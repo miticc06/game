@@ -20,7 +20,13 @@ struct CollisionEvent
 {
 	LPGAMEOBJECT obj;
 	float t, nx, ny;
-	CollisionEvent(float t, float nx, float ny, LPGAMEOBJECT obj = NULL) { this->t = t; this->nx = nx; this->ny = ny; this->obj = obj; }
+	CollisionEvent(float t, float nx, float ny, LPGAMEOBJECT obj = NULL) 
+	{ 
+		this->t = t; 
+		this->nx = nx; 
+		this->ny = ny; 
+		this->obj = obj; 
+	}
 
 	static bool compare(const LPCOLLISIONEVENT &a, LPCOLLISIONEVENT &b)
 	{
@@ -49,7 +55,7 @@ public:
 
 	DWORD dt; 
 
-	vector<LPANIMATION> animations;
+	vector<Animation *> animations;
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }

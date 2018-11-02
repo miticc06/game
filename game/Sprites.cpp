@@ -16,7 +16,8 @@ Sprites * Sprites::__instance = NULL;
 
 Sprites *Sprites::GetInstance()
 {
-	if (__instance == NULL) __instance = new Sprites();
+	if (__instance == NULL) 
+		__instance = new Sprites();
 	return __instance;
 }
 
@@ -42,7 +43,8 @@ LPSPRITE Sprites::Get(int id)
 void Animation::Add(int spriteId, DWORD time)
 {
 	int t = time;
-	if (time == 0) t=this->defaultTime;
+	if (time == 0)
+		t = this->defaultTime;
 
 	LPSPRITE sprite = Sprites::GetInstance()->Get(spriteId);
 	LPANIMATION_FRAME frame = new AnimationFrame(sprite, t);
@@ -72,20 +74,20 @@ void Animation::Render(float x, float y, int alpha)
 	frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
 }
 
-CAnimations * CAnimations::__instance = NULL;
+Animations * Animations::__instance = NULL;
 
-CAnimations * CAnimations::GetInstance()
+Animations * Animations::GetInstance()
 {
-	if (__instance == NULL) __instance = new CAnimations();
+	if (__instance == NULL) __instance = new Animations();
 	return __instance;
 }
 
-void CAnimations::Add(int id, LPANIMATION ani)
+void Animations::Add(int id, Animation * ani)
 {
 	animations[id] = ani;
 }
 
-LPANIMATION CAnimations::Get(int id)
+Animation * Animations::Get(int id)
 {
 	return animations[id];
 }

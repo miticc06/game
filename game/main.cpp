@@ -32,7 +32,7 @@
 #include "Goomba.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
-#define MAIN_WINDOW_TITLE L"04 - Collision"
+#define MAIN_WINDOW_TITLE L"Game"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 200)
 #define SCREEN_WIDTH 320
@@ -126,7 +126,7 @@ void LoadResources()
 
 
 	Sprites * sprites = Sprites::GetInstance();
-	CAnimations * animations = CAnimations::GetInstance();
+	Animations * animations = Animations::GetInstance();
 	
 	LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
 
@@ -162,7 +162,7 @@ void LoadResources()
 
 	sprites->Add(30003, 45, 21, 61, 29, texEnemy); // die sprite
 
-	LPANIMATION ani;
+	Animation * ani;
 
 	ani = new Animation(100);	// idle big right
 	ani->Add(10001);

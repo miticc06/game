@@ -48,8 +48,16 @@ class AnimationFrame
 	DWORD time;
 
 public:
-	AnimationFrame(LPSPRITE sprite, int time) { this->sprite = sprite; this->time = time; }
-	DWORD GetTime() { return time; }
+	AnimationFrame(LPSPRITE sprite, int time)
+	{ 
+		this->sprite = sprite; 
+		this->time = time;
+	}
+
+	DWORD GetTime() 
+	{ 
+		return time; 
+	}
 	LPSPRITE GetSprite() { return sprite; }
 };
 
@@ -67,18 +75,17 @@ public:
 	void Render(float x, float y, int alpha=255);
 };
 
-typedef Animation *LPANIMATION;
-
-class CAnimations
+ 
+class Animations
 {
-	static CAnimations * __instance;
+	static Animations * __instance;
 
-	unordered_map<int, LPANIMATION> animations;
+	unordered_map<int, Animation *> animations;
 
 public:
-	void Add(int id, LPANIMATION ani);
-	LPANIMATION Get(int id);
+	void Add(int id, Animation * ani);
+	Animation * Get(int id);
 
-	static CAnimations * GetInstance();
+	static Animations * GetInstance();
 };
 
