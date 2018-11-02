@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="debug.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Brick.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Goomba.h" />
+    <ClInclude Include="Mario.h" />
+    <ClInclude Include="debug.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{59c90432-2e1f-4ef8-a1a8-7f7e46ab8123}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
