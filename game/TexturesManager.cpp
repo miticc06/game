@@ -5,22 +5,22 @@
 
 #include "debug.h"
 #include "Game.h"
-#include "textures.h"
+#include "TexturesManager.h"
 
-Textures * Textures::__instance = NULL;
+TexturesManager * TexturesManager::__instance = NULL;
 
-Textures::Textures()
+TexturesManager::TexturesManager()
 {
 
 }
 
-Textures *Textures::GetInstance()
+TexturesManager *TexturesManager::GetInstance()
 {
-	if (__instance == NULL) __instance = new Textures();
+	if (__instance == NULL) __instance = new TexturesManager();
 	return __instance;
 }
 
-void Textures::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
+void TexturesManager::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
 {
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filePath, &info);
@@ -60,7 +60,7 @@ void Textures::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
 	DebugOut(L"[INFO] Texture loaded Ok: id=%d, %s \n", id, filePath);
 }
 
-LPDIRECT3DTEXTURE9 Textures::Get(unsigned int i) 
+LPDIRECT3DTEXTURE9 TexturesManager::Get(unsigned int i) 
 {
 	return textures[i];
 }

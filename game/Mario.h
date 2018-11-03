@@ -44,11 +44,7 @@ class Mario : public GameObject
 	int untouchable;
 	DWORD untouchable_start;
 public: 
-	Mario() : GameObject()
-	{
-		level = MARIO_LEVEL_BIG;
-		untouchable = 0;
-	}
+	Mario();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();
 	void SetState(int state);

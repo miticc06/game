@@ -7,16 +7,16 @@ using namespace std;
 /*
 	Manage texture database
 */
-class Textures
+class TexturesManager
 {
-	static Textures * __instance;
+	static TexturesManager * __instance;
 
 	unordered_map<int, LPDIRECT3DTEXTURE9> textures;
 
 public: 
-	Textures();
+	TexturesManager();
 	void Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor);
 	LPDIRECT3DTEXTURE9 Get(unsigned int i);
 
-	static Textures * GetInstance();
+	static TexturesManager * GetInstance();
 };

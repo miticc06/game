@@ -6,6 +6,9 @@
 
 #include "Sprites.h"
 
+#include "define.h"
+
+
 
 using namespace std;
 
@@ -55,7 +58,9 @@ public:
 
 	DWORD dt; 
 
-	vector<Animation *> animations;
+	//vector<Animation *> _animations;
+
+	map<int, Animation*> _animations;
 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -77,7 +82,7 @@ public:
 		float &nx, 
 		float &ny);
 
-	void AddAnimation(int aniId);
+	//void AddAnimation(int aniId);
 
 	GameObject();
 

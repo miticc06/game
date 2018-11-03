@@ -17,11 +17,10 @@
     <ClCompile Include="Sprites.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Textures.cpp">
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TexturesManager.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteManager.cpp" />
-    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h" />
@@ -37,13 +36,12 @@
     <ClInclude Include="Sprites.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Textures.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="define.h">
       <Filter>Framework\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturesManager.h">
+      <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

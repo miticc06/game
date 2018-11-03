@@ -3,7 +3,7 @@
 
 
 #include "debug.h"
-#include "Textures.h"
+#include "TexturesManager.h"
 #include "Game.h"
 #include "GameObject.h"
 #include "Sprites.h"
@@ -124,7 +124,7 @@ void GameObject::RenderBoundingBox()
 	D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
-	LPDIRECT3DTEXTURE9 bbox = Textures::GetInstance()->Get(ID_TEX_BBOX);
+	LPDIRECT3DTEXTURE9 bbox = TexturesManager::GetInstance()->Get(ID_TEX_BBOX);
 
 	float l,t,r,b; 
 
@@ -137,11 +137,11 @@ void GameObject::RenderBoundingBox()
 	Game::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
 }
 
-void GameObject::AddAnimation(int aniId)
-{
-	Animation * ani = Animations::GetInstance()->Get(aniId);
-	animations.push_back(ani);
-}
+//void GameObject::AddAnimation(int aniId)
+//{
+//	Animation * ani = AnimationsManager::GetInstance()->Get(aniId);
+//	_animations.push_back(ani);
+//}
 
 
 GameObject::~GameObject()

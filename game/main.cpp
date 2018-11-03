@@ -1,4 +1,4 @@
-/* =============================================================
+﻿/* =============================================================
 	INTRODUCTION TO GAME PROGRAMMING SE102
 	
 	SAMPLE 04 - COLLISION
@@ -25,7 +25,7 @@
 #include "debug.h"
 #include "Game.h"
 #include "GameObject.h"
-#include "Textures.h"
+#include "TexturesManager.h"
 
 #include "Mario.h"
 #include "Brick.h"
@@ -115,7 +115,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 */
 void LoadResources()
 {
-	Textures * textures = Textures::GetInstance();
+	TexturesManager * textures = TexturesManager::GetInstance();
 
 	textures->Add(ID_TEX_MARIO, L"textures\\mario.png",D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
@@ -125,8 +125,8 @@ void LoadResources()
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
 
-	Sprites * sprites = Sprites::GetInstance();
-	Animations * animations = Animations::GetInstance();
+	SpritesManager * sprites = SpritesManager::GetInstance();
+	AnimationsManager * animations = AnimationsManager::GetInstance();
 	
 	LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
 
@@ -141,6 +141,11 @@ void LoadResources()
 	sprites->Add(10013, 125, 154, 140, 181, texMario);
 
 	sprites->Add(10099, 215, 120, 231, 135, texMario);		// die 
+
+
+	// thêm các sprite vào list sprite chung, quản lí bằng id
+
+
 
 	// small
 	sprites->Add(10021, 247, 0, 259, 15, texMario);			// idle small right
@@ -162,80 +167,10 @@ void LoadResources()
 
 	sprites->Add(30003, 45, 21, 61, 29, texEnemy); // die sprite
 
-	Animation * ani;
-
-	ani = new Animation(100);	// idle big right
-	ani->Add(10001);
-	animations->Add(400, ani);
-
-	ani = new Animation(100);	// idle big left
-	ani->Add(10011);
-	animations->Add(401, ani);
-
-	ani = new Animation(100);	// idle small right
-	ani->Add(10021);
-	animations->Add(402, ani);
-
-	ani = new Animation(100);	// idle small left
-	ani->Add(10031);
-	animations->Add(403, ani);
-
-	ani = new Animation(100);	// walk right big
-	ani->Add(10001);
-	ani->Add(10002);
-	ani->Add(10003);
-	animations->Add(500, ani);
-
-	ani = new Animation(100);	// // walk left big
-	ani->Add(10011);
-	ani->Add(10012);
-	ani->Add(10013);
-	animations->Add(501, ani);
-
-	ani = new Animation(100);	// walk right small
-	ani->Add(10021);
-	ani->Add(10022);
-	ani->Add(10023);
-	animations->Add(502, ani);
-
-	ani = new Animation(100);	// walk left small
-	ani->Add(10031);
-	ani->Add(10032);
-	ani->Add(10033);
-	animations->Add(503, ani);
-
-
-	ani = new Animation(100);		// Mario die
-	ani->Add(10099);
-	animations->Add(599, ani);
-
 	
 
-	ani = new Animation(100);		// brick
-	ani->Add(20001);
-	animations->Add(601, ani);
-
-	ani = new Animation(300);		// Goomba walk
-	ani->Add(30001);
-	ani->Add(30002);
-	animations->Add(701, ani);
-
-	ani = new Animation(1000);		// Goomba dead
-	ani->Add(30003);
-	animations->Add(702, ani);
-
 	mario = new Mario();
-	mario->AddAnimation(400);		// idle right big
-	mario->AddAnimation(401);		// idle left big
-	mario->AddAnimation(402);		// idle right small
-	mario->AddAnimation(403);		// idle left small
 
-	mario->AddAnimation(500);		// walk right big
-	mario->AddAnimation(501);		// walk left big
-	mario->AddAnimation(502);		// walk right small
-	mario->AddAnimation(503);		// walk left big
-
-	mario->AddAnimation(599);		// die
 
 
 
@@ -247,42 +182,32 @@ void LoadResources()
 	// and Goombas 
 	for (int i = 0; i < 4; i++)
 	{
-		goomba = new Goomba();
-		goomba->AddAnimation(701);
-		goomba->AddAnimation(702);
+		goomba = new Goomba(); 
 		goomba->SetPosition(200 + i * 60, 135);
 		goomba->SetState(GOOMBA_STATE_WALKING);
 		objects.push_back(goomba);
 	}
-
-/*
+	 
 	for (int i = 0; i < 5; i++)
 	{
 		Brick *brick = new Brick();
-		brick->AddAnimation(601);
-		brick->SetPosition(100 + i*48.0f, 74);
+ 		brick->SetPosition(100 + i*48.0f, 74);
 		objects.push_back(brick);
 
 		brick = new Brick();
-		brick->AddAnimation(601);
-		brick->SetPosition(100 + i*48.0f, 90);
+ 		brick->SetPosition(100 + i*48.0f, 90);
 		objects.push_back(brick);
 
 		brick = new Brick();
-		brick->AddAnimation(601);
-		brick->SetPosition(84 + i*48.0f, 90);
+ 		brick->SetPosition(84 + i*48.0f, 90);
 		objects.push_back(brick);
-	}
-*/
-
+	} 
 	for (int i = 3; i < 4; i++)
 	{
-		Brick *brick = new Brick();
-		brick->AddAnimation(601);
-		brick->SetPosition(0 + i*16.0f, 150);
+		Brick *brick = new Brick(); 
+		brick->SetPosition(0 + i * 16.0f, 150);
 		objects.push_back(brick);
 	}
-
 
 
 }

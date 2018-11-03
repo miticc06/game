@@ -39,7 +39,7 @@ void Goomba::Render()
 		ani = GOOMBA_ANI_DIE;
 	}
 
-	animations[ani]->Render(x,y);
+	_animations[ani]->Render(x,y);
 	//RenderBoundingBox();
 }
 
@@ -57,4 +57,11 @@ void Goomba::SetState(int state)
 			vx = -GOOMBA_WALKING_SPEED;
 	}
 
+}
+
+Goomba::Goomba()
+{
+	_animations[GOOMBA_ANI_WALKING] = AnimationsManager::GetInstance()->Get(701);
+	_animations[GOOMBA_ANI_DIE] = AnimationsManager::GetInstance()->Get(702);
+	 
 }

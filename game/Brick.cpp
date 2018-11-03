@@ -1,8 +1,15 @@
 #include "Brick.h"
 
+Brick::Brick()
+{
+	_animations[0] = AnimationsManager::GetInstance()->Get(601);
+
+ 
+}
+
 void Brick::Render()
 {
-	animations[0]->Render(x, y);
+	_animations[0]->Render(x, y);
 	//RenderBoundingBox();
 }
 
