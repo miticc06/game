@@ -236,11 +236,12 @@ void Game::SweptAABB(
 		dx_entry = sl - mr; 
 		dx_exit = sr - ml;
 	}
-	else if (dx < 0)
-	{
-		dx_entry = sr - ml;
-		dx_exit = sl- mr;
-	}
+	else
+		if (dx < 0)
+		{
+			dx_entry = sr - ml;
+			dx_exit = sl- mr;
+		}
 
 
 	if (dy > 0)

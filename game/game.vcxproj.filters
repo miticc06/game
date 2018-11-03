@@ -20,6 +20,8 @@
     <ClCompile Include="Textures.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h" />
@@ -38,10 +40,18 @@
     <ClInclude Include="Textures.h">
       <Filter>Framework</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteManager.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="define.h">
+      <Filter>Framework\Define</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
       <UniqueIdentifier>{59c90432-2e1f-4ef8-a1a8-7f7e46ab8123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Define">
+      <UniqueIdentifier>{a4b56e58-ce8f-4290-a703-10207636f8c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

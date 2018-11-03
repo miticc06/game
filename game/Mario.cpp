@@ -69,7 +69,7 @@ void Mario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				}
 				else if (e->nx != 0)
 				{
-					/*if (untouchable==0)
+					if (untouchable==0)
 					{
 						if (goomba->GetState()!=GOOMBA_STATE_DIE)
 						{
@@ -81,7 +81,7 @@ void Mario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							else 
 								SetState(MARIO_STATE_DIE);
 						}
-					}*/
+					}
 				}
 			}
 		}
