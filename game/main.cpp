@@ -74,6 +74,9 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		mario->SetPosition(50.0f,0.0f);
 		mario->SetSpeed(0, 0);
 		break;
+case DIK_Z: // reset 
+ 		mario->SetLevel(MARIO_LEVEL_SMALL);
+		break;
 	}
 }
 

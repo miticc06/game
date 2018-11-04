@@ -64,6 +64,8 @@ Mario::Mario() : GameObject()
 
 void Mario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	vy = 0;
+
 	// Calculate dx, dy 
 	GameObject::Update(dt);
 	

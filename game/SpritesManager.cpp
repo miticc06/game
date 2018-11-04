@@ -52,7 +52,7 @@ void SpritesManager::loadResource()
 	this->_listSprite[eID::MARIO] = _sprite;
 	this->loadSpriteInfo(eID::MARIO, "textures\\mario.txt");
 
-	_sprite = new Sprite(L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	_sprite = new Sprite(L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255)); // special texture to draw object bounding box
 	this->_listSprite[eID::BBOX] = _sprite;
 
 }
