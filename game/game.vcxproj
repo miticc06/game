@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
@@ -130,11 +131,12 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Mario.h" />
-    <ClInclude Include="Sprites.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpritesManager.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="TexturesManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -142,9 +144,9 @@
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
-    <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpritesManager.cpp" />
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TexturesManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

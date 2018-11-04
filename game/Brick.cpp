@@ -2,7 +2,7 @@
 
 Brick::Brick()
 {
-	_animations[0] = AnimationsManager::GetInstance()->Get(601);
+	//_animations[0] = AnimationsManager::GetInstance()->Get(601);
 
  
 }

@@ -4,10 +4,10 @@
 #include <d3dx9.h>
 #include <vector>
 
-#include "Sprites.h"
+#include "Sprite.h"
 
 #include "define.h"
-
+#include "Animation.h"
 
 
 using namespace std;

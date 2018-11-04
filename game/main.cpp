@@ -25,7 +25,7 @@
 #include "debug.h"
 #include "Game.h"
 #include "GameObject.h"
-#include "TexturesManager.h"
+
 
 #include "Mario.h"
 #include "Brick.h"
@@ -115,59 +115,109 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 */
 void LoadResources()
 {
-	TexturesManager * textures = TexturesManager::GetInstance();
 
-	textures->Add(ID_TEX_MARIO, L"textures\\mario.png",D3DCOLOR_XRGB(255, 255, 255));
-	textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
-	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
-
-
-	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-
-
-	SpritesManager * sprites = SpritesManager::GetInstance();
-	AnimationsManager * animations = AnimationsManager::GetInstance();
-	
-	LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
-
-	// big
-	sprites->Add(10001, 246, 154, 260, 181, texMario);		// idle right
-
-	sprites->Add(10002, 275, 154, 290, 181, texMario);		// walk
-	sprites->Add(10003, 304, 154, 321, 181, texMario);
-
-	sprites->Add(10011, 186, 154, 200, 181, texMario);		// idle left
-	sprites->Add(10012, 155, 154, 170, 181, texMario);		// walk
-	sprites->Add(10013, 125, 154, 140, 181, texMario);
-
-	sprites->Add(10099, 215, 120, 231, 135, texMario);		// die 
-
-
-	// thêm các sprite vào list sprite chung, quản lí bằng id
-
-
-
-	// small
-	sprites->Add(10021, 247, 0, 259, 15, texMario);			// idle small right
-	sprites->Add(10022, 275, 0, 291, 15, texMario);			// walk 
-	sprites->Add(10023, 306, 0, 320, 15, texMario);			// 
-
-	sprites->Add(10031, 187, 0, 198, 15, texMario);			// idle small left
-
-	sprites->Add(10032, 155, 0, 170, 15, texMario);			// walk
-	sprites->Add(10033, 125, 0, 139, 15, texMario);			// 
-
-
-	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
-	sprites->Add(20001, 408, 225, 424, 241, texMisc);
-
-	LPDIRECT3DTEXTURE9 texEnemy = textures->Get(ID_TEX_ENEMY);
-	sprites->Add(30001, 5, 14, 21, 29, texEnemy);
-	sprites->Add(30002, 25, 14, 41, 29, texEnemy);
-
-	sprites->Add(30003, 45, 21, 61, 29, texEnemy); // die sprite
+	SpritesManager * _spriteManager = SpritesManager::GetInstance();
+	_spriteManager->loadResource(); // load texture và các rect frame
+	 
 
 	
+
+
+
+
+
+
+	//textures->Add(ID_TEX_MARIO, L"textures\\mario.png",D3DCOLOR_XRGB(255, 255, 255));
+	//textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
+	//textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
+
+
+	//textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+
+
+
+
+
+
+
+
+
+	// 
+	//LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
+
+	//// big
+	//sprites->Add(10001, 246, 154, 260, 181, texMario);		// idle right
+
+	//sprites->Add(10002, 275, 154, 290, 181, texMario);		// walk
+	//sprites->Add(10003, 304, 154, 321, 181, texMario);
+
+	//sprites->Add(10011, 186, 154, 200, 181, texMario);		// idle left
+	//sprites->Add(10012, 155, 154, 170, 181, texMario);		// walk
+	//sprites->Add(10013, 125, 154, 140, 181, texMario);
+
+	//sprites->Add(10099, 215, 120, 231, 135, texMario);		// die 
+
+
+	//// thêm các sprite vào list sprite chung, quản lí bằng id
+
+
+
+	//// small
+	//sprites->Add(10021, 247, 0, 259, 15, texMario);			// idle small right
+	//sprites->Add(10022, 275, 0, 291, 15, texMario);			// walk 
+	//sprites->Add(10023, 306, 0, 320, 15, texMario);			// 
+
+	//sprites->Add(10031, 187, 0, 198, 15, texMario);			// idle small left
+
+	//sprites->Add(10032, 155, 0, 170, 15, texMario);			// walk
+	//sprites->Add(10033, 125, 0, 139, 15, texMario);			// 
+
+
+
+
+
+
+
+	//LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
+	//sprites->Add(20001, 408, 225, 424, 241, texMisc);
+
+	//LPDIRECT3DTEXTURE9 texEnemy = textures->Get(ID_TEX_ENEMY);
+	//sprites->Add(30001, 5, 14, 21, 29, texEnemy);
+	//sprites->Add(30002, 25, 14, 41, 29, texEnemy);
+
+	//sprites->Add(30003, 45, 21, 61, 29, texEnemy); // die sprite
+
+	//
+
+
+
+
+
+
+
+
+
+
+	//ani = new Animation(100);		// brick
+	//ani->Add(20001);
+	//animations->Add(601, ani);
+
+	//ani = new Animation(300);		// Goomba walk
+	//ani->Add(30001);
+	//ani->Add(30002);
+	//animations->Add(701, ani);
+
+	//ani = new Animation(1000);		// Goomba dead
+	//ani->Add(30003);
+	//animations->Add(702, ani);
+
+
+
+
+
+
+
+
 
 	mario = new Mario();
 
@@ -179,35 +229,35 @@ void LoadResources()
 	objects.push_back(mario);
 
 
-	// and Goombas 
-	for (int i = 0; i < 4; i++)
-	{
-		goomba = new Goomba(); 
-		goomba->SetPosition(200 + i * 60, 135);
-		goomba->SetState(GOOMBA_STATE_WALKING);
-		objects.push_back(goomba);
-	}
-	 
-	for (int i = 0; i < 5; i++)
-	{
-		Brick *brick = new Brick();
- 		brick->SetPosition(100 + i*48.0f, 74);
-		objects.push_back(brick);
+	//// and Goombas 
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	goomba = new Goomba(); 
+	//	goomba->SetPosition(200 + i * 60, 135);
+	//	goomba->SetState(GOOMBA_STATE_WALKING);
+	//	objects.push_back(goomba);
+	//}
+	// 
+	//for (int i = 0; i < 5; i++)
+	//{
+	//	Brick *brick = new Brick();
+ //		brick->SetPosition(100 + i*48.0f, 74);
+	//	objects.push_back(brick);
 
-		brick = new Brick();
- 		brick->SetPosition(100 + i*48.0f, 90);
-		objects.push_back(brick);
+	//	brick = new Brick();
+ //		brick->SetPosition(100 + i*48.0f, 90);
+	//	objects.push_back(brick);
 
-		brick = new Brick();
- 		brick->SetPosition(84 + i*48.0f, 90);
-		objects.push_back(brick);
-	} 
-	for (int i = 3; i < 4; i++)
-	{
-		Brick *brick = new Brick(); 
-		brick->SetPosition(0 + i * 16.0f, 150);
-		objects.push_back(brick);
-	}
+	//	brick = new Brick();
+ //		brick->SetPosition(84 + i*48.0f, 90);
+	//	objects.push_back(brick);
+	//} 
+	//for (int i = 3; i < 4; i++)
+	//{
+	//	Brick *brick = new Brick(); 
+	//	brick->SetPosition(0 + i * 16.0f, 150);
+	//	objects.push_back(brick);
+	//}
 
 
 }

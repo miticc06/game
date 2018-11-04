@@ -1,26 +1,32 @@
-#include <Windows.h>
+#include "Sprite.h"
 
-#include <d3d9.h>
-#include <d3dx9.h>
 
-#include "debug.h"
-#include "Game.h"
-#include "TexturesManager.h"
 
-TexturesManager * TexturesManager::__instance = NULL;
-
-TexturesManager::TexturesManager()
+Sprite::Sprite()
 {
-
 }
 
-TexturesManager *TexturesManager::GetInstance()
+
+Sprite::~Sprite()
 {
-	if (__instance == NULL) __instance = new TexturesManager();
-	return __instance;
 }
 
-void TexturesManager::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
+
+
+void Sprite::Draw(float x, float y, RECT r, int alpha)
+{
+	Game * game = Game::GetInstance();
+	game->Draw(x, y, _texture, r, alpha);
+}
+
+LPDIRECT3DTEXTURE9 Sprite::GetTexture()
+{
+	return _texture;
+}
+
+
+
+Sprite::Sprite(LPWSTR filePath, D3DCOLOR transparentColor)
 {
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(filePath, &info);
@@ -31,7 +37,7 @@ void TexturesManager::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
 	}
 
 	LPDIRECT3DDEVICE9 d3ddv = Game::GetInstance()->GetDirect3DDevice();
-	LPDIRECT3DTEXTURE9 texture;
+
 
 	result = D3DXCreateTextureFromFileEx(
 		d3ddv,								// Pointer to Direct3D device object
@@ -44,26 +50,15 @@ void TexturesManager::Add(int id, LPCWSTR filePath, D3DCOLOR transparentColor)
 		D3DPOOL_DEFAULT,
 		D3DX_DEFAULT,
 		D3DX_DEFAULT,
-		transparentColor,			
+		transparentColor,
 		&info,
 		NULL,
-		&texture);								// Created texture pointer
+		&_texture);								// Created texture pointer
 
 	if (result != D3D_OK)
 	{
 		OutputDebugString(L"[ERROR] CreateTextureFromFile failed\n");
 		return;
 	}
-
-	textures[id] = texture;
-
-	DebugOut(L"[INFO] Texture loaded Ok: id=%d, %s \n", id, filePath);
+	DebugOut(L"[INFO] Texture loaded Ok: %s \n", filePath);
 }
-
-LPDIRECT3DTEXTURE9 TexturesManager::Get(unsigned int i) 
-{
-	return textures[i];
-}
-
-
-

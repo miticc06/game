@@ -2,12 +2,11 @@
 #include <algorithm>
 
 
-#include "debug.h"
-#include "TexturesManager.h"
+#include "debug.h" 
 #include "Game.h"
 #include "GameObject.h"
-#include "Sprites.h"
-
+#include "Sprite.h"
+ 
 GameObject::GameObject()
 {
 	x = y = 0;
@@ -124,7 +123,7 @@ void GameObject::RenderBoundingBox()
 	D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
-	LPDIRECT3DTEXTURE9 bbox = TexturesManager::GetInstance()->Get(ID_TEX_BBOX);
+	LPDIRECT3DTEXTURE9 bbox_texture = SpritesManager::GetInstance()->getSprite(eID::BBOX)->GetTexture();
 
 	float l,t,r,b; 
 
@@ -134,14 +133,9 @@ void GameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	Game::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
+	Game::GetInstance()->Draw(x, y, bbox_texture, rect.left, rect.top, rect.right, rect.bottom, 100);
 }
-
-//void GameObject::AddAnimation(int aniId)
-//{
-//	Animation * ani = AnimationsManager::GetInstance()->Get(aniId);
-//	_animations.push_back(ani);
-//}
+  
 
 
 GameObject::~GameObject()

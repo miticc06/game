@@ -14,13 +14,14 @@
     <ClCompile Include="main.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Sprites.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TexturesManager.cpp">
+    <ClCompile Include="SpritesManager.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h" />
@@ -33,16 +34,17 @@
     <ClInclude Include="GameObject.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Sprites.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h" />
     <ClInclude Include="define.h">
       <Filter>Framework\Define</Filter>
     </ClInclude>
-    <ClInclude Include="TexturesManager.h">
+    <ClInclude Include="SpritesManager.h">
       <Filter>Framework</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

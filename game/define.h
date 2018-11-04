@@ -5,7 +5,7 @@
 
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <map>
+#include <map> 
 using namespace std;
 
 #define WINDOW_WIDTH 512
@@ -17,7 +17,8 @@ using namespace std;
 // ID của Sprite, object
 enum eID
 {
-	TET
+	MARIO,
+	BBOX
 };
 
  enum eStatus

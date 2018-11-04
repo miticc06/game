@@ -61,7 +61,7 @@ void Goomba::SetState(int state)
 
 Goomba::Goomba()
 {
-	_animations[GOOMBA_ANI_WALKING] = AnimationsManager::GetInstance()->Get(701);
-	_animations[GOOMBA_ANI_DIE] = AnimationsManager::GetInstance()->Get(702);
+	//_animations[GOOMBA_ANI_WALKING] = AnimationsManager::GetInstance()->Get(701);
+	//_animations[GOOMBA_ANI_DIE] = AnimationsManager::GetInstance()->Get(702);
 	 
 }
