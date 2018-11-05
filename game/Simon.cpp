@@ -167,7 +167,7 @@ void Simon::Render()
 void Simon::SetState(int state)
 {
 	
-	GameObject::SetState(state);
+	/*GameObject::SetState(state);
 
 	switch (state)
 	{
@@ -182,7 +182,7 @@ void Simon::SetState(int state)
 	default:
 		break;
 	}
-
+*/
 
 
 }
@@ -226,8 +226,12 @@ void Simon::Stop()
 {
 	if (vx!=0)
 		vx -= dt*SIMON_GRAVITY*0.1*trend;
-	if (trend == 1 && vx < 0) vx = 0;
-	if (trend == -1 && vx > 0) vx = 0;
+	if (trend == 1 && vx < 0) 
+		vx = 0;
+	if (trend == -1 && vx > 0) 
+		vx = 0;
+	// tóm lại là vx = 0 :v
+
 
 	isWalking = 0;
 	if (isSitting == true) // nếu simon đang ngồi

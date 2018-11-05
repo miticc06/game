@@ -17,6 +17,16 @@ using namespace std;
 
 #define SHOWBOX_PINK 0
 
+
+
+
+#define SCREEN_WIDTH 512
+#define SCREEN_HEIGHT 448
+
+
+
+
+
 // ID của Sprite, object
 enum eID
 {

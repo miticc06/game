@@ -29,6 +29,10 @@
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Simon.cpp" />
+    <ClCompile Include="Map.cpp">
+      <Filter>Framework\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h" />
@@ -59,6 +63,10 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Simon.h" />
+    <ClInclude Include="Map.h">
+      <Filter>Framework\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -69,6 +77,12 @@
     </Filter>
     <Filter Include="Player">
       <UniqueIdentifier>{a1462d77-ab06-4dec-9408-86c35e4bab07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Map">
+      <UniqueIdentifier>{0faecd9b-1d9d-4a7f-8fbd-cb69b31c0599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Camera">
+      <UniqueIdentifier>{d94051ad-a4c4-4685-aff1-7168095dc6f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

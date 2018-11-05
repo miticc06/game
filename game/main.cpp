@@ -32,13 +32,13 @@
 #include "Goomba.h"
 
 #include "Simon.h"
+#include "define.h"
+#include "Map.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"Game"
 
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 200)
-#define SCREEN_WIDTH 512
-#define SCREEN_HEIGHT 448
+#define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
 
 #define MAX_FRAME_RATE 60
 
@@ -50,9 +50,9 @@
 
 HWND hWnd;
 
-Game *game;
-
+Game *game; 
 Simon * simon;
+Map * TileMap;
 
 vector<LPGAMEOBJECT> objects;
 
@@ -178,6 +178,8 @@ void LoadResources()
 {
 
 	simon = new Simon();
+	
+	TileMap = new Map();
 
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
 	simon->SetPosition(0, 0);
@@ -187,7 +189,7 @@ void LoadResources()
 	objects.push_back(simon);
 
 
-	Brick * brick = new Brick(32, 300, 400, 32);
+	Brick * brick = new Brick(0, 320, 1536, 32);
 	objects.push_back(brick);
 
 
@@ -377,8 +379,15 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
+
+
+		TileMap->DrawMap();
+
 		for (int i = 0; i < objects.size(); i++)
 			objects[i]->Render();
+
+
+
 
 		spriteHandler->End();
 		d3ddv->EndScene();
