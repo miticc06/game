@@ -23,17 +23,17 @@ void Simon::GetBoundingBox(float & left, float & top, float & right, float & bot
 {
 	if (isSitting == true) // simon đang ngồi
 	{
-		left = x; 
-		top = y; // không chỉnh lại y bởi vì hàm Sit() đã điều chỉnh
-		right = x + SIMON_BBOX_WIDTH;
-		bottom = y + SIMON_BBOX_SITTING_HEIGHT;
+		left = x + 12;
+		top = y - 1; // không chỉnh lại y bởi vì hàm Sit() đã điều chỉnh
+		right = x + SIMON_BBOX_WIDTH - 17;
+		bottom = y + SIMON_BBOX_SITTING_HEIGHT -3;
 	}
 	else
-	{
-		left = x;
-		top = y;
-		right = x + SIMON_BBOX_WIDTH;
-		bottom = y + SIMON_BBOX_HEIGHT;
+	{ 
+		left = x +12;
+		top = y -1 ;
+		right = x + SIMON_BBOX_WIDTH - 17;
+		bottom = y + SIMON_BBOX_HEIGHT - 3;
 	}
  	
 }
@@ -70,18 +70,84 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 
-	GameObject::Update(dt);  	// Calculate dx, dy 
-	vy = 0;
-
-	//vy += SIMON_GRAVITY * dt;// Simple fall down
-
+	GameObject::Update(dt);   
+	vy += SIMON_GRAVITY * dt;// Simple fall down
 	 
 
-	x += dx;
-	y += dy;
 
 
 
+ 
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+	 
+	CalcPotentialCollisions(coObjects, coEvents); // Lấy danh sách các va chạm
+ 
+	// No collision occured, proceed normally
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
+
+		// block 
+		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + ny * 0.4f;
+
+		if (nx != 0)
+			vx = 0; // nếu mà nx, ny <>0  thì nó va chạm rồi. mà chạm rồi thì dừng vận tốc cho nó đừng chạy nữa
+	
+		if (ny != 0)
+			vy = 0;
+
+		//// Collision logic with Goombas
+		//for (UINT i = 0; i < coEventsResult.size(); i++)
+		//{
+		//	LPCOLLISIONEVENT e = coEventsResult[i];
+
+		//	if (dynamic_cast<Goomba *>(e->obj))
+		//	{
+		//		Goomba *goomba = dynamic_cast<Goomba *>(e->obj);
+
+		//		// jump on top >> kill Goomba and deflect a bit 
+		//		if (e->ny < 0)
+		//		{
+		//			if (goomba->GetState() != GOOMBA_STATE_DIE)
+		//			{
+		//				goomba->SetState(GOOMBA_STATE_DIE);
+		//				vy = -MARIO_JUMP_DEFLECT_SPEED;
+		//			}
+		//		}
+		//		else if (e->nx != 0)
+		//		{
+		//			if (untouchable == 0)
+		//			{
+		//				if (goomba->GetState() != GOOMBA_STATE_DIE)
+		//				{
+		//					if (level > MARIO_LEVEL_SMALL)
+		//					{
+		//						level = MARIO_LEVEL_SMALL;
+		//						StartUntouchable();
+		//					}
+		//					else
+		//						SetState(MARIO_STATE_DIE);
+		//				}
+		//			}
+		//		}
+		//	}
+		//}
+	}
+
+	// clean up collision events
+	for (UINT i = 0; i < coEvents.size(); i++)
+		delete coEvents[i];
 }
 
 void Simon::Render()
@@ -139,20 +205,35 @@ void Simon::Go()
 
 void Simon::Sit()
 {
+	vx = 0;
+	isWalking = 0;
+
 	if (isSitting == false) // nếu trước đó simon chưa ngồi
 		y = y + 16; // kéo simon xuống
 
 	isSitting = 1;
 }
 
+void Simon::Jump()
+{
+	if (isSitting == true)
+		return;
+	vy -= SIMON_VJUMP;
+	isJumping = true;
+}
+
 void Simon::Stop()
 {
-	vx = 0;
+	if (vx!=0)
+		vx -= dt*SIMON_GRAVITY*0.1*trend;
+	if (trend == 1 && vx < 0) vx = 0;
+	if (trend == -1 && vx > 0) vx = 0;
+
 	isWalking = 0;
 	if (isSitting == true) // nếu simon đang ngồi
 	{
 		isSitting = 0; // hủy trạng thái ngồi
-		y = y - 16; // kéo simon lên
+		y = y - 18; // kéo simon lên
 	}
 	
 }

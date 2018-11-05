@@ -71,6 +71,13 @@ void CSampleKeyHander::OnKeyDown(int KeyCode) // khi đè phím
 
 	if (KeyCode == DIK_ESCAPE)
 		DestroyWindow(hWnd); // thoát
+
+	if (KeyCode == DIK_Q)
+		simon->SetPosition(SIMON_POSITION_DEFAULT);
+	
+	if (KeyCode == DIK_SPACE)
+		simon->Jump();
+
 	//switch (KeyCode)
 	//{
 	//case DIK_RIGHT:
@@ -103,8 +110,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 {
 
 	if (game->IsKeyDown(DIK_DOWN))
-	{
-		simon->Stop();
+	{ 
 		simon->Sit();
 
 		if (game->IsKeyDown(DIK_RIGHT))
@@ -173,7 +179,7 @@ void LoadResources()
 
 	simon = new Simon();
 
-	simon->SetPosition(50.0f, 0);
+	simon->SetPosition(SIMON_POSITION_DEFAULT);
 	simon->SetPosition(0, 0);
 
 
@@ -181,7 +187,7 @@ void LoadResources()
 	objects.push_back(simon);
 
 
-	Brick * brick = new Brick(30, 300, 400, 32);
+	Brick * brick = new Brick(32, 300, 400, 32);
 	objects.push_back(brick);
 
 
