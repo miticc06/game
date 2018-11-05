@@ -31,12 +31,14 @@
 #include "Brick.h"
 #include "Goomba.h"
 
+#include "Simon.h"
+
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"Game"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 200)
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 512
+#define SCREEN_HEIGHT 448
 
 #define MAX_FRAME_RATE 60
 
@@ -44,10 +46,13 @@
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
 
+
+
+HWND hWnd;
+
 Game *game;
 
-Mario *mario;
-Goomba *goomba;
+Simon * simon;
 
 vector<LPGAMEOBJECT> objects;
 
@@ -60,41 +65,88 @@ class CSampleKeyHander: public KeyEventHandler
 
 CSampleKeyHander * keyHandler; 
 
-void CSampleKeyHander::OnKeyDown(int KeyCode)
+void CSampleKeyHander::OnKeyDown(int KeyCode) // khi đè phím
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+
+	if (KeyCode == DIK_ESCAPE)
+		DestroyWindow(hWnd); // thoát
+	//switch (KeyCode)
+	//{
+	//case DIK_RIGHT:
+	//	simon->Right();
+	//	simon->Go();
+	//	break;
+	//case DIK_LEFT:
+	//	simon->Left();
+	//	simon->Go();
+	//	break;
+ //
+	//}
+}
+
+void CSampleKeyHander::OnKeyUp(int KeyCode) // khi buông phím
+{
+	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+
+
+
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
-		mario->SetState(MARIO_STATE_JUMP);
-		break;
-	case DIK_A: // reset
-		mario->SetState(MARIO_STATE_IDLE);
-		mario->SetLevel(MARIO_LEVEL_BIG);
-		mario->SetPosition(50.0f,0.0f);
-		mario->SetSpeed(0, 0);
-		break;
-case DIK_Z: // reset 
- 		mario->SetLevel(MARIO_LEVEL_SMALL);
-		break;
+		//simon->Sit();
+		break; 
 	}
-}
-
-void CSampleKeyHander::OnKeyUp(int KeyCode)
-{
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 }
 
 void CSampleKeyHander::KeyState(BYTE *states)
 {
-	// disable control key when Mario die 
-	if (mario->GetState() == MARIO_STATE_DIE) return;
-	if (game->IsKeyDown(DIK_RIGHT))
-		mario->SetState(MARIO_STATE_WALKING_RIGHT);
-	else if (game->IsKeyDown(DIK_LEFT))
-		mario->SetState(MARIO_STATE_WALKING_LEFT);
+
+	if (game->IsKeyDown(DIK_DOWN))
+	{
+		simon->Stop();
+		simon->Sit();
+
+		if (game->IsKeyDown(DIK_RIGHT))
+			simon->Right();
+
+		if (game->IsKeyDown(DIK_LEFT))
+			simon->Left();
+
+		return;
+	}
 	else
-		mario->SetState(MARIO_STATE_IDLE);
+		simon->Stop();
+
+
+	if (game->IsKeyDown(DIK_RIGHT))
+	{
+		simon->Right();
+		simon->Go();
+	}
+	else
+		if (game->IsKeyDown(DIK_LEFT))
+		{
+			simon->Left();
+			simon->Go();
+		}
+		else
+		{
+			simon->Stop();
+		}
+		//DebugOut(L"ahihihihi\n");
+	// disable control key when Mario die 
+	//if (mario->GetState() == MARIO_STATE_DIE) return;
+	//if (game->IsKeyDown(DIK_RIGHT))
+	//	mario->SetState(MARIO_STATE_WALKING_RIGHT);
+	//else if (game->IsKeyDown(DIK_LEFT))
+	//	mario->SetState(MARIO_STATE_WALKING_LEFT);
+	//else
+	//	mario->SetState(MARIO_STATE_IDLE);
+
+
+
+
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -119,11 +171,30 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void LoadResources()
 {
 
-	SpritesManager * _spriteManager = SpritesManager::GetInstance();
-	_spriteManager->loadResource(); // load texture và các rect frame
-	 
+	simon = new Simon();
+
+	simon->SetPosition(50.0f, 0);
+	simon->SetPosition(0, 0);
+
+
+
+	objects.push_back(simon);
+
+
+	Brick * brick = new Brick(30, 300, 400, 32);
+	objects.push_back(brick);
+
+
+
+
 
 	
+
+	//SpritesManager * _spriteManager = SpritesManager::GetInstance();
+	//_spriteManager->loadResource(); // load texture và các rect frame
+	// 
+
+	//
 
 
 
@@ -222,14 +293,12 @@ void LoadResources()
 
 
 
-	mario = new Mario();
+//	mario = new Mario();
 
 
 
-
-
-	mario->SetPosition(50.0f, 0);
-	objects.push_back(mario);
+	//mario->SetPosition(50.0f, 0);
+	//objects.push_back(mario);
 
 
 	//// and Goombas 
@@ -273,7 +342,7 @@ void Update(DWORD dt)
 {
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
-	DebugOut(L"[DT] DT: %d\n", dt);
+//	DebugOut(L"[DT] DT: %d\n", dt);
  	vector<LPGAMEOBJECT> coObjects;
 	for (int i = 1; i < objects.size(); i++)
 	{
@@ -401,7 +470,8 @@ int Run()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
+	//HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
+	hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	game = Game::GetInstance();
 	game->Init(hWnd);
@@ -412,7 +482,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	LoadResources();
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

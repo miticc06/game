@@ -8,55 +8,55 @@
 
 Mario::Mario() : GameObject()
 {
-	level = MARIO_LEVEL_BIG;
-	untouchable = 0;
+	//level = MARIO_LEVEL_BIG;
+	//untouchable = 0;
 
 
-	Sprite* _sprite = SpritesManager::GetInstance()->getSprite(eID::MARIO); // get texture của eid 
-	 
+	//Sprite* _sprite = SpritesManager::GetInstance()->getSprite(eID::MARIO); // get texture của eid 
+	// 
 
-	//_animations[MARIO_ANI_BIG_IDLE_RIGHT] = new Animation(12, 13);
-
-
-	_animations[MARIO_ANI_BIG_IDLE_RIGHT] = new Animation(_sprite, 100); // Tạo Animation có texture là _sprite, mỗi frame chạy trong 100
-	_animations[MARIO_ANI_BIG_IDLE_RIGHT]->addFrameRect(eID::MARIO, "10001", NULL);
+	////_animations[MARIO_ANI_BIG_IDLE_RIGHT] = new Animation(12, 13);
 
 
-	_animations[MARIO_ANI_BIG_IDLE_LEFT] = new Animation(_sprite, 100);
-	_animations[MARIO_ANI_BIG_IDLE_LEFT]->addFrameRect(eID::MARIO, "10011",NULL);
- 
-
-	_animations[MARIO_ANI_SMALL_IDLE_RIGHT] = new Animation(_sprite, 100);
-	_animations[MARIO_ANI_SMALL_IDLE_RIGHT]->addFrameRect(eID::MARIO, "10021", NULL);
+	//_animations[MARIO_ANI_BIG_IDLE_RIGHT] = new Animation(_sprite, 100); // Tạo Animation có texture là _sprite, mỗi frame chạy trong 100
+	//_animations[MARIO_ANI_BIG_IDLE_RIGHT]->addFrameRect(eID::MARIO, "10001", NULL);
 
 
-	_animations[MARIO_ANI_SMALL_IDLE_LEFT] = new Animation(_sprite, 100);
-	_animations[MARIO_ANI_SMALL_IDLE_LEFT]->addFrameRect(eID::MARIO, "10031", NULL);
-   
+	//_animations[MARIO_ANI_BIG_IDLE_LEFT] = new Animation(_sprite, 100);
+	//_animations[MARIO_ANI_BIG_IDLE_LEFT]->addFrameRect(eID::MARIO, "10011",NULL);
+ //
 
-	_animations[MARIO_ANI_BIG_WALKING_RIGHT] = new Animation(_sprite, 100);
-	_animations[MARIO_ANI_BIG_WALKING_RIGHT]->addFrameRect(eID::MARIO, "10001","10002","10003", NULL);
-	 
-
-	_animations[MARIO_ANI_BIG_WALKING_LEFT] = new Animation(_sprite, 100);
-	_animations[MARIO_ANI_BIG_WALKING_LEFT]->addFrameRect(eID::MARIO, "10011", "10012", "10013", NULL);
-
-	 
-	_animations[MARIO_ANI_SMALL_WALKING_RIGHT] = new Animation(_sprite, 100);
-	_animations[MARIO_ANI_SMALL_WALKING_RIGHT]->addFrameRect(eID::MARIO, "10021", "10022", "10023", NULL);
-	 
-
-	_animations[MARIO_ANI_SMALL_WALKING_LEFT] = new Animation(_sprite, 100);
-	_animations[MARIO_ANI_SMALL_WALKING_LEFT]->addFrameRect(eID::MARIO, "10031", "10032", "10033", NULL);
+	//_animations[MARIO_ANI_SMALL_IDLE_RIGHT] = new Animation(_sprite, 100);
+	//_animations[MARIO_ANI_SMALL_IDLE_RIGHT]->addFrameRect(eID::MARIO, "10021", NULL);
 
 
-	_animations[MARIO_ANI_DIE] = new Animation(_sprite, 100);
-	_animations[MARIO_ANI_DIE]->addFrameRect(eID::MARIO, "10099", NULL);
+	//_animations[MARIO_ANI_SMALL_IDLE_LEFT] = new Animation(_sprite, 100);
+	//_animations[MARIO_ANI_SMALL_IDLE_LEFT]->addFrameRect(eID::MARIO, "10031", NULL);
+ //  
 
-	   
+	//_animations[MARIO_ANI_BIG_WALKING_RIGHT] = new Animation(_sprite, 100);
+	//_animations[MARIO_ANI_BIG_WALKING_RIGHT]->addFrameRect(eID::MARIO, "10001","10002","10003", NULL);
+	// 
 
-	 
-	 
+	//_animations[MARIO_ANI_BIG_WALKING_LEFT] = new Animation(_sprite, 100);
+	//_animations[MARIO_ANI_BIG_WALKING_LEFT]->addFrameRect(eID::MARIO, "10011", "10012", "10013", NULL);
+
+	// 
+	//_animations[MARIO_ANI_SMALL_WALKING_RIGHT] = new Animation(_sprite, 100);
+	//_animations[MARIO_ANI_SMALL_WALKING_RIGHT]->addFrameRect(eID::MARIO, "10021", "10022", "10023", NULL);
+	// 
+
+	//_animations[MARIO_ANI_SMALL_WALKING_LEFT] = new Animation(_sprite, 100);
+	//_animations[MARIO_ANI_SMALL_WALKING_LEFT]->addFrameRect(eID::MARIO, "10031", "10032", "10033", NULL);
+
+
+	//_animations[MARIO_ANI_DIE] = new Animation(_sprite, 100);
+	//_animations[MARIO_ANI_DIE]->addFrameRect(eID::MARIO, "10099", NULL);
+
+	//   
+
+	// 
+	// 
 
 
 
@@ -151,7 +151,7 @@ void Mario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void Mario::Render()
 {
-	int ani;
+	/*int ani;
 	if (state == MARIO_STATE_DIE)
 		ani = MARIO_ANI_DIE;
 	else
@@ -182,13 +182,13 @@ void Mario::Render()
 	if (untouchable) alpha = 128;
 	_animations[ani]->Render(x, y, alpha);
 
-	RenderBoundingBox();
+	RenderBoundingBox();*/
 }
 
 void Mario::SetState(int state)
 {
 	GameObject::SetState(state);
-
+/*
 	switch (state)
 	{
 	case MARIO_STATE_WALKING_RIGHT:
@@ -201,13 +201,14 @@ void Mario::SetState(int state)
 		break;
 	case MARIO_STATE_JUMP: 
 		vy = -MARIO_JUMP_SPEED_Y;
+
 	case MARIO_STATE_IDLE: 
 		vx = 0;
 		break;
 	case MARIO_STATE_DIE:
 		vy = -MARIO_DIE_DEFLECT_SPEED;
 		break;
-	}
+	}*/
 }
 
 void Mario::GetBoundingBox(float &left, float &top, float &right, float &bottom)

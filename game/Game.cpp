@@ -69,7 +69,13 @@ void Game::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top,
 void Game::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, int alpha)
 {
 	D3DXVECTOR3 p(x, y, 0);
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	spriteHandler->Draw(
+		texture, 
+		&r, 
+		NULL,
+		&p,
+		D3DCOLOR_ARGB(alpha, 255, 255, 255)
+	);
 }
 
 int Game::IsKeyDown(int KeyCode)

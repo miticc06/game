@@ -14,11 +14,16 @@ using namespace std;
 #define COLOR_BLACK D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)  
 #define COLOR_KEY D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f) 
 
+
+#define SHOWBOX_PINK 0
+
 // ID của Sprite, object
 enum eID
 {
-	MARIO,
-	BBOX
+	SIMON = 01,
+
+
+	BRICK = 21
 };
 
  enum eStatus
@@ -51,6 +56,58 @@ enum eDirection
 typedef D3DXVECTOR3 GVector3;
 typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)
+
+
+
+//
+//void GLTrace(char* format, ...)
+//{
+//	char *_traceFile = "C:\\Temp\\Sample_TH_game.log";
+//	int _traceNum = 1;
+//
+//	if (!_traceNum) return;
+//
+//	FILE *f = stderr;
+//	if (_traceFile != NULL)
+//	{
+//		if (fopen_s(&f, _traceFile, "a") != 0)
+//		{
+//			fprintf(stderr, "WARNING: Failed to open trace file '%s' for writing!\n", _traceFile);
+//			return;
+//		}
+//	}
+//	va_list ap;
+//	va_start(ap, format);
+//	fprintf(f, format, ap);
+//	va_end(ap);
+//	fprintf(f, "\n");
+//	if (_traceFile != NULL) fclose(f);
+//}
+//
+//void GLMessage(char* text)
+//{
+//	//	Game::GetInstance()->
+//		//MessageBoxA(G_hWnd, text, "Sample TH", MB_OK);
+//}
+//
+//void GLTitle(char* text) {
+//	//SetWindowTextA(G_hWnd, text);
+//}
+//
+//void OutDebug(const char * text)
+//{
+//	OutputDebugStringA(text);
+//	OutputDebugStringA("\n");
+//
+//}
+//
+
+
+
+
+
+
+
 
 #ifndef SAFE_DELETE
 

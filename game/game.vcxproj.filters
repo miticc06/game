@@ -22,6 +22,13 @@
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="GSprite.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="GTexture.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Simon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h" />
@@ -45,6 +52,13 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="GSprite.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="GTexture.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Simon.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -52,6 +66,9 @@
     </Filter>
     <Filter Include="Framework\Define">
       <UniqueIdentifier>{a4b56e58-ce8f-4290-a703-10207636f8c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{a1462d77-ab06-4dec-9408-86c35e4bab07}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

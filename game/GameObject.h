@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <Windows.h>
 #include <d3dx9.h>
@@ -8,7 +8,8 @@
 
 #include "define.h"
 #include "Animation.h"
-
+#include "GSprite.h"
+#include "GTexture.h"
 
 using namespace std;
 
@@ -42,6 +43,8 @@ class GameObject
 {
 public:
 
+	eID type; // Loại Object
+
 	float x; 
 	float y;
 
@@ -51,11 +54,15 @@ public:
 	float vx;
 	float vy;
 
-	int nx;	 
+	int trend;	// hướng -1 : trái, 1: phải
 
 	int state;
 
 	DWORD dt; 
+
+
+	GTexture * _texture;
+	GSprite * _sprite;
 
 	//vector<Animation *> _animations;
 
