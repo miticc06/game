@@ -33,6 +33,9 @@
       <Filter>Framework\Map</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="define.cpp">
+      <Filter>Framework\Define</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h" />

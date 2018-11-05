@@ -23,8 +23,18 @@ using namespace std;
 #define SCREEN_WIDTH 512
 #define SCREEN_HEIGHT 448
 
+ 
+ 
+
+extern int Window_Width;
+extern int Window_Height;
+
+extern int MapWidth;
+extern int MapHeight;
 
 
+extern int ScreenColumn;
+extern int ScreenRow;
 
 
 // ID của Sprite, object

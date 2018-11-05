@@ -44,21 +44,37 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	int index = _sprite->GetIndex();
 
-	if (isSitting == 1)
+	if (isSitting == true)
 	{
 		_sprite->SelectIndex(SIMON_ANI_SITTING);
 	}
 	else
-		if (isWalking == 1) // đang di chuyển
+		if (isWalking == true) // đang di chuyển
 		{
-			if (index < SIMON_ANI_BEGIN_WALKING || index >= SIMON_ANI_END_WALKING)
-				_sprite->SelectIndex(1);
+			if (isJumping == false) // ko nhảy
+			{
+				if (index < SIMON_ANI_BEGIN_WALKING || index >= SIMON_ANI_END_WALKING)
+					_sprite->SelectIndex(1);
 
-			//cập nhật frame mới
-			_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+				//cập nhật frame mới
+				_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+			}
+			else
+			{
+				_sprite->SelectIndex(SIMON_ANI_JUMPING);
+			}
+			
 		}
 		else
-			_sprite->SelectIndex(SiMON_ANI_IDLE);		// SIMON đứng yên
+			if (isJumping == true) // nếu ko đi mà chỉ nhảy
+			{
+				_sprite->SelectIndex(SIMON_ANI_JUMPING);
+			}
+			else
+			{
+				_sprite->SelectIndex(SiMON_ANI_IDLE);		// SIMON đứng yên
+
+			}
 
 	 
 	/* Update về sprite */
@@ -105,7 +121,11 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			vx = 0; // nếu mà nx, ny <>0  thì nó va chạm rồi. mà chạm rồi thì dừng vận tốc cho nó đừng chạy nữa
 	
 		if (ny != 0)
+		{
 			vy = 0;
+			isJumping = false; // kết thúc nhảy
+		}
+			
 
 		//// Collision logic with Goombas
 		//for (UINT i = 0; i < coEventsResult.size(); i++)

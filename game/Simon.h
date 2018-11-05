@@ -29,6 +29,8 @@
 
 #define SiMON_ANI_IDLE 0
 
+#define SIMON_ANI_JUMPING 4
+
 #define SIMON_ANI_SITTING 4
 
 
