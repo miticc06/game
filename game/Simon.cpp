@@ -142,6 +142,11 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 
+
+
+
+
+
 	if (isAttacking == true) //  update postion roi sau vì kiểm tra va chạm bên trên có thể khiến x,y của simon thay đổi, gây lệch vị trí roi với simon
 	{
 		if (_ListWeapon[0]->GetFinish() == false) // nếu MorningStar đang đánh
@@ -152,9 +157,10 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			_ListWeapon[0]->Update(dt);
 			if (_ListWeapon.size() == 1 && _ListWeapon[0]->GetFinish() == true) // code ngu, khi size>1 thì sao?
 				isAttacking = false;
-		}
 
-
+			_ListWeapon[0]->CollisionWithObject(dt, coObjects); // kiểm tra va chạm với các object khác
+			
+		} 
 	}
 	
 }

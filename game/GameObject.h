@@ -101,6 +101,7 @@ public:
 //	virtual void SetState(int state) { this->state = state; }
 	
 	int GetHealth();
+	void SubHealth(int th);
 	int GetHeight();
 	int GetWidth();
 	void SetTrend(int Trend);

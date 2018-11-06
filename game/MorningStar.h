@@ -7,6 +7,7 @@
 
 
 #include "Weapon.h"
+#include "GameObject.h"
 
 class MorningStar : public Weapon
 {
@@ -21,6 +22,9 @@ public:
 
 	void UpdatePositionFitSimon();
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+
+	void CollisionWithObject(DWORD dt, vector<LPGAMEOBJECT>* listObj);
+
 };
 
 

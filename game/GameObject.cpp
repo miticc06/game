@@ -145,6 +145,13 @@ int GameObject::GetHealth()
 	return Health;
 }
 
+void GameObject::SubHealth(int th)
+{
+	Health -= th;
+	if (Health < 0)
+		Health = 0;
+}
+
 int GameObject::GetHeight()
 {
 	return _texture->FrameHeight;

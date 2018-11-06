@@ -67,6 +67,8 @@ public:
 	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
 
+	bool AABBCheck(RECT b1, RECT b2); 
+
 	static Game * GetInstance();
 
 	~Game();
