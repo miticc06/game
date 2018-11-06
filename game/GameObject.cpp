@@ -132,7 +132,7 @@ void GameObject::RenderBoundingBox(Camera * camera)
 		rect.right = (int)r - (int)l;
 		rect.bottom = (int)b - (int)t;
 	
-		D3DXVECTOR2 pos = camera->Transform(x, y);
+		D3DXVECTOR2 pos = camera->Transform(l, t);
 
 		LPDIRECT3DTEXTURE9  _Texture = DebugRenderBBOX::GetInstance()->GetTexture();
 
