@@ -35,6 +35,8 @@
 #include "define.h"
 #include "Map.h"
 
+#include "Camera.h"
+
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"Game"
 
@@ -53,6 +55,7 @@ HWND hWnd;
 Game *game; 
 Simon * simon;
 Map * TileMap;
+Camera *camera;
 
 vector<LPGAMEOBJECT> objects;
 
@@ -184,6 +187,9 @@ void LoadResources()
 	simon = new Simon();
 	
 	TileMap = new Map();
+	camera = new Camera(Window_Width, Window_Height);
+	camera->SetPosition(0, 0);
+
 
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
 	simon->SetPosition(0, 0);
@@ -217,6 +223,8 @@ void Update(DWORD dt)
 		coObjects.push_back(objects[i]);
 	}
 
+	camera->SetPosition(simon->x, camera->GetViewport().y); // cho camera chạy theo simon
+
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt,&coObjects);
@@ -241,10 +249,10 @@ void Render()
 
 
 
-		TileMap->DrawMap();
+		TileMap->DrawMap(camera);
 
 		for (int i = 0; i < objects.size(); i++)
-			objects[i]->Render();
+			objects[i]->Render(camera);
 
 
 

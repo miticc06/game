@@ -37,6 +37,8 @@
 
 
 #include "GameObject.h"
+
+
 class Simon : public GameObject
 {
 public:
@@ -57,7 +59,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 
 
-	virtual void Render();
+	virtual void Render(Camera * camera);
 
 	void SetState(int state);
 

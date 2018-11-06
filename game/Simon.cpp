@@ -170,19 +170,20 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		delete coEvents[i];
 }
 
-void Simon::Render()
+void Simon::Render(Camera* camera)
 { 
 
-
+	D3DXVECTOR2 pos = camera->Transform(x, y);
 
 
 	if (trend == -1)
-		_sprite->Draw(x, y);
+		_sprite->Draw(pos.x, pos.y);
 	else
-		_sprite->DrawFlipX(x, y);
+		_sprite->DrawFlipX(pos.x, pos.y);
 	 
 
-}
+} 
+
 
 void Simon::SetState(int state)
 {
@@ -221,6 +222,7 @@ void Simon::Go()
 {
 	vx = SIMON_WALKING_SPEED * trend;
 	isWalking = 1;
+	
 }
 
 void Simon::Sit()

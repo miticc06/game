@@ -8,6 +8,8 @@
 #include "GSprite.h"
 #include "define.h"
 
+#include "Camera.h"
+
 #include <fstream>
 #include <iostream>
 
@@ -42,7 +44,7 @@ public:
 	~Map();
 	void LoadMap();
 	void ReadMapTXT(char * filename);
-	void DrawMap();
+	void DrawMap(Camera * camera);
 
 };
 
