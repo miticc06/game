@@ -159,6 +159,8 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Simon::Render(Camera* camera)
 { 
+	if (IS_DEBUG_RENDER_BBOX)
+		RenderBoundingBox(camera);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	 

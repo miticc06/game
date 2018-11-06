@@ -9,6 +9,7 @@
 #include "GSprite.h"
 #include "GTexture.h"
 #include "Camera.h"
+#include "DebugRenderBBOX.h"
 
 using namespace std;
 
@@ -78,7 +79,7 @@ public:
 
 	//int GetState() { return this->state; }
 
-	void RenderBoundingBox();
+	void RenderBoundingBox(Camera * camera);
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT> *coObjects, vector<LPCOLLISIONEVENT> &coEvents);

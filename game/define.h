@@ -24,9 +24,10 @@ using namespace std;
 #define SCREEN_WIDTH 512
 #define SCREEN_HEIGHT 448
 
- 
- 
 
+#define IS_DEBUG_RENDER_BBOX 1
+ 
+ 
 extern int Window_Width;
 extern int Window_Height;
 

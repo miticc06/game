@@ -1,5 +1,5 @@
 #include "define.h"
-
+#include "GTexture.h"
 
 
 
@@ -12,3 +12,4 @@ int MapHeight;
 
 int ScreenColumn;
 int ScreenRow;
+

@@ -3,9 +3,6 @@
   <ItemGroup>
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Mario.cpp" />
-    <ClCompile Include="debug.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -27,9 +24,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Torch.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Framework\Grid</Filter>
     </ClCompile>
@@ -45,14 +39,22 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Object\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="MorningStar.cpp" />
+    <ClCompile Include="Torch.cpp">
+      <Filter>Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="MorningStar.cpp">
+      <Filter>Object\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Framework\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugRenderBBOX.cpp">
+      <Filter>Framework\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Mario.h" />
-    <ClInclude Include="debug.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="define.h">
       <Filter>Framework\Define</Filter>
     </ClInclude>
@@ -71,9 +73,6 @@
     <ClInclude Include="Game.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Torch.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Framework\Grid</Filter>
     </ClInclude>
@@ -89,7 +88,18 @@
     <ClInclude Include="Weapon.h">
       <Filter>Object\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="MorningStar.h" />
+    <ClInclude Include="Torch.h">
+      <Filter>Object\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="MorningStar.h">
+      <Filter>Object\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Framework\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugRenderBBOX.h">
+      <Filter>Framework\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -121,6 +131,9 @@
     </Filter>
     <Filter Include="Object\Weapon">
       <UniqueIdentifier>{444901f6-5fb3-4466-b1ab-576f361cdd1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Debug">
+      <UniqueIdentifier>{dfb43383-ef23-4a2b-ba06-790f57a296f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

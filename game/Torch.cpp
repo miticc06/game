@@ -34,6 +34,12 @@ void Torch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Torch::Render(Camera * camera)
 { 
+
+	if (IS_DEBUG_RENDER_BBOX)
+		RenderBoundingBox(camera);
+
 	D3DXVECTOR2 pos = camera->Transform(x, y); 
 	_sprite->Draw(pos.x, pos.y); 
+
+
 }
