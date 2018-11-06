@@ -69,6 +69,12 @@ void CSampleKeyHander::OnKeyDown(int KeyCode) // khi đè phím
 	{
 		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x+10, simon->y);
 	}
+
+	if (KeyCode == DIK_X)
+	{
+		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
+		simon->Attack(simon->_ListWeapon[0]);
+	}
  
 }
 
@@ -168,7 +174,7 @@ void LoadResources()
 	simon->SetPosition(0, 0);
 	 
 	 
-	gridGame = new Grid;
+	gridGame = new Grid();
 	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
  
 

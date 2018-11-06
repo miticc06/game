@@ -30,9 +30,6 @@
     <ClCompile Include="Torch.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Simon.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Framework\Grid</Filter>
     </ClCompile>
@@ -42,6 +39,13 @@
     <ClCompile Include="GSprite.cpp">
       <Filter>Framework\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Simon.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Object\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="MorningStar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -70,9 +74,6 @@
     <ClInclude Include="Torch.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Simon.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Framework\Grid</Filter>
     </ClInclude>
@@ -82,6 +83,13 @@
     <ClInclude Include="GSprite.h">
       <Filter>Framework\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="Simon.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Object\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="MorningStar.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -110,6 +118,9 @@
     </Filter>
     <Filter Include="Framework\Animation">
       <UniqueIdentifier>{860a8b8a-e5f8-409f-ba75-74bfa582b643}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Weapon">
+      <UniqueIdentifier>{444901f6-5fb3-4466-b1ab-576f361cdd1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

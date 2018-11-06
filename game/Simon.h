@@ -37,7 +37,8 @@
 
 
 #include "GameObject.h"
-
+#include "Weapon.h"
+#include "MorningStar.h"
 
 class Simon : public GameObject
 {
@@ -46,7 +47,9 @@ public:
 	bool isWalking;
 	bool isJumping;
 	bool isSitting;
+	bool isAttacking;
 
+	vector<Weapon*> _ListWeapon;
 
 public:
 	Simon();
@@ -72,6 +75,9 @@ public:
 	void Stop();
 
 	void CollisionWithBrick(vector<LPGAMEOBJECT> *coObjects = NULL);
+
+	void Attack(Weapon *w);
+
 
 };
 

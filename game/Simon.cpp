@@ -11,8 +11,12 @@ Simon::Simon()
 	isWalking = 0;
 	isJumping = 0;
 	isSitting = 0;
+	isAttacking = 0;
 
 	Health = 16; // simon dính 16 phát là chết
+
+	_ListWeapon.clear();
+	_ListWeapon.push_back(new MorningStar());
 }
 
 
@@ -41,7 +45,6 @@ void Simon::GetBoundingBox(float & left, float & top, float & right, float & bot
 
 void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 { 
-
 	/* Không cho lọt khỏi camera */
 	if (x < -10)
 		x = -10;
@@ -88,9 +91,10 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	/* Update về sprite */
 
 
+	
 
 
-
+	
 
 
 
@@ -106,7 +110,24 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CollisionWithBrick(&coObjects_Brick); // check Collision and update x, y for simon
 
 
- 
+
+
+
+	if (isAttacking == true) //  update postion roi sau vì kiểm tra va chạm bên trên có thể khiến x,y của simon thay đổi, gây lệch vị trí roi với simon
+	{
+		if (_ListWeapon[0]->GetFinish() == false) // nếu MorningStar đang đánh
+		{
+			_ListWeapon[0]->SetPosition(this->x, this->y);
+			_ListWeapon[0]->UpdatePositionFitSimon();
+
+			_ListWeapon[0]->Update(dt);
+			if (_ListWeapon.size() == 1 && _ListWeapon[0]->GetFinish() == true) // code ngu, khi size>1 thì sao?
+				isAttacking = false;
+		}
+
+
+	}
+	
 }
 
 void Simon::Render(Camera* camera)
@@ -119,6 +140,11 @@ void Simon::Render(Camera* camera)
 	else
 		_sprite->DrawFlipX(pos.x, pos.y);
 	 
+	for (int i=0; i<_ListWeapon.size(); i++)
+		if (_ListWeapon[i]->GetFinish() == false)
+		{ 
+			_ListWeapon[i]->Draw(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
+		}
 	 
 } 
  
@@ -254,4 +280,13 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
+}
+
+void Simon::Attack(Weapon * w)
+{ 
+	if (isAttacking == true) // đang tấn công thì bỏ qua
+		return;
+
+	isAttacking = true; // set trang thái tấn công
+	w->Create(this->x, this->y, this->trend); // set vị trí weapon theo simon
 }
