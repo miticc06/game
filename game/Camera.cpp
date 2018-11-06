@@ -4,32 +4,42 @@
   
 
 
-Camera::Camera(float w, float h)
+Camera::Camera(int w, int h/*, int b_left, int b_right*/)
 {
 	_width = w;
 	_height = h;
-
-
+	/*_borderLeft = b_left;
+	_borderRight = b_right; */
 }
 
 Camera::~Camera()
 {
 }
 
+void Camera::Update()
+{
+	if (_viewport.x < 0)
+		_viewport.x = 0;
+
+	if (_viewport.x > MapWidth - Window_Width)
+		_viewport.x = MapWidth - Window_Width; 
+
+}
+
 D3DXVECTOR2 Camera::Transform(int x, int y)
 {
-	return D3DXVECTOR2(x - viewport.x, y -viewport.y);
+	return D3DXVECTOR2(x - _viewport.x, y - _viewport.y);
 }
 
 void Camera::SetPosition(int x, int y)
 {
-	viewport.x = x;
-	viewport.y = y;
+	_viewport.x = x;
+	_viewport.y = y;
 }
  
 
 D3DXVECTOR2 Camera::GetViewport()
 {
-	return viewport;
+	return _viewport;
 }
  

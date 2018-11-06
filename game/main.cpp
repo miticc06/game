@@ -187,7 +187,7 @@ void LoadResources()
 	simon = new Simon();
 	
 	TileMap = new Map();
-	camera = new Camera(Window_Width, Window_Height);
+	camera = new Camera(Window_Width, Window_Height/*, Window_Width/2, MapWidth - Window_Width / 2*/);
 	camera->SetPosition(0, 0);
 
 
@@ -223,7 +223,8 @@ void Update(DWORD dt)
 		coObjects.push_back(objects[i]);
 	}
 
-	camera->SetPosition(simon->x, camera->GetViewport().y); // cho camera chạy theo simon
+	camera->SetPosition(simon->x - Window_Width/2 + 30, camera->GetViewport().y ); // cho camera chạy theo simon
+	camera->Update();
 
 	for (int i = 0; i < objects.size(); i++)
 	{

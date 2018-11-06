@@ -38,7 +38,7 @@ void Map::ReadMapTXT(char * filename)
 
 	if (fileIn)
 	{
-		fileIn >> RowMatrix >> ColumnMatrix >> ColTile >> RowTile >> CountTileFrame;
+		fileIn >> RowMatrix >> ColumnMatrix >> ColTile >> RowTile >> CountTileFrame >> AutoFit;
  		for (int i = 0; i < RowMatrix; i++)
 		{
 			for (int j = 0; j < ColumnMatrix; j++)
@@ -48,10 +48,7 @@ void Map::ReadMapTXT(char * filename)
 		}
 		fileIn.close(); 
 	} 
-
-
-
-
+	  
  
 }
 
@@ -75,31 +72,28 @@ void Map::DrawMap(Camera *camera)
 		}
 	}
  */
-	int AutoFit = 64;
-
+ 
 
 	row = int(camera->GetViewport().y) / TileTexture->FrameHeight;
-	column = int(camera->GetViewport().x) / TileTexture->FrameHeight ;
+	column = int(camera->GetViewport().x) / TileTexture->FrameHeight;
 
 	x = -(int(camera->GetViewport().x) % TileTexture->FrameHeight);
 	y = -(int(camera->GetViewport().y) % TileTexture->FrameHeight);
 
 	for (int i = 0; i < ScreenRow; i++)
-	{
-		//if (y + TileTexture->FrameWidth * i >=  AutoFit)
+	{ 
 		{
-			for (int j = 0; j < ScreenColumn +1; j++)
+			for (int j = 0; j < ScreenColumn +1; j++) // ngay đây dư 1 nên... pla pla..
 			{
-			//	if ((RowMatrix - row + i >= 0) && (RowMatrix - row + i <= RowMatrix))
-				{
+				if (!(row + i < 0 || row + i>RowMatrix || j + column < 0 || j + column > ColumnMatrix))
+ 				{
 					TileSprite->SelectIndex(TileMap[row + i][column + j]);
-					TileSprite->DrawRaw(x + TileTexture->FrameWidth*j, y + TileTexture->FrameHeight*i);
-					//x = x + TileTexture->FrameHeight;
-				}
+					TileSprite->DrawRaw(x + TileTexture->FrameWidth*j, y + TileTexture->FrameHeight*i +AutoFit);
+ 				}
 			}
 		}
-		//y = y + TileTexture->FrameHeight;
-	//	x = -int(camera->GetViewport().x) % TileTexture->FrameHeight;
-	}
+ 	}
  
 }
+
+//tong qan nn wsml , dinh nghiax vaf cac thanh phan, so sanh wsml voi 

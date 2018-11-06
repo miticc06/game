@@ -8,9 +8,6 @@
     <ClCompile Include="debug.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -36,6 +33,9 @@
     <ClCompile Include="define.cpp">
       <Filter>Framework\Define</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h" />
@@ -43,9 +43,6 @@
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="debug.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h" />
@@ -70,6 +67,9 @@
       <Filter>Framework\Map</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GameObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -86,6 +86,9 @@
     </Filter>
     <Filter Include="Framework\Camera">
       <UniqueIdentifier>{d94051ad-a4c4-4685-aff1-7168095dc6f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{07c8ee41-a12d-4074-ab7a-94fdc80360be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

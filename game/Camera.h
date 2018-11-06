@@ -6,16 +6,18 @@
 class Camera
 {
 protected:
-	D3DXVECTOR2 viewport;
+	D3DXVECTOR2 _viewport;
 	int _width;
 	int _height;
 
+	int _borderLeft;
+	int _borderRight;
 
 public:
-	Camera(float w, float h);
+	Camera(int w, int h/*, int b_left, int b_right*/);
 	~Camera();
 	 
-
+	void Update();
 
 	D3DXVECTOR2 Transform(int x, int y);
 

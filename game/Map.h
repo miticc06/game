@@ -33,6 +33,8 @@ private:
 	int RowTile;// số lượng dòng tile trong texture
 	int CountTileFrame; // tổng số lương tile trong texture 
 	int TileMap[500][500];
+	int AutoFit;
+
 
 	int row; // dòng hiện tại camera đang đứng
 	int column; //cột hiện tại camera đang đứng

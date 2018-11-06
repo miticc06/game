@@ -39,7 +39,15 @@ void Simon::GetBoundingBox(float & left, float & top, float & right, float & bot
 }
 
 void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
+{ 
+
+	/* Không cho lọt khỏi camera */
+	if (x < -10)
+		x = -10;
+	if (x + SIMON_BBOX_WIDTH > MapWidth)
+		x = MapWidth - SIMON_BBOX_WIDTH;
+
+
 	/* Update về sprite */
 
 	int index = _sprite->GetIndex();
