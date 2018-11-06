@@ -5,13 +5,13 @@
 #include "debug.h" 
 #include "Game.h"
 #include "GameObject.h"
-#include "Sprite.h"
- 
+  
 GameObject::GameObject()
 {
 	x = y = 0;
 	vx = vy = 0;
 	trend = 1;	
+	Health = 1;  // Alive
 }
 
 void GameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -138,7 +138,33 @@ void GameObject::RenderBoundingBox()
 }
 
 
+int GameObject::GetHealth()
+{
+	return Health;
+}
+
+int GameObject::GetHeight()
+{
+	return _texture->FrameHeight;
+}
+
+int GameObject::GetWidth()
+{
+	return _texture->FrameWidth;
+}
+
+void GameObject::SetTrend(int Trend)
+{
+	trend = Trend;
+}
+
+void GameObject::SetId(int ID)
+{ 
+	this->id = ID;
+}
+
 GameObject::~GameObject()
 {
-
+	SAFE_DELETE(_texture);
+	SAFE_DELETE(_sprite);
 }

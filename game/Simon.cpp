@@ -12,6 +12,7 @@ Simon::Simon()
 	isJumping = 0;
 	isSitting = 0;
 
+	Health = 16; // simon dính 16 phát là chết
 }
 
 
@@ -182,14 +183,13 @@ void Simon::Render(Camera* camera)
 { 
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
-
-
+	 
 	if (trend == -1)
 		_sprite->Draw(pos.x, pos.y);
 	else
 		_sprite->DrawFlipX(pos.x, pos.y);
 	 
-
+	 
 } 
 
 

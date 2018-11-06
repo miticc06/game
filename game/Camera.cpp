@@ -42,4 +42,14 @@ D3DXVECTOR2 Camera::GetViewport()
 {
 	return _viewport;
 }
+
+int Camera::GetWidth()
+{
+	return _width;
+}
+
+int Camera::GetHeight()
+{
+	return _height;
+}
  

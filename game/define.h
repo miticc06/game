@@ -5,7 +5,8 @@
 
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <map> 
+#include <map>
+#include "debug.h"
 using namespace std;
 
 #define WINDOW_WIDTH 512
@@ -43,24 +44,14 @@ enum eID
 	SIMON = 01,
 
 
-	BRICK = 21
-};
 
- enum eStatus
-{
-	NORMAL = 0,
-	MOVING_LEFT = (1 << 0),		//00000001
-	MOVING_RIGHT = (1 << 1),	//00000010
-	JUMPING = (1 << 2),			//00000100
-	FALLING = (1 << 3),			//00001000
-	RUNNING = (1 << 4),			//00010000
-	LOOKING_UP = (1 << 5),
-	ROLLING_DOWN = (1 << 6),
-	ATTACKING = (1 << 7),
-	DIE = (1 << 8),
-	DESTROY = (1 << 9)
-};
+	BRICK = 21,
 
+
+
+	TORCH = 41
+};
+ 
  
 enum eDirection
 {

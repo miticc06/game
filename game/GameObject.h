@@ -3,11 +3,9 @@
 #include <Windows.h>
 #include <d3dx9.h>
 #include <vector>
-
-#include "Sprite.h"
+ 
 
 #include "define.h"
-#include "Animation.h"
 #include "GSprite.h"
 #include "GTexture.h"
 #include "Camera.h"
@@ -42,7 +40,12 @@ struct CollisionEvent
 
 class GameObject
 {
+protected:
+	int Health;
+
+
 public:
+	int id; // ID của object
 
 	eID type; // Loại Object
 
@@ -56,26 +59,24 @@ public:
 	float vy;
 
 	int trend;	// hướng -1 : trái, 1: phải
-
-	int state;
+	
+	//int state;
 
 	DWORD dt; 
 
 
 	GTexture * _texture;
 	GSprite * _sprite;
-
-	//vector<Animation *> _animations;
-
-	map<int, Animation*> _animations;
-
+	
+	bool isTake;
+ 
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
-	int GetState() { return this->state; }
+	//int GetState() { return this->state; }
 
 	void RenderBoundingBox();
 
@@ -96,7 +97,17 @@ public:
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera) = 0;
-	virtual void SetState(int state) { this->state = state; }
+//	virtual void SetState(int state) { this->state = state; }
+	
+	int GetHealth();
+	int GetHeight();
+	int GetWidth();
+	void SetTrend(int Trend);
+	void SetId(int ID);
+
+
+
+
 
 
 	~GameObject();

@@ -10,8 +10,8 @@ protected:
 	int _width;
 	int _height;
 
-	int _borderLeft;
-	int _borderRight;
+	/*int _borderLeft;
+	int _borderRight;*/
 
 public:
 	Camera(int w, int h/*, int b_left, int b_right*/);
@@ -25,6 +25,8 @@ public:
 
 	D3DXVECTOR2 GetViewport();
 
+	int GetWidth();
+	int GetHeight();
 
 };
 

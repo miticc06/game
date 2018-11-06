@@ -78,9 +78,9 @@ void Mario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	coEvents.clear();
 
 	// turn off collision when die 
-	if (state!=MARIO_STATE_DIE)
+	/*if (state!=MARIO_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
-
+*/
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
@@ -119,17 +119,17 @@ void Mario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				// jump on top >> kill Goomba and deflect a bit 
 				if (e->ny < 0)
 				{
-					if (goomba->GetState()!= GOOMBA_STATE_DIE)
+					/*if (goomba->GetState()!= GOOMBA_STATE_DIE)
 					{
 						goomba->SetState(GOOMBA_STATE_DIE);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
-					}
+					}*/
 				}
 				else if (e->nx != 0)
 				{
 					if (untouchable==0)
 					{
-						if (goomba->GetState()!=GOOMBA_STATE_DIE)
+						/*if (goomba->GetState()!=GOOMBA_STATE_DIE)
 						{
 							if (level > MARIO_LEVEL_SMALL)
 							{
@@ -138,7 +138,7 @@ void Mario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							}
 							else 
 								SetState(MARIO_STATE_DIE);
-						}
+						}*/
 					}
 				}
 			}
@@ -187,7 +187,7 @@ void Mario::Render()
 
 void Mario::SetState(int state)
 {
-	GameObject::SetState(state);
+	//GameObject::SetState(state);
 /*
 	switch (state)
 	{

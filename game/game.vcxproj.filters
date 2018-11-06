@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Brick.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="debug.cpp">
@@ -11,64 +9,78 @@
     <ClCompile Include="main.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="SpritesManager.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="GSprite.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="GTexture.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Map.cpp">
       <Filter>Framework\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="define.cpp">
       <Filter>Framework\Define</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Framework\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Torch.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Simon.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Framework\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="GTexture.cpp">
+      <Filter>Framework\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="GSprite.cpp">
+      <Filter>Framework\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Brick.h" />
-    <ClInclude Include="Game.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="debug.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="define.h">
       <Filter>Framework\Define</Filter>
     </ClInclude>
-    <ClInclude Include="SpritesManager.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="GSprite.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="GTexture.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="Simon.h" />
     <ClInclude Include="Map.h">
       <Filter>Framework\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="GameObject.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Framework\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Object\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Torch.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Simon.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Framework\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="GTexture.h">
+      <Filter>Framework\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="GSprite.h">
+      <Filter>Framework\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +101,15 @@
     </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{07c8ee41-a12d-4074-ab7a-94fdc80360be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Ground">
+      <UniqueIdentifier>{72083239-6ae6-4d0a-951d-8f493ec85e3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Grid">
+      <UniqueIdentifier>{04c0e51c-83d1-4f59-8c3a-73884ce3fddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Animation">
+      <UniqueIdentifier>{860a8b8a-e5f8-409f-ba75-74bfa582b643}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

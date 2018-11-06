@@ -1,24 +1,4 @@
-﻿/* =============================================================
-	INTRODUCTION TO GAME PROGRAMMING SE102
-	
-	SAMPLE 04 - COLLISION
-
-	This sample illustrates how to:
-
-		1/ Implement SweptAABB algorithm between moving objects
-		2/ Implement a simple (yet effective) collision frame work
-
-	Key functions: 
-		Game::SweptAABB
-		GameObject::SweptAABBEx
-		GameObject::CalcPotentialCollisions
-		GameObject::FilterCollision
-
-		GameObject::GetBoundingBox
-		
-================================================================ */
-
-#include <windows.h>
+﻿#include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 
@@ -34,30 +14,31 @@
 #include "Simon.h"
 #include "define.h"
 #include "Map.h"
-
 #include "Camera.h"
+#include "Grid.h"
 
-#define WINDOW_CLASS_NAME L"SampleWindow"
+
+#define WINDOW_CLASS_NAME L"Game"
 #define MAIN_WINDOW_TITLE L"Game"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
 
 #define MAX_FRAME_RATE 60
 
-#define ID_TEX_MARIO 0
-#define ID_TEX_ENEMY 10
-#define ID_TEX_MISC 20
-
 
  
 HWND hWnd;
 
 Game *game; 
+
 Simon * simon;
 Map * TileMap;
 Camera *camera;
+Grid * gridGame;
 
-vector<LPGAMEOBJECT> objects;
+vector<LPGAMEOBJECT> ListObj;
+
+
 
 class CSampleKeyHander: public KeyEventHandler
 {
@@ -82,21 +63,13 @@ void CSampleKeyHander::OnKeyDown(int KeyCode) // khi đè phím
 	{
 		if (simon->isJumping== false)
 			simon->Jump();
-	
 	}
 
-	//switch (KeyCode)
-	//{
-	//case DIK_RIGHT:
-	//	simon->Right();
-	//	simon->Go();
-	//	break;
-	//case DIK_LEFT:
-	//	simon->Left();
-	//	simon->Go();
-	//	break;
- //
-	//}
+	if (KeyCode == DIK_1)
+	{
+		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x+10, simon->y);
+	}
+ 
 }
 
 void CSampleKeyHander::OnKeyUp(int KeyCode) // khi buông phím
@@ -193,15 +166,11 @@ void LoadResources()
 
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
 	simon->SetPosition(0, 0);
-
-
-
-	objects.push_back(simon);
-
-
-	Brick * brick = new Brick(0, 320, 1536, 32);
-	objects.push_back(brick);
-
+	 
+	 
+	gridGame = new Grid;
+	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
+ 
 
 
 	 
@@ -214,21 +183,18 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
-//	DebugOut(L"[DT] DT: %d\n", dt);
- 	vector<LPGAMEOBJECT> coObjects;
-	for (int i = 1; i < objects.size(); i++)
-	{
-		coObjects.push_back(objects[i]);
-	}
+ //	DebugOut(L"[DT] DT: %d\n", dt);
+ 
 
+	gridGame->GetListObject(ListObj, camera); // lấy hết các object trong vùng camera;
+
+	simon->Update(dt, &ListObj);
 	camera->SetPosition(simon->x - Window_Width/2 + 30, camera->GetViewport().y ); // cho camera chạy theo simon
 	camera->Update();
 
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 0; i < ListObj.size(); i++)
 	{
-		objects[i]->Update(dt,&coObjects);
+		ListObj[i]->Update(dt,&ListObj);
 	}
 }
 
@@ -245,17 +211,18 @@ void Render()
 	{
 		// Clear back buffer with a color
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
-
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 
 
 		TileMap->DrawMap(camera);
 
-		for (int i = 0; i < objects.size(); i++)
-			objects[i]->Render(camera);
 
 
+		for (int i = 0; i < ListObj.size(); i++)
+			ListObj[i]->Render(camera);
+
+		simon->Render(camera);
 
 
 		spriteHandler->End();

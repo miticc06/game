@@ -6,10 +6,10 @@ void Goomba::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	top = y;
 	right = x + GOOMBA_BBOX_WIDTH;
 
-	if (state == GOOMBA_STATE_DIE)
-		bottom = y + GOOMBA_BBOX_HEIGHT_DIE;
-	else 	
-		bottom = y + GOOMBA_BBOX_HEIGHT;
+	//if (state == GOOMBA_STATE_DIE)
+	//	bottom = y + GOOMBA_BBOX_HEIGHT_DIE;
+	//else 	
+	//	bottom = y + GOOMBA_BBOX_HEIGHT;
 }
 
 void Goomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -38,18 +38,18 @@ void Goomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void Goomba::Render()
 {
-	int ani = GOOMBA_ANI_WALKING;
-	if (state == GOOMBA_STATE_DIE) {
-		ani = GOOMBA_ANI_DIE;
-	}
+	//int ani = GOOMBA_ANI_WALKING;
+	//if (state == GOOMBA_STATE_DIE) {
+	//	ani = GOOMBA_ANI_DIE;
+	//}
 
-	_animations[ani]->Render(x,y);
+	//_animations[ani]->Render(x,y);
 	//RenderBoundingBox();
 }
 
 void Goomba::SetState(int state)
 {
-	GameObject::SetState(state);
+	//GameObject::SetState(state);
 	switch (state)
 	{
 		case GOOMBA_STATE_DIE:
