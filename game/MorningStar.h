@@ -20,7 +20,7 @@ public:
 	void Create(float simonX, float simonY, int simonTrend); 
 
 	void UpdatePositionFitSimon();
-
+	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 };
 
 

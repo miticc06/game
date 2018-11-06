@@ -5,7 +5,7 @@
 #include "Camera.h"
 #include "GTexture.h"
 #include "GSprite.h"
-
+#include "DebugRenderBBOX.h"
 class Weapon
 {
 protected:
@@ -36,8 +36,14 @@ public:
  	virtual void Draw(Camera *camera);
 
 
+
 	virtual void SetPosition(float X, float Y);
 	virtual void UpdatePositionFitSimon();
+
+
+	void RenderBoundingBox(Camera * camera);
+	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
+
 	int GetFinish();
 
 	void SetFinish(bool b);

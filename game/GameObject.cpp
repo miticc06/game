@@ -122,8 +122,7 @@ void GameObject::FilterCollision(
 void GameObject::RenderBoundingBox(Camera * camera)
 { 
 		RECT rect;
-		 
- 	
+		  
 		float l,t,r,b; 
 	
 		GetBoundingBox(l, t, r, b);
