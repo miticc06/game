@@ -75,6 +75,19 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			_sprite->SelectIndex(SIMON_ANI_SITTING);
 	}
 	else
+		if (isAttacking == true)
+		{
+			if (index < SIMON_ANI_STANDING_ATTACKING_BEGIN || index >= SIMON_ANI_STANDING_ATTACKING_END)
+			{
+				_sprite->SelectIndex(SIMON_ANI_STANDING_ATTACKING_BEGIN);
+			}
+			else
+			{
+				//cập nhật frame mới
+				_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+			}
+		}
+		else
 		if (isWalking == true) // đang di chuyển
 		{
 			if (isJumping == false) // ko nhảy
@@ -175,6 +188,9 @@ void Simon::Right()
 
 void Simon::Go()
 {
+	if (isAttacking == true)
+		return;
+
 	vx = SIMON_WALKING_SPEED * trend;
 	isWalking = 1;
 	
@@ -193,20 +209,32 @@ void Simon::Sit()
 
 void Simon::Jump()
 {
+	if (isJumping == true)
+		return;
+
 	if (isSitting == true)
 		return;
+	if (isAttacking == true)
+		return;
+	
+
 	vy -= SIMON_VJUMP;
 	isJumping = true;
 }
 
 void Simon::Stop()
 {
-	if (vx!=0)
-		vx -= dt*SIMON_GRAVITY*0.1*trend;
-	if (trend == 1 && vx < 0) 
-		vx = 0;
-	if (trend == -1 && vx > 0) 
-		vx = 0;
+	if (isAttacking == true)
+		return;
+
+	vx = 0;
+
+	//if (vx!=0)
+	//	vx -= dt*SIMON_GRAVITY*0.1*trend;
+	//if (trend == 1 && vx < 0) 
+	//	vx = 0;
+	//if (trend == -1 && vx > 0) 
+	//	vx = 0;
 	// tóm lại là vx = 0 :v
 
 

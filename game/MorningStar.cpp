@@ -59,11 +59,11 @@ void MorningStar::UpdatePositionFitSimon()
 {
 	if (trend == -1)
 	{
-		this->x = x - 76;
+		this->x = x - 65;
 		
 	}
 	else
 	{
-		this->x = x - 25;
+		this->x = x - 30;
 	}
 }

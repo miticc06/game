@@ -60,8 +60,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode) // khi đè phím
 		simon->SetPosition(SIMON_POSITION_DEFAULT);
 	
 	if (KeyCode == DIK_SPACE)
-	{
-		if (simon->isJumping== false)
+	{ 
 			simon->Jump();
 	}
 
