@@ -5,7 +5,7 @@
 Simon::Simon()
 {
 	_texture = new GTexture("Resources\\simon.png", 8, 3, 24, SHOWBOX_PINK);
-	_sprite = new GSprite(_texture, 100);
+	_sprite = new GSprite(_texture, 250);
 	type = eID::SIMON;
 
 	isWalking = 0;
@@ -50,6 +50,7 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x = -10;
 	if (x + SIMON_BBOX_WIDTH > MapWidth)
 		x = MapWidth - SIMON_BBOX_WIDTH;
+	/* Không cho lọt khỏi camera */
 
 
 	/* Update về sprite */
@@ -58,15 +59,28 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (isSitting == true)
 	{
-		_sprite->SelectIndex(SIMON_ANI_SITTING);
+		if (isAttacking == true) // tấn công
+		{
+			if (index < SIMON_ANI_SITTING_ATTACKING_BEGIN || index >= SIMON_ANI_SITTING_ATTACKING_END)
+			{
+				_sprite->SelectIndex(SIMON_ANI_SITTING_ATTACKING_BEGIN);
+			}
+			else
+			{
+				//cập nhật frame mới
+				_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+			} 
+		}
+		else
+			_sprite->SelectIndex(SIMON_ANI_SITTING);
 	}
 	else
 		if (isWalking == true) // đang di chuyển
 		{
 			if (isJumping == false) // ko nhảy
 			{
-				if (index < SIMON_ANI_BEGIN_WALKING || index >= SIMON_ANI_END_WALKING)
-					_sprite->SelectIndex(1);
+				if (index < SIMON_ANI_WALKING_BEGIN || index >= SIMON_ANI_WALKING_END)
+					_sprite->SelectIndex(SIMON_ANI_WALKING_BEGIN);
 
 				//cập nhật frame mới
 				_sprite->Update(dt); // dt này được cập nhật khi gọi update; 

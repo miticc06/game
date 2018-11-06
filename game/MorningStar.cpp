@@ -5,7 +5,7 @@
 MorningStar::MorningStar()
 {
 	_texture = new GTexture("Resources\\weapon\\morningstar.png", 4, 3, 12, 0);
-	_sprite = new GSprite(_texture, 100);
+	_sprite = new GSprite(_texture, 90);
 	this->level = 0;
 }
 
