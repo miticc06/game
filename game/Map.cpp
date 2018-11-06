@@ -16,7 +16,7 @@ void Map::LoadMap()
 {
 	ReadMapTXT("Resources/map/1.txt");
 	TileTexture = new GTexture("Resources/map/1.png", ColTile, RowTile, CountTileFrame);
-	TileSprite = new GSprite(TileTexture, 0);
+	TileSprite = new GSprite(TileTexture, 100);
 	
 
 	MapWidth = (TileTexture->FrameHeight)*(ColumnMatrix);  // Chiều dài của MAP

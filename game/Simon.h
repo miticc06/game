@@ -14,7 +14,7 @@
 #define SIMON_GRAVITY 0.005f
 #define SIMON_VJUMP 0.8f
 
-#define SIMON_WALKING_SPEED 0.15f 
+#define SIMON_WALKING_SPEED 0.2f //0.12f 
 
 
 
@@ -60,9 +60,7 @@ public:
 
 
 	virtual void Render(Camera * camera);
-
-	void SetState(int state);
-
+	 
 
 	void Left();  // set lại hướng của simon
 	void Right(); // set lại hướng của simon
@@ -72,6 +70,8 @@ public:
 
 
 	void Stop();
+
+	void CollisionWithBrick(vector<LPGAMEOBJECT> *coObjects = NULL);
 
 };
 

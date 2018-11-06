@@ -42,12 +42,12 @@ class GameObject
 {
 protected:
 	int Health;
+	eID type; // Loại Object
 
 
 public:
 	int id; // ID của object
 
-	eID type; // Loại Object
 
 	float x; 
 	float y;
@@ -105,7 +105,7 @@ public:
 	void SetTrend(int Trend);
 	void SetId(int ID);
 
-
+	eID GetType();
 
 
 

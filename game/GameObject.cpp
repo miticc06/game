@@ -76,6 +76,7 @@ void GameObject::CalcPotentialCollisions(
 	}
 
 	std::sort(coEvents.begin(), coEvents.end(), CollisionEvent::compare);
+
 }
 
 void GameObject::FilterCollision(
@@ -161,6 +162,11 @@ void GameObject::SetTrend(int Trend)
 void GameObject::SetId(int ID)
 { 
 	this->id = ID;
+}
+
+eID GameObject::GetType()
+{
+	return type;
 }
 
 GameObject::~GameObject()

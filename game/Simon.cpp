@@ -84,7 +84,6 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				_sprite->SelectIndex(SiMON_ANI_IDLE);		// SIMON đứng yên
 
 			}
-
 	 
 	/* Update về sprite */
 
@@ -99,84 +98,15 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += SIMON_GRAVITY * dt;// Simple fall down
 	 
 
-
+	vector<LPGAMEOBJECT> coObjects_Brick;
+	coObjects_Brick.clear();
+	for (int i = 0; i < coObjects->size(); i++)
+		if (coObjects->at(i)->GetType() == eID::BRICK)
+			coObjects_Brick.push_back(coObjects->at(i));
+	CollisionWithBrick(&coObjects_Brick); // check Collision and update x, y for simon
 
 
  
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
-
-	coEvents.clear();
-	 
-	CalcPotentialCollisions(coObjects, coEvents); // Lấy danh sách các va chạm
- 
-	// No collision occured, proceed normally
-	if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
-	}
-	else
-	{
-		float min_tx, min_ty, nx = 0, ny;
-
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-
-		// block 
-		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.4f;
-
-		if (nx != 0)
-			vx = 0; // nếu mà nx, ny <>0  thì nó va chạm rồi. mà chạm rồi thì dừng vận tốc cho nó đừng chạy nữa
-	
-		if (ny != 0)
-		{
-			vy = 0;
-			isJumping = false; // kết thúc nhảy
-		}
-			
-
-		//// Collision logic with Goombas
-		//for (UINT i = 0; i < coEventsResult.size(); i++)
-		//{
-		//	LPCOLLISIONEVENT e = coEventsResult[i];
-
-		//	if (dynamic_cast<Goomba *>(e->obj))
-		//	{
-		//		Goomba *goomba = dynamic_cast<Goomba *>(e->obj);
-
-		//		// jump on top >> kill Goomba and deflect a bit 
-		//		if (e->ny < 0)
-		//		{
-		//			if (goomba->GetState() != GOOMBA_STATE_DIE)
-		//			{
-		//				goomba->SetState(GOOMBA_STATE_DIE);
-		//				vy = -MARIO_JUMP_DEFLECT_SPEED;
-		//			}
-		//		}
-		//		else if (e->nx != 0)
-		//		{
-		//			if (untouchable == 0)
-		//			{
-		//				if (goomba->GetState() != GOOMBA_STATE_DIE)
-		//				{
-		//					if (level > MARIO_LEVEL_SMALL)
-		//					{
-		//						level = MARIO_LEVEL_SMALL;
-		//						StartUntouchable();
-		//					}
-		//					else
-		//						SetState(MARIO_STATE_DIE);
-		//				}
-		//			}
-		//		}
-		//	}
-		//}
-	}
-
-	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++)
-		delete coEvents[i];
 }
 
 void Simon::Render(Camera* camera)
@@ -191,30 +121,7 @@ void Simon::Render(Camera* camera)
 	 
 	 
 } 
-
-
-void Simon::SetState(int state)
-{
-	
-	/*GameObject::SetState(state);
-
-	switch (state)
-	{
-	case SIMON_STATE_IDLE:
-		vx = 0; 
-		break;
-	case SIMON_STATE_WALKING:
-		vx = SIMON_WALKING_SPEED;
-		break;
-
-
-	default:
-		break;
-	}
-*/
-
-
-}
+ 
 
 void Simon::Left()
 {
@@ -270,4 +177,81 @@ void Simon::Stop()
 		y = y - 18; // kéo simon lên
 	}
 	
+}
+
+void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
+{
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+
+	CalcPotentialCollisions(coObjects, coEvents); // Lấy danh sách các va chạm
+
+	// No collision occured, proceed normally
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
+		// nếu ko va chạm thì min_tx,min_ty = 1.0, còn nếu có thì nó trả về thời gian va chạm. 
+		//Còn nx,ny là hướng va chạm,  = 0 nếu ko va chạm;
+
+		// block 
+		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + ny * 0.4f; // ny = -1 thì hướng từ trên xuống....
+
+		if (nx != 0)
+			vx = 0; // nếu mà nx, ny <>0  thì nó va chạm rồi. mà chạm rồi thì dừng vận tốc cho nó đừng chạy nữa
+
+		if (ny != 0)
+		{
+			vy = 0;
+			isJumping = false; // kết thúc nhảy
+		}
+
+		//// Collision logic with Goombas
+		//for (UINT i = 0; i < coEventsResult.size(); i++)
+		//{
+		//	LPCOLLISIONEVENT e = coEventsResult[i];
+		//	if (dynamic_cast<Goomba *>(e->obj))
+		//	{
+		//		Goomba *goomba = dynamic_cast<Goomba *>(e->obj);
+		//		// jump on top >> kill Goomba and deflect a bit 
+		//		if (e->ny < 0)
+		//		{
+		//			if (goomba->GetState() != GOOMBA_STATE_DIE)
+		//			{
+		//				goomba->SetState(GOOMBA_STATE_DIE);
+		//				vy = -MARIO_JUMP_DEFLECT_SPEED;
+		//			}
+		//		}
+		//		else if (e->nx != 0)
+		//		{
+		//			if (untouchable == 0)
+		//			{
+		//				if (goomba->GetState() != GOOMBA_STATE_DIE)
+		//				{
+		//					if (level > MARIO_LEVEL_SMALL)
+		//					{
+		//						level = MARIO_LEVEL_SMALL;
+		//						StartUntouchable();
+		//					}
+		//					else
+		//						SetState(MARIO_STATE_DIE);
+		//				}
+		//			}
+		//		}
+		//	}
+		//}
+	}
+
+	// clean up collision events
+	for (UINT i = 0; i < coEvents.size(); i++)
+		delete coEvents[i];
 }
