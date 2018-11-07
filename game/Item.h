@@ -7,7 +7,7 @@
 #include "GameObject.h"
 #include "DebugRenderBBOX.h"
 #include "define.h"
-
+//#include "VariableGlobal.h"
 
 class Item
 {
@@ -17,6 +17,9 @@ protected:
 
 	float x;
 	float y;
+
+	float dx;
+	float dy;
 
 	float vx;
 	float vy;

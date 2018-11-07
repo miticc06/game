@@ -54,8 +54,12 @@
     <ClCompile Include="Item.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="LargeHeart.cpp" />
-    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="LargeHeart.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableGlobal.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -108,8 +112,12 @@
     <ClInclude Include="Item.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="LargeHeart.h" />
-    <ClInclude Include="Scene.h" />
+    <ClInclude Include="LargeHeart.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableGlobal.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

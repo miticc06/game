@@ -21,6 +21,7 @@ void GameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	dy = vy*dt;
 }
 
+
 /*
 	Extension of original SweptAABB to deal with two moving objects
 */

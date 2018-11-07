@@ -8,6 +8,9 @@
 
 #include "Weapon.h"
 #include "GameObject.h"
+#include "VariableGlobal.h"
+#include "LargeHeart.h"
+
 
 class MorningStar : public Weapon
 {

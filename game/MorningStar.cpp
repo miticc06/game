@@ -117,6 +117,7 @@ void MorningStar::CollisionWithObject(DWORD dt, vector<LPGAMEOBJECT>* listObj)
 			if (Game::GetInstance()->AABBCheck(rect, rect1))
 			{
 				listObj->at(i)->SubHealth(1);
+				VariableGlobal::GetInstance()->ListItem.push_back(new LargeHeart(listObj->at(i)->x, listObj->at(i)->y));
 			}
 		}
 }

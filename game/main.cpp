@@ -16,8 +16,9 @@
 #include "Map.h"
 #include "Camera.h"
 #include "Grid.h"
-#include "Item.h"
-#include "Scene.h"
+#include "Item.h" 
+#include "VariableGlobal.h"
+
 
 #define WINDOW_CLASS_NAME L"Game"
 #define MAIN_WINDOW_TITLE L"Game"
@@ -27,14 +28,12 @@
 #define MAX_FRAME_RATE 60
 
 
- 
+VariableGlobal * _variableGlobal;
 
 
 
-HWND hWnd;
+HWND hWnd; 
 
-
-Scene * MainScene;
 
 
 Game *game;  
@@ -44,7 +43,6 @@ Camera *camera;
 Grid * gridGame;
 
 vector<LPGAMEOBJECT> ListObj;
-vector<Item *> ListItem;
 
 
 
@@ -169,6 +167,8 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 */
 void LoadResources()
 {
+	_variableGlobal = VariableGlobal::GetInstance();
+	 
 
 	simon = new Simon();
 	TileMap = new Map();
@@ -183,8 +183,10 @@ void LoadResources()
 	gridGame = new Grid();
 	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
  
-	ListItem.clear();
-	 
+
+
+
+	_variableGlobal->ListItem.clear();
 
 }
 
@@ -208,9 +210,9 @@ void Update(DWORD dt)
 		ListObj[i]->Update(dt,&ListObj);
 	}
 
-	for (int i = 0; i < ListItem.size(); i++)
+	for (int i = 0; i < _variableGlobal->ListItem.size(); i++) // update các Item
 	{
-		ListItem[i]->Update(dt, & ListObj);
+		_variableGlobal->ListItem[i]->Update(dt, & ListObj);
 	}
 
 }
@@ -243,8 +245,8 @@ void Render()
 
 
 
-		for (int i = 0; i < ListItem.size(); i++) // Draw các item
-			ListItem[i]->Render(camera); 
+		for (int i = 0; i < _variableGlobal->ListItem.size(); i++) // Draw các item
+			_variableGlobal->ListItem[i]->Render(camera);
 
 
 
