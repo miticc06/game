@@ -77,17 +77,17 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 	{
 		if (trend == 1)
 		{
-			left = x + 10 + (_sprite->GetIndex() >= MORNINGSTAR_ANI_LEVEL0_START + 2) * 40; // là frame đánh roi thì left+40
+			left = x + 80;  
 			top = y + 15;
-			right = x + _texture->FrameWidth - 30 - (_sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1)*80; // Là 2 frame đầu thì trừ 80 bên phải
-			bottom = y + _texture->FrameHeight - 15;
+			right = x + _texture->FrameWidth -30; 
+			bottom = y + _texture->FrameHeight - 30;
 		}
 		else
 		{
-			left = x + 30 + (_sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1) * 80; // Là 2 frame đầu thì cộng 80 bên trái
+			left = x + 30;
 			top = y + 15;
-			right = x + _texture->FrameWidth - 10 - (_sprite->GetIndex() >= MORNINGSTAR_ANI_LEVEL0_START + 2) * 40;// là frame đánh roi thì right-40
-			bottom = y + _texture->FrameHeight - 15;
+			right = x + _texture->FrameWidth - 85;
+			bottom = y + _texture->FrameHeight - 30;
 
 		}
 
@@ -97,6 +97,9 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 
 void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
 {
+	if (_sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1)
+		return;
+
 	RECT rect, rect1;
 	float l, t, r, b;
 	float l1, t1, r1, b1;
