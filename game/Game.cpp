@@ -317,6 +317,12 @@ bool Game::AABBCheck(RECT b1, RECT b2)
 	return !(b1.right < b2.left || b1.left > b2.right || /*b1.top < b2.bottom || b1.bottom > b2.top*/ b1.top > b2.bottom || b1.bottom < b2.top);
 }
 
+bool Game::AABBCheck(float b1left, float b1top, float b1right, float b1bottom, float b2left, float b2top, float b2right, float b2bottom )
+{
+	return !(b1right < b2left || b1left > b2right || /*b1.top < b2.bottom || b1.bottom > b2.top*/ b1top > b2bottom || b1bottom < b2top);
+}
+
+
 Game *Game::GetInstance()
 {
 	if (__instance == NULL) __instance = new Game();

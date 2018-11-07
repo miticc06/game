@@ -80,6 +80,7 @@ public:
 	void Stop();
 
 	void CollisionWithBrick(vector<LPOBJECT> *coObjects = NULL);
+	void CollisionWithItem();
 
 	void Attack(Weapon *w);
 

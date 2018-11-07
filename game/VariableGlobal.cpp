@@ -13,7 +13,7 @@ VariableGlobal * VariableGlobal::GetInstance()
 VariableGlobal::VariableGlobal()
 {
 	ListItem.clear();
-
+	HeartCollect = 0;
 
 
 }

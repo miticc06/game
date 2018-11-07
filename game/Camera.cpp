@@ -25,7 +25,6 @@ void Camera::Update()
 		_viewport.x = MapWidth - Window_Width; 
 
 }
-
 D3DXVECTOR2 Camera::Transform(int x, int y)
 {
 	return D3DXVECTOR2(x - _viewport.x, y - _viewport.y);

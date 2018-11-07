@@ -38,7 +38,7 @@ void Weapon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 void Weapon::Render(Camera * camera)
 {
-	DebugOut(L"WEAPON: index = %d \n", _sprite->GetIndex());
+	//DebugOut(L"WEAPON: index = %d \n", _sprite->GetIndex());
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (trend == -1)
 		_sprite->Draw(pos.x, pos.y);

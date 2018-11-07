@@ -70,6 +70,7 @@ public:
 	bool AABBCheck(RECT b1, RECT b2); 
 
 	static Game * GetInstance();
+	bool AABBCheck(float b1left, float b1top, float b1right, float b1bottom, float b2left, float b2top, float b2right, float b2bottom);
 
 	~Game();
 };

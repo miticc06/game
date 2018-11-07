@@ -3,9 +3,7 @@
 
 
 Item::Item()
-{
-	vx = 0;
-	vy = 0;
+{ 
 	TimeDisplayed = 0;
 
 }
@@ -13,9 +11,7 @@ Item::Item()
 
 Item::~Item()
 {
-	SAFE_DELETE(_sprite);
-	SAFE_DELETE(_texture);
-
+	 
 }
 
 void Item::Update(DWORD dt, vector<LPOBJECT> *listObject)
@@ -24,6 +20,8 @@ void Item::Update(DWORD dt, vector<LPOBJECT> *listObject)
 
 void Item::Render(Camera * camera)
 {
+	if (isFinish == true)
+		return;
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 
@@ -37,4 +35,9 @@ void Item::Render(Camera * camera)
 bool Item::GetFinish()
 {
 	return isFinish;
+}
+
+void Item::SetFinish(bool b)
+{
+	isFinish = b;
 }
