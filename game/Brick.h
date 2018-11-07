@@ -5,7 +5,8 @@
 #define BRICK_FRAME_HEIGHT 32
 
 #include "GameObject.h"
- 
+#include "VariableGlobal.h"
+
 class Brick : public GameObject
 {
 protected:

@@ -7,8 +7,7 @@
 #include "GameObject.h"
 #include "DebugRenderBBOX.h"
 #include "define.h"
-//#include "VariableGlobal.h"
-
+ 
 class Item : public Object
 {
 protected: 

@@ -18,7 +18,7 @@
 #include "Grid.h"
 #include "Item.h" 
 #include "VariableGlobal.h"
-
+#include "Board.h"
 
 #define WINDOW_CLASS_NAME L"Game"
 #define MAIN_WINDOW_TITLE L"Game"
@@ -41,6 +41,9 @@ Simon * simon;
 Map * TileMap;
 Camera *camera;
 Grid * gridGame;
+
+Board * board;
+
 
 vector<LPOBJECT> ListObj;
 
@@ -158,13 +161,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	return 0;
 }
-
-/*
-	Load all game resources 
-	In this example: load textures, sprites, animations and mario object
-
-	TO-DO: Improve this function by loading texture,sprite,animation,object from file
-*/
+ 
 void LoadResources()
 {
 	_variableGlobal = VariableGlobal::GetInstance();
@@ -175,6 +172,8 @@ void LoadResources()
 	camera = new Camera(Window_Width, Window_Height/*, Window_Width/2, MapWidth - Window_Width / 2*/);
 	camera->SetPosition(0, 0);
 
+
+	board = new Board(0, 0);
 
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
 	simon->SetPosition(0, 0);
@@ -189,11 +188,7 @@ void LoadResources()
 	_variableGlobal->ListItem.clear();
 
 }
-
-/*
-	Update world status for this frame
-	dt: time period between beginning of last frame and beginning of this frame
-*/
+ 
 void Update(DWORD dt)
 {
  //	DebugOut(L"[DT] DT: %d\n", dt);
@@ -216,11 +211,7 @@ void Update(DWORD dt)
 	}
 
 }
-
-
-/*
-	Render a frame 
-*/
+ 
 void Render()
 {
 	LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3DDevice();
@@ -237,7 +228,7 @@ void Render()
 
 		TileMap->DrawMap(camera);
 
-
+		board->Render(camera);
 
 		for (int i = 0; i < ListObj.size(); i++)
 			ListObj[i]->Render(camera);

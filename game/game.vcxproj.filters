@@ -63,6 +63,7 @@
     <ClCompile Include="Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Board.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -124,6 +125,7 @@
     <ClInclude Include="Object.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Board.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

@@ -16,7 +16,7 @@ VariableGlobal::VariableGlobal()
 	HeartCollect = 0;
 
 
-}
+ }
 
 
 VariableGlobal::~VariableGlobal()
