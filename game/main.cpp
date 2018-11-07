@@ -42,7 +42,7 @@ Map * TileMap;
 Camera *camera;
 Grid * gridGame;
 
-vector<LPGAMEOBJECT> ListObj;
+vector<LPOBJECT> ListObj;
 
 
 
@@ -72,7 +72,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode) // khi đè phím
 
 	if (KeyCode == DIK_1)
 	{
-		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x+10, simon->y);
+		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->GetX()+10, simon->GetY());
 	}
 
 	if (KeyCode == DIK_X)
@@ -202,7 +202,7 @@ void Update(DWORD dt)
 	gridGame->GetListObject(ListObj, camera); // lấy hết các object trong vùng camera;
 
 	simon->Update(dt, &ListObj);
-	camera->SetPosition(simon->x - Window_Width/2 + 30, camera->GetViewport().y ); // cho camera chạy theo simon
+	camera->SetPosition(simon->GetX() - Window_Width/2 + 30, camera->GetViewport().y ); // cho camera chạy theo simon
 	camera->Update();
 
 	for (int i = 0; i < ListObj.size(); i++)
@@ -212,7 +212,7 @@ void Update(DWORD dt)
 
 	for (int i = 0; i < _variableGlobal->ListItem.size(); i++) // update các Item
 	{
-		_variableGlobal->ListItem[i]->Update(dt, & ListObj);
+		_variableGlobal->ListItem[i]->Update(dt, &ListObj);
 	}
 
 }

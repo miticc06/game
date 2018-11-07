@@ -60,6 +60,7 @@
     <ClCompile Include="VariableGlobal.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Object.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -118,6 +119,7 @@
     <ClInclude Include="VariableGlobal.h">
       <Filter>Framework</Filter>
     </ClInclude>
+    <ClInclude Include="Object.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

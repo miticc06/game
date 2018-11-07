@@ -46,7 +46,7 @@ public:
 
 	void RenderBoundingBox(Camera * camera);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
-	virtual void CollisionWithObject(DWORD dt, vector<LPGAMEOBJECT>* listObj) = 0;
+	virtual void CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj) = 0;
 
 
 	int GetFinish();

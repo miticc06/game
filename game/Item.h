@@ -36,7 +36,7 @@ public:
 	~Item();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
-	virtual void Update(DWORD dt, vector<GameObject*> *listObject = NULL);
+	virtual void Update(DWORD dt, vector<LPOBJECT> *listObject = NULL);
 	virtual void Render(Camera * camera);
 	virtual void SetPosition(float X, float Y);
 	eID GetType();

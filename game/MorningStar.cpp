@@ -92,7 +92,7 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 
 }
 
-void MorningStar::CollisionWithObject(DWORD dt, vector<LPGAMEOBJECT>* listObj)
+void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
 {
 	RECT rect, rect1;
 	float l, t, r, b;
@@ -106,18 +106,24 @@ void MorningStar::CollisionWithObject(DWORD dt, vector<LPGAMEOBJECT>* listObj)
 
 
 
-	for (int i=0; i< listObj->size(); i++)
-		if (listObj->at(i)->GetHealth()>0 && listObj->at(i)->GetType() == eID::TORCH)
+	for (int i = 0; i < listObj->size(); i++)
+		if (dynamic_cast<GameObject*>(listObj->at(i)))
 		{
-			listObj->at(i)->GetBoundingBox(l1, t1, r1, b1);
-			rect1.left = (int)l1;
-			rect1.top = (int)t1;
-			rect1.right = (int)r1;
-			rect1.bottom = (int)b1;
-			if (Game::GetInstance()->AABBCheck(rect, rect1))
+
+			GameObject *obj = dynamic_cast<GameObject*>(listObj->at(i));
+			if (obj->GetHealth() > 0 && listObj->at(i)->GetType() == eID::TORCH)
 			{
-				listObj->at(i)->SubHealth(1);
-				VariableGlobal::GetInstance()->ListItem.push_back(new LargeHeart(listObj->at(i)->x, listObj->at(i)->y));
+				listObj->at(i)->GetBoundingBox(l1, t1, r1, b1);
+				rect1.left = (int)l1;
+				rect1.top = (int)t1;
+				rect1.right = (int)r1;
+				rect1.bottom = (int)b1;
+				if (Game::GetInstance()->AABBCheck(rect, rect1))
+				{
+					obj->SubHealth(1);
+					VariableGlobal::GetInstance()->ListItem.push_back(new LargeHeart(listObj->at(i)->GetX(), listObj->at(i)->GetY()));
+				}
 			}
 		}
+
 }

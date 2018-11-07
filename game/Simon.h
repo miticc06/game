@@ -64,7 +64,7 @@ public:
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
+	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
 
 
 	virtual void Render(Camera * camera);
@@ -79,7 +79,7 @@ public:
 
 	void Stop();
 
-	void CollisionWithBrick(vector<LPGAMEOBJECT> *coObjects = NULL);
+	void CollisionWithBrick(vector<LPOBJECT> *coObjects = NULL);
 
 	void Attack(Weapon *w);
 

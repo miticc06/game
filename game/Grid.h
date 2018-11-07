@@ -33,8 +33,8 @@ private:
  
 public:
 	void ReadFileToGrid(char * filename); // Đọc các object từ file
-	void GetListObject(vector<GameObject*>& ListObj, Camera * camera);
-	void GetListObject(vector<GameObject*> &ListObj, GameObject * obj);
+	void GetListObject(vector<Object*>& ListObj, Camera * camera);
+	void GetListObject(vector<Object*> &ListObj, GameObject * obj);
 
 
 	void Insert(int id, int type, int trend, float x, float y, float w, float h); //Thêm object vào grid

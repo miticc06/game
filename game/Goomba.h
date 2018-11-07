@@ -16,7 +16,7 @@
 class Goomba : public GameObject
 {
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
+	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects);
 	virtual void Render();
 
 

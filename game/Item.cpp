@@ -18,7 +18,7 @@ Item::~Item()
 
 }
 
-void Item::Update(DWORD dt, vector<GameObject*> *listObject)
+void Item::Update(DWORD dt, vector<LPOBJECT> *listObject)
 {
 }
 

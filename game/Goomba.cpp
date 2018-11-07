@@ -12,7 +12,7 @@ void Goomba::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	//	bottom = y + GOOMBA_BBOX_HEIGHT;
 }
 
-void Goomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void Goomba::Update(DWORD dt, vector<LPOBJECT> *coObjects)
 {
 	GameObject::Update(dt, coObjects);
 

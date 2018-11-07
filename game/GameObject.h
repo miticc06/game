@@ -11,31 +11,79 @@
 #include "Camera.h"
 #include "DebugRenderBBOX.h"
 
+#include "Object.h"
+
 using namespace std;
 
  
 class GameObject; 
 typedef GameObject * LPGAMEOBJECT;
+//
+//struct CollisionEvent;
+//typedef CollisionEvent * LPCOLLISIONEVENT;
+//struct CollisionEvent
+//{
+//	LPGAMEOBJECT obj;
+//	float t, nx, ny;
+//	CollisionEvent(float t, float nx, float ny, LPGAMEOBJECT obj = NULL) 
+//	{ 
+//		this->t = t; 
+//		this->nx = nx; 
+//		this->ny = ny; 
+//		this->obj = obj; 
+//	}
+//
+//	static bool compare(const LPCOLLISIONEVENT &a, LPCOLLISIONEVENT &b)
+//	{
+//		return a->t < b->t;
+//	}
+//};
+//
 
-struct CollisionEvent;
-typedef CollisionEvent * LPCOLLISIONEVENT;
-struct CollisionEvent
+
+
+
+class GameObject : public Object
 {
-	LPGAMEOBJECT obj;
-	float t, nx, ny;
-	CollisionEvent(float t, float nx, float ny, LPGAMEOBJECT obj = NULL) 
-	{ 
-		this->t = t; 
-		this->nx = nx; 
-		this->ny = ny; 
-		this->obj = obj; 
-	}
+protected:
+	int Health; 
 
-	static bool compare(const LPCOLLISIONEVENT &a, LPCOLLISIONEVENT &b)
-	{
-		return a->t < b->t;
-	}
+public:
+	int id; // ID của object
+	  
+	int trend;	// hướng -1 : trái, 1: phải
+	    
+	bool isTake;
+
+public:
+   
+ 
+	GameObject();
+
+	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
+	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
+	virtual void Render(Camera * camera) = 0;
+ 
+	int GetHealth();
+	void SubHealth(int th); 
+	void SetTrend(int Trend);
+	void SetId(int ID);
+	  
+	~GameObject();
 };
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 
 
@@ -117,3 +165,4 @@ public:
 	~GameObject();
 };
 
+*/

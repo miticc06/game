@@ -139,6 +139,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MorningStar.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Torch.h" />
     <ClInclude Include="VariableGlobal.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MorningStar.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="VariableGlobal.cpp" />

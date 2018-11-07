@@ -43,7 +43,7 @@ void Simon::GetBoundingBox(float & left, float & top, float & right, float & bot
  	
 }
 
-void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 { 
 	/* Không cho lọt khỏi camera */
 	/*if (x < -10)
@@ -131,7 +131,7 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += SIMON_GRAVITY * dt;// Simple fall down
 	 
 
-	vector<LPGAMEOBJECT> coObjects_Brick;
+	vector<LPOBJECT> coObjects_Brick;
 	coObjects_Brick.clear();
 	for (int i = 0; i < coObjects->size(); i++)
 		if (coObjects->at(i)->GetType() == eID::BRICK)
@@ -257,7 +257,7 @@ void Simon::Stop()
 	
 }
 
-void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
+void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 {
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;

@@ -31,7 +31,7 @@ void Grid::ReadFileToGrid(char * filename)
 	} 
 }
 
-void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
+void Grid::GetListObject(vector<Object*>& ListObj, Camera * camera)
 {
 	ListObj.clear(); // clear list
 	ResetTake();
@@ -60,16 +60,16 @@ void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 		}
 }
 
-void Grid::GetListObject(vector<GameObject*> &ListObj, GameObject * obj)
+void Grid::GetListObject(vector<Object*> &ListObj, GameObject * obj)
 {
 	ListObj.clear(); // clear list
 	ResetTake();
 
-	int rowBottom = floor((obj->y + obj->GetHeight()) / (float)GRID_CELL_HEIGHT);
-	int rowTop = floor((obj->y) / (float)GRID_CELL_HEIGHT);
+	int rowBottom = floor((obj->GetY() + obj->GetHeight()) / (float)GRID_CELL_HEIGHT);
+	int rowTop = floor((obj->GetY()) / (float)GRID_CELL_HEIGHT);
 
-	int colLeft = floor((obj->x) / (float)GRID_CELL_WIDTH);
-	int colRight = floor((obj->x + obj->GetWidth()) / (float)GRID_CELL_WIDTH);
+	int colLeft = floor((obj->GetX()) / (float)GRID_CELL_WIDTH);
+	int colRight = floor((obj->GetX() + obj->GetWidth()) / (float)GRID_CELL_WIDTH);
 
 
 	for (int row = rowTop; row <= rowBottom; row++)
