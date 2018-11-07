@@ -27,7 +27,7 @@ void Torch::GetBoundingBox(float & left, float & top, float & right, float & bot
 
 }
 
-void Torch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void Torch::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 {
 	_sprite->Update(dt); // update animation
 }
