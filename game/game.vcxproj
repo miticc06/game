@@ -134,9 +134,12 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GSprite.h" />
     <ClInclude Include="GTexture.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="LargeHeart.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MorningStar.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Torch.h" />
     <ClInclude Include="Weapon.h" />
@@ -153,10 +156,13 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GSprite.cpp" />
     <ClCompile Include="GTexture.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="LargeHeart.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MorningStar.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="Weapon.cpp" />

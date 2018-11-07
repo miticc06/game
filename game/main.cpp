@@ -16,7 +16,8 @@
 #include "Map.h"
 #include "Camera.h"
 #include "Grid.h"
-
+#include "Item.h"
+#include "Scene.h"
 
 #define WINDOW_CLASS_NAME L"Game"
 #define MAIN_WINDOW_TITLE L"Game"
@@ -27,16 +28,23 @@
 
 
  
+
+
+
 HWND hWnd;
 
-Game *game; 
 
+Scene * MainScene;
+
+
+Game *game;  
 Simon * simon;
 Map * TileMap;
 Camera *camera;
 Grid * gridGame;
 
 vector<LPGAMEOBJECT> ListObj;
+vector<Item *> ListItem;
 
 
 
@@ -163,7 +171,6 @@ void LoadResources()
 {
 
 	simon = new Simon();
-	
 	TileMap = new Map();
 	camera = new Camera(Window_Width, Window_Height/*, Window_Width/2, MapWidth - Window_Width / 2*/);
 	camera->SetPosition(0, 0);
@@ -176,8 +183,7 @@ void LoadResources()
 	gridGame = new Grid();
 	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
  
-
-
+	ListItem.clear();
 	 
 
 }
@@ -201,7 +207,14 @@ void Update(DWORD dt)
 	{
 		ListObj[i]->Update(dt,&ListObj);
 	}
+
+	for (int i = 0; i < ListItem.size(); i++)
+	{
+		ListItem[i]->Update(dt, & ListObj);
+	}
+
 }
+
 
 /*
 	Render a frame 
@@ -226,6 +239,16 @@ void Render()
 
 		for (int i = 0; i < ListObj.size(); i++)
 			ListObj[i]->Render(camera);
+
+
+
+
+		for (int i = 0; i < ListItem.size(); i++) // Draw các item
+			ListItem[i]->Render(camera); 
+
+
+
+
 
 		simon->Render(camera);
 
