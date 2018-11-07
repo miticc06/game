@@ -82,7 +82,9 @@ public:
 	void RenderBoundingBox(Camera * camera);
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
+
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT> *coObjects, vector<LPCOLLISIONEVENT> &coEvents);
+
 	void FilterCollision(
 		vector<LPCOLLISIONEVENT> &coEvents, 
 		vector<LPCOLLISIONEVENT> &coEventsResult, 

@@ -27,7 +27,9 @@ void LargeHeart::GetBoundingBox(float & left, float & top, float & right, float 
 
 void LargeHeart::Update(DWORD dt, GameObject * listObject)
 {
+	dy = vy * dt;
 
+	
 
 
 }
