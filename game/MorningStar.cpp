@@ -7,6 +7,7 @@ MorningStar::MorningStar()
 	_texture = new GTexture("Resources\\weapon\\morningstar.png", 4, 3, 12, 0);
 	_sprite = new GSprite(_texture, 90);
 	this->level = 0;
+	type = eID::MORNINGSTAR;
 }
 
 
@@ -14,7 +15,7 @@ MorningStar::~MorningStar()
 {
 }
 
-void MorningStar::Update(int dt)
+void MorningStar::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 {
 	//if (isFinish == false)
 	//{
@@ -37,15 +38,18 @@ void MorningStar::Update(int dt)
 		else
 		{
 			_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL0_START);
-		} 
+		}
 	}
 }
+ 
 
 void MorningStar::Create(float simonX, float simonY, int simonTrend)
 {
  
 
 	Weapon::Create(simonX, simonY, simonTrend);
+
+	//xBackup, yBackup
 
 	UpdatePositionFitSimon();
 
@@ -60,7 +64,6 @@ void MorningStar::UpdatePositionFitSimon()
 	if (trend == -1)
 	{
 		this->x = x - 65;
-		
 	}
 	else
 	{

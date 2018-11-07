@@ -180,7 +180,7 @@ void Simon::Render(Camera* camera)
 	for (int i=0; i<_ListWeapon.size(); i++)
 		if (_ListWeapon[i]->GetFinish() == false)
 		{ 
-			_ListWeapon[i]->Draw(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
+			_ListWeapon[i]->Render(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
 		}
 	 
 } 

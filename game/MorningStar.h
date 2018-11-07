@@ -16,12 +16,14 @@ class MorningStar : public Weapon
 {
 protected:
 	int level;
-
+	float xBackup, yBackup;
 public:
 	MorningStar();
 	~MorningStar();
-	void Update( int dt);
-	void Create(float simonX, float simonY, int simonTrend); 
+	
+	void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
+	
+	void Create(float simonX, float simonY, int simonTrend);
 
 	void UpdatePositionFitSimon();
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);

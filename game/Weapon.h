@@ -9,23 +9,15 @@
 #include <vector>
 #include "GameObject.h"
 
-class Weapon
+class Weapon : public Object
 {
-protected:
-	eID TypeWeapon;
-
- 	float vx;	// Vận tốc theo trục X
-	float vy;	// Vận tốc theo trục Y
+protected: 
 	 
 	int trend;		// hướng trái = -1, phải = 1;
 
 	bool isFinish;
 
-	float x;	// Vị trí theo trục X
-	float y;	// Vị trí theo trục Y 
-
-	GTexture * _texture;
-	GSprite * _sprite;
+	 
 
 public:
 	Weapon();
@@ -35,26 +27,24 @@ public:
 	void SetTrend(int Trend);
 
 	virtual void Create(float simonX, float simonY, int simonTrend);
-	virtual void Update( int dt);
- 	virtual void Draw(Camera *camera);
+ 
 
+	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL) ;
 
+ 
 
-	virtual void SetPosition(float X, float Y);
+ 	virtual void Render(Camera *camera);
+
+	 
 	virtual void UpdatePositionFitSimon();
-
-
-	void RenderBoundingBox(Camera * camera);
-	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
+	 
 	virtual void CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj) = 0;
 
 
 	int GetFinish();
 
 	void SetFinish(bool b);
-
-	eID GetType(); 
-
+	  
 
 };
 

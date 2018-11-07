@@ -50,7 +50,9 @@ enum eID
 
 
 
-	TORCH = 41
+	TORCH = 41,
+
+	MORNINGSTAR = 61
 };
  
  

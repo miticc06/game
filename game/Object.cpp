@@ -126,6 +126,8 @@ void Object::FilterCollision(
 
 Object::Object()
 {
+	vx = vy = 0;
+	x = y = 0;
 }
 
 

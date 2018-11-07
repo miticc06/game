@@ -60,7 +60,9 @@
     <ClCompile Include="VariableGlobal.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Object.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -119,7 +121,9 @@
     <ClInclude Include="VariableGlobal.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

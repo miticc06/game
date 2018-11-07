@@ -9,9 +9,7 @@ Weapon::Weapon()
 
 
 Weapon::~Weapon()
-{
-	SAFE_DELETE(_texture);
-	SAFE_DELETE(_sprite);
+{ 
 }
 
 int Weapon::GetTrend()
@@ -32,12 +30,13 @@ void Weapon::Create(float simonX, float simonY, int simonTrend)
 	isFinish = 0;
 }
 
-void Weapon::Update(int dt)
+void Weapon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 {
 	_sprite->Update(dt);
 }
+ 
 
-void Weapon::Draw(Camera * camera)
+void Weapon::Render(Camera * camera)
 {
 	DebugOut(L"WEAPON: index = %d \n", _sprite->GetIndex());
 	D3DXVECTOR2 pos = camera->Transform(x, y);
@@ -49,37 +48,12 @@ void Weapon::Draw(Camera * camera)
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
 }
-
-void Weapon::SetPosition(float X, float Y)
-{
-	this->x = X;
-	this->y = Y;
-}
+ 
 
 void Weapon::UpdatePositionFitSimon()
 {
 }
-
-void Weapon::RenderBoundingBox(Camera * camera)
-{
-
-	RECT rect;
-
-	float l, t, r, b;
-
-	GetBoundingBox(l, t, r, b);
-	rect.left = 0;
-	rect.top = 0;
-	rect.right = (int)r - (int)l;
-	rect.bottom = (int)b - (int)t;
-
-	D3DXVECTOR2 pos = camera->Transform(l, t);
-
-	LPDIRECT3DTEXTURE9  _Texture = DebugRenderBBOX::GetInstance()->GetTexture();
-
-	Game::GetInstance()->Draw(pos.x, pos.y, _Texture, rect.left, rect.top, rect.right, rect.bottom, 100);
-
-}
+ 
 
 int Weapon::GetFinish()
 {
@@ -90,8 +64,4 @@ void Weapon::SetFinish(bool b)
 {
 	isFinish = b;
 }
-
-eID Weapon::GetType()
-{
-	return TypeWeapon;
-}
+ 
