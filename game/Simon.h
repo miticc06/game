@@ -14,7 +14,7 @@
 #define SIMON_GRAVITY 0.005f
 #define SIMON_VJUMP 0.8f
 
-#define SIMON_WALKING_SPEED 0.2f //0.12f 
+#define SIMON_WALKING_SPEED 0.12f //0.12f 
 
 
 

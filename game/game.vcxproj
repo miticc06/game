@@ -143,6 +143,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Torch.h" />
+    <ClInclude Include="UpgradeMorningStar.h" />
     <ClInclude Include="VariableGlobal.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Torch.cpp" />
+    <ClCompile Include="UpgradeMorningStar.cpp" />
     <ClCompile Include="VariableGlobal.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>

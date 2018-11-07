@@ -10,6 +10,9 @@
 #include "GameObject.h"
 #include "Item.h"
 #include "LargeHeart.h"
+#include "UpgradeMorningStar.h"
+
+
 
 class Weapon : public Object
 {

@@ -64,6 +64,7 @@
     <ClCompile Include="VariableGlobal.cpp">
       <Filter>Framework\Define</Filter>
     </ClCompile>
+    <ClCompile Include="UpgradeMorningStar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -126,6 +127,7 @@
     <ClInclude Include="VariableGlobal.h">
       <Filter>Framework\Define</Filter>
     </ClInclude>
+    <ClInclude Include="UpgradeMorningStar.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
