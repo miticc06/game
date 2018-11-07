@@ -6,8 +6,8 @@
 #include "GTexture.h"
 #include "GameObject.h"
 #include "DebugRenderBBOX.h"
-#include "define.h"
- 
+#include "define.h" 
+
 class Item : public Object
 {
 protected: 
@@ -26,6 +26,7 @@ public:
 	virtual void Render(Camera * camera);
 	virtual void SetReward() = 0; // Hàm cập nhật điểm cho người chơi
 	  
+ 
  	bool GetFinish();
 	void SetFinish(bool b);
 };

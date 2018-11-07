@@ -65,3 +65,13 @@ void Weapon::SetFinish(bool b)
 	isFinish = b;
 }
  
+
+Item * Weapon::GetNewItem(int Id, eID Type, float X, float Y)
+{
+	if (Type == eID::TORCH)
+	{
+		if (Id == 1 || Id == 4)
+			return new LargeHeart(X, Y);
+
+	}
+}

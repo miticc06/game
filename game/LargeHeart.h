@@ -1,4 +1,7 @@
-#pragma once
+#ifndef __LARGEHEART_H__
+#define __LARGEHEART_H__
+
+
 #include "Item.h"
 #include "VariableGlobal.h"
 
@@ -12,12 +15,17 @@ class LargeHeart :
 public:
 	LargeHeart();
 	LargeHeart(float X, float Y);
-	 
+
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void Update(DWORD dt, vector<LPOBJECT> *listObject = NULL);
 	void SetReward();
 
-	 
+
 	~LargeHeart();
 };
+
+
+
+
+#endif 
 

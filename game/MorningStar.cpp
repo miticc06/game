@@ -112,12 +112,11 @@ void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
 
 
 
-	for (int i = 0; i < listObj->size(); i++)
-		if (dynamic_cast<GameObject*>(listObj->at(i)))
+	for (int i = 0; i < listObj->size(); i++) // ngay đây có thể tối ưu thêm, từ từ fix :p
+		if (listObj->at(i)->GetType() == eID::TORCH)
 		{
-
 			GameObject *obj = dynamic_cast<GameObject*>(listObj->at(i));
-			if (obj->GetHealth() > 0 && listObj->at(i)->GetType() == eID::TORCH)
+			if (obj->GetHealth() > 0)
 			{
 				listObj->at(i)->GetBoundingBox(l1, t1, r1, b1);
 				rect1.left = (int)l1;
@@ -131,5 +130,6 @@ void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
 				}
 			}
 		}
+	 
 
 }

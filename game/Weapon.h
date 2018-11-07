@@ -8,6 +8,8 @@
 #include "DebugRenderBBOX.h"
 #include <vector>
 #include "GameObject.h"
+#include "Item.h"
+#include "LargeHeart.h"
 
 class Weapon : public Object
 {
@@ -45,6 +47,7 @@ public:
 
 	void SetFinish(bool b);
 	  
+	static Item * GetNewItem(int Id, eID Type, float X, float Y);
 
 };
 

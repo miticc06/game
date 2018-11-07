@@ -57,13 +57,13 @@
     <ClCompile Include="LargeHeart.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="VariableGlobal.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="VariableGlobal.cpp">
+      <Filter>Framework\Define</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -119,13 +119,13 @@
     <ClInclude Include="LargeHeart.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="VariableGlobal.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Board.h" />
+    <ClInclude Include="VariableGlobal.h">
+      <Filter>Framework\Define</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

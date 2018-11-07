@@ -32,6 +32,8 @@ void Item::Render(Camera * camera)
 }
  
 
+
+
 bool Item::GetFinish()
 {
 	return isFinish;
