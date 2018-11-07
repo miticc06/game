@@ -77,16 +77,16 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 	{
 		if (trend == 1)
 		{
-			left = x + 10;
+			left = x + 10 + (_sprite->GetIndex() >= MORNINGSTAR_ANI_LEVEL0_START + 2) * 40; // là frame đánh roi thì left+40
 			top = y + 15;
-			right = x + _texture->FrameWidth - 30;
+			right = x + _texture->FrameWidth - 30 - (_sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1)*80; // Là 2 frame đầu thì trừ 80 bên phải
 			bottom = y + _texture->FrameHeight - 15;
 		}
 		else
 		{
-			left = x + 30;
+			left = x + 30 + (_sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1) * 80; // Là 2 frame đầu thì cộng 80 bên trái
 			top = y + 15;
-			right = x + _texture->FrameWidth - 10;
+			right = x + _texture->FrameWidth - 10 - (_sprite->GetIndex() >= MORNINGSTAR_ANI_LEVEL0_START + 2) * 40;// là frame đánh roi thì right-40
 			bottom = y + _texture->FrameHeight - 15;
 
 		}
