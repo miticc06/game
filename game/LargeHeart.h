@@ -17,7 +17,6 @@ public:
 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void Update(DWORD dt, GameObject * listObject);
-	//void Render(Camera * camera);
 
 
 

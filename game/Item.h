@@ -9,22 +9,9 @@
 #include "define.h"
 //#include "VariableGlobal.h"
 
-class Item
+class Item : public Object
 {
-protected:
-	GSprite * _sprite;
-	GTexture * _texture;
-
-	float x;
-	float y;
-
-	float dx;
-	float dy;
-
-	float vx;
-	float vy;
-
-	eID type;
+protected: 
 
 	int TimeDisplayMax; // thời gian tối đa cho phép hiển thị.
 	int TimeDisplayed; // Thời gian đã hiển thị.
@@ -38,10 +25,8 @@ public:
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPOBJECT> *listObject = NULL);
 	virtual void Render(Camera * camera);
-	virtual void SetPosition(float X, float Y);
-	eID GetType();
-	void RenderBoundingBox(Camera * camera);
-	bool GetFinish();
+	  
+ 	bool GetFinish();
 };
 
 
