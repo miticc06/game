@@ -72,6 +72,8 @@ Item * Weapon::GetNewItem(int Id, eID Type, float X, float Y)
 	{
 		if (Id == 1 || Id == 4)
 			return new LargeHeart(X, Y);
+		else
+			return new LargeHeart(X, Y);
 
 	}
 }
