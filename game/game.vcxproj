@@ -143,6 +143,8 @@
     <ClInclude Include="MorningStar.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Scene_1.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Torch.h" />
     <ClInclude Include="UpgradeMorningStar.h" />
@@ -171,6 +173,8 @@
     <ClCompile Include="MorningStar.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Scene_1.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="UpgradeMorningStar.cpp" />

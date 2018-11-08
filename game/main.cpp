@@ -1,20 +1,7 @@
 ﻿#include "debug.h"
 #include "Game.h"
-#include "GameObject.h"
 
-
-#include "Mario.h"
-#include "Brick.h"
-#include "Goomba.h"
-
-#include "Simon.h"
-#include "define.h"
-#include "Map.h"
-#include "Camera.h"
-#include "Grid.h"
-#include "Item.h" 
-#include "VariableGlobal.h"
-#include "Board.h"
+#include "SceneManager.h"
 
 #define WINDOW_CLASS_NAME L"Game"
 #define MAIN_WINDOW_TITLE L"Game"
@@ -24,24 +11,15 @@
 #define MAX_FRAME_RATE 60
 
 
-VariableGlobal * _variableGlobal;
-
+#include "Scene_1.h"
 
 
 HWND hWnd; 
-
 Game *game;
-
-//extern Game *game;  
-Simon * simon;
-Map * TileMap;
-Camera *camera;
-Grid * gridGame;
-
-Board * board;
+SceneManager * _sceneManager;
 
 
-vector<LPOBJECT> ListObj;
+
 
 //
 //
@@ -164,52 +142,12 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
  
 void LoadResources()
 {
-	_variableGlobal = VariableGlobal::GetInstance();
-	 
-
-	simon = new Simon();
-	TileMap = new Map();
-	camera = new Camera(Window_Width, Window_Height/*, Window_Width/2, MapWidth - Window_Width / 2*/);
-	camera->SetPosition(0, 0);
-
-
-	board = new Board(0, 0);
-
-	simon->SetPosition(SIMON_POSITION_DEFAULT);
-	simon->SetPosition(0, 0);
-	 
-	 
-	gridGame = new Grid();
-	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
- 
-
-
-
-	_variableGlobal->ListItem.clear();
-
+	_sceneManager->LoadResources();
 }
  
 void Update(DWORD dt)
-{
- //	DebugOut(L"[DT] DT: %d\n", dt);
- 
-
-	gridGame->GetListObject(ListObj, camera); // lấy hết các object trong vùng camera;
-
-	simon->Update(dt, &ListObj);
-	camera->SetPosition(simon->GetX() - Window_Width/2 + 30, camera->GetViewport().y ); // cho camera chạy theo simon
-	camera->Update();
-
-	for (int i = 0; i < ListObj.size(); i++)
-	{
-		ListObj[i]->Update(dt,&ListObj);
-	}
-
-	for (int i = 0; i < _variableGlobal->ListItem.size(); i++) // update các Item
-	{
-		_variableGlobal->ListItem[i]->Update(dt, &ListObj);
-	}
-
+{ 
+	_sceneManager->Update(dt); 
 }
  
 void Render()
@@ -223,27 +161,9 @@ void Render()
 		// Clear back buffer with a color
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+		 
 
-
-
-		TileMap->DrawMap(camera);
-
-
-		for (int i = 0; i < ListObj.size(); i++)
-			ListObj[i]->Render(camera);
-
-
-
-
-		for (int i = 0; i < _variableGlobal->ListItem.size(); i++) // Draw các item
-			_variableGlobal->ListItem[i]->Render(camera);
-
-
-
-
-		board->Render(camera);
-
-		simon->Render(camera);
+		_sceneManager->Render();
 
 
 		spriteHandler->End();
@@ -348,11 +268,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game = Game::GetInstance();
 	game->Init(hWnd);
 
+	_sceneManager = SceneManager::GetInstance();
+
+
+	_sceneManager->SetScene(new Scene_1()); // vào màn 1
+	 
+
+
 	//keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(/*keyHandler*/);
 
 
 	LoadResources();
+	
 
 	SetWindowPos(hWnd, 0, 0, 0, Window_Width, Window_Height, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

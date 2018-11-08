@@ -1,5 +1,4 @@
 #include "define.h"
-#include "GTexture.h"
 
 
 

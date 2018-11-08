@@ -190,8 +190,10 @@ void Game::ProcessKeyboard()
 	}
 
 	 
-	/*keyHandler->*/KeyState((BYTE *)&keyStates); 
+	/*keyHandler->*/    /*KeyState((BYTE *)&keyStates); */
 	 
+	SceneManager::GetInstance()->KeyState((BYTE *)&keyStates);
+	
 
 	// Collect all buffered events
 	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
@@ -208,9 +210,11 @@ void Game::ProcessKeyboard()
 		int KeyCode = keyEvents[i].dwOfs;
 		int KeyState = keyEvents[i].dwData;
 		if ((KeyState & 0x80) > 0)
-			/*keyHandler->*/OnKeyDown(KeyCode);
+			/*keyHandler->*//* OnKeyDown(KeyCode);*/
+			SceneManager::GetInstance()->OnKeyDown(KeyCode);
 		else
-			/*keyHandler->*/OnKeyUp(KeyCode);
+			/*keyHandler->*/ /*OnKeyUp(KeyCode);*/
+			SceneManager::GetInstance()->OnKeyUp(KeyCode);
 	}
 }
 

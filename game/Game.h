@@ -1,5 +1,8 @@
 #pragma once
 #include "define.h"
+
+#include "SceneManager.h"
+
 #define DIRECTINPUT_VERSION 0x0800
 
 #define KEYBOARD_BUFFER_SIZE 1024
@@ -19,6 +22,7 @@ public:
 typedef KeyEventHandler * LPKEYEVENTHANDLER;
 
 */
+
 
 class Game
 {

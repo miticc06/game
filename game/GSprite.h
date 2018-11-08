@@ -3,8 +3,7 @@
  
 
 #include "GTexture.h"
-#include "Game.h"
-
+ 
 
 class GSprite {
 public:

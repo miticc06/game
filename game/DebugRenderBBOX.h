@@ -21,5 +21,4 @@ public:
 
 
 
-#endif // !__DEBUGRENDERBBOX_H__
-
+#endif
