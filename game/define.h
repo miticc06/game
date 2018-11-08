@@ -7,6 +7,27 @@
 #include <d3dx9.h>
 #include <map>
 #include "debug.h"
+
+#include <vector>
+
+#include <Windows.h> 
+
+#include <dinput.h> 
+
+
+#include <algorithm>
+
+
+#include <stdio.h>
+
+#include <fstream>
+#include <iostream>
+#include <stdlib.h>
+#include <iostream>
+#include <iomanip>
+
+
+
 using namespace std;
 
 #define WINDOW_WIDTH 512
@@ -25,7 +46,7 @@ using namespace std;
 #define SCREEN_HEIGHT 448
 
 
-#define IS_DEBUG_RENDER_BBOX 0
+#define IS_DEBUG_RENDER_BBOX 1
  
  
 extern int Window_Width;

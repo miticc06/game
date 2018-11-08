@@ -1,8 +1,6 @@
 ﻿#pragma once
 
-#include <Windows.h>
-#include <d3dx9.h>
-#include <vector>
+
  
 
 #include "define.h"
@@ -10,7 +8,7 @@
 #include "GTexture.h"
 #include "Camera.h"
 #include "DebugRenderBBOX.h"
-
+#include "define.h"
 #include "Object.h"
 
 using namespace std;

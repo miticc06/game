@@ -1,11 +1,7 @@
 ﻿#ifndef __GRID_H__
 #define	__GRID_H__
 
-#include <vector>
-#include <stdlib.h>
-#include <iostream>
-#include <fstream>
-#include <iomanip>
+
 #include "Game.h" 
 #include "GSprite.h" 
 #include "Map.h"

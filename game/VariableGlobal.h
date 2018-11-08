@@ -3,8 +3,10 @@
  
 
 #include "define.h"
-#include <vector>
+ 
+
 #include "Item.h"
+
 
 class VariableGlobal
 { 

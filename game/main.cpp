@@ -1,8 +1,4 @@
-﻿#include <windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
-
-#include "debug.h"
+﻿#include "debug.h"
 #include "Game.h"
 #include "GameObject.h"
 
@@ -34,9 +30,9 @@ VariableGlobal * _variableGlobal;
 
 HWND hWnd; 
 
+Game *game;
 
-
-Game *game;  
+//extern Game *game;  
 Simon * simon;
 Map * TileMap;
 Camera *camera;

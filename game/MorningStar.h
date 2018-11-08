@@ -5,6 +5,8 @@
 #define MORNINGSTAR_ANI_LEVEL0_START 0
 #define MORNINGSTAR_ANI_LEVEL0_END 3
 
+#define MORNINGSTAR_ANI_LEVEL1_START 4
+#define MORNINGSTAR_ANI_LEVEL1_END 7
 
 #include "Weapon.h"
 #include "GameObject.h"
@@ -30,8 +32,10 @@ public:
 
 	void CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj);
 
+	void UpgradeLevel();
+
 };
 
 
 
-#endif // !__MORNINGSTAR_H__
+#endif  

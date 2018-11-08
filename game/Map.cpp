@@ -95,5 +95,4 @@ void Map::DrawMap(Camera *camera)
  	}
  
 }
-
-//tong qan nn wsml , dinh nghiax vaf cac thanh phan, so sanh wsml voi 
+ 

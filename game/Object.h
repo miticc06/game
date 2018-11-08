@@ -1,8 +1,6 @@
-﻿#pragma once
+﻿#ifndef __OBJECT_H__
+#define __OBJECT_H__
 
-#include <Windows.h>
-#include <d3dx9.h>
-#include <vector>
 
 
 #include "define.h"
@@ -10,7 +8,7 @@
 #include "GTexture.h"
 #include "Camera.h"
 #include "DebugRenderBBOX.h"
-#include <algorithm>
+
 
 using namespace std;
 
@@ -44,7 +42,7 @@ class Object
 {
 protected:
 	eID type; // Loại Object
-	 
+
 	float x;
 	float y;
 
@@ -85,16 +83,21 @@ public:
 	int GetWidth() { return _texture->FrameWidth; }
 
 	eID GetType() { return type; }
-	 
+
 
 
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL) = 0;
 	virtual void Render(Camera * camera) = 0;
- 	 
-	
+
+
 
 	~Object();
 };
+
+
+
+
+#endif  
 

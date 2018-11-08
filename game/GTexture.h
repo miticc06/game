@@ -1,8 +1,6 @@
 ﻿#ifndef __CTEXTURE_H__
 #define __CTEXTURE_H__
-
-#include <d3d9.h>
-#include <d3dx9.h>
+ 
 #include "Game.h"
 #include "define.h"
 

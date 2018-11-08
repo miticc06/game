@@ -19,7 +19,7 @@ public:
 	 
 	void Update();
 
-	D3DXVECTOR2 Transform(int x, int y);
+	D3DXVECTOR2 Transform(float x, float y);
 
 	void SetPosition(int x, int y); 
 

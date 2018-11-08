@@ -2,16 +2,12 @@
 #define __MAP_H__
 
 
-#include <stdio.h>
 
 #include "GTexture.h"
 #include "GSprite.h"
 #include "define.h"
 
 #include "Camera.h"
-
-#include <fstream>
-#include <iostream>
 
 
 #define TILE_FRAME_WIDTH 64

@@ -6,7 +6,6 @@
 #include "GTexture.h"
 #include "GSprite.h"
 #include "DebugRenderBBOX.h"
-#include <vector>
 #include "GameObject.h"
 #include "Item.h"
 #include "LargeHeart.h"

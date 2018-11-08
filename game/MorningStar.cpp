@@ -40,6 +40,18 @@ void MorningStar::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 			_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL0_START);
 		}
 	}
+
+	if (level == 1)
+	{
+		if (MORNINGSTAR_ANI_LEVEL1_START <= _sprite->GetIndex() && _sprite->GetIndex() < MORNINGSTAR_ANI_LEVEL1_END)
+		{
+			_sprite->Update(dt);
+		}
+		else
+		{
+			_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL1_START);
+		}
+	}
 }
  
 
@@ -56,6 +68,11 @@ void MorningStar::Create(float simonX, float simonY, int simonTrend)
 	if (level == 0)
 	{
 		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL0_START - 1); // đặt sai index cho hàm update cập nhật ngay frame đầu
+	}
+
+	if (level == 1)
+	{
+		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL1_START - 1); // đặt sai index cho hàm update cập nhật ngay frame đầu
 	}
 }
 
@@ -80,6 +97,26 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 			left = x + 80;  
 			top = y + 15;
 			right = x + _texture->FrameWidth -30; 
+			bottom = y + _texture->FrameHeight - 30;
+		}
+		else
+		{
+			left = x + 30;
+			top = y + 15;
+			right = x + _texture->FrameWidth - 85;
+			bottom = y + _texture->FrameHeight - 30;
+
+		}
+
+	}
+
+	if (level == 1)
+	{
+		if (trend == 1)
+		{
+			left = x + 80;
+			top = y + 15;
+			right = x + _texture->FrameWidth - 30;
 			bottom = y + _texture->FrameHeight - 30;
 		}
 		else
@@ -132,4 +169,11 @@ void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
 		}
 	 
 
+}
+
+void MorningStar::UpgradeLevel()
+{
+	if (level >= 2)
+		return;
+	level++;
 }
