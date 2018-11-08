@@ -67,6 +67,9 @@
     <ClCompile Include="UpgradeMorningStar.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Framework\Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -132,6 +135,9 @@
     <ClInclude Include="UpgradeMorningStar.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Framework\Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -169,6 +175,9 @@
     </Filter>
     <Filter Include="Object\Item">
       <UniqueIdentifier>{5c6daaa9-a099-4a7c-ab4d-2ff70a828313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Font">
+      <UniqueIdentifier>{f85bd4fe-bdbb-43f7-b818-60bdf95399fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

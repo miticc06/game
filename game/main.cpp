@@ -224,7 +224,6 @@ void Render()
 
 		TileMap->DrawMap(camera);
 
-		board->Render(camera);
 
 		for (int i = 0; i < ListObj.size(); i++)
 			ListObj[i]->Render(camera);
@@ -238,6 +237,7 @@ void Render()
 
 
 
+		board->Render(camera);
 
 		simon->Render(camera);
 

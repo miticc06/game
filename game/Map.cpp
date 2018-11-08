@@ -53,27 +53,7 @@ void Map::ReadMapTXT(char * filename)
 }
 
 void Map::DrawMap(Camera *camera)
-{
-	 /*
-	
-	row = int(camera->GetViewport().y) / TileTexture->FrameHeight;
-	column = int(camera->GetViewport().x) / TileTexture->FrameHeight;
-
-	for (int i = 0; i < ScreenRow; i++)
-	{
-		for (int j = 0; j < ScreenColumn; j++)
-		{
-			TileSprite->SelectIndex(TileMap[i][j + column]);
-
-			//D3DXVECTOR2 pos = camera->Transform(0 + j * TILE_FRAME_HEIGHT, 0 + i * TILE_FRAME_WIDTH);
-			//TileSprite->Draw(pos.x, pos.y);
-
-			TileSprite->Draw(0 + j * TILE_FRAME_HEIGHT , 0 + i * TILE_FRAME_WIDTH);
-		}
-	}
- */
- 
-
+{ 
 	row = int(camera->GetViewport().y) / TileTexture->FrameHeight;
 	column = int(camera->GetViewport().x) / TileTexture->FrameHeight;
 

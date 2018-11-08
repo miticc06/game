@@ -129,6 +129,7 @@
     <ClInclude Include="debug.h" />
     <ClInclude Include="DebugRenderBBOX.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
@@ -154,6 +155,7 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="DebugRenderBBOX.cpp" />
     <ClCompile Include="define.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
