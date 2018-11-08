@@ -177,7 +177,25 @@ void Game::ProcessKeyboard()
 		}
 	}
 
-	keyHandler->KeyState((BYTE *)&keyStates);
+
+	if (keyHandler)
+		keyHandler->KeyState((BYTE *)&keyStates);
+	else
+		DebugOut(L"[ERROR] keyHandler->KeyState");
+
+	/*try
+	{
+		if (keyHandler)
+			keyHandler->KeyState((BYTE *)&keyStates); 
+		else
+			DebugOut(L"[ERROR] keyHandler->KeyState");
+
+	}
+	catch (exception ex)
+	{
+		DebugOut(L"[ERROR] keyHandler->KeyState");
+	}
+*/
 
 
 

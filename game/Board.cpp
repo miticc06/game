@@ -12,7 +12,14 @@ Board::Board(int X, int Y)
 void Board::Render(Camera * camera)
 { 
 	_sprite->Draw(x,y);
-	_font.Draw(x, y, "AHIHI DO CHO - 0123456789");
+	_font.Draw(x, y+15, "SCORE-");
+	_font.Draw(x, y+33, "PLAYER");
+	_font.Draw(x, y+51, "ENEMY");
+
+
+	_font.Draw(x+210, y + 15, "TIME");
+	_font.Draw(x + 400, y + 15, "STAGE");
+
 }
 
 
