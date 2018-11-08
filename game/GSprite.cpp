@@ -115,7 +115,7 @@ void GSprite::Draw(int X, int Y)
 
  
 
-	D3DXVECTOR3 p(X, Y, 0);
+	D3DXVECTOR3 p((float)X, (float)Y, 0);
 	spriteHandler->Draw(
 		_texture->Texture,
 		&srect,
@@ -131,7 +131,7 @@ void GSprite::DrawRect(int X, int Y, RECT SrcRect)
 {
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
 
-	D3DXVECTOR3 position((float)X, (float)Y, 0);
+	D3DXVECTOR3 position((float)X, (float)Y, 0.0f);
 	spriteHandler->Draw(
 		_texture->Texture,
 		&SrcRect,
@@ -150,9 +150,9 @@ void GSprite::DrawFlipX(int x, int y)
 
 	D3DXMATRIX newMt;
 
-	D3DXVECTOR2 top_left = D3DXVECTOR2(x, y);
+	D3DXVECTOR2 top_left = D3DXVECTOR2((float)x, (float)y);
 
-	D3DXVECTOR2 rotate = D3DXVECTOR2(-1, 1);
+	D3DXVECTOR2 rotate = D3DXVECTOR2(-1.0f, 1.0f);
 
 	D3DXMatrixTransformation2D(&newMt, &top_left, 0.0f, &rotate, NULL, 0.0f, NULL);
 	D3DXMATRIX finalMt = newMt * oldMt;
@@ -175,8 +175,8 @@ void GSprite::DrawFlipY(int x, int y)
 	spriteHandler->GetTransform(&oldMt);
 
 	D3DXMATRIX newMt;
-	D3DXVECTOR2 center = D3DXVECTOR2(x + _texture->FrameWidth / 2, y + _texture->FrameHeight / 2);
-	D3DXVECTOR2 rotate = D3DXVECTOR2(1, -1);
+	D3DXVECTOR2 center = D3DXVECTOR2((float)(x + _texture->FrameWidth / 2), (float)( y + _texture->FrameHeight / 2));
+	D3DXVECTOR2 rotate = D3DXVECTOR2(1.0f, -1.0f);
 
 	D3DXMatrixTransformation2D(&newMt, &center, 0.0f, &rotate, NULL, 0.0f, NULL);
 	D3DXMATRIX finalMt = newMt * oldMt;
@@ -199,8 +199,8 @@ void GSprite::DrawIndex(int index, int X, int Y)
 	srect.bottom = srect.top + _texture->FrameHeight;
 	D3DXVECTOR3 position(0, 0, 0);
 	D3DXVECTOR3 center(0, 0, 0);
-	position.x = X - _texture->FrameWidth / 2;
-	position.y = Y - _texture->FrameHeight / 2;
+	position.x = (float)(X - _texture->FrameWidth / 2);
+	position.y = (float)(Y - _texture->FrameHeight / 2);
 	spriteHandler->Draw(
 		_texture->Texture,
 		&srect,
@@ -223,8 +223,8 @@ void GSprite::DrawRaw(int X, int Y)
 
  	D3DXVECTOR3 position(0, 0, 0);
 	D3DXVECTOR3 center(0, 0, 0);
-	position.x = X;
-	position.y = Y;
+	position.x = (float)X;
+	position.y = (float)Y;
 	spriteHandler->Draw(
 		_texture->Texture,
 		&srect,
@@ -248,8 +248,8 @@ void GSprite::DrawApart(int x, int y, int w)
 	spriteHandler->GetTransform(&oldMt);
 
 	D3DXMATRIX newMt;
-	D3DXVECTOR2 center = D3DXVECTOR2(x + _texture->FrameWidth / 2, y + _texture->FrameHeight / 2);
-	D3DXVECTOR2 rotate = D3DXVECTOR2(-1, 1);
+	D3DXVECTOR2 center = D3DXVECTOR2((float)(x + _texture->FrameWidth / 2), (float)(y + _texture->FrameHeight / 2));
+	D3DXVECTOR2 rotate = D3DXVECTOR2(-1.0, 1.0);
 
 	D3DXMatrixTransformation2D(&newMt, &center, 0.0f, &rotate, NULL, 0.0f, NULL);
 	D3DXMATRIX finalMt = newMt * oldMt;
@@ -268,8 +268,8 @@ void GSprite::DrawApart(int x, int y, int w)
 
  		D3DXVECTOR3 position(0, 0, 0);
 		D3DXVECTOR3 center(0, 0, 0);
-		position.x = X - _texture->FrameWidth / 2;
-		position.y = Y - _texture->FrameHeight / 2;
+		position.x = (float)(X - _texture->FrameWidth / 2);
+		position.y = (float)(Y - _texture->FrameHeight / 2);
 		spriteHandler->Draw(
 			_texture->Texture,
 			&srect,

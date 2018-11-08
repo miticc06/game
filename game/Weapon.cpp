@@ -76,7 +76,9 @@ Item * Weapon::GetNewItem(int Id, eID Type, float X, float Y)
 		if (Id == 2 || Id == 3)
 			return new UpgradeMorningStar(X, Y);
 
-		return new LargeHeart(X, Y);
+	//	return new LargeHeart(X, Y);
 
 	}
+
+	return new LargeHeart(X, Y);
 }

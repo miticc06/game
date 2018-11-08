@@ -42,7 +42,7 @@ void GTexture::Load(int ShowBox)
 
 	result = D3DXGetImageInfoFromFileA(FileName, &info);
 
-	RECT s = { 0, 0, info.Width, info.Height };
+	RECT s = { (LONG)0,(LONG)0, (LONG)info.Width, (LONG)info.Height };
 	this->Size = s;
 
 	FrameWidth = info.Width / Cols;
@@ -92,7 +92,7 @@ void GTexture::Load(int R, int G, int B)
 
 	result = D3DXGetImageInfoFromFileA(FileName, &info);
 
-	RECT s = { 0, 0, info.Width, info.Height };
+	RECT s = { (LONG)0,(LONG)0, (LONG)info.Width,(LONG)info.Height };
 	this->Size = s;
 
 	FrameWidth = info.Width / Cols;

@@ -53,8 +53,8 @@ void Scene_1::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
-	if (KeyCode == DIK_ESCAPE)
-		;//	DestroyWindow(hWnd); // thoát
+	//if (KeyCode == DIK_ESCAPE)
+	//	;//	DestroyWindow(hWnd); // thoát
 
 	if (KeyCode == DIK_Q)
 		simon->SetPosition(SIMON_POSITION_DEFAULT);
@@ -124,15 +124,15 @@ void Scene_1::Update(DWORD dt)
 	gridGame->GetListObject(ListObj, camera); // lấy hết các object trong vùng camera;
 
 	simon->Update(dt, &ListObj);
-	camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetViewport().y); // cho camera chạy theo simon
+	camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
 	camera->Update();
 
-	for (int i = 0; i < ListObj.size(); i++)
+	for (UINT i = 0; i < ListObj.size(); i++)
 	{
 		ListObj[i]->Update(dt, &ListObj);
 	}
 
-	for (int i = 0; i < _variableGlobal->ListItem.size(); i++) // update các Item
+	for (UINT i = 0; i < _variableGlobal->ListItem.size(); i++) // update các Item
 	{
 		_variableGlobal->ListItem[i]->Update(dt, &ListObj);
 	}
@@ -144,12 +144,12 @@ void Scene_1::Render()
 	TileMap->DrawMap(camera);
 
 
-	for (int i = 0; i < ListObj.size(); i++)
+	for (UINT i = 0; i < ListObj.size(); i++)
 		ListObj[i]->Render(camera);
 
 	 
 
-	for (int i = 0; i < _variableGlobal->ListItem.size(); i++) // Draw các item
+	for (UINT i = 0; i < _variableGlobal->ListItem.size(); i++) // Draw các item
 		_variableGlobal->ListItem[i]->Render(camera);
 
 

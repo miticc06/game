@@ -149,7 +149,7 @@ void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
 
 
 
-	for (int i = 0; i < listObj->size(); i++) // ngay đây có thể tối ưu thêm, từ từ fix :p
+	for (UINT i = 0; i < listObj->size(); i++) // ngay đây có thể tối ưu thêm, từ từ fix :p
 		if (listObj->at(i)->GetType() == eID::TORCH)
 		{
 			GameObject *obj = dynamic_cast<GameObject*>(listObj->at(i));

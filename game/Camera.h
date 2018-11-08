@@ -6,7 +6,10 @@
 class Camera
 {
 protected:
-	D3DXVECTOR2 _viewport;
+
+//	D3DXVECTOR2 _viewport;
+	float _xCam;
+	float _yCam;
 	int _width;
 	int _height;
 
@@ -19,12 +22,12 @@ public:
 	 
 	void Update();
 
-	D3DXVECTOR2 Transform(float x, float y);
+	D3DXVECTOR2 Transform(float, float);
 
-	void SetPosition(int x, int y); 
+	void SetPosition(float x, float y);
 
-	D3DXVECTOR2 GetViewport();
-
+	float GetXCam();
+	float GetYCam(); 
 	int GetWidth();
 	int GetHeight();
 

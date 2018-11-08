@@ -17,8 +17,8 @@ Font::~Font()
 }
 
 void Font::Draw(float x, float y, string s)
-{
-	for (int i = 0; i < s.size(); i++)
+{ 
+	for (UINT i = 0; i < s.size(); i++)
 	{
 		if (s[i] == ' ')
 			continue;

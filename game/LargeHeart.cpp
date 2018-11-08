@@ -41,7 +41,7 @@ void LargeHeart::Update(DWORD dt, vector<LPOBJECT>* listObject)
 
 	vector<LPOBJECT> listObject_Brick;
 	listObject_Brick.clear();
-	for (int i = 0; i < listObject->size(); i++)
+	for (UINT i = 0; i < listObject->size(); i++)
 		if (listObject->at(i)->GetType() == eID::BRICK)
 			listObject_Brick.push_back(listObject->at(i));
 

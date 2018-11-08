@@ -7,8 +7,8 @@ Torch::Torch(int X, int Y)
 {
 	_texture = new GTexture("Resources\\ground\\0.png", 2, 1, 2, 0);
 	_sprite = new GSprite(_texture, 100);
-	this->x = X;
-	this->y = Y;
+	this->x = (float)X;
+	this->y = (float)Y;
 	type = eID::TORCH;
 	Health = 1; 
 }

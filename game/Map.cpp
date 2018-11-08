@@ -54,11 +54,11 @@ void Map::ReadMapTXT(char * filename)
 
 void Map::DrawMap(Camera *camera)
 { 
-	row = int(camera->GetViewport().y) / TileTexture->FrameHeight;
-	column = int(camera->GetViewport().x) / TileTexture->FrameHeight;
+	row = int(camera->GetYCam()) / TileTexture->FrameHeight;
+	column = int(camera->GetXCam()) / TileTexture->FrameHeight;
 
-	x = -(int(camera->GetViewport().x) % TileTexture->FrameHeight);
-	y = -(int(camera->GetViewport().y) % TileTexture->FrameHeight);
+	x = -(int(camera->GetXCam()) % TileTexture->FrameHeight);
+	y = -(int(camera->GetYCam()) % TileTexture->FrameHeight);
 
 	for (int i = 0; i < ScreenRow; i++)
 	{ 

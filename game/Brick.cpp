@@ -6,8 +6,8 @@ Brick::Brick(int X, int Y, int W, int H)
 	type = eID::BRICK;
 	_texture = new GTexture("Resources\\ground\\2.png", 1, 1, 1, 0);
 	_sprite = new GSprite(_texture, 1000);
-	this->x = X;
-	this->y = Y;
+	this->x = (float)X;
+	this->y = (float)Y;
 	this->width = W;
 	this->height = H;
 }

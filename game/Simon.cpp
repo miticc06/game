@@ -49,9 +49,9 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 	/*if (x < -10)
 		x = -10;*/
 	if (x < 0)
-		x = 0;
+		x = 0.0f;
 	if (x + SIMON_BBOX_WIDTH > MapWidth)
-		x = MapWidth - SIMON_BBOX_WIDTH;
+		x = (float)(MapWidth - SIMON_BBOX_WIDTH);
 	/* Không cho lọt khỏi camera */
 
 
@@ -133,7 +133,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 	vector<LPOBJECT> list_Brick;
 	list_Brick.clear();
-	for (int i = 0; i < coObjects->size(); i++)
+	for (UINT i = 0; i < coObjects->size(); i++)
 		if (coObjects->at(i)->GetType() == eID::BRICK)
 			list_Brick.push_back(coObjects->at(i));
 	CollisionWithBrick(&list_Brick); // check Collision and update x, y for simon
@@ -181,7 +181,7 @@ void Simon::Render(Camera* camera)
 	else
 		_sprite->DrawFlipX(pos.x, pos.y);
 	 
-	for (int i=0; i<_ListWeapon.size(); i++)
+	for (UINT i=0; i<_ListWeapon.size(); i++)
 		if (_ListWeapon[i]->GetFinish() == false)
 		{ 
 			_ListWeapon[i]->Render(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
@@ -362,7 +362,7 @@ void Simon::CollisionWithItem()
 	GetBoundingBox(l, t, r, b);  // lấy BBOX của simon
 	 
 
-	for (int i = 0; i < varG->ListItem.size(); i++) // check trước bằng AABB xem có va chạm không?
+	for (UINT i = 0; i < varG->ListItem.size(); i++) // check trước bằng AABB xem có va chạm không?
 	{
 		varG->ListItem.at(i)->GetBoundingBox(l1, t1, r1, b1);
 		if (Game::GetInstance()->AABBCheck(l, t, r, b, l1, t1, r1, b1) == true)
@@ -374,7 +374,7 @@ void Simon::CollisionWithItem()
 
 
 
-	for (int i = 0; i < varG->ListItem.size(); i++)
+	for (UINT i = 0; i < varG->ListItem.size(); i++)
 		if (varG->ListItem[i]->GetFinish() == false) // chưa kết thúc thì xét
 		{
 			listObj.push_back(varG->ListItem[i]);
