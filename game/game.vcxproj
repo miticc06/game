@@ -142,6 +142,7 @@
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MorningStar.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Torch.h" />
     <ClInclude Include="UpgradeMorningStar.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MorningStar.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="UpgradeMorningStar.cpp" />

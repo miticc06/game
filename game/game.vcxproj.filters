@@ -70,6 +70,9 @@
     <ClCompile Include="Font.cpp">
       <Filter>Framework\Font</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Framework\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -138,6 +141,9 @@
     <ClInclude Include="Font.h">
       <Filter>Framework\Font</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Framework\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -178,6 +184,9 @@
     </Filter>
     <Filter Include="Framework\Font">
       <UniqueIdentifier>{f85bd4fe-bdbb-43f7-b818-60bdf95399fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Scene">
+      <UniqueIdentifier>{5e0cace7-9997-4db5-a549-4df062601ea6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

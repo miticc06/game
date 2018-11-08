@@ -83,7 +83,19 @@ int Game::IsKeyDown(int KeyCode)
 	return (keyStates[KeyCode] & 0x80) > 0;
 }
 
-void Game::InitKeyboard(LPKEYEVENTHANDLER handler)
+void Game::KeyState(BYTE * state)
+{
+}
+
+void Game::OnKeyDown(int KeyCode)
+{
+}
+
+void Game::OnKeyUp(int KeyCode)
+{
+}
+
+void Game::InitKeyboard(/*LPKEYEVENTHANDLER handler*/)
 {
 	HRESULT
 		hr = DirectInput8Create
@@ -147,7 +159,7 @@ void Game::InitKeyboard(LPKEYEVENTHANDLER handler)
 		return;
 	}
 
-	this->keyHandler = handler;
+	//this->keyHandler = handler;
 
 	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
 }
@@ -172,39 +184,21 @@ void Game::ProcessKeyboard()
 		}
 		else
 		{
-			//DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
+			DebugOut(L"[ERROR] DINPUT::GetDeviceState failed. Error: %d\n", hr);
 			return;
 		}
 	}
 
-
-	if (keyHandler)
-		keyHandler->KeyState((BYTE *)&keyStates);
-	else
-		DebugOut(L"[ERROR] keyHandler->KeyState");
-
-	/*try
-	{
-		if (keyHandler)
-			keyHandler->KeyState((BYTE *)&keyStates); 
-		else
-			DebugOut(L"[ERROR] keyHandler->KeyState");
-
-	}
-	catch (exception ex)
-	{
-		DebugOut(L"[ERROR] keyHandler->KeyState");
-	}
-*/
-
-
+	 
+	/*keyHandler->*/KeyState((BYTE *)&keyStates); 
+	 
 
 	// Collect all buffered events
 	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
 	hr = didv->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), keyEvents, &dwElements, 0);
 	if (FAILED(hr))
 	{
-		//DebugOut(L"[ERROR] DINPUT::GetDeviceData failed. Error: %d\n", hr);
+		DebugOut(L"[ERROR] DINPUT::GetDeviceData failed. Error: %d\n", hr);
 		return;
 	}
 
@@ -214,9 +208,9 @@ void Game::ProcessKeyboard()
 		int KeyCode = keyEvents[i].dwOfs;
 		int KeyState = keyEvents[i].dwData;
 		if ((KeyState & 0x80) > 0)
-			keyHandler->OnKeyDown(KeyCode);
+			/*keyHandler->*/OnKeyDown(KeyCode);
 		else
-			keyHandler->OnKeyUp(KeyCode);
+			/*keyHandler->*/OnKeyUp(KeyCode);
 	}
 }
 

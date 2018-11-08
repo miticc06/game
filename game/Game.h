@@ -6,6 +6,8 @@
 /*
 Abstract class to define keyboard event handlers
 */
+
+/*
 class KeyEventHandler
 {
 public:
@@ -16,8 +18,11 @@ public:
 
 typedef KeyEventHandler * LPKEYEVENTHANDLER;
 
+*/
+
 class Game
 {
+protected:
 	static Game * __instance;
 	HWND hWnd;									// Window handle
 
@@ -33,10 +38,14 @@ class Game
 	BYTE  keyStates[256];			// DirectInput keyboard state buffer 
 	DIDEVICEOBJECTDATA keyEvents[KEYBOARD_BUFFER_SIZE];		// Buffered keyboard data
 
-	LPKEYEVENTHANDLER keyHandler;
+	//LPKEYEVENTHANDLER keyHandler;
+
+	virtual void KeyState(BYTE *state);
+	virtual void OnKeyDown(int KeyCode);
+	virtual void OnKeyUp(int KeyCode);
 
 public:
-	void InitKeyboard(LPKEYEVENTHANDLER handler);
+	void InitKeyboard(/*LPKEYEVENTHANDLER handler*/);
 	void Init(HWND hWnd);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, int alpha = 255);
@@ -65,7 +74,11 @@ public:
 
 	bool AABBCheck(RECT b1, RECT b2); 
 
+
+
 	static Game * GetInstance();
+
+
 	bool AABBCheck(float b1left, float b1top, float b1right, float b1bottom, float b2left, float b2top, float b2right, float b2bottom);
 
 	~Game();
