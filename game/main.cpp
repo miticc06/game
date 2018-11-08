@@ -303,7 +303,7 @@ int Run()
 	int done = 0;
 	DWORD frameStart = GetTickCount();
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
-
+	DWORD now, dt;
 	while (!done)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -314,24 +314,28 @@ int Run()
 			DispatchMessage(&msg);
 		}
 
-		DWORD now = GetTickCount();
+		now = GetTickCount();
 
 		// dt: the time between (beginning of last frame) and now
 		// this frame: the frame we are about to render
-		DWORD dt = now - frameStart;
+		dt = now - frameStart;
 
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
 
 			game->ProcessKeyboard();
-			
+
+ 
 			Update(dt);
 			Render();
 		}
-		else
-			Sleep(tickPerFrame - dt);	
-	}
+		else 
+			Sleep(tickPerFrame - dt);
+			
+
+		
+ }
 
 	return 1;
 }
