@@ -1,6 +1,5 @@
 ﻿#include "Simon.h"
-
-
+ 
 
 Simon::Simon()
 {
@@ -165,8 +164,8 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 			_ListWeapon[0]->CollisionWithObject(dt, coObjects); // kiểm tra va chạm với các object khác
 			
 		} 
-	}
-	
+	} 
+
 }
 
 void Simon::Render(Camera* camera)
@@ -177,9 +176,9 @@ void Simon::Render(Camera* camera)
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	 
 	if (trend == -1)
-		_sprite->Draw(pos.x, pos.y);
+		_sprite->Draw((int)pos.x, (int)pos.y);
 	else
-		_sprite->DrawFlipX(pos.x, pos.y);
+		_sprite->DrawFlipX((int)pos.x, (int)pos.y);
 	 
 	for (UINT i=0; i<_ListWeapon.size(); i++)
 		if (_ListWeapon[i]->GetFinish() == false)

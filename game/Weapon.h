@@ -45,7 +45,7 @@ public:
 	virtual void CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj) = 0;
 
 
-	int GetFinish();
+	bool GetFinish();
 
 	void SetFinish(bool b);
 	  

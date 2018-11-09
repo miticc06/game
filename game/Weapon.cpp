@@ -41,9 +41,9 @@ void Weapon::Render(Camera * camera)
 	//DebugOut(L"WEAPON: index = %d \n", _sprite->GetIndex());
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (trend == -1)
-		_sprite->Draw(pos.x, pos.y);
+		_sprite->Draw((int)pos.x, (int)pos.y);
 	else
-		_sprite->DrawFlipX(pos.x, pos.y);
+		_sprite->DrawFlipX((int)pos.x, (int)pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
@@ -55,7 +55,7 @@ void Weapon::UpdatePositionFitSimon()
 }
  
 
-int Weapon::GetFinish()
+bool Weapon::GetFinish()
 {
 	return isFinish;
 }
