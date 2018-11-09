@@ -148,14 +148,10 @@ void Scene_1::Render()
 		ListObj[i]->Render(camera);
 
 	 
-
-	//for (UINT i = 0; i < _variableGlobal->ListItem.size(); i++) // Draw các item
-	//	_variableGlobal->ListItem[i]->Render(camera);
+	 
 
 
-
-
-	board->Render(camera);
+	board->Render(camera, simon);
 
 	simon->Render(camera);
 

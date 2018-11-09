@@ -6,20 +6,22 @@
 #include "Camera.h"
 #include "define.h"
 #include "Font.h"
+#include "Simon.h"
+#include "BoardHealth.h"
+
 class Board
 {
 private:
 	Font _font;
-
+	BoardHealth _boardHealth;
+	
 	GTexture *_texture;
 	GSprite * _sprite;
 	int x, y;
 
-	string information;
-
-public:
+ public:
 	Board(int X, int Y);
-	void Render(Camera *camera);
+	void Render(Camera *camera , Simon * simon);
 	~Board();
 };
 

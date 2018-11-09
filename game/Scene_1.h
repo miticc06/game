@@ -25,11 +25,8 @@ public:
 	Map * TileMap;
 	Camera *camera;
 	Grid * gridGame;
-
 	Board * board;
-
-	//VariableGlobal * _variableGlobal;
-
+	 
 
 	vector<LPOBJECT> ListObj;
 

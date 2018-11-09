@@ -12,7 +12,7 @@
 
 #include <Windows.h> 
 
-
+#include <string>
 
 
 #include <algorithm>

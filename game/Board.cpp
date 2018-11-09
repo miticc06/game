@@ -1,4 +1,4 @@
-#include "Board.h"
+﻿#include "Board.h"
  
 Board::Board(int X, int Y)
 {
@@ -8,8 +8,9 @@ Board::Board(int X, int Y)
 	y = Y;
  
 }
+ 
 
-void Board::Render(Camera * camera)
+void Board::Render(Camera * camera, Simon * simon)
 { 
 	_sprite->Draw(x,y);
 	_font.Draw(x, y+15, "SCORE-");
@@ -19,6 +20,12 @@ void Board::Render(Camera * camera)
 
 	_font.Draw(x+210, y + 15, "TIME");
 	_font.Draw(x + 400, y + 15, "STAGE");
+
+
+	_font.Draw(x + 400+15, y + 15+18, std::to_string(simon->GetHeartCollect())); // Số lượng tim nhặt dc
+	
+
+	_boardHealth.Draw(x + 100, y + 30, simon->GetHealth(), 5);
 
 }
 

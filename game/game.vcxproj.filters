@@ -57,7 +57,6 @@
     <ClCompile Include="Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Board.cpp" />
     <ClCompile Include="VariableGlobal.cpp">
       <Filter>Framework\Define</Filter>
     </ClCompile>
@@ -65,7 +64,7 @@
       <Filter>Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
-      <Filter>Framework\Font</Filter>
+      <Filter>Framework\Board\Font</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Framework\Scene</Filter>
@@ -78,6 +77,12 @@
     </ClCompile>
     <ClCompile Include="GSprite.cpp">
       <Filter>Framework\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>Framework\Board</Filter>
+    </ClCompile>
+    <ClCompile Include="BoardHealth.cpp">
+      <Filter>Framework\Board</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,7 +139,6 @@
     <ClInclude Include="Object.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Board.h" />
     <ClInclude Include="VariableGlobal.h">
       <Filter>Framework\Define</Filter>
     </ClInclude>
@@ -142,7 +146,7 @@
       <Filter>Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
-      <Filter>Framework\Font</Filter>
+      <Filter>Framework\Board\Font</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Framework\Scene</Filter>
@@ -155,6 +159,12 @@
     </ClInclude>
     <ClInclude Include="GSprite.h">
       <Filter>Framework\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>Framework\Board</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardHealth.h">
+      <Filter>Framework\Board</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,11 +204,14 @@
     <Filter Include="Object\Item">
       <UniqueIdentifier>{5c6daaa9-a099-4a7c-ab4d-2ff70a828313}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Font">
-      <UniqueIdentifier>{f85bd4fe-bdbb-43f7-b818-60bdf95399fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Scene">
       <UniqueIdentifier>{5e0cace7-9997-4db5-a549-4df062601ea6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Board">
+      <UniqueIdentifier>{a0c36d2c-f20b-487c-86dc-567d14ff6429}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Board\Font">
+      <UniqueIdentifier>{f85bd4fe-bdbb-43f7-b818-60bdf95399fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
