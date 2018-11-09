@@ -59,14 +59,19 @@ protected:
 
 public:
 	Object();
-	Object(eID _type) { this->type = _type; }
-	void SetPosition(float x, float y) { this->x = x, this->y = y; }
-	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
-	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
-	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
+	Object(eID _type);
+	void SetPosition(float x, float y);
+	void SetSpeed(float vx, float vy);
+	void GetPosition(float &x, float &y);
+	void GetSpeed(float &vx, float &vy);
 
-	float GetX() { return x; }
-	float GetY() { return y; }
+	float GetX();
+	float GetY();
+	int GetHeight();
+	int GetWidth();
+	eID GetType();
+
+
 
 	void RenderBoundingBox(Camera * camera);
 	LPCOLLISIONEVENT SweptAABBEx(LPOBJECT coO);
@@ -79,13 +84,7 @@ public:
 		float &nx,
 		float &ny);
 
-	int GetHeight() { return _texture->FrameHeight; }
-	int GetWidth() { return _texture->FrameWidth; }
-
-	eID GetType() { return type; }
-
-
-
+	 
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL) = 0;

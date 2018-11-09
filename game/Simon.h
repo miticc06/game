@@ -47,19 +47,20 @@
 
 class Simon : public GameObject
 {
-public:
-	
+private:
+	int HeartCollect; // số lượng item heart người chơi nhặt được
+	 
 	bool isWalking;
 	bool isJumping;
 	bool isSitting;
 	bool isAttacking;
 
-	vector<Weapon*> _ListWeapon;
 
 public:
 	Simon();
 	~Simon();
 
+	vector<Weapon*> _ListWeapon;
 
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
@@ -75,9 +76,11 @@ public:
 	void Go();
 	void Sit();
 	void Jump();
-
-
 	void Stop();
+
+
+	void SetHeartCollect(int h);
+	int GetHeartCollect();
 
 	void CollisionWithBrick(vector<LPOBJECT> *coObjects = NULL);
 	void CollisionWithItem();

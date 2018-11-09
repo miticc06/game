@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+﻿#include "SceneManager.h"
 
 SceneManager * SceneManager::_Instance = NULL;
 
@@ -24,6 +24,7 @@ void SceneManager::SetScene(Scene * x)
 	Scene * scene_temp = _scene;
 	
 	// .....
+	// có thể là truyền pointer simon cho Scene sau - quản lí điểm
 
 	_scene = x;
 	SAFE_DELETE(scene_temp);

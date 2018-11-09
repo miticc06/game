@@ -30,9 +30,6 @@
     <ClCompile Include="GTexture.cpp">
       <Filter>Framework\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="GSprite.cpp">
-      <Filter>Framework\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="Simon.cpp">
       <Filter>Player</Filter>
     </ClCompile>
@@ -79,6 +76,9 @@
     <ClCompile Include="Scene_1.cpp">
       <Filter>Framework\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="GSprite.cpp">
+      <Filter>Framework\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -105,9 +105,6 @@
       <Filter>Framework\Grid</Filter>
     </ClInclude>
     <ClInclude Include="GTexture.h">
-      <Filter>Framework\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="GSprite.h">
       <Filter>Framework\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Simon.h">
@@ -155,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="Scene_1.h">
       <Filter>Framework\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GSprite.h">
+      <Filter>Framework\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

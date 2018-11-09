@@ -121,6 +121,21 @@ void Object::FilterCollision(
 	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
 }
 
+int Object::GetHeight()
+{
+	return _texture->FrameHeight;
+}
+
+int Object::GetWidth()
+{
+	return _texture->FrameWidth;
+}
+
+eID Object::GetType()
+{
+	return type;
+}
+
 
 
 
@@ -128,6 +143,44 @@ Object::Object()
 {
 	vx = vy = 0;
 	x = y = 0;
+}
+
+Object::Object(eID _type)
+{
+	this->type = _type;
+}
+
+void Object::SetPosition(float x, float y)
+{
+	this->x = x;
+	this->y = y;
+}
+
+void Object::SetSpeed(float vx, float vy)
+{
+	this->vx = vx;
+	this->vy = vy;
+}
+
+void Object::GetPosition(float & x, float & y)
+{
+	x = this->x; y = this->y;
+}
+
+void Object::GetSpeed(float & vx, float & vy)
+{
+	vx = this->vx;
+	vy = this->vy;
+}
+
+float Object::GetX()
+{
+	return x;
+}
+
+float Object::GetY()
+{
+	return y;
 }
 
 

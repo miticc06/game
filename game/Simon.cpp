@@ -260,6 +260,16 @@ void Simon::Stop()
 	
 }
 
+void Simon::SetHeartCollect(int h)
+{
+	HeartCollect = h;
+}
+
+int Simon::GetHeartCollect()
+{
+	return HeartCollect;
+}
+
 void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 {
 	vector<LPCOLLISIONEVENT> coEvents;
