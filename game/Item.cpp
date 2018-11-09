@@ -25,7 +25,7 @@ void Item::Render(Camera * camera)
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 
-	_sprite->Draw(pos.x, pos.y);
+	_sprite->Draw((int)pos.x, (int)pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

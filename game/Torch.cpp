@@ -39,7 +39,7 @@ void Torch::Render(Camera * camera)
 		RenderBoundingBox(camera);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y); 
-	_sprite->Draw(pos.x, pos.y); 
+	_sprite->Draw((int)pos.x, (int)pos.y);
 
 
 }

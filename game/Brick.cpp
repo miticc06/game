@@ -21,7 +21,7 @@ void Brick::Render(Camera * camera)
 	 
 	for (int i = 0; i < (int)ceil(width / BRICK_FRAME_WIDTH); i++)
 		for (int j = 0; j < (int)ceil(height / BRICK_FRAME_HEIGHT); j++)
-			_sprite->Draw(pos.x + i * BRICK_FRAME_WIDTH, pos.y + j * BRICK_FRAME_HEIGHT);
+			_sprite->Draw( (int) pos.x + i * BRICK_FRAME_WIDTH, (int)pos.y + j * BRICK_FRAME_HEIGHT);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

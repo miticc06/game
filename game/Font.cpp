@@ -16,7 +16,7 @@ Font::~Font()
 	SAFE_DELETE(_sprite);
 }
 
-void Font::Draw(float x, float y, string s)
+void Font::Draw(int x, int y, string s)
 { 
 	for (UINT i = 0; i < s.size(); i++)
 	{

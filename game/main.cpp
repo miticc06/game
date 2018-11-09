@@ -14,7 +14,6 @@
 #include "Scene_1.h"
 
 
-HWND hWnd; 
 Game *game;
 SceneManager * _sceneManager;
 
@@ -263,7 +262,8 @@ int Run()
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	//HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
-	hWnd = CreateGameWindow(hInstance, nCmdShow, Window_Width, Window_Height);
+
+	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, Window_Width, Window_Height);
 
 	game = Game::GetInstance();
 	game->Init(hWnd);

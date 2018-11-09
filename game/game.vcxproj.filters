@@ -73,8 +73,10 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Framework\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_1.cpp" />
     <ClCompile Include="SceneManager.cpp">
+      <Filter>Framework\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_1.cpp">
       <Filter>Framework\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -148,8 +150,10 @@
     <ClInclude Include="Scene.h">
       <Filter>Framework\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_1.h" />
     <ClInclude Include="SceneManager.h">
+      <Filter>Framework\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_1.h">
       <Filter>Framework\Scene</Filter>
     </ClInclude>
   </ItemGroup>

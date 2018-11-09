@@ -328,6 +328,11 @@ void Game::SweptAABB(
 
 }
 
+HWND Game::GetWindowHandle()
+{
+	return hWnd;
+}
+
 bool Game::AABBCheck(RECT b1, RECT b2)
 {
 	return !(b1.right < b2.left || b1.left > b2.right || /*b1.top < b2.bottom || b1.bottom > b2.top*/ b1.top > b2.bottom || b1.bottom < b2.top);

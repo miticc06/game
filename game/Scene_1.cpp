@@ -53,8 +53,8 @@ void Scene_1::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
-	//if (KeyCode == DIK_ESCAPE)
-	//	;//	DestroyWindow(hWnd); // thoát
+	if (KeyCode == DIK_ESCAPE)
+		DestroyWindow(/*hWnd*/ Game::GetInstance()->GetWindowHandle()); // thoát
 
 	if (KeyCode == DIK_Q)
 		simon->SetPosition(SIMON_POSITION_DEFAULT);

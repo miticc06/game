@@ -15,7 +15,7 @@ private:
 public:
 	Font();
 	~Font();
-	void Draw(float x, float y, string s);
+	void Draw(int x, int y, string s);
 };
 
 

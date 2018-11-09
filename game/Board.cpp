@@ -12,13 +12,13 @@ Board::Board(int X, int Y)
 void Board::Render(Camera * camera)
 { 
 	_sprite->Draw(x,y);
-	_font.Draw((float)x, (float)y+15, "SCORE-");
-	_font.Draw((float)x, (float)y+33, "PLAYER");
-	_font.Draw((float)x, (float)y+51, "ENEMY");
+	_font.Draw(x, y+15, "SCORE-");
+	_font.Draw(x, y+33, "PLAYER");
+	_font.Draw(x, y+51, "ENEMY");
 
 
-	_font.Draw((float)x+210, (float)y + 15, "TIME");
-	_font.Draw((float)x + 400, (float)y + 15, "STAGE");
+	_font.Draw(x+210, y + 15, "TIME");
+	_font.Draw(x + 400, y + 15, "STAGE");
 
 }
 
