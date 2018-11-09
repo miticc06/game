@@ -9,8 +9,7 @@
 #define MORNINGSTAR_ANI_LEVEL1_END 7
 
 #include "Weapon.h"
-#include "GameObject.h"
-#include "VariableGlobal.h"
+#include "GameObject.h" 
 #include "LargeHeart.h"
 
 

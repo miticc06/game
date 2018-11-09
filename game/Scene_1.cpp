@@ -91,7 +91,7 @@ void Scene_1::OnKeyUp(int KeyCode)
 void Scene_1::LoadResources()
 {
 
-	_variableGlobal = VariableGlobal::GetInstance();
+	//_variableGlobal = VariableGlobal::GetInstance();
 
 
 	simon = new Simon();
@@ -112,7 +112,7 @@ void Scene_1::LoadResources()
 
 
 
-	_variableGlobal->ListItem.clear();
+	//_variableGlobal->ListItem.clear();
 
 }
 
@@ -132,10 +132,10 @@ void Scene_1::Update(DWORD dt)
 		ListObj[i]->Update(dt, &ListObj);
 	}
 
-	for (UINT i = 0; i < _variableGlobal->ListItem.size(); i++) // update các Item
-	{
-		_variableGlobal->ListItem[i]->Update(dt, &ListObj);
-	}
+	//for (UINT i = 0; i < _variableGlobal->ListItem.size(); i++) // update các Item
+	//{
+	//	_variableGlobal->ListItem[i]->Update(dt, &ListObj);
+	//}
 }
 
 void Scene_1::Render()
@@ -149,8 +149,8 @@ void Scene_1::Render()
 
 	 
 
-	for (UINT i = 0; i < _variableGlobal->ListItem.size(); i++) // Draw các item
-		_variableGlobal->ListItem[i]->Render(camera);
+	//for (UINT i = 0; i < _variableGlobal->ListItem.size(); i++) // Draw các item
+	//	_variableGlobal->ListItem[i]->Render(camera);
 
 
 

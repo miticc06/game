@@ -28,7 +28,7 @@ public:
 
 	Board * board;
 
-	VariableGlobal * _variableGlobal;
+	//VariableGlobal * _variableGlobal;
 
 
 	vector<LPOBJECT> ListObj;

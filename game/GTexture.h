@@ -7,9 +7,9 @@
 class GTexture 
 {
 public:
-	char* FileName; //đường dẫn tới file ảnh
-	RECT Size;		//độ phân giải ảnh
 	LPDIRECT3DTEXTURE9 Texture;
+	char* FileName;  
+	RECT Size;		//độ phân giải ảnh
 	int Cols;		//số cột frame
 	int Rows;		//số hàng frame
 	int Count;		//tổng số frame

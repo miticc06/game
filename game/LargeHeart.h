@@ -2,8 +2,7 @@
 #define __LARGEHEART_H__
 
 
-#include "Item.h"
-#include "VariableGlobal.h"
+#include "Item.h" 
 
 #define LARGEHEART_GRAVITY 0.25f
 

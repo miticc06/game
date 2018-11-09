@@ -163,7 +163,7 @@ void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
 				if (Game::GetInstance()->AABBCheck(rect, rect1))
 				{
 					obj->SubHealth(1);
-					VariableGlobal::GetInstance()->ListItem.push_back(Weapon::GetNewItem(obj->id, obj->GetType(), listObj->at(i)->GetX(), listObj->at(i)->GetY()));
+					//VariableGlobal::GetInstance()->ListItem.push_back(Weapon::GetNewItem(obj->id, obj->GetType(), listObj->at(i)->GetX(), listObj->at(i)->GetY()));
 				}
 			}
 		}

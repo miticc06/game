@@ -9,9 +9,9 @@ class GSprite {
 public:
 	GTexture* _texture;
 
-	int _start;		//chạy từ frame đầu tiên (chỉ số)
-	int _end;		//chạy đến frame cuối cùng (chỉ số)
-	int _index;		//frame hiện tại
+	int _start;
+	int _end;
+	int _index;
 	int _timeAni;	//thời gian chuyển frame
 	int _timeLocal;	//biến hỗ trợ đếm thời gian
 

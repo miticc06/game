@@ -4,8 +4,7 @@
 #define BRICK_FRAME_WIDTH 32
 #define BRICK_FRAME_HEIGHT 32
 
-#include "GameObject.h"
-#include "VariableGlobal.h"
+#include "GameObject.h" 
 
 class Brick : public GameObject
 {

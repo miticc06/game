@@ -79,8 +79,8 @@ void LargeHeart::Update(DWORD dt, vector<LPOBJECT>* listObject)
 void LargeHeart::SetReward()
 {
 
-	VariableGlobal::GetInstance()->HeartCollect += 5;
-	DebugOut(L"[ITEM] +5 Heart. Tong = %d \n", VariableGlobal::GetInstance()->HeartCollect);
+	//VariableGlobal::GetInstance()->HeartCollect += 5;
+	//DebugOut(L"[ITEM] +5 Heart. Tong = %d \n", VariableGlobal::GetInstance()->HeartCollect);
 }
  
 

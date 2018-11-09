@@ -93,10 +93,8 @@ void GSprite::Draw(int X, int Y)
 
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
 
-
-
-	srect.left = (_index % _texture->Cols)*(_texture->FrameWidth);
-	srect.top = (_index / _texture->Cols)*(_texture->FrameHeight);
+	srect.left = (_index % _texture->Cols)*_texture->FrameWidth;
+	srect.top = (_index / _texture->Cols)*_texture->FrameHeight;
 	srect.right = srect.left + _texture->FrameWidth;
 	srect.bottom = srect.top + _texture->FrameHeight;
 	 

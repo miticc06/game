@@ -12,7 +12,7 @@
 
 #include <Windows.h> 
 
-#include <dinput.h> 
+
 
 
 #include <algorithm>
