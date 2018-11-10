@@ -237,7 +237,7 @@ void Scene_1::CheckCollisionWeapon()
 			if (simon->_ListWeapon[0]->isCollision(listObj[i]) == true)
 			{
 				GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
-			//	gameObjTorch->SubHealth(1);
+				gameObjTorch->SubHealth(1);
 				listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX(), gameObjTorch->GetY()));
 			}
 

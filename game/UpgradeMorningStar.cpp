@@ -35,10 +35,8 @@ void UpgradeMorningStar::Update(DWORD dt, vector<LPOBJECT>* listObject)
 		isFinish = true;
 		return;
 	}
-
-
-	dy = vy * dt;
-
+	 
+	Item::Update(dt); // Update dt, dx, dy 
 
 	vector<LPOBJECT> listObject_Brick;
 	listObject_Brick.clear();

@@ -81,7 +81,9 @@
     <ClCompile Include="BoardHealth.cpp">
       <Filter>Framework\Board</Filter>
     </ClCompile>
-    <ClCompile Include="ItemDagger.cpp" />
+    <ClCompile Include="ItemDagger.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -161,7 +163,9 @@
     <ClInclude Include="BoardHealth.h">
       <Filter>Framework\Board</Filter>
     </ClInclude>
-    <ClInclude Include="ItemDagger.h" />
+    <ClInclude Include="ItemDagger.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

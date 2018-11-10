@@ -33,8 +33,7 @@ void LargeHeart::Update(DWORD dt, vector<LPOBJECT>* listObject)
 		return;
 	}
 
-	dy = vy * dt;
-
+	Item::Update(dt); // Update dt, dx, dy
 
 	vector<LPOBJECT> listObject_Brick;
 	listObject_Brick.clear();

@@ -16,6 +16,9 @@ Item::~Item()
 
 void Item::Update(DWORD dt, vector<LPOBJECT> *listObject)
 { 
+	this->dt = dt;
+	dx = vx * dt;
+	dy = vy * dt;
 }
 
 void Item::Render(Camera * camera)

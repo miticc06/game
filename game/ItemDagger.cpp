@@ -35,7 +35,7 @@ void ItemDagger::Update(DWORD dt, vector<LPOBJECT> *listObject)
 		return;
 	}
 	 
-	dy = vy * dt;
+	Item::Update(dt); // Update dt, dx, dy
 
 
 	vector<LPOBJECT> listObject_Brick;
@@ -49,10 +49,7 @@ void ItemDagger::Update(DWORD dt, vector<LPOBJECT> *listObject)
 
 	coEvents.clear();
 
-	if (y + dy > 365.0f)
-	{
-		DebugOut(L"XSAD");
-	}
+ 
 	CalcPotentialCollisions(&listObject_Brick, coEvents); // Lấy danh sách các va chạm
 	 
 	
@@ -76,10 +73,7 @@ void ItemDagger::Update(DWORD dt, vector<LPOBJECT> *listObject)
 		}
 	}
 
-
-	if (y > 365.0f)
-		DebugOut(L"XSAD");
-
+	 
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
 	 

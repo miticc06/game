@@ -102,14 +102,14 @@ void Object::FilterCollision(
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
 
-		if (c->t < min_tx && c->nx != 0)
+		if (c->t <= min_tx && c->nx != 0)
 		{ // va chạm theo trục x
 			min_tx = c->t;
 			nx = c->nx;
 			min_ix = i;
 		}
 
-		if (c->t < min_ty  && c->ny != 0)
+		if (c->t <= min_ty  && c->ny != 0)
 		{ // va chạm theo trục y
 			min_ty = c->t;
 			ny = c->ny;
