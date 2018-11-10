@@ -14,7 +14,7 @@
 #include "Item.h" 
 #include "Board.h"
 #include "ItemDagger.h"
-
+#include "Dagger.h"
 
 
 class Scene_1 : public Scene

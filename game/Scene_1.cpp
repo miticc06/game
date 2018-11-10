@@ -93,7 +93,17 @@ void Scene_1::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_X)
 	{
 		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
-		simon->Attack(simon->_ListWeapon[0]);
+		simon->Attack(simon->_weaponMain);
+	}
+
+
+	if (KeyCode == DIK_Z)
+	{
+		if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == true && simon->GetHeartCollect()>0)
+		{
+			simon->SetHeartCollect(simon->GetHeartCollect() - 1); // giảm 1 heart
+			simon->Attack(simon->_weaponSub);
+		}
 	}
 
 	if (simon->isJumping && simon->isWalking)
@@ -222,8 +232,7 @@ void Scene_1::Render()
 
 void Scene_1::CheckCollision()
 {
-	if (simon->_ListWeapon[0]->GetFinish()==false) // Vũ khí đang hoạt động
-		CheckCollisionWeapon();
+	CheckCollisionWeapon();
 
 	CheckCollisionSimonWithItem();
 
@@ -232,15 +241,36 @@ void Scene_1::CheckCollision()
 
 void Scene_1::CheckCollisionWeapon()
 {
-	for (UINT i = 0; i < listObj.size(); i++)
-		if (listObj[i]->GetType() == eID::TORCH)
-			if (simon->_ListWeapon[0]->isCollision(listObj[i]) == true)
-			{
-				GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
-				gameObjTorch->SubHealth(1);
-				listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX(), gameObjTorch->GetY()));
-			}
+	// main weapon
+	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
+	{
+		for (UINT i = 0; i < listObj.size(); i++)
+			if (listObj[i]->GetType() == eID::TORCH)
+				if (simon->_weaponMain->isCollision(listObj[i]) == true)
+				{
+					GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
+					gameObjTorch->SubHealth(1);
+					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX(), gameObjTorch->GetY()));
+				}
+	}
 
+
+	// subweapon
+	if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == false)
+	{
+		for (UINT i = 0; i < listObj.size(); i++)
+			if (listObj[i]->GetType() == eID::TORCH)
+				if (simon->_weaponSub->isCollision(listObj[i]) == true)
+				{
+					GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
+
+					gameObjTorch->SubHealth(1);
+
+					simon->_weaponSub->SetFinish(true);   // cây kiếm trúng object thì tắt luôn
+
+					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX(), gameObjTorch->GetY()));
+				}
+	}
 
 
 
@@ -263,13 +293,19 @@ void Scene_1::CheckCollisionSimonWithItem()
 				} 
 				case eID::UPGRADEMORNINGSTAR:
 				{
-					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->_ListWeapon[0]);
+					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->_weaponMain);
 					objMorningStar->UpgradeLevel(); // Nâng cấp vũ khí roi
 					listItem[i]->SetFinish(true);
 					break;
 				}
  
-
+				case eID::ITEMDAGGER:
+				{
+					SAFE_DELETE(simon->_weaponSub);
+					simon->_weaponSub = new Dagger();
+ 					listItem[i]->SetFinish(true);
+					break;
+				}
 
 
 				default:

@@ -75,6 +75,7 @@ enum eID
 
 	// weapon
 	MORNINGSTAR = 61,
+	DAGGER = 62,
 
 
 	// item

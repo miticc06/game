@@ -84,6 +84,9 @@
     <ClCompile Include="ItemDagger.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Dagger.cpp">
+      <Filter>Object\Weapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -165,6 +168,9 @@
     </ClInclude>
     <ClInclude Include="ItemDagger.h">
       <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Dagger.h">
+      <Filter>Object\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

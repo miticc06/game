@@ -18,8 +18,8 @@ Simon::Simon()
 	score = 0;
 
 
-	_ListWeapon.clear();
-	_ListWeapon.push_back(new MorningStar());
+	_weaponMain =  new MorningStar();
+	_weaponSub = NULL;
 }
 
 
@@ -66,6 +66,42 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 	int index = _sprite->GetIndex();
 
+
+
+
+
+
+
+
+
+
+
+	if (isAttacking == true)  
+	{
+		if (_weaponMain->GetFinish() == false) // nếu MorningStar đang đánh
+		{ 
+			_weaponMain->Update(dt);
+			if (_weaponMain->GetFinish() == true)
+				isAttacking = false;
+		}
+		else
+		{
+			if (_weaponSub != NULL)
+			{
+				isAttacking = !(SIMON_ANI_SITTING_ATTACKING_END  == index || SIMON_ANI_STANDING_ATTACKING_END  == index);
+			}
+		}
+	}
+
+	if (_weaponSub != NULL && _weaponSub->GetFinish() == false)
+	{
+		_weaponSub->Update(dt);
+	}
+
+
+
+
+
 	if (isSitting == true)
 	{
 		if (isAttacking == true) // tấn công
@@ -86,7 +122,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 	else
 		if (isAttacking == true)
 		{
-			if (index < SIMON_ANI_STANDING_ATTACKING_BEGIN || index >= SIMON_ANI_STANDING_ATTACKING_END)
+			if (index < SIMON_ANI_STANDING_ATTACKING_BEGIN || index >= SIMON_ANI_STANDING_ATTACKING_END )
 			{
 				_sprite->SelectIndex(SIMON_ANI_STANDING_ATTACKING_BEGIN);
 			}
@@ -173,22 +209,43 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 
 
+	_weaponMain->SetPosition(this->x, this->y);
+	_weaponMain->UpdatePositionFitSimon();
 
+	//_weaponMain->Update(dt);
+
+	/*
+	
+	
 	if (isAttacking == true) //  update postion roi sau vì kiểm tra va chạm bên trên có thể khiến x,y của simon thay đổi, gây lệch vị trí roi với simon
 	{
-		if (_ListWeapon[0]->GetFinish() == false) // nếu MorningStar đang đánh
+		if (_weaponMain->GetFinish() == false) // nếu MorningStar đang đánh
 		{
-			_ListWeapon[0]->SetPosition(this->x, this->y);
-			_ListWeapon[0]->UpdatePositionFitSimon();
+			_weaponMain->SetPosition(this->x, this->y);
+			_weaponMain->UpdatePositionFitSimon();
 
-			_ListWeapon[0]->Update(dt);
-			if (_ListWeapon.size() == 1 && _ListWeapon[0]->GetFinish() == true) // code ngu, khi size>1 thì sao?
+			_weaponMain->Update(dt);
+
+			if (_weaponMain->GetFinish() == true) 
 				isAttacking = false;
-
-		//	_ListWeapon[0]->CollisionWithObject(dt, coObjects); // kiểm tra va chạm với các object khác
-			
 		} 
+		else
+		{
+			if (_weaponSub != NULL)
+			{
+				isAttacking = !(SIMON_ANI_SITTING_ATTACKING_END + 1 == _sprite->GetIndex() || SIMON_ANI_STANDING_ATTACKING_END + 1 == _sprite->GetIndex());
+			} 
+		}
 	} 
+
+	if (_weaponSub != NULL && _weaponSub->GetFinish() == false)
+	{
+		_weaponSub->Update(dt);
+	}
+
+	*/
+
+	
 
 }
 
@@ -196,7 +253,7 @@ void Simon::Render(Camera* camera)
 { 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
-
+	
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	 
 	if (trend == -1)
@@ -204,11 +261,13 @@ void Simon::Render(Camera* camera)
 	else
 		_sprite->DrawFlipX((int)pos.x, (int)pos.y);
 	 
-	for (UINT i=0; i<_ListWeapon.size(); i++)
-		if (_ListWeapon[i]->GetFinish() == false)
-		{ 
-			_ListWeapon[i]->Render(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
-		}
+	if (_weaponMain->GetFinish()==false)
+		_weaponMain->Render(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
+
+	if (_weaponSub != NULL && _weaponSub->GetFinish() == false)
+		_weaponSub->Render(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
+
+
 	 
 } 
  
@@ -380,7 +439,7 @@ void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 
 void Simon::Attack(Weapon * w)
 { 
-	if (isAttacking == true) // đang tấn công thì bỏ qua
+	if (isAttacking == true && dynamic_cast<MorningStar*>(w)!=NULL) // đang tấn công mà là roi thì bỏ qua
 		return;
 
 	isAttacking = true; // set trang thái tấn công

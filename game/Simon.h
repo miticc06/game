@@ -65,7 +65,8 @@ public:
 	Simon();
 	~Simon();
 
-	vector<Weapon*> _ListWeapon;
+	Weapon* _weaponMain;
+	Weapon* _weaponSub;
 
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
