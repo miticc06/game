@@ -16,42 +16,18 @@ MorningStar::~MorningStar()
 }
 
 void MorningStar::Update(DWORD dt, vector<LPOBJECT>* coObjects)
-{
-	//if (isFinish == false)
-	//{
-	//	if (level == 0 && _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_END) // nếu nó chạy frame cuối rồi
-	//	{
-	//		isFinish = true;
-	//		return;
-	//	} 
-	//}
+{ 
 
-	isFinish = (_sprite->GetIndex() == 3) + (_sprite->GetIndex() == 7) + (_sprite->GetIndex() == 11);
+	isFinish = (_sprite->GetIndex() == 3 && level == 0) + (_sprite->GetIndex() == 7 && level == 1) + (_sprite->GetIndex() == 11 && level == 2);
+
+	int StartFrame = MORNINGSTAR_ANI_LEVEL0_START + 4 * level; // ánh xạ chỉ số frame bằng level thay vì ifelse 
+	int EndFrame = MORNINGSTAR_ANI_LEVEL0_END + 4 * level;
 
 
-	if (level == 0)
-	{
-		if (MORNINGSTAR_ANI_LEVEL0_START <= _sprite->GetIndex() && _sprite->GetIndex() < MORNINGSTAR_ANI_LEVEL0_END)
-		{
-			_sprite->Update(dt);
-		}
-		else
-		{
-			_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL0_START);
-		}
-	}
-
-	if (level == 1)
-	{
-		if (MORNINGSTAR_ANI_LEVEL1_START <= _sprite->GetIndex() && _sprite->GetIndex() < MORNINGSTAR_ANI_LEVEL1_END)
-		{
-			_sprite->Update(dt);
-		}
-		else
-		{
-			_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL1_START);
-		}
-	}
+	if (StartFrame <= _sprite->GetIndex() && _sprite->GetIndex() < EndFrame)
+		_sprite->Update(dt);
+	else
+		_sprite->SelectIndex(StartFrame);
 }
  
 
@@ -61,19 +37,19 @@ void MorningStar::Create(float simonX, float simonY, int simonTrend)
 
 	Weapon::Create(simonX, simonY, simonTrend);
 
-	//xBackup, yBackup
-
 	UpdatePositionFitSimon();
-
-	if (level == 0)
+	switch (level)
 	{
+	case 0:
 		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL0_START - 1); // đặt sai index cho hàm update cập nhật ngay frame đầu
-	}
-
-	if (level == 1)
-	{
+		break;
+	case 1:
 		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL1_START - 1); // đặt sai index cho hàm update cập nhật ngay frame đầu
-	}
+		break;
+	case 2:
+		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL2_START - 1); // đặt sai index cho hàm update cập nhật ngay frame đầu
+		break; 
+	} 
 }
 
 void MorningStar::UpdatePositionFitSimon()
@@ -90,31 +66,13 @@ void MorningStar::UpdatePositionFitSimon()
 
 void MorningStar::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	if (level == 0)
+	switch (level)
+	{
+	case 0: 
 	{
 		if (trend == 1)
 		{
-			left = x + 80;  
-			top = y + 15;
-			right = x + _texture->FrameWidth -30; 
-			bottom = y + _texture->FrameHeight - 30;
-		}
-		else
-		{
-			left = x + 30;
-			top = y + 15;
-			right = x + _texture->FrameWidth - 85;
-			bottom = y + _texture->FrameHeight - 30;
-
-		}
-
-	}
-
-	if (level == 1)
-	{
-		if (trend == 1)
-		{
-			left = x + 80;
+			left = x + 78;
 			top = y + 15;
 			right = x + _texture->FrameWidth - 30;
 			bottom = y + _texture->FrameHeight - 30;
@@ -123,54 +81,56 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 		{
 			left = x + 30;
 			top = y + 15;
-			right = x + _texture->FrameWidth - 85;
+			right = x + _texture->FrameWidth - 80;
 			bottom = y + _texture->FrameHeight - 30;
 
 		}
-
+		break;
 	}
+	case 1:
+	{
+		if (trend == 1)
+		{
+			left = x + 78;
+			top = y + 15;
+			right = x + _texture->FrameWidth - 30;
+			bottom = y + _texture->FrameHeight - 30;
+		}
+		else
+		{
+			left = x + 30;
+			top = y + 15;
+			right = x + _texture->FrameWidth - 80;
+			bottom = y + _texture->FrameHeight - 30;
 
+		}
+		break;
+	}
+	case 2:
+	{
+		if (trend == 1)
+		{
+			left = x + 78;
+			top = y + 15;
+			right = x + _texture->FrameWidth;
+			bottom = y + _texture->FrameHeight - 30;
+		}
+		else
+		{
+			left = x;
+			top = y + 15;
+			right = x + _texture->FrameWidth - 80;
+			bottom = y + _texture->FrameHeight - 30;
+
+		}
+		break;
+	}
+	default:
+		break;
+	} 
+ 
 }
-//
-//void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
-//{
-//	if (_sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1)
-//		return;
-//
-//	RECT rect, rect1;
-//	float l, t, r, b;
-//	float l1, t1, r1, b1;
-//
-//	GetBoundingBox(l, t, r, b);
-//	rect.left = (int)l;
-//	rect.top = (int)t;
-//	rect.right = (int)r;
-//	rect.bottom = (int)b;
-//
-//
-//
-//	for (UINT i = 0; i < listObj->size(); i++) // ngay đây có thể tối ưu thêm, từ từ fix :p
-//		if (listObj->at(i)->GetType() == eID::TORCH)
-//		{
-//			GameObject *obj = dynamic_cast<GameObject*>(listObj->at(i));
-//			if (obj->GetHealth() > 0)
-//			{
-//				listObj->at(i)->GetBoundingBox(l1, t1, r1, b1);
-//				rect1.left = (int)l1;
-//				rect1.top = (int)t1;
-//				rect1.right = (int)r1;
-//				rect1.bottom = (int)b1;
-//				if (Game::GetInstance()->AABBCheck(rect, rect1))
-//				{
-//					obj->SubHealth(1);
-//					//VariableGlobal::GetInstance()->ListItem.push_back(Weapon::GetNewItem(obj->id, obj->GetType(), listObj->at(i)->GetX(), listObj->at(i)->GetY()));
-//				}
-//			}
-//		}
-//	 
-//
-//}
-
+ 
 void MorningStar::UpgradeLevel()
 {
 	if (level >= 2)
@@ -180,8 +140,15 @@ void MorningStar::UpgradeLevel()
 
 bool MorningStar::isCollision(Object * obj)
 {
-	if (_sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1)
-		return false;
+	if (level==0 && _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1)
+		return false; // frame đầu và frame chuẩn bị đánh thì ko xét va chạm
+
+	if (level == 1 && _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL1_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL1_START + 1)
+		return false; // frame đầu và frame chuẩn bị đánh thì ko xét va chạm
+
+	if (level == 2 && _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL2_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL2_START + 1)
+		return false; // frame đầu và frame chuẩn bị đánh thì ko xét va chạm
+
 
 	GameObject *gameObj = dynamic_cast<GameObject*>(obj);
 	if (gameObj->GetHealth() <= 0) // vật này die rồi thì ko va chạm

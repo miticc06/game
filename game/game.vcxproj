@@ -138,6 +138,7 @@
     <ClInclude Include="GSprite.h" />
     <ClInclude Include="GTexture.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemDagger.h" />
     <ClInclude Include="LargeHeart.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mario.h" />
@@ -149,7 +150,6 @@
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Torch.h" />
     <ClInclude Include="UpgradeMorningStar.h" />
-    <ClInclude Include="VariableGlobal.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +168,7 @@
     <ClCompile Include="GSprite.cpp" />
     <ClCompile Include="GTexture.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemDagger.cpp" />
     <ClCompile Include="LargeHeart.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -180,7 +181,6 @@
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="UpgradeMorningStar.cpp" />
-    <ClCompile Include="VariableGlobal.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

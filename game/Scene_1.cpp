@@ -75,7 +75,7 @@ void Scene_1::KeyState(BYTE * state)
 
 void Scene_1::OnKeyDown(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+//	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
 	if (KeyCode == DIK_ESCAPE)
 		DestroyWindow(/*hWnd*/ Game::GetInstance()->GetWindowHandle()); // thoát
@@ -135,7 +135,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 void Scene_1::OnKeyUp(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 
 	switch (KeyCode)
 	{
@@ -174,7 +174,7 @@ void Scene_1::Update(DWORD dt)
 //	DebugOut(L"[DT] DT: %d\n", dt);
 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object trong vùng camera;
-	DebugOut(L"[Grid] ListObject by Camera = %d\n", listObj.size());
+	//DebugOut(L"[Grid] ListObject by Camera = %d\n", listObj.size());
 
 
 
@@ -237,7 +237,7 @@ void Scene_1::CheckCollisionWeapon()
 			if (simon->_ListWeapon[0]->isCollision(listObj[i]) == true)
 			{
 				GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
-				gameObjTorch->SubHealth(1);
+			//	gameObjTorch->SubHealth(1);
 				listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX(), gameObjTorch->GetY()));
 			}
 
@@ -268,6 +268,10 @@ void Scene_1::CheckCollisionSimonWithItem()
 					listItem[i]->SetFinish(true);
 					break;
 				}
+ 
+
+
+
 				default:
 					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
 					break;
@@ -295,7 +299,8 @@ Item * Scene_1::GetNewItem(int Id, eID Type, float X, float Y)
 		if (Id == 2 || Id == 3)
 			return new UpgradeMorningStar(X, Y);
 
-		//	return new LargeHeart(X, Y);
+		if (Id == 5)
+			return new ItemDagger(X, Y);
 
 	}
 

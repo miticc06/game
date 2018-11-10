@@ -8,6 +8,9 @@
 #define MORNINGSTAR_ANI_LEVEL1_START 4
 #define MORNINGSTAR_ANI_LEVEL1_END 7
 
+#define MORNINGSTAR_ANI_LEVEL2_START 8
+#define MORNINGSTAR_ANI_LEVEL2_END 11
+
 #include "Weapon.h"
 #include "GameObject.h" 
 #include "LargeHeart.h"

@@ -57,9 +57,6 @@
     <ClCompile Include="Object.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="VariableGlobal.cpp">
-      <Filter>Framework\Define</Filter>
-    </ClCompile>
     <ClCompile Include="UpgradeMorningStar.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
@@ -84,6 +81,7 @@
     <ClCompile Include="BoardHealth.cpp">
       <Filter>Framework\Board</Filter>
     </ClCompile>
+    <ClCompile Include="ItemDagger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Goomba.h" />
@@ -139,9 +137,6 @@
     <ClInclude Include="Object.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="VariableGlobal.h">
-      <Filter>Framework\Define</Filter>
-    </ClInclude>
     <ClInclude Include="UpgradeMorningStar.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
@@ -166,6 +161,7 @@
     <ClInclude Include="BoardHealth.h">
       <Filter>Framework\Board</Filter>
     </ClInclude>
+    <ClInclude Include="ItemDagger.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

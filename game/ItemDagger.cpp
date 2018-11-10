@@ -1,42 +1,40 @@
-﻿#include "UpgradeMorningStar.h"
+﻿#include "ItemDagger.h"
 
 
-
-UpgradeMorningStar::UpgradeMorningStar()
+ 
+ItemDagger::ItemDagger(float X, float Y)
 {
-	_texture = new GTexture("Resources\\item\\3.png");
-	_sprite = new GSprite(_texture, 100);
-	type = eID::UPGRADEMORNINGSTAR;
-}
+	_texture = new GTexture("Resources\\item\\4.png");
+	_sprite = new GSprite(_texture, 0);
+	type = eID::ITEMDAGGER;
 
-UpgradeMorningStar::UpgradeMorningStar(float X, float Y) : UpgradeMorningStar()
-{
 	this->x = X;
 	this->y = Y;
-	vy = UPGRADEMORNINGSTAR_GRAVITY;
-	TimeDisplayMax = UPGRADEMORNINGSTAR_TIMEDISPLAYMAX; // set time hiển thị tối đa
-
+	vy = ITEMDAGGER_GRAVITY;
+	TimeDisplayMax = ITEMDAGGER_TIMEDISPLAYMAX;
+	TimeDisplayed = 0;
 }
 
-void UpgradeMorningStar::GetBoundingBox(float & left, float & top, float & right, float & bottom)
+void ItemDagger::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	left = x;
 	top = y;
 	right = x + _texture->FrameWidth;
-	bottom = y + _texture->FrameHeight;
+	bottom = y + _texture->FrameHeight /*- 18*/; 
 }
 
-void UpgradeMorningStar::Update(DWORD dt, vector<LPOBJECT>* listObject)
-{
 
+
+
+void ItemDagger::Update(DWORD dt, vector<LPOBJECT> *listObject)
+{ 
 	TimeDisplayed += dt;
 	if (TimeDisplayed >= TimeDisplayMax)
 	{
 		isFinish = true;
 		return;
 	}
-
-
+	 
 	dy = vy * dt;
 
 
@@ -51,12 +49,18 @@ void UpgradeMorningStar::Update(DWORD dt, vector<LPOBJECT>* listObject)
 
 	coEvents.clear();
 
+	if (y + dy > 365.0f)
+	{
+		DebugOut(L"XSAD");
+	}
 	CalcPotentialCollisions(&listObject_Brick, coEvents); // Lấy danh sách các va chạm
+	 
+	
 
-	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
-		y += dy;
+		y += dy; 
+
 	}
 	else
 	{
@@ -72,11 +76,18 @@ void UpgradeMorningStar::Update(DWORD dt, vector<LPOBJECT>* listObject)
 		}
 	}
 
+
+	if (y > 365.0f)
+		DebugOut(L"XSAD");
+
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
+	 
+}
 
-} 
 
-UpgradeMorningStar::~UpgradeMorningStar()
+
+
+ItemDagger::~ItemDagger()
 {
 }

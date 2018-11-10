@@ -1,20 +1,18 @@
 ﻿#include "LargeHeart.h"
 
 
-
-LargeHeart::LargeHeart()
+ 
+LargeHeart::LargeHeart(float X, float Y)
 {
 	_texture = new GTexture("Resources\\item\\1.png");
 	_sprite = new GSprite(_texture, 100);
 	type = eID::LARGEHEART;
-}
 
-LargeHeart::LargeHeart(float X, float Y) : LargeHeart()
-{
 	this->x = X;
 	this->y = Y;
 	vy = LARGEHEART_GRAVITY;
 	TimeDisplayMax = LARGEHEART_TIMEDISPLAYMAX; // set time hiển thị tối đa
+	TimeDisplayed = 0;
 }
 
 void LargeHeart::GetBoundingBox(float & left, float & top, float & right, float & bottom)
@@ -34,7 +32,6 @@ void LargeHeart::Update(DWORD dt, vector<LPOBJECT>* listObject)
 		isFinish = true;
 		return;
 	}
-
 
 	dy = vy * dt;
 
@@ -74,13 +71,6 @@ void LargeHeart::Update(DWORD dt, vector<LPOBJECT>* listObject)
  	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
 
-}
-
-void LargeHeart::SetReward()
-{
-
-	//VariableGlobal::GetInstance()->HeartCollect += 5;
-	//DebugOut(L"[ITEM] +5 Heart. Tong = %d \n", VariableGlobal::GetInstance()->HeartCollect);
 }
  
 

@@ -24,8 +24,7 @@ public:
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPOBJECT> *listObject = NULL);
 	virtual void Render(Camera * camera);
-	virtual void SetReward() = 0; // Hàm cập nhật điểm cho người chơi
-	  
+ 	  
  
  	bool GetFinish();
 	void SetFinish(bool b);

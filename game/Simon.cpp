@@ -14,7 +14,7 @@ Simon::Simon()
 
 	Health = 16; // simon dính 16 phát là chết
 	Lives = 5; // có 5 mạng sống
-	HeartCollect = 0;
+	HeartCollect = 5;
 	score = 0;
 
 
@@ -377,83 +377,6 @@ void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
 }
-//
-//void Simon::CollisionWithItem()
-//{ 
-//
-//
-//	return;
-//	//VariableGlobal *varG = VariableGlobal::GetInstance();  
-//	vector<LPOBJECT> listObj;
-//	listObj.clear();
-//
-//
-//	/*Xóa những Item đã kết thúc*/
-//	//vector<Item*>::iterator it;
-//	//for (it = varG->ListItem.begin(); it != varG->ListItem.end(); )
-//	//{
-//	//	if ((*it)->GetFinish() == true)
-//	//	{
-//	//		it = varG->ListItem.erase(it);
-//	//	}
-//	//	else
-//	//		++it;
-//	//}
-//
-//	float l, t, r, b;
-////	float l1, t1, r1, b1;
-//	GetBoundingBox(l, t, r, b);  // lấy BBOX của simon
-//	 
-//
-//	//for (UINT i = 0; i < varG->ListItem.size(); i++) // check trước bằng AABB xem có va chạm không?
-//	//{
-//	//	varG->ListItem.at(i)->GetBoundingBox(l1, t1, r1, b1);
-//	//	if (Game::GetInstance()->AABBCheck(l, t, r, b, l1, t1, r1, b1) == true)
-//	//	{
-//	//		varG->ListItem.at(i)->SetReward();
-//	//		varG->ListItem.at(i)->SetFinish(true);
-//	//	}
-//	//}
-//
-//
-//
-//	//for (UINT i = 0; i < varG->ListItem.size(); i++)
-//	//	if (varG->ListItem[i]->GetFinish() == false) // chưa kết thúc thì xét
-//	//	{
-//	//		listObj.push_back(varG->ListItem[i]);
-//	//	}
-//
-//
-//	vector<LPCOLLISIONEVENT> coEvents;
-//	vector<LPCOLLISIONEVENT> coEventsResult;
-//
-//	coEvents.clear();
-//
-//	CalcPotentialCollisions(&listObj, coEvents); // Lấy danh sách các va chạm
-//
-//	// No collision occured, proceed normally
-//	if (coEvents.size() != 0)
-//	{ 
-//		float min_tx, min_ty, nx = 0, ny;
-//
-//		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-//   
-//		for (UINT i = 0; i < coEventsResult.size(); i++)
-//		{
-//			LPCOLLISIONEVENT e = coEventsResult[i];
-//			Item *item = dynamic_cast<Item *>(e->obj); // Chắc chắn là Item nên ép kiểu luôn
-//
-//			item->SetReward();
-//			item->SetFinish(true);
-//			
-//		}
-//	}
-//	 
-//	for (UINT i = 0; i < coEvents.size(); i++)
-//		delete coEvents[i];
-//	  
-//}
-// 
 
 void Simon::Attack(Weapon * w)
 { 

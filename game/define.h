@@ -46,7 +46,7 @@ using namespace std;
 #define SCREEN_HEIGHT 448
 
 
-#define IS_DEBUG_RENDER_BBOX 0
+#define IS_DEBUG_RENDER_BBOX 1
  
  
 extern int Window_Width;
@@ -66,19 +66,21 @@ enum eID
 	SIMON = 01,
 
 
-
+	// object nền
 	BRICK = 21,
 
 
-
+	// object
 	TORCH = 41,
 
+	// weapon
 	MORNINGSTAR = 61,
 
 
-
+	// item
 	LARGEHEART = 81,
-	UPGRADEMORNINGSTAR = 82
+	UPGRADEMORNINGSTAR = 82,
+	ITEMDAGGER = 83
 };
  
  

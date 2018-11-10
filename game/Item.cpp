@@ -15,7 +15,7 @@ Item::~Item()
 }
 
 void Item::Update(DWORD dt, vector<LPOBJECT> *listObject)
-{
+{ 
 }
 
 void Item::Render(Camera * camera)
