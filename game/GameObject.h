@@ -65,6 +65,7 @@ public:
 	int GetHealth();
 	void SubHealth(int th); 
 	void SetTrend(int Trend);
+	int GetTrend();
 	void SetId(int ID);
 	  
 	~GameObject();

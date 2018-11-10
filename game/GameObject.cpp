@@ -17,6 +17,7 @@ void GameObject::Update(DWORD dt, vector<LPOBJECT> *coObjects)
 	this->dt = dt;
 	dx = vx*dt;
 	dy = vy*dt;
+	
 }
 
 
@@ -37,6 +38,11 @@ void GameObject::SubHealth(int th)
 void GameObject::SetTrend(int Trend)
 {
 	trend = Trend;
+}
+
+int GameObject::GetTrend()
+{
+	return trend;
 }
 
 void GameObject::SetId(int ID)

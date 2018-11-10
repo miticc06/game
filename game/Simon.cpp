@@ -14,8 +14,8 @@ Simon::Simon()
 
 	Health = 16; // simon dính 16 phát là chết
 	Lives = 5; // có 5 mạng sống
-	HeartCollect = 127;
-	score = 1230;
+	HeartCollect = 0;
+	score = 0;
 
 
 	_ListWeapon.clear();
@@ -48,6 +48,10 @@ void Simon::GetBoundingBox(float & left, float & top, float & right, float & bot
 
 void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 { 
+	/*if (isJumping)
+		DebugOut(L"X = %f - Y = %f\n", x, y);
+*/
+
 	/* Không cho lọt khỏi camera */
 	/*if (x < -10)
 		x = -10;*/
@@ -130,12 +134,28 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 
 
-	GameObject::Update(dt);   
+	GameObject::Update(dt);  
+	//if (isJumping)
+	//{
+	//	dy = vy * 2.0f;
+	//	vy += /*0.0019f*/ 0.002f * 16;
+	//}
+	//else  
+		
+	
+	
 	vy += SIMON_GRAVITY * dt;// Simple fall down
-	 
+	if (isJumping && isWalking)
+	{
+		dx = vx * dt*1.5;
 
-	if (isJumping == true && isWalking == true)
-		vx += 0.0012f * dt *trend;
+	}
+		
+
+
+
+	//if (isJumping == true && isWalking == true)
+	//	vx += 0.0012f * dt *trend;
 
 
 
@@ -237,6 +257,9 @@ void Simon::Jump()
 {
 	if (isJumping == true)
 		return;
+
+	
+
 
 	if (isSitting == true)
 		return;

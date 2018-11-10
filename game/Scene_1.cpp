@@ -35,7 +35,9 @@ void Scene_1::KeyState(BYTE * state)
 	}
 	else
 		simon->Stop();
-
+	
+	if (simon->isJumping)
+		return;
 
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 	{
@@ -110,12 +112,18 @@ void Scene_1::OnKeyDown(int KeyCode)
 			simon->Stop();
 			float vx, vy;
 			simon->GetSpeed(vx, vy);
-			simon->SetSpeed(0/*vx - 0.0001f*/, vy - SIMON_VJUMP);
+			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetTrend()/**vx - 0.0001f*/,vy - SIMON_VJUMP);
 			simon->isJumping = 1;
 			simon->isWalking = 1;
 		}
 		else
 		{
+			//simon->Stop();
+			//float vx, vy;
+			//simon->GetSpeed(vx, vy);
+			//simon->SetSpeed(0,/* vy - SIMON_VJUMP*/ -1.4f);
+			//simon->isJumping = 1;
+
 			simon->Jump();
 		}
 
@@ -163,7 +171,7 @@ void Scene_1::LoadResources()
 
 void Scene_1::Update(DWORD dt)
 {
-	DebugOut(L"[DT] DT: %d\n", dt);
+//	DebugOut(L"[DT] DT: %d\n", dt);
 
 
 	gridGame->GetListObject(ListObj, camera); // lấy hết các object trong vùng camera;
