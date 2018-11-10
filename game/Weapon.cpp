@@ -54,6 +54,7 @@ void Weapon::UpdatePositionFitSimon()
 {
 }
  
+ 
 
 bool Weapon::GetFinish()
 {
@@ -65,20 +66,3 @@ void Weapon::SetFinish(bool b)
 	isFinish = b;
 }
  
-
-Item * Weapon::GetNewItem(int Id, eID Type, float X, float Y)
-{
-	if (Type == eID::TORCH)
-	{
-		if (Id == 1 || Id == 4)
-			return new LargeHeart(X, Y);
-
-		if (Id == 2 || Id == 3)
-			return new UpgradeMorningStar(X, Y);
-
-	//	return new LargeHeart(X, Y);
-
-	}
-
-	return new LargeHeart(X, Y);
-}

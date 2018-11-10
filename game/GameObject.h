@@ -46,12 +46,13 @@ class GameObject : public Object
 protected:
 	int Health; 
 
-public:
 	int id; // ID của object
 	  
+
+protected:
+
 	int trend;	// hướng -1 : trái, 1: phải
-	    
-	bool isTake;
+	   
 
 public:
    
@@ -67,7 +68,8 @@ public:
 	void SetTrend(int Trend);
 	int GetTrend();
 	void SetId(int ID);
-	  
+	int GetId();
+
 	~GameObject();
 };
 

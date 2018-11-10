@@ -173,23 +173,31 @@ void Scene_1::Update(DWORD dt)
 {
 //	DebugOut(L"[DT] DT: %d\n", dt);
 
+	gridGame->GetListObject(listObj, camera); // lấy hết các object trong vùng camera;
+	DebugOut(L"[Grid] ListObject by Camera = %d\n", listObj.size());
 
-	gridGame->GetListObject(ListObj, camera); // lấy hết các object trong vùng camera;
 
-	simon->Update(dt, &ListObj);
+
+	simon->Update(dt, &listObj);
 	camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
 	camera->Update();
 
-	for (UINT i = 0; i < ListObj.size(); i++)
+	for (UINT i = 0; i < listObj.size(); i++)
 	{
-		ListObj[i]->Update(dt, &ListObj);
+		listObj[i]->Update(dt, &listObj);
 	}
 
-	//for (UINT i = 0; i < _variableGlobal->ListItem.size(); i++) // update các Item
-	//{
-	//	_variableGlobal->ListItem[i]->Update(dt, &ListObj);
-	//}
+	for (UINT i = 0; i < listItem.size(); i++)
+		listItem[i]->Update(dt, &listObj); // trong các hàm update chỉ kiểm tra va chạm với đất
+	 
+
+	CheckCollision();
+
 }
+
+
+
+
 
 void Scene_1::Render()
 {
@@ -197,10 +205,11 @@ void Scene_1::Render()
 	TileMap->DrawMap(camera);
 
 
-	for (UINT i = 0; i < ListObj.size(); i++)
-		ListObj[i]->Render(camera);
+	for (UINT i = 0; i < listObj.size(); i++)
+		listObj[i]->Render(camera);
 
-	 
+	for (UINT i = 0; i < listItem.size(); i++)
+		listItem[i]->Render(camera);
 	 
 	simon->Render(camera);
 
@@ -209,4 +218,86 @@ void Scene_1::Render()
 
 
 
+}
+
+void Scene_1::CheckCollision()
+{
+	if (simon->_ListWeapon[0]->GetFinish()==false) // Vũ khí đang hoạt động
+		CheckCollisionWeapon();
+
+	CheckCollisionSimonWithItem();
+
+
+}
+
+void Scene_1::CheckCollisionWeapon()
+{
+	for (UINT i = 0; i < listObj.size(); i++)
+		if (listObj[i]->GetType() == eID::TORCH)
+			if (simon->_ListWeapon[0]->isCollision(listObj[i]) == true)
+			{
+				GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
+				gameObjTorch->SubHealth(1);
+				listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX(), gameObjTorch->GetY()));
+			}
+
+
+
+
+}
+
+void Scene_1::CheckCollisionSimonWithItem()
+{
+	for (UINT i = 0; i < listItem.size(); i++)
+		if (listItem[i]->GetFinish() == false)
+		{
+			if (simon->isCollisionWithItem(listItem[i]) == true) // có va chạm
+			{
+				switch (listItem[i]->GetType())
+				{
+				case eID::LARGEHEART:
+				{
+					simon->SetHeartCollect(simon->GetHeartCollect() + 5);
+					listItem[i]->SetFinish(true);
+					break;
+				} 
+				case eID::UPGRADEMORNINGSTAR:
+				{
+					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->_ListWeapon[0]);
+					objMorningStar->UpgradeLevel(); // Nâng cấp vũ khí roi
+					listItem[i]->SetFinish(true);
+					break;
+				}
+				default:
+					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
+					break;
+				}
+
+			}
+		}
+
+
+
+
+
+}
+
+
+
+
+Item * Scene_1::GetNewItem(int Id, eID Type, float X, float Y)
+{
+	if (Type == eID::TORCH)
+	{
+		if (Id == 1 || Id == 4)
+			return new LargeHeart(X, Y);
+
+		if (Id == 2 || Id == 3)
+			return new UpgradeMorningStar(X, Y);
+
+		//	return new LargeHeart(X, Y);
+
+	}
+
+	return new LargeHeart(X, Y);
 }

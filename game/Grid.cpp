@@ -33,11 +33,11 @@ void Grid::GetListObject(vector<Object*>& ListObj, Camera * camera)
 	ListObj.clear(); // clear list
 	ResetTake();
 
-	int rowBottom = (int) floor((camera->GetYCam() + camera->GetHeight()) / (float)GRID_CELL_HEIGHT);
-	int rowTop = (int)floor((camera->GetYCam()) / (float)GRID_CELL_HEIGHT);
+	int rowBottom = (int) floor((camera->GetYCam() + camera->GetHeight() - 1) / (float)GRID_CELL_HEIGHT);
+	int rowTop = (int)floor((camera->GetYCam() + 1) / (float)GRID_CELL_HEIGHT);
 
-	int colLeft = (int)floor((camera->GetXCam()) / (float)GRID_CELL_WIDTH);
-	int colRight = (int)floor((camera->GetXCam() + camera->GetWidth()) / (float)GRID_CELL_WIDTH);
+	int colLeft = (int)floor((camera->GetXCam() + 1) / (float)GRID_CELL_WIDTH);
+	int colRight = (int)floor((camera->GetXCam() + camera->GetWidth() -1) / (float)GRID_CELL_WIDTH);
 
 
 	for (int row = rowTop; row <= rowBottom; row++)
@@ -47,10 +47,10 @@ void Grid::GetListObject(vector<Object*>& ListObj, Camera * camera)
 			{
 				if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetHealth() > 0) // còn tồn tại
 				{
-					if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->isTake == false)
+					if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetIsTake() == false)
 					{
 						ListObj.push_back(cells[row + GRID_BASE][col + GRID_BASE].at(i));
-						cells[row + GRID_BASE][col + GRID_BASE].at(i)->isTake = true;
+						cells[row + GRID_BASE][col + GRID_BASE].at(i)->SetIsTake(true);
 					}
 				}
 			}
@@ -62,11 +62,11 @@ void Grid::GetListObject(vector<Object*> &ListObj, GameObject * obj)
 	ListObj.clear(); // clear list
 	ResetTake();
 
-	int rowBottom = (int)floor((obj->GetY() + obj->GetHeight()) / (float)GRID_CELL_HEIGHT);
+	int rowBottom = (int)floor((obj->GetY() + obj->GetHeight() -1 ) / (float)GRID_CELL_HEIGHT);
 	int rowTop = (int)floor((obj->GetY()) / (float)GRID_CELL_HEIGHT);
 
 	int colLeft = (int)floor((obj->GetX()) / (float)GRID_CELL_WIDTH);
-	int colRight = (int)floor((obj->GetX() + obj->GetWidth()) / (float)GRID_CELL_WIDTH);
+	int colRight = (int)floor((obj->GetX() + obj->GetWidth() -1) / (float)GRID_CELL_WIDTH);
 
 
 	for (int row = rowTop; row <= rowBottom; row++)
@@ -76,10 +76,10 @@ void Grid::GetListObject(vector<Object*> &ListObj, GameObject * obj)
 			{
 				if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetHealth() > 0) // còn tồn tại
 				{
-					if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->isTake == false)
+					if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetIsTake() == false)
 					{
 						ListObj.push_back(cells[row + GRID_BASE][col + GRID_BASE].at(i));
-						cells[row + GRID_BASE][col + GRID_BASE].at(i)->isTake = true;
+						cells[row + GRID_BASE][col + GRID_BASE].at(i)->SetIsTake(true);
 					}
 				}
 			}
@@ -92,8 +92,8 @@ void Grid::GetListObject(vector<Object*> &ListObj, GameObject * obj)
 void Grid::ResetTake()
 {
 	for (UINT i = 0; i < listObjectGame.size(); i++)
-	{
-		listObjectGame[i]->isTake = false;
+	{ 
+		listObjectGame[i]->SetIsTake(false);
 	}
 }
  
@@ -112,8 +112,8 @@ void Grid::Insert(int id, int type, int trend, int x, int y, int w, int h)
 		return;
 	} 
 	dataObject->SetId(id);
-	dataObject->SetTrend(trend);
-	dataObject->isTake = false;
+	dataObject->SetTrend(trend); 
+	dataObject->SetIsTake(false);
 
 	listObjectGame.push_back(dataObject);
 

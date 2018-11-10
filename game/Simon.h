@@ -88,14 +88,17 @@ public:
 	int GetHeartCollect();
 
 	void CollisionWithBrick(vector<LPOBJECT> *coObjects = NULL);
-	void CollisionWithItem();
-
+ 
 	void Attack(Weapon *w);
 
 	int GetLives();
 	void SetLives(int l);
 	int GetScore();
 	void SetScore(int s);
+
+
+	bool isCollisionWithItem(Item * objItem);
+
 
 };
 

@@ -1,6 +1,6 @@
 ﻿#include "Board.h"
  
-string Board::FillNumber(string s, int MaxNumber)
+string Board::FillNumber(string s, UINT MaxNumber)
 {
 	while (s.size() < MaxNumber)
 		s = "0" + s;
@@ -20,7 +20,7 @@ void Board::Render(Camera * camera, Simon * simon , int state)
 { 
 	_sprite->Draw(x,y);
 	_font.Draw(x, y+15, "SCORE-");
-	_font.Draw(x, y + 15, "SCORE-" + FillNumber(std::to_string(simon->GetScore()),6)  );
+	_font.Draw(x, y + 15, "SCORE-" + FillNumber(std::to_string(simon->GetScore()), (UINT) 6)  );
 
 	_font.Draw(x, y+33, "PLAYER");
 	_font.Draw(x, y+51, "ENEMY");

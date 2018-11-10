@@ -29,10 +29,11 @@ public:
 	void UpdatePositionFitSimon();
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 
-	void CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj);
-
+ 
 	void UpgradeLevel();
 
+
+	bool isCollision(Object* obj);
 };
 
 

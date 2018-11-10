@@ -57,6 +57,11 @@ protected:
 	GTexture * _texture;
 	GSprite * _sprite;
 
+
+	bool isTake;
+
+
+
 public:
 	Object();
 	Object(eID _type);
@@ -72,6 +77,8 @@ public:
 	eID GetType();
 
 
+	bool GetIsTake();
+	void SetIsTake(int b);
 
 	void RenderBoundingBox(Camera * camera);
 	LPCOLLISIONEVENT SweptAABBEx(LPOBJECT coO);

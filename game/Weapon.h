@@ -42,15 +42,15 @@ public:
 	 
 	virtual void UpdatePositionFitSimon();
 	 
-	virtual void CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj) = 0;
+ 
+	virtual bool isCollision(Object* obj) = 0; // kiểm tra vũ khí này có va chạm với object kia hay không?
 
 
 	bool GetFinish();
 
 	void SetFinish(bool b);
 	  
-	static Item * GetNewItem(int Id, eID Type, float X, float Y);
-
+ 
 };
 
 

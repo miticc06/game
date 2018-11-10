@@ -49,6 +49,10 @@ void GameObject::SetId(int ID)
 { 
 	this->id = ID;
 }
+int GameObject::GetId()
+{
+	return id;
+}
 GameObject::~GameObject()
 {
 }

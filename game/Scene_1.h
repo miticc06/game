@@ -28,7 +28,7 @@ public:
 	Board * board;
 	 
 
-	vector<LPOBJECT> ListObj;
+	vector<LPOBJECT> listObj;
 
 	vector <Item*> listItem;
 
@@ -39,11 +39,16 @@ public:
 	void KeyState(BYTE *state);
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
-
 	void LoadResources();
 	void Update(DWORD dt);
 	void Render();
 
+
+	void CheckCollision();
+	void CheckCollisionWeapon();
+	void CheckCollisionSimonWithItem();
+
+	Item * GetNewItem(int Id, eID Type, float X, float Y);
 };
 
 #endif

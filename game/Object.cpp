@@ -117,8 +117,10 @@ void Object::FilterCollision(
 		}
 	}
 
-	if (min_ix >= 0) coEventsResult.push_back(coEvents[min_ix]);
-	if (min_iy >= 0) coEventsResult.push_back(coEvents[min_iy]);
+	if (min_ix >= 0)
+		coEventsResult.push_back(coEvents[min_ix]);
+	if (min_iy >= 0)
+		coEventsResult.push_back(coEvents[min_iy]);
 }
 
 int Object::GetHeight()
@@ -134,6 +136,16 @@ int Object::GetWidth()
 eID Object::GetType()
 {
 	return type;
+}
+
+bool Object::GetIsTake()
+{
+	return isTake;
+}
+
+void Object::SetIsTake(int b)
+{
+	isTake = b;
 }
 
 

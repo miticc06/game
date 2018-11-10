@@ -19,7 +19,7 @@ private:
 	GSprite * _sprite;
 	int x, y;
 
-	string FillNumber(string s, int MaxNumber);
+	string FillNumber(string s, UINT MaxNumber);
 
  public:
 	Board(int X, int Y);

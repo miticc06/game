@@ -131,11 +131,62 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 	}
 
 }
+//
+//void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
+//{
+//	if (_sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1)
+//		return;
+//
+//	RECT rect, rect1;
+//	float l, t, r, b;
+//	float l1, t1, r1, b1;
+//
+//	GetBoundingBox(l, t, r, b);
+//	rect.left = (int)l;
+//	rect.top = (int)t;
+//	rect.right = (int)r;
+//	rect.bottom = (int)b;
+//
+//
+//
+//	for (UINT i = 0; i < listObj->size(); i++) // ngay đây có thể tối ưu thêm, từ từ fix :p
+//		if (listObj->at(i)->GetType() == eID::TORCH)
+//		{
+//			GameObject *obj = dynamic_cast<GameObject*>(listObj->at(i));
+//			if (obj->GetHealth() > 0)
+//			{
+//				listObj->at(i)->GetBoundingBox(l1, t1, r1, b1);
+//				rect1.left = (int)l1;
+//				rect1.top = (int)t1;
+//				rect1.right = (int)r1;
+//				rect1.bottom = (int)b1;
+//				if (Game::GetInstance()->AABBCheck(rect, rect1))
+//				{
+//					obj->SubHealth(1);
+//					//VariableGlobal::GetInstance()->ListItem.push_back(Weapon::GetNewItem(obj->id, obj->GetType(), listObj->at(i)->GetX(), listObj->at(i)->GetY()));
+//				}
+//			}
+//		}
+//	 
+//
+//}
 
-void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
+void MorningStar::UpgradeLevel()
+{
+	if (level >= 2)
+		return;
+	level++;
+}
+
+bool MorningStar::isCollision(Object * obj)
 {
 	if (_sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1)
-		return;
+		return false;
+
+	GameObject *gameObj = dynamic_cast<GameObject*>(obj);
+	if (gameObj->GetHealth() <= 0) // vật này die rồi thì ko va chạm
+		return false;
+
 
 	RECT rect, rect1;
 	float l, t, r, b;
@@ -148,32 +199,10 @@ void MorningStar::CollisionWithObject(DWORD dt, vector<LPOBJECT>* listObj)
 	rect.bottom = (int)b;
 
 
-
-	for (UINT i = 0; i < listObj->size(); i++) // ngay đây có thể tối ưu thêm, từ từ fix :p
-		if (listObj->at(i)->GetType() == eID::TORCH)
-		{
-			GameObject *obj = dynamic_cast<GameObject*>(listObj->at(i));
-			if (obj->GetHealth() > 0)
-			{
-				listObj->at(i)->GetBoundingBox(l1, t1, r1, b1);
-				rect1.left = (int)l1;
-				rect1.top = (int)t1;
-				rect1.right = (int)r1;
-				rect1.bottom = (int)b1;
-				if (Game::GetInstance()->AABBCheck(rect, rect1))
-				{
-					obj->SubHealth(1);
-					//VariableGlobal::GetInstance()->ListItem.push_back(Weapon::GetNewItem(obj->id, obj->GetType(), listObj->at(i)->GetX(), listObj->at(i)->GetY()));
-				}
-			}
-		}
-	 
-
-}
-
-void MorningStar::UpgradeLevel()
-{
-	if (level >= 2)
-		return;
-	level++;
+	gameObj->GetBoundingBox(l1, t1, r1, b1);
+	rect1.left = (int)l1;
+	rect1.top = (int)t1;
+	rect1.right = (int)r1;
+	rect1.bottom = (int)b1;
+	return Game::GetInstance()->AABBCheck(rect, rect1);
 }
