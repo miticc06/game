@@ -224,7 +224,7 @@ void Scene_1::Render()
 	simon->Render(camera);
 
 
-	board->Render(camera, simon, 1);
+	board->Render(camera, simon, 1, simon->_weaponSub);
 
 
 

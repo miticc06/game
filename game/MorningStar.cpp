@@ -130,6 +130,10 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 	} 
  
 }
+
+void MorningStar::RenderIcon(int X, int Y)
+{
+}
  
 void MorningStar::UpgradeLevel()
 {

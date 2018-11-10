@@ -68,7 +68,7 @@ void Map::DrawMap(Camera *camera)
 				if (!(row + i < 0 || row + i>RowMatrix || j + column < 0 || j + column > ColumnMatrix))
  				{
 					TileSprite->SelectIndex(TileMap[row + i][column + j]);
-					TileSprite->DrawRaw(x + TileTexture->FrameWidth*j, y + TileTexture->FrameHeight*i + HeightBoard);
+					TileSprite->Draw(x + TileTexture->FrameWidth*j, y + TileTexture->FrameHeight*i + HeightBoard);
  				}
 			}
 		}

@@ -16,6 +16,8 @@ public:
 	void Create(float simonX, float simonY, int simonTrend);
 	 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	void RenderIcon(int X, int Y);
+
 
 	bool isCollision(Object* obj);
 

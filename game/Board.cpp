@@ -15,8 +15,8 @@ Board::Board(int X, int Y)
 	y = Y;
 }
  
-
-void Board::Render(Camera * camera, Simon * simon , int state)
+#include "Dagger.h"
+void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSub)
 { 
 	_sprite->Draw(x,y);
 	_font.Draw(x, y+15, "SCORE-");
@@ -36,6 +36,15 @@ void Board::Render(Camera * camera, Simon * simon , int state)
 
 
 	_boardHealth.Draw(x + 100, y + 30, simon->GetHealth(), 5);
+	 
+	if (weaponSub != NULL)
+	{
+		if (weaponSub->GetType() == eID::DAGGER)
+		{
+			weaponSub->RenderIcon(330, 40);
+		}
+
+	}
 
 }
 

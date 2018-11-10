@@ -30,7 +30,7 @@ public:
 
 	void UpdatePositionFitSimon();
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-
+	void RenderIcon(int X, int Y);
  
 	void UpgradeLevel();
 

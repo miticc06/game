@@ -20,36 +20,28 @@ public:
 	GSprite(GTexture* texture, int timeAnimation);
 	GSprite(GTexture* texture, int start, int end, int timeAnimation);
 
-	//sang frame tiếp theo
-	void Next();
+ 	void Next();
 
-	//trở về frame đầu tiên
-	void Reset();
+ 	void Reset();
 
-	//chọn ID của 1 frame
-	void SelectIndex(int index);
+ 	void SelectIndex(int index);
 
-	//update animation
-	void Update(int ellapseTime);
+ 	void Update(int ellapseTime);
 
-	// Render current sprite at location (X,Y) at the target surface
-	void Draw(int x, int y);
+ 	void Draw(int x, int y);
 
 	//Render with scale (-1, 1)
 	void DrawFlipX(int x, int y);
+	 
+	void DrawFlipXIndex(int index, int x, int y);
 
-	//render with scale (1, -1)
-	void DrawFlipY(int x, int y);
-
-	//Render Rect of texture at (x,y)
+	 
 	void DrawRect(int X, int Y, RECT SrcRect);
 
 	void DrawIndex(int index, int X, int Y);
-
-	void DrawRaw(int X, int Y);
+	 
 	int GetIndex();
-
-	void DrawApart(int x, int y, int w);
+	 
 	~GSprite();
 
 	//=======================================================================================================================

@@ -23,7 +23,7 @@ private:
 
  public:
 	Board(int X, int Y);
-	void Render(Camera *camera , Simon * simon, int state);
+	void Render(Camera * camera, Simon * simon, int state, Weapon * weaponSub);
 	~Board();
 };
 

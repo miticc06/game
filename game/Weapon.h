@@ -45,6 +45,8 @@ public:
  
 	virtual bool isCollision(Object* obj) = 0; // kiểm tra vũ khí này có va chạm với object kia hay không?
 
+	virtual void RenderIcon(int X, int Y) = 0;
+
 
 	bool GetFinish();
 
