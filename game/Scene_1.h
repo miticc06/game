@@ -30,7 +30,7 @@ public:
 
 	vector<LPOBJECT> ListObj;
 
-
+	vector <Item*> listItem;
 
 public:
 	Scene_1();

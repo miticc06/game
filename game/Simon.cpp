@@ -13,6 +13,10 @@ Simon::Simon()
 	isAttacking = 0;
 
 	Health = 16; // simon dính 16 phát là chết
+	Lives = 5; // có 5 mạng sống
+	HeartCollect = 127;
+	score = 1230;
+
 
 	_ListWeapon.clear();
 	_ListWeapon.push_back(new MorningStar());
@@ -437,4 +441,24 @@ void Simon::Attack(Weapon * w)
 
 	isAttacking = true; // set trang thái tấn công
 	w->Create(this->x, this->y, this->trend); // set vị trí weapon theo simon
+}
+
+int Simon::GetLives()
+{
+	return Lives;
+}
+
+void Simon::SetLives(int l)
+{
+	Lives = l;
+}
+
+int Simon::GetScore()
+{
+	return score;
+}
+
+void Simon::SetScore(int s)
+{
+	score = s;
 }

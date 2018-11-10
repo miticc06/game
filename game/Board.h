@@ -19,9 +19,11 @@ private:
 	GSprite * _sprite;
 	int x, y;
 
+	string FillNumber(string s, int MaxNumber);
+
  public:
 	Board(int X, int Y);
-	void Render(Camera *camera , Simon * simon);
+	void Render(Camera *camera , Simon * simon, int state);
 	~Board();
 };
 

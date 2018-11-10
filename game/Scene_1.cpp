@@ -138,10 +138,7 @@ void Scene_1::OnKeyUp(int KeyCode)
 }
 
 void Scene_1::LoadResources()
-{
-
-	//_variableGlobal = VariableGlobal::GetInstance();
-
+{ 
 
 	simon = new Simon();
 	TileMap = new Map();
@@ -152,17 +149,16 @@ void Scene_1::LoadResources()
 	board = new Board(0, 0);
 
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
-	simon->SetPosition(0, 0);
+	//simon->SetPosition(0, 0);
 
 
 	gridGame = new Grid();
 	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
 
+	listItem.clear();
 
 
-
-	//_variableGlobal->ListItem.clear();
-
+ 
 }
 
 void Scene_1::Update(DWORD dt)
@@ -198,11 +194,11 @@ void Scene_1::Render()
 
 	 
 	 
-
-
-	board->Render(camera, simon);
-
 	simon->Render(camera);
+
+
+	board->Render(camera, simon, 1);
+
 
 
 }

@@ -49,7 +49,11 @@ class Simon : public GameObject
 {
 private:
 	int HeartCollect; // số lượng item heart người chơi nhặt được
-	
+	int Lives;
+	int score;
+
+
+
 public:
 	bool isWalking;
 	bool isJumping;
@@ -88,6 +92,10 @@ public:
 
 	void Attack(Weapon *w);
 
+	int GetLives();
+	void SetLives(int l);
+	int GetScore();
+	void SetScore(int s);
 
 };
 
