@@ -8,7 +8,7 @@
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
 
-#define MAX_FRAME_RATE 60
+#define MAX_FRAME_RATE 90
 
 
 #include "Scene_1.h"
@@ -245,6 +245,7 @@ int Run()
 
 		if (dt >= tickPerFrame)
 		{
+		//	DebugOut(L"dt = %d \n ", dt);
 			frameStart = now;
 
 			game->ProcessKeyboard();

@@ -130,6 +130,11 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 	vy += SIMON_GRAVITY * dt;// Simple fall down
 	 
 
+	if (isJumping == true && isWalking == true)
+		vx += 0.0012f * dt *trend;
+
+
+
 	vector<LPOBJECT> list_Brick;
 	list_Brick.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)
@@ -191,17 +196,21 @@ void Simon::Render(Camera* camera)
 
 void Simon::Left()
 {
+	// (isJumping == true || isAttacking == true)
+	//	return;
 	trend = -1;
 }
 
 void Simon::Right()
 {
+	//if (isJumping == true || isAttacking == true)
+	//	return;
 	trend = 1; // quay qua phải
 }
 
 void Simon::Go()
 {
-	if (isAttacking == true)
+	if (isAttacking == true /*|| isJumping == true*/)
 		return;
 
 	vx = SIMON_WALKING_SPEED * trend;

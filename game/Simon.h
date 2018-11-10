@@ -11,8 +11,8 @@
 
 
 
-#define SIMON_GRAVITY 0.005f
-#define SIMON_VJUMP 0.8f
+#define SIMON_GRAVITY 0.005f//0.005f
+#define SIMON_VJUMP 0.9f
 
 #define SIMON_WALKING_SPEED 0.12f //0.12f 
 
@@ -49,7 +49,8 @@ class Simon : public GameObject
 {
 private:
 	int HeartCollect; // số lượng item heart người chơi nhặt được
-	 
+	
+public:
 	bool isWalking;
 	bool isJumping;
 	bool isSitting;

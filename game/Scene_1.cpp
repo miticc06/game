@@ -13,7 +13,14 @@ Scene_1::~Scene_1()
 
 void Scene_1::KeyState(BYTE * state)
 {
- 
+	
+	//simon->Jump();
+
+	//return;
+
+	if (simon->isJumping && simon->isWalking)
+		return;
+
 	if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
 	{
 		simon->Sit();
@@ -32,12 +39,27 @@ void Scene_1::KeyState(BYTE * state)
 
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 	{
+		if (simon->isAttacking)
+		{
+			float vx, vy;
+			simon->GetSpeed(vx, vy);
+			simon->SetSpeed(0, vy);
+			return;
+		}
+			
 		simon->Right();
 		simon->Go();
 	}
 	else
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
 		{
+			if (simon->isAttacking)
+			{
+				float vx, vy;
+				simon->GetSpeed(vx, vy);
+				simon->SetSpeed(0, vy);
+				return;
+			}
 			simon->Left();
 			simon->Go();
 		}
@@ -59,10 +81,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_Q)
 		simon->SetPosition(SIMON_POSITION_DEFAULT);
 
-	if (KeyCode == DIK_SPACE)
-	{
-		simon->Jump();
-	}
+
 
 	if (KeyCode == DIK_1)
 	{
@@ -74,6 +93,36 @@ void Scene_1::OnKeyDown(int KeyCode)
 		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
 		simon->Attack(simon->_ListWeapon[0]);
 	}
+
+	if (simon->isJumping && simon->isWalking)
+	{
+		return;
+	}
+	
+	
+
+
+ 
+	if (KeyCode == DIK_SPACE)
+	{
+		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+		{
+			simon->Stop();
+			float vx, vy;
+			simon->GetSpeed(vx, vy);
+			simon->SetSpeed(0/*vx - 0.0001f*/, vy - SIMON_VJUMP);
+			simon->isJumping = 1;
+			simon->isWalking = 1;
+		}
+		else
+		{
+			simon->Jump();
+		}
+
+
+		
+	}
+
 }
 
 void Scene_1::OnKeyUp(int KeyCode)
