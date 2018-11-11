@@ -50,10 +50,8 @@ void GTexture::Load(int ShowBox)
 
 	if (result != D3D_OK)
 	{
-	//	GLMessage("Can not load texture");
-	//	GLTrace("[texture.h] Failed to get information from image file [%s]", FileName);
-		OutputDebugStringA(FileName);
-		return;
+		DebugOut(L"[ERROR TEXTURE] Khong the load texture: %s \n", FileName);
+ 		return;
 	}
 
 	result = D3DXCreateTextureFromFileExA(
@@ -75,8 +73,7 @@ void GTexture::Load(int ShowBox)
 	
 	if (result != D3D_OK)
 	{
-		//GLMessage("Can not load texture");
-	//	GLTrace("[texture.h] Failed to create texture from file '%s'", FileName);
+		DebugOut(L"[ERROR TEXTURE] Khong the load texture: %s \n", FileName);
 		return;
 	}
 }
@@ -100,10 +97,8 @@ void GTexture::Load(int R, int G, int B)
 
 	if (result != D3D_OK)
 	{
-		//GLMessage("Can not load texture");
-		//GLTrace("[texture.h] Failed to get information from image file [%s]", FileName);
-		OutputDebugStringA(FileName);
-		return;
+		DebugOut(L"[ERROR TEXTURE] Khong the load texture: %s \n", FileName);
+ 		return;
 	}
 
 	result = D3DXCreateTextureFromFileExA(
@@ -125,8 +120,8 @@ void GTexture::Load(int R, int G, int B)
 
 	if (result != D3D_OK)
 	{
-		//GLMessage("Can not load texture");
-		//GLTrace("[texture.h] Failed to create texture from file '%s'", FileName);
+		DebugOut(L"[ERROR TEXTURE] Khong the load texture: %s \n", FileName);
+
 		return;
 	}
 }

@@ -7,6 +7,7 @@
 
 #define LARGEHEART_GRAVITY 0.25f
 #define LARGEHEART_TIMEDISPLAYMAX 3000
+#define LARGEHEART_TIMEWAITMAX 300
 
 class LargeHeart :
 	public Item

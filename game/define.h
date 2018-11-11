@@ -46,7 +46,7 @@ using namespace std;
 #define SCREEN_HEIGHT 448
 
 
-#define IS_DEBUG_RENDER_BBOX 1
+#define IS_DEBUG_RENDER_BBOX 0
  
  
 extern int Window_Width;
@@ -89,7 +89,11 @@ enum eID
 	BOARD = 102,
 	BOARDHEALTH = 103,
 	MAP1 = 104,
-	RENDERBBOX =105
+	RENDERBBOX =105,
+
+	// Effect
+	FIRE = 121,
+	HIT = 122
 };
  
  

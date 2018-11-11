@@ -14,6 +14,8 @@ LargeHeart::LargeHeart(float X, float Y)
 	vy = LARGEHEART_GRAVITY;
 	TimeDisplayMax = LARGEHEART_TIMEDISPLAYMAX; // set time hiển thị tối đa
 	TimeDisplayed = 0;
+	TimeWaited = 0;
+	TimeWaitMax = LARGEHEART_TIMEWAITMAX;
 }
 
 void LargeHeart::GetBoundingBox(float & left, float & top, float & right, float & bottom)
@@ -26,6 +28,11 @@ void LargeHeart::GetBoundingBox(float & left, float & top, float & right, float 
 
 void LargeHeart::Update(DWORD dt, vector<LPOBJECT>* listObject)
 {
+	if (TimeWaited < TimeWaitMax)
+	{
+		TimeWaited += dt;
+		return;
+	}
 
 	TimeDisplayed += dt;
 	if (TimeDisplayed >= TimeDisplayMax)

@@ -6,6 +6,7 @@
 
 #define ITEMDAGGER_TIMEDISPLAYMAX 3000
 #define ITEMDAGGER_GRAVITY 0.25f
+#define ITEMDAGGER_TIMEWAITMAX 300
 
 
 class ItemDagger : public Item

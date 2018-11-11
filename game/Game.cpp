@@ -255,8 +255,7 @@ void Game::SweptAABB(
 	float bb = dy > 0 ? mb + dy : mb;
 
 	if (br < sl || bl > sr || bb < st || bt > sb) return;
-
-
+ 
 	if (dx == 0 && dy == 0) return;		// moving object is not moving > obvious no collision
 
 	if (dx > 0)
@@ -335,12 +334,13 @@ HWND Game::GetWindowHandle()
 
 bool Game::AABBCheck(RECT b1, RECT b2)
 {
-	return !(b1.right < b2.left || b1.left > b2.right || /*b1.top < b2.bottom || b1.bottom > b2.top*/ b1.top > b2.bottom || b1.bottom < b2.top);
+	return !(b1.right < b2.left || b1.left > b2.right || b1.top > b2.bottom || b1.bottom < b2.top);
 }
+
 
 bool Game::AABBCheck(float b1left, float b1top, float b1right, float b1bottom, float b2left, float b2top, float b2right, float b2bottom )
 {
-	return !(b1right < b2left || b1left > b2right || /*b1.top < b2.bottom || b1.bottom > b2.top*/ b1top > b2bottom || b1bottom < b2top);
+	return !(b1right < b2left || b1left > b2right || b1top > b2bottom || b1bottom < b2top);
 }
 
 

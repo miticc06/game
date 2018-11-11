@@ -85,6 +85,15 @@
     <ClCompile Include="TextureManager.cpp">
       <Filter>Framework\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Framework\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>Framework\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Hit.cpp">
+      <Filter>Framework\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -168,6 +177,15 @@
     <ClInclude Include="TextureManager.h">
       <Filter>Framework\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>Framework\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Framework\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Hit.h">
+      <Filter>Framework\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -214,6 +232,9 @@
     </Filter>
     <Filter Include="Framework\Board\Font">
       <UniqueIdentifier>{f85bd4fe-bdbb-43f7-b818-60bdf95399fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Effect">
+      <UniqueIdentifier>{56fc4ff3-9a31-4d61-8eb7-2830a90becca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -16,6 +16,9 @@
 #include "ItemDagger.h"
 #include "Dagger.h"
 #include "TextureManager.h"
+#include "Effect.h"
+#include "Fire.h"
+#include "Hit.h"
 
 class Scene_1 : public Scene
 {
@@ -31,6 +34,8 @@ public:
 	vector<LPOBJECT> listObj;
 
 	vector <Item*> listItem;
+	vector <Effect*> listEffect;
+
 
 public:
 	Scene_1();

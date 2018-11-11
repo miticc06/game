@@ -90,6 +90,24 @@ void Scene_1::OnKeyDown(int KeyCode)
 		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->GetX() + 10, simon->GetY());
 	}
 
+
+
+
+	if (KeyCode == DIK_2) // lấy tọa độ world của chuột 
+	{
+		POINT p;
+		GetCursorPos(&p);
+  		ScreenToClient(Game::GetInstance()->GetWindowHandle(), &p);
+		DebugOut(L"[MOUSE POSITION] x: %d , y = %d\n", p.x + (int)camera->GetXCam(), p.y+ (int)camera->GetYCam());
+
+	}
+
+
+
+
+
+
+
 	if (KeyCode == DIK_X)
 	{
 		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
@@ -175,7 +193,7 @@ void Scene_1::LoadResources()
 	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
 
 	listItem.clear();
-
+	listEffect.clear();
 
  
 }
@@ -184,23 +202,32 @@ void Scene_1::Update(DWORD dt)
 {
 //	DebugOut(L"[DT] DT: %d\n", dt);
 
-	gridGame->GetListObject(listObj, camera); // lấy hết các object trong vùng camera;
+	
+
+
+
+	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 	//DebugOut(L"[Grid] ListObject by Camera = %d\n", listObj.size());
 
-
+	 
 
 	simon->Update(dt, &listObj);
+
 	camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
 	camera->Update();
 
 	for (UINT i = 0; i < listObj.size(); i++)
-	{
-		listObj[i]->Update(dt, &listObj);
-	}
+		listObj[i]->Update(dt, &listObj);  // đã kiểm tra "Alive" lúc lấy từ lưới ra
 
 	for (UINT i = 0; i < listItem.size(); i++)
-		listItem[i]->Update(dt, &listObj); // trong các hàm update chỉ kiểm tra va chạm với đất
-	 
+		if (listItem[i]->GetFinish()== false)
+			listItem[i]->Update(dt, &listObj); // trong các hàm update chỉ kiểm tra va chạm với đất
+
+
+	for (UINT i = 0; i < listEffect.size(); i++)
+		if (listEffect[i]->GetFinish() == false)
+			listEffect[i]->Update(dt);
+
 
 	CheckCollision();
 
@@ -220,10 +247,14 @@ void Scene_1::Render()
 		listObj[i]->Render(camera);
 
 	for (UINT i = 0; i < listItem.size(); i++)
-		listItem[i]->Render(camera);
+		if (listItem[i]->GetFinish()==false)
+			listItem[i]->Render(camera);
 	 
-	simon->Render(camera);
+	for (UINT i = 0; i < listEffect.size(); i++)
+		if (listEffect[i]->GetFinish() == false)
+			listEffect[i]->Render(camera);
 
+	simon->Render(camera);
 
 	board->Render(camera, simon, 1, simon->_weaponSub);
 
@@ -251,7 +282,10 @@ void Scene_1::CheckCollisionWeapon()
 				{
 					GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
 					gameObjTorch->SubHealth(1);
-					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX(), gameObjTorch->GetY()));
+
+					listEffect.push_back(new Hit(gameObjTorch->GetX()+14, gameObjTorch->GetY() + 14)); // hiệu ứng lửa
+					listEffect.push_back(new Fire(gameObjTorch->GetX() - 5, gameObjTorch->GetY()+8)); // hiệu ứng lửa
+					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() +5, gameObjTorch->GetY()));
 				}
 	}
 
@@ -269,7 +303,9 @@ void Scene_1::CheckCollisionWeapon()
 
 					simon->_weaponSub->SetFinish(true);   // cây kiếm trúng object thì tắt luôn
 
-					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX(), gameObjTorch->GetY()));
+					listEffect.push_back(new Hit(gameObjTorch->GetX() + 14, gameObjTorch->GetY() + 14)); // hiệu ứng lửa
+					listEffect.push_back(new Fire(gameObjTorch->GetX() - 5, gameObjTorch->GetY() + 8)); // hiệu ứng lửa
+					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
 				}
 	}
 
@@ -280,7 +316,7 @@ void Scene_1::CheckCollisionWeapon()
 void Scene_1::CheckCollisionSimonWithItem()
 {
 	for (UINT i = 0; i < listItem.size(); i++)
-		if (listItem[i]->GetFinish() == false)
+		if (listItem[i]->GetFinish() == false && listItem[i]->isWaitingDisplay() == false) // chưa kết thúc và "không phải" đang chờ để hiển thị
 		{
 			if (simon->isCollisionWithItem(listItem[i]) == true) // có va chạm
 			{

@@ -13,6 +13,8 @@ ItemDagger::ItemDagger(float X, float Y)
 	vy = ITEMDAGGER_GRAVITY;
 	TimeDisplayMax = ITEMDAGGER_TIMEDISPLAYMAX;
 	TimeDisplayed = 0;
+	TimeWaited = 0;
+	TimeWaitMax = ITEMDAGGER_TIMEWAITMAX;
 }
 
 void ItemDagger::GetBoundingBox(float &left, float &top, float &right, float &bottom)
@@ -28,6 +30,12 @@ void ItemDagger::GetBoundingBox(float &left, float &top, float &right, float &bo
 
 void ItemDagger::Update(DWORD dt, vector<LPOBJECT> *listObject)
 { 
+	if (TimeWaited < TimeWaitMax)
+	{
+		TimeWaited += dt;
+		return;
+	}
+
 	TimeDisplayed += dt;
 	if (TimeDisplayed >= TimeDisplayMax)
 	{

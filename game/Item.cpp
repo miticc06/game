@@ -5,7 +5,9 @@
 Item::Item()
 { 
 	TimeDisplayed = 0;
-
+	TimeWaitMax = 0;
+	TimeDisplayMax = 0;
+	TimeWaited = 0;
 }
 
 
@@ -23,8 +25,10 @@ void Item::Update(DWORD dt, vector<LPOBJECT> *listObject)
 
 void Item::Render(Camera * camera)
 {
-	if (isFinish == true)
+	if (TimeWaited< TimeWaitMax)
+	{ 
 		return;
+	}
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 
@@ -32,6 +36,11 @@ void Item::Render(Camera * camera)
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
+}
+
+bool Item::isWaitingDisplay()
+{
+	return TimeWaited < TimeWaitMax;
 }
  
 

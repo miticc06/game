@@ -1,20 +1,22 @@
 ﻿#include "UpgradeMorningStar.h"
 
+ 
 
-
-UpgradeMorningStar::UpgradeMorningStar()
+UpgradeMorningStar::UpgradeMorningStar(float X, float Y) 
 {
- 	_texture = TextureManager::GetInstance()->GetTexture(eID::UPGRADEMORNINGSTAR);
+	_texture = TextureManager::GetInstance()->GetTexture(eID::UPGRADEMORNINGSTAR);
 	_sprite = new GSprite(_texture, 100);
 	type = eID::UPGRADEMORNINGSTAR;
-}
 
-UpgradeMorningStar::UpgradeMorningStar(float X, float Y) : UpgradeMorningStar()
-{
 	this->x = X;
 	this->y = Y;
 	vy = UPGRADEMORNINGSTAR_GRAVITY;
+	
+	TimeDisplayed = 0;
 	TimeDisplayMax = UPGRADEMORNINGSTAR_TIMEDISPLAYMAX; // set time hiển thị tối đa
+	TimeWaited = 0;
+	TimeWaitMax = UPGRADEMORNINGSTAR_TIMEWAITMAX;
+
 
 }
 
@@ -28,6 +30,12 @@ void UpgradeMorningStar::GetBoundingBox(float & left, float & top, float & right
 
 void UpgradeMorningStar::Update(DWORD dt, vector<LPOBJECT>* listObject)
 {
+	if (TimeWaited < TimeWaitMax)
+	{
+		TimeWaited += dt;
+		return;
+	}
+
 
 	TimeDisplayed += dt;
 	if (TimeDisplayed >= TimeDisplayMax)

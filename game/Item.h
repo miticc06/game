@@ -11,8 +11,11 @@ class Item : public Object
 {
 protected: 
 
-	int TimeDisplayMax; // thời gian tối đa cho phép hiển thị.
-	int TimeDisplayed; // Thời gian đã hiển thị.
+	DWORD TimeDisplayMax; // thời gian tối đa cho phép hiển thị.
+	DWORD TimeDisplayed; // Thời gian đã hiển thị.
+
+	DWORD TimeWaited; // Thời gian đã chờ trước khi hiển thị
+	DWORD TimeWaitMax; // Thời gian tối đa phải chờ trước khi hiển thị
 
 	bool isFinish; // đã kết thúc chưa?
 
@@ -23,7 +26,7 @@ public:
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPOBJECT> *listObject = NULL);
 	virtual void Render(Camera * camera);
- 	  
+	virtual bool isWaitingDisplay(); // đang chờ object hiển thi? - simon chưa được ăn
  
  	bool GetFinish();
 	void SetFinish(bool b);
