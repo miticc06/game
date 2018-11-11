@@ -4,7 +4,8 @@
  
 LargeHeart::LargeHeart(float X, float Y)
 {
-	_texture = new GTexture("Resources\\item\\1.png");
+ 	_texture = TextureManager::GetInstance()->GetTexture(eID::LARGEHEART);
+
 	_sprite = new GSprite(_texture, 100);
 	type = eID::LARGEHEART;
 

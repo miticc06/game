@@ -4,15 +4,13 @@
 
 Font::Font()
 {
-	_texture = new GTexture("Resources\\font\\1.png", 13, 3, 37, 0);
+	_texture = TextureManager::GetInstance()->GetTexture(eID::FONT);
 	_sprite = new GSprite(_texture, 0);
-
 }
 
 
 Font::~Font()
-{
-	SAFE_DELETE(_texture);
+{ 
 	SAFE_DELETE(_sprite);
 }
 

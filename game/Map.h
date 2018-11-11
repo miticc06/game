@@ -8,6 +8,7 @@
 #include "define.h"
 
 #include "Camera.h"
+#include "TextureManager.h"
 
 
 #define TILE_FRAME_WIDTH 64
@@ -16,8 +17,8 @@
 class Map
 {
 private:
-	GTexture *TileTexture;
-	GSprite *TileSprite;
+	GTexture *_texture;
+	GSprite *_sprite;
 
 	int ScreenColumn;
 	int ScreenRow;

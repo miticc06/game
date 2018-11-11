@@ -3,7 +3,7 @@
 
 Simon::Simon()
 {
-	_texture = new GTexture("Resources\\simon.png", 8, 3, 24, SHOWBOX_PINK);
+ 	_texture = TextureManager::GetInstance()->GetTexture(eID::SIMON);
 	_sprite = new GSprite(_texture, 250);
 	type = eID::SIMON;
 
@@ -66,14 +66,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 	int index = _sprite->GetIndex();
 
-
-
-
-
-
-
-
-
+	 
 
 
 	if (isAttacking == true)  

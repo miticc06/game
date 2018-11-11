@@ -2,6 +2,7 @@
 #define __DAGGER_H__
 
 #include "Weapon.h"
+#include "TextureManager.h"
 
 #define DAGGER_SPEED 0.35f
 

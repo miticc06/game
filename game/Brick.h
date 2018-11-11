@@ -5,6 +5,7 @@
 #define BRICK_FRAME_HEIGHT 32
 
 #include "GameObject.h" 
+#include "TextureManager.h"
 
 class Brick : public GameObject
 {

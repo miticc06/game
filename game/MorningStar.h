@@ -14,6 +14,7 @@
 #include "Weapon.h"
 #include "GameObject.h" 
 #include "LargeHeart.h"
+#include "TextureManager.h"
 
 
 class MorningStar : public Weapon

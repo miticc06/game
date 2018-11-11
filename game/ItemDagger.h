@@ -2,6 +2,7 @@
 #define __ITEMDAGGER_H__
  
 #include "Item.h"
+#include "TextureManager.h"
 
 #define ITEMDAGGER_TIMEDISPLAYMAX 3000
 #define ITEMDAGGER_GRAVITY 0.25f

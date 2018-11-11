@@ -8,6 +8,7 @@
 #include "Font.h"
 #include "Simon.h"
 #include "BoardHealth.h"
+#include "TextureManager.h"
 
 class Board
 {

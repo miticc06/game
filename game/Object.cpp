@@ -16,9 +16,15 @@ void Object::RenderBoundingBox(Camera * camera)
 
 	D3DXVECTOR2 pos = camera->Transform(l, t);
 
-	LPDIRECT3DTEXTURE9  _Texture = DebugRenderBBOX::GetInstance()->GetTexture();
-
-	Game::GetInstance()->Draw(pos.x, pos.y, _Texture, rect.left, rect.top, rect.right, rect.bottom, 100);
+	Game::GetInstance()->Draw(
+		pos.x, 
+		pos.y, 
+		TextureManager::GetInstance()->GetTexture(eID::RENDERBBOX)->Texture ,
+		rect.left, 
+		rect.top, 
+		rect.right, 
+		rect.bottom, 
+		100);
 
 }
 
@@ -198,6 +204,7 @@ float Object::GetY()
 
 Object::~Object()
 {
-	SAFE_DELETE(_texture);
+	/*SAFE_DELETE(_texture);*/
+	// ko xóa texture vì đây là texture dùng chung được quản lí bởi TextureManager
 	SAFE_DELETE(_sprite);
 }

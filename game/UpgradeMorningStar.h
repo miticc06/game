@@ -7,6 +7,9 @@
 #define UPGRADEMORNINGSTAR_TIMEDISPLAYMAX 3000
 
 #include "Item.h"
+#include "TextureManager.h"
+
+
 class UpgradeMorningStar :
 	public Item
 {
@@ -18,8 +21,7 @@ public:
 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void Update(DWORD dt, vector<LPOBJECT> *listObject = NULL);
-	void SetReward();
-
+ 
 
 	~UpgradeMorningStar();
 };

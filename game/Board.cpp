@@ -9,7 +9,7 @@ string Board::FillNumber(string s, UINT MaxNumber)
 
 Board::Board(int X, int Y)
 {
-	_texture = new GTexture("Resources\\blackboard.png");
+ 	_texture = TextureManager::GetInstance()->GetTexture(eID::BOARD);
 	_sprite = new GSprite(_texture, 0);
 	x = X;
 	y = Y;
@@ -51,6 +51,5 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 
 Board::~Board()
 {
-	SAFE_DELETE(_texture);
 	SAFE_DELETE(_sprite);
 }

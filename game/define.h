@@ -81,7 +81,15 @@ enum eID
 	// item
 	LARGEHEART = 81,
 	UPGRADEMORNINGSTAR = 82,
-	ITEMDAGGER = 83
+	ITEMDAGGER = 83,
+
+
+	// other
+	FONT = 101,
+	BOARD = 102,
+	BOARDHEALTH = 103,
+	MAP1 = 104,
+	RENDERBBOX =105
 };
  
  

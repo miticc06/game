@@ -2,6 +2,8 @@
 #define __TORCH_H__
 
 #include "GameObject.h"
+#include "TextureManager.h"
+
 class Torch : public GameObject
 {
 

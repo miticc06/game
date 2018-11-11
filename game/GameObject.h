@@ -6,8 +6,7 @@
 #include "define.h"
 #include "GSprite.h"
 #include "GTexture.h"
-#include "Camera.h"
-#include "DebugRenderBBOX.h"
+#include "Camera.h" 
 #include "define.h"
 #include "Object.h"
 

@@ -4,7 +4,7 @@
  
 ItemDagger::ItemDagger(float X, float Y)
 {
-	_texture = new GTexture("Resources\\item\\4.png");
+ 	_texture = TextureManager::GetInstance()->GetTexture(eID::ITEMDAGGER);
 	_sprite = new GSprite(_texture, 0);
 	type = eID::ITEMDAGGER;
 

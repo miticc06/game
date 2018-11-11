@@ -4,7 +4,7 @@
 
 MorningStar::MorningStar()
 {
-	_texture = new GTexture("Resources\\weapon\\morningstar.png", 4, 3, 12, 0);
+	_texture = TextureManager::GetInstance()->GetTexture(eID::MORNINGSTAR);
 	_sprite = new GSprite(_texture, 90);
 	this->level = 0;
 	type = eID::MORNINGSTAR;

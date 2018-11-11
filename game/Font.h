@@ -5,13 +5,14 @@
 #include "GTexture.h"
 #include "define.h"
 
+#include "TextureManager.h"
 
 class Font
 {
 private:
 	GSprite * _sprite;
 	GTexture * _texture;
-
+	
 public:
 	Font();
 	~Font();

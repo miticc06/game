@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Goomba.cpp" />
-    <ClCompile Include="Mario.cpp" />
     <ClCompile Include="main.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -45,9 +43,6 @@
     <ClCompile Include="debug.cpp">
       <Filter>Framework\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="DebugRenderBBOX.cpp">
-      <Filter>Framework\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
@@ -87,10 +82,11 @@
     <ClCompile Include="Dagger.cpp">
       <Filter>Object\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Framework\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Goomba.h" />
-    <ClInclude Include="Mario.h" />
     <ClInclude Include="define.h">
       <Filter>Framework\Define</Filter>
     </ClInclude>
@@ -128,9 +124,6 @@
       <Filter>Object\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="debug.h">
-      <Filter>Framework\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="DebugRenderBBOX.h">
       <Filter>Framework\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
@@ -171,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="Dagger.h">
       <Filter>Object\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Framework\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

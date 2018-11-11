@@ -4,7 +4,7 @@
 
 Dagger::Dagger()
 {
-	_texture = new GTexture("Resources\\weapon\\1.png");
+ 	_texture = TextureManager::GetInstance()->GetTexture(eID::DAGGER);
 	_sprite = new GSprite(_texture, 0);
 	type = eID::DAGGER;
 }

@@ -15,7 +15,7 @@
 #include "Board.h"
 #include "ItemDagger.h"
 #include "Dagger.h"
-
+#include "TextureManager.h"
 
 class Scene_1 : public Scene
 {
@@ -26,7 +26,7 @@ public:
 	Camera *camera;
 	Grid * gridGame;
 	Board * board;
-	 
+
 
 	vector<LPOBJECT> listObj;
 

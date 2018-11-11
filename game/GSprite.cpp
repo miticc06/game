@@ -1,4 +1,4 @@
-#include "GSprite.h" 
+﻿#include "GSprite.h" 
 
 GSprite::GSprite()
 {
@@ -46,8 +46,9 @@ GSprite::GSprite(GTexture* texture, int timeAnimation)
 
 GSprite::~GSprite()
 {
-	if (_texture != NULL)
-		delete _texture;
+	/*if (_texture != NULL)
+		delete _texture;*/
+	// Không deleete texture vì đây là texture chung sẽ delete sau khi TextureManager bị delete
 }
 
 void GSprite::SetARGB(int r, int g, int b, int a)

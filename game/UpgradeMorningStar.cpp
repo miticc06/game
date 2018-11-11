@@ -4,7 +4,7 @@
 
 UpgradeMorningStar::UpgradeMorningStar()
 {
-	_texture = new GTexture("Resources\\item\\3.png");
+ 	_texture = TextureManager::GetInstance()->GetTexture(eID::UPGRADEMORNINGSTAR);
 	_sprite = new GSprite(_texture, 100);
 	type = eID::UPGRADEMORNINGSTAR;
 }

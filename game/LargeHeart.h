@@ -3,6 +3,7 @@
 
 
 #include "Item.h" 
+#include "TextureManager.h"
 
 #define LARGEHEART_GRAVITY 0.25f
 #define LARGEHEART_TIMEDISPLAYMAX 3000

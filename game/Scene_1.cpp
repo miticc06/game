@@ -157,6 +157,7 @@ void Scene_1::OnKeyUp(int KeyCode)
 
 void Scene_1::LoadResources()
 { 
+	TextureManager * _textureManager = TextureManager::GetInstance(); // Đã gọi load resource
 
 	simon = new Simon();
 	TileMap = new Map();

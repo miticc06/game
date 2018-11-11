@@ -4,6 +4,8 @@
 #include "GSprite.h"
 #include "GTexture.h"
 #include "define.h"
+#include "TextureManager.h"
+
 #define BOARDHEALTH_MAX_CELL 16
 
 #define BOARDHEALTH_FRAME_PLAYER 0

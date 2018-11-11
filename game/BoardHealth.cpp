@@ -4,14 +4,13 @@
 
 BoardHealth::BoardHealth()
 {
-	_texture = new GTexture("Resources\\heal.png", 3,1,3);
+	_texture = TextureManager::GetInstance()->GetTexture(eID::BOARDHEALTH);
 	_sprite = new GSprite(_texture, 0);
-}
 
+} 
 
 BoardHealth::~BoardHealth()
-{
-	SAFE_DELETE(_texture);
+{ 
 	SAFE_DELETE(_sprite);
 }
 

@@ -4,8 +4,7 @@
 #include "GSprite.h"
 #include "Camera.h"
 #include "GTexture.h"
-#include "GameObject.h"
-#include "DebugRenderBBOX.h"
+#include "GameObject.h" 
 #include "define.h" 
 
 class Item : public Object

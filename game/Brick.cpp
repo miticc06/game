@@ -3,8 +3,8 @@
 
 Brick::Brick(int X, int Y, int W, int H)
 {
-	type = eID::BRICK;
-	_texture = new GTexture("Resources\\ground\\2.png", 1, 1, 1, 0);
+	type = eID::BRICK; 
+	_texture = TextureManager::GetInstance()->GetTexture(eID::BRICK);
 	_sprite = new GSprite(_texture, 1000);
 	this->x = (float)X;
 	this->y = (float)Y;
@@ -14,8 +14,6 @@ Brick::Brick(int X, int Y, int W, int H)
 
 void Brick::Render(Camera * camera)
 {
-	
-
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 
 	 
