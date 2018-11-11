@@ -33,14 +33,14 @@ void Simon::GetBoundingBox(float & left, float & top, float & right, float & bot
 	{
 		left = x + 15;
 		top = y - 1; // không chỉnh lại y bởi vì hàm Sit() đã điều chỉnh
-		right = x + SIMON_BBOX_WIDTH - 17+5;
+		right = x + SIMON_BBOX_WIDTH - 17+5-3;
 		bottom = y + SIMON_BBOX_SITTING_HEIGHT -3;
 	}
 	else
 	{ 
 		left = x +15;
 		top = y -1 ;
-		right = x + SIMON_BBOX_WIDTH - 17+5;
+		right = x + SIMON_BBOX_WIDTH - 17+5-3;
 		bottom = y + SIMON_BBOX_HEIGHT - 3;
 	}
  	
