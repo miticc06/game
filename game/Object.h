@@ -97,6 +97,9 @@ public:
 	virtual void Render(Camera * camera) = 0;
 
 
+	 
+	bool isCollitionObjectWithObject(Object *obj); 	// kiểm tra bằng AABB và Sweept AABB
+
 
 	~Object();
 };

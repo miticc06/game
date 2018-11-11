@@ -202,6 +202,22 @@ float Object::GetY()
 }
 
 
+bool Object::isCollitionObjectWithObject(Object * obj)	// kiểm tra bằng AABB và Sweept AABB
+{
+	float l, t, r, b;
+	float l1, t1, r1, b1;
+	this->GetBoundingBox(l, t, r, b);
+	obj->GetBoundingBox(l1, t1, r1, b1); // bbox obj
+
+	if (Game::GetInstance()->AABBCheck(l, t, r, b, l1, t1, r1, b1)) // kiểm tra va chạm bằng AABB trước
+		return true;
+
+	LPCOLLISIONEVENT e = SweptAABBEx(obj); // kt va chạm giữa 2 object bằng sweptAABB
+	bool res = e->t > 0 && e->t <= 1.0f; // ĐK va chạm
+	SAFE_DELETE(e); 
+	return res;
+}
+
 Object::~Object()
 {
 	/*SAFE_DELETE(_texture);*/

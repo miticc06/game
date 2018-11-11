@@ -203,6 +203,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 
 	_weaponMain->SetPosition(this->x, this->y);
+	_weaponMain->SetSpeed(vx, vy); // set vận tốc để kt va chạm
 	_weaponMain->UpdatePositionFitSimon();
 
 	//_weaponMain->Update(dt);
@@ -474,21 +475,5 @@ bool Simon::isCollisionWithItem(Item * objItem)
 		return true; // check with AABB
 	}
 
-
-	vector<LPOBJECT> listObj;
-	listObj.clear();
-
-	listObj.push_back(objItem); // thêm object Item này để kt
-
-	vector<LPCOLLISIONEVENT> coEvents; 
-
-	coEvents.clear();
-	CalcPotentialCollisions(&listObj, coEvents); // Lấy danh sách các va chạm
-
-	int countCollision = (int)coEvents.size();
-
-	for (UINT i = 0; i < coEvents.size(); i++)
-		delete coEvents[i];
-
-	return (countCollision > 0); 
+	return isCollitionObjectWithObject(objItem);
 }

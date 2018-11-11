@@ -17,6 +17,10 @@ MorningStar::~MorningStar()
 
 void MorningStar::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 { 
+	this->dt = dt;
+	this->dx = vx * dt;
+	this->dy = vy * dt;
+	// update for check collision
 
 	isFinish = (_sprite->GetIndex() == 3 && level == 0) + (_sprite->GetIndex() == 7 && level == 1) + (_sprite->GetIndex() == 11 && level == 2);
 
@@ -158,22 +162,5 @@ bool MorningStar::isCollision(Object * obj)
 	if (gameObj->GetHealth() <= 0) // vật này die rồi thì ko va chạm
 		return false;
 
-
-	RECT rect, rect1;
-	float l, t, r, b;
-	float l1, t1, r1, b1;
-
-	GetBoundingBox(l, t, r, b);
-	rect.left = (int)l;
-	rect.top = (int)t;
-	rect.right = (int)r;
-	rect.bottom = (int)b;
-
-
-	gameObj->GetBoundingBox(l1, t1, r1, b1);
-	rect1.left = (int)l1;
-	rect1.top = (int)t1;
-	rect1.right = (int)r1;
-	rect1.bottom = (int)b1;
-	return Game::GetInstance()->AABBCheck(rect, rect1);
+	return isCollitionObjectWithObject(gameObj);
 }
