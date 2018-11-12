@@ -2,27 +2,24 @@
 #define __SIMON_H__
 
 
+#include "GameObject.h"
+#include "Weapon.h"
+#include "MorningStar.h"
+#include "Sound.h"
+
 #define SIMON_POSITION_DEFAULT  50.0f, 0
 
 #define SIMON_BBOX_WIDTH 60
 #define SIMON_BBOX_HEIGHT 66
-
 #define SIMON_BBOX_SITTING_HEIGHT 48
-
-
-
+ 
 #define SIMON_GRAVITY 0.005f//0.005f
 #define SIMON_VJUMP 0.9f
 
 #define SIMON_WALKING_SPEED 0.12f //0.12f 
 
-
-
-
 #define SIMON_STATE_IDLE 0
 #define SIMON_STATE_WALKING 1
-
-
 
 #define SIMON_ANI_WALKING_BEGIN 1
 #define SIMON_ANI_WALKING_END 3
@@ -41,9 +38,9 @@
 
 #define TIME_FREEZE_MAX 500
 
-#include "GameObject.h"
-#include "Weapon.h"
-#include "MorningStar.h"
+
+
+
 
 class Simon : public GameObject
 {

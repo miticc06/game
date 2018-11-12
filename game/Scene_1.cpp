@@ -127,6 +127,8 @@ void Scene_1::OnKeyDown(int KeyCode)
 	{
 		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
 		simon->Attack(simon->_weaponMain);
+		if (simon->isAttacking == true)
+			sound->Play(eSound::soundWhip);
 	}
 
 
@@ -192,10 +194,12 @@ void Scene_1::OnKeyUp(int KeyCode)
 		break;
 	}
 }
+  
 
 void Scene_1::LoadResources()
-{ 
+{   
 	TextureManager * _textureManager = TextureManager::GetInstance(); // Đã gọi load resource
+	sound = Sound::GetInstance();
 
 	simon = new Simon();
 	TileMap = new Map();
@@ -212,10 +216,18 @@ void Scene_1::LoadResources()
 	gridGame = new Grid();
 	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
 
+
+
 	listItem.clear();
 	listEffect.clear();
 
 	_gameTime.SetTime(0); // đếm lại từ 0
+
+
+
+
+	// bật nhạc game
+	sound->Play(eSound::musicState1, true);
 }
 
 void Scene_1::Update(DWORD dt)
@@ -238,6 +250,13 @@ void Scene_1::Update(DWORD dt)
 	}
 	else
 		_gameTime.Update();
+	if (GAME_TIME_SCENE1 - _gameTime.GetTime() <= 30) // đúng còn lại 30 giây thì bật sound loop
+	{
+		if (_gameTime.CheckIsJustChanged() == true) // Kiểm tra _time vừa thay đổi thì mới play nhạc. Nếu chỉ kt <=30s thì cứ mỗi deltatime nó sẽ Play nhạc -> thừa, ko đều
+		{
+			sound->Play(eSound::soundStopTimer);
+		}
+	}
 
 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
@@ -320,6 +339,8 @@ void Scene_1::CheckCollisionWeapon()
 					listEffect.push_back(new Hit(gameObjTorch->GetX()+14, gameObjTorch->GetY() + 14)); // hiệu ứng lửa
 					listEffect.push_back(new Fire(gameObjTorch->GetX() - 5, gameObjTorch->GetY()+8)); // hiệu ứng lửa
 					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() +5, gameObjTorch->GetY()));
+
+					sound->Play(eSound::soundHit);
 				}
 	}
 
@@ -340,6 +361,9 @@ void Scene_1::CheckCollisionWeapon()
 					listEffect.push_back(new Hit(gameObjTorch->GetX() + 14, gameObjTorch->GetY() + 14)); // hiệu ứng lửa
 					listEffect.push_back(new Fire(gameObjTorch->GetX() - 5, gameObjTorch->GetY() + 8)); // hiệu ứng lửa
 					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
+
+					sound->Play(eSound::soundHit);
+
 				}
 	}
 
@@ -360,6 +384,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 				{
 					simon->SetHeartCollect(simon->GetHeartCollect() + 5);
 					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectItem);
 					break;
 				} 
 				case eID::UPGRADEMORNINGSTAR:
@@ -368,6 +393,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 					objMorningStar->UpgradeLevel(); // Nâng cấp vũ khí roi
 					listItem[i]->SetFinish(true);
 					simon->SetFreeze(true); // bật trạng thái đóng băng
+					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
  
@@ -376,6 +402,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 					SAFE_DELETE(simon->_weaponSub);
 					simon->_weaponSub = new Dagger();
  					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
 
@@ -384,6 +411,8 @@ void Scene_1::CheckCollisionSimonWithItem()
 					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
 					break;
 				}
+				 
+
 
 			}
 		}

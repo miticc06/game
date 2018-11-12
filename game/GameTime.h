@@ -9,6 +9,7 @@ private:
 	DWORD _accumulationTime; // thời gian đã tích lũy
 	int _time; // time game
 	DWORD _frameStart;
+	bool isJustChanged; // kiểm tra có phải biến time vừa được cập nhật?
 
 public:
 	GameTime();
@@ -16,6 +17,7 @@ public:
 	void Update();
 	void SetTime(int t);
 	int GetTime();
+	bool CheckIsJustChanged();
 };
 
 

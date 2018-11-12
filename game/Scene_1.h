@@ -20,8 +20,10 @@
 #include "Fire.h"
 #include "Hit.h"
 #include "GameTime.h"
+#include "Sound.h"
 
-#define GAME_TIME_SCENE1 300
+
+#define GAME_TIME_SCENE1 45
 
 class Scene_1 : public Scene
 {
@@ -32,7 +34,7 @@ private:
 	Camera *camera;
 	Grid * gridGame;
 	Board * board;
-
+	Sound * sound;
 
 	vector<LPOBJECT> listObj;
 

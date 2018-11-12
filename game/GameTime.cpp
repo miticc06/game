@@ -1,4 +1,4 @@
-#include "GameTime.h"
+﻿#include "GameTime.h"
 
 
 
@@ -29,6 +29,7 @@ void GameTime::Update()
 	{
 		_accumulationTime = (_accumulationTime + dt) % 1000;
 		_time++;
+		isJustChanged = true; // set trạng thái vừa thay đổi
 	}
 
 	_frameStart = now;
@@ -44,4 +45,11 @@ void GameTime::SetTime(int t)
 int GameTime::GetTime()
 {
 	return _time;
+}
+
+bool GameTime::CheckIsJustChanged()
+{
+	bool b = isJustChanged;
+	isJustChanged = false; // sau khi lấy trạng thái xong rồi thì coi như "chưa thay đổi"
+	return b;
 }
