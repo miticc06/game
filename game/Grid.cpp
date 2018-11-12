@@ -131,6 +131,8 @@ GameObject * Grid::GetNewObject(int type, int x, int y,int w, int h)
 {
 	if (type == eID::BRICK) return new Brick(x, y, w, h);
 	if (type == eID::TORCH) return new Torch(x, y);
+	if (type == eID::OBJECT_HIDDEN) return new ObjectHidden(x, y, w, h);
+
 	return NULL;
 }
  

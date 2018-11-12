@@ -3,12 +3,13 @@
  
 ObjectHidden::ObjectHidden(int X, int Y, int W, int H)
 {
-	x = X;
-	y = Y;
+	x = (int)X;
+	y = (int)Y;
 	width = W;
 	height = H;
 	type = eID::OBJECT_HIDDEN;
 	id = 0; // set sau
+	Health = 1;
 }
 
 ObjectHidden::~ObjectHidden()

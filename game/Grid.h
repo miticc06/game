@@ -8,7 +8,7 @@
 #include "Torch.h"
 #include "Brick.h"
 #include "define.h"
-
+#include "ObjectHidden.h"
 
 using namespace std;
 
