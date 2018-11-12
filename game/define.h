@@ -72,6 +72,7 @@ enum eID
 
 	// object
 	TORCH = 41,
+	OBJECT_HIDDEN = 42,
 
 	// weapon
 	MORNINGSTAR = 61,
