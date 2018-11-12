@@ -19,6 +19,7 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::soundCollectWeapon, L"Resources/sound/collectweapon.wav");
 
 	AddSound(eSound::soundStopTimer, L"Resources/sound/stoptimer.wav");
+	AddSound(eSound::soundDagger, L"Resources/sound/usingdagger.wav");
 
 
 

@@ -126,9 +126,12 @@ void Scene_1::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_X)
 	{
 		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
-		simon->Attack(simon->_weaponMain);
-		if (simon->isAttacking == true)
+
+		if (simon->isAttacking == false)
 			sound->Play(eSound::soundWhip);
+
+		simon->Attack(simon->_weaponMain);
+
 	}
 
 
@@ -138,6 +141,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 		{
 			simon->SetHeartCollect(simon->GetHeartCollect() - 1); // giảm 1 heart
 			simon->Attack(simon->_weaponSub);
+			sound->Play(eSound::soundDagger);
 		}
 	}
 

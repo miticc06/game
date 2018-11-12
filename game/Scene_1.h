@@ -23,7 +23,7 @@
 #include "Sound.h"
 
 
-#define GAME_TIME_SCENE1 45
+#define GAME_TIME_SCENE1 300
 
 class Scene_1 : public Scene
 {
