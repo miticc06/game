@@ -19,8 +19,8 @@ enum eSound
 
 
 
-	musicState1 = 51
-
+	musicState1 = 51,
+	musicLifeLost = 52
 };
 
 

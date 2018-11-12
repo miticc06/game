@@ -1,4 +1,4 @@
-#ifndef __SCENE_1_H__
+﻿#ifndef __SCENE_1_H__
 #define __SCENE_1_H__
 
 #include "Scene.h"
@@ -23,7 +23,7 @@
 #include "Sound.h"
 
 
-#define GAME_TIME_SCENE1 300
+#define GAME_TIME_SCENE1 15
 
 class Scene_1 : public Scene
 {
@@ -52,6 +52,9 @@ public:
 	void LoadResources();
 	void Update(DWORD dt);
 	void Render();
+
+
+	void ResetResource(); // reset lai resource khi simon mất 1 mạng
 
 
 	void CheckCollision();

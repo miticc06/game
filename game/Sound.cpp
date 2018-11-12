@@ -20,14 +20,12 @@ void Sound::LoadResourceSound()
 
 	AddSound(eSound::soundStopTimer, L"Resources/sound/stoptimer.wav");
 	AddSound(eSound::soundDagger, L"Resources/sound/usingdagger.wav");
-
-
-
-
+	 
 
 
 
 	AddSound(eSound::musicState1, L"Resources/music/Stage_01_Vampire_Killer.wav");
+	AddSound(eSound::musicLifeLost, L"Resources/music/Life_Lost.wav");
 
 
 }

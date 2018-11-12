@@ -207,15 +207,14 @@ void Scene_1::LoadResources()
 
 	simon = new Simon();
 	TileMap = new Map();
-	camera = new Camera(Window_Width, Window_Height/*, Window_Width/2, MapWidth - Window_Width / 2*/);
+	camera = new Camera(Window_Width, Window_Height);
 	camera->SetPosition(0, 0);
 
 
 	board = new Board(0, 0);
 
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
-	//simon->SetPosition(0, 0);
-
+	simon->SetPositionBackup(SIMON_POSITION_DEFAULT);
 
 	gridGame = new Grid();
 	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
@@ -236,9 +235,6 @@ void Scene_1::LoadResources()
 
 void Scene_1::Update(DWORD dt)
 {
-//	DebugOut(L"[DT] DT: %d\n", dt);
-
-
 	if (simon->GetFreeze() == true)
 	{
 		simon->UpdateFreeze(dt);
@@ -247,14 +243,24 @@ void Scene_1::Update(DWORD dt)
 	}
 
 
-	if (_gameTime.GetTime() >= GAME_TIME_SCENE1)
+	if (_gameTime.GetTime() >= GAME_TIME_SCENE1) // hết thời gian
 	{
-	//	DebugOut(L"Het thoi gian! %d \n", GetTickCount());
+		sound->Play(eSound::musicLifeLost);
+		if (simon->GetLives() == 0)
+			return;
+		bool result = simon->LoseLife();
+		if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
+		{
+			ResetResource(); // reset lại game
+		}
 		return;
 	}
 	else
 		_gameTime.Update();
-	if (GAME_TIME_SCENE1 - _gameTime.GetTime() <= 30) // đúng còn lại 30 giây thì bật sound loop
+
+
+
+	if (GAME_TIME_SCENE1 - _gameTime.GetTime() <= 2) // đúng còn lại 30 giây thì bật sound loop
 	{
 		if (_gameTime.CheckIsJustChanged() == true) // Kiểm tra _time vừa thay đổi thì mới play nhạc. Nếu chỉ kt <=30s thì cứ mỗi deltatime nó sẽ Play nhạc -> thừa, ko đều
 		{
@@ -317,6 +323,21 @@ void Scene_1::Render()
 
 
 
+}
+
+void Scene_1::ResetResource()
+{
+ 
+	SAFE_DELETE(gridGame);
+	gridGame = new Grid();
+	gridGame->ReadFileToGrid("Resources/map/Obj_1.txt"); // đọc lại các object từ list
+
+	listItem.clear();
+	listEffect.clear();
+
+	_gameTime.SetTime(0); // đếm lại từ 0
+	sound->Stop(eSound::musicState1); // tắt nhạc nền
+	sound->Play(eSound::musicState1, true); // mở lại nhạc nền
 }
 
 void Scene_1::CheckCollision()

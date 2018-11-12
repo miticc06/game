@@ -39,7 +39,8 @@
 #define TIME_FREEZE_MAX 500
 
 
-
+#define SIMON_DEFAULT_HEALTH 16
+#define SIMON_DEFAULT_HEARTCOLLECT 5
 
 
 class Simon : public GameObject
@@ -49,10 +50,10 @@ private:
 	int Lives;
 	int score;
 
-
 	bool isFreeze; // Trạng thái đóng băng thay đổi màu liên tục
 	DWORD TimeFreeze; // thời gian đã đóng băng
 
+	D3DXVECTOR2 PositionBackup;
 
 public:
 	bool isWalking;
@@ -72,8 +73,6 @@ public:
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera);
-	 
-//	void RenderSimon(Camera * camera)
 
 	void Left();  // set lại hướng của simon
 	void Right(); // set lại hướng của simon
@@ -103,6 +102,8 @@ public:
 
 	bool isCollisionWithItem(Item * objItem);
 
+	bool LoseLife();
+	void SetPositionBackup(float X, float Y);  // lưu vị trí cần backup để simon die thì bắt đầu lại từ đây
 
 };
 

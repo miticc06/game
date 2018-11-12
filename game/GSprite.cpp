@@ -109,14 +109,6 @@ void GSprite::Draw(int X, int Y)
 
 }
 
-
-
-
-
-
-
-
-
 void GSprite::DrawRandomColor(int X, int Y)
 {
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
@@ -178,9 +170,6 @@ void GSprite::DrawRandomColor(int X, int Y)
 	 
 
 }
-
- 
-
 
 void GSprite::DrawRandomColorFlipX(int x, int y)
 {

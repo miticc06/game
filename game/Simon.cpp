@@ -12,9 +12,9 @@ Simon::Simon()
 	isSitting = 0;
 	isAttacking = 0;
 
-	Health = 16; // simon dính 16 phát là chết
+	Health = SIMON_DEFAULT_HEALTH; // simon dính 16 phát là chết
 	Lives = 3; // có 5 mạng sống
-	HeartCollect = 5;
+	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
 	score = 0;
 
 
@@ -519,4 +519,35 @@ bool Simon::isCollisionWithItem(Item * objItem)
 	}
 
 	return isCollitionObjectWithObject(objItem);
+}
+
+bool Simon::LoseLife()
+{
+	if (Lives - 1 < 0)
+		return false;
+	Health = SIMON_DEFAULT_HEALTH;
+	Lives = Lives - 1;
+	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
+	SAFE_DELETE(_weaponMain);
+	SAFE_DELETE(_weaponSub);
+	_weaponMain = new MorningStar();
+	_weaponSub = NULL; 
+
+	isAttacking = 0;
+	isJumping = 0;
+	isFreeze = 0;
+	isSitting = 0;
+	isWalking = 0;
+
+	trend = 1;
+
+	x = PositionBackup.x;
+	y = PositionBackup.y;
+
+	return true;
+}
+
+void Simon::SetPositionBackup(float X, float Y)
+{
+	PositionBackup = D3DXVECTOR2(X, Y);
 }
