@@ -19,10 +19,13 @@
 #include "Effect.h"
 #include "Fire.h"
 #include "Hit.h"
+#include "GameTime.h"
+
+#define GAME_TIME_SCENE1 300
 
 class Scene_1 : public Scene
 {
-public:
+private:
 
 	Simon * simon;
 	Map * TileMap;
@@ -35,7 +38,7 @@ public:
 
 	vector <Item*> listItem;
 	vector <Effect*> listEffect;
-
+	GameTime _gameTime;
 
 public:
 	Scene_1();

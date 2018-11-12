@@ -16,7 +16,7 @@ Board::Board(int X, int Y)
 }
  
 #include "Dagger.h"
-void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSub)
+void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSub, int RemainingTime)
 { 
 	_sprite->Draw(x,y);
 	_font.Draw(x, y+15, "SCORE-");
@@ -26,7 +26,9 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 	_font.Draw(x, y+51, "ENEMY");
 
 
-	_font.Draw(x+210, y + 15, "TIME");
+	_font.Draw(x+220 , y + 15, "TIME " + FillNumber(std::to_string(RemainingTime), (UINT)4) );
+
+
 	_font.Draw(x + 400 -20, y + 15, "STAGE");
 	_font.Draw(x + 400+60, y + 15, std::to_string(state));
 

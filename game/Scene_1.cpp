@@ -195,15 +195,20 @@ void Scene_1::LoadResources()
 	listItem.clear();
 	listEffect.clear();
 
- 
+	_gameTime.SetTime(0); // đếm lại từ 0
 }
 
 void Scene_1::Update(DWORD dt)
 {
 //	DebugOut(L"[DT] DT: %d\n", dt);
 
-	
-
+	if (_gameTime.GetTime() >= GAME_TIME_SCENE1)
+	{
+	//	DebugOut(L"Het thoi gian! %d \n", GetTickCount());
+		return;
+	}
+	else
+		_gameTime.Update();
 
 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
@@ -256,7 +261,7 @@ void Scene_1::Render()
 
 	simon->Render(camera);
 
-	board->Render(camera, simon, 1, simon->_weaponSub);
+	board->Render(camera, simon, 1, simon->_weaponSub, GAME_TIME_SCENE1 - _gameTime.GetTime());
 
 
 

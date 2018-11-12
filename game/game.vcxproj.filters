@@ -94,6 +94,9 @@
     <ClCompile Include="Hit.cpp">
       <Filter>Framework\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Framework\GameTime</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -186,6 +189,9 @@
     <ClInclude Include="Hit.h">
       <Filter>Framework\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Framework\GameTime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -235,6 +241,12 @@
     </Filter>
     <Filter Include="Framework\Effect">
       <UniqueIdentifier>{56fc4ff3-9a31-4d61-8eb7-2830a90becca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Sound">
+      <UniqueIdentifier>{aa2ae68b-90ec-4fa1-bc51-19d6f5f9391c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GameTime">
+      <UniqueIdentifier>{b634eeb3-9cde-4281-8edf-d3919dd71d24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

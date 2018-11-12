@@ -19,12 +19,13 @@ void Object::RenderBoundingBox(Camera * camera)
 	Game::GetInstance()->Draw(
 		pos.x, 
 		pos.y, 
-		TextureManager::GetInstance()->GetTexture(eID::RENDERBBOX)->Texture ,
-		rect.left, 
-		rect.top, 
-		rect.right, 
-		rect.bottom, 
-		100);
+		TextureManager::GetInstance()->GetTexture(
+			eID::RENDERBBOX)->Texture ,
+			rect.left, 
+			rect.top, 
+			rect.right, 
+			rect.bottom, 
+			100);
 
 }
 

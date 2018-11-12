@@ -35,6 +35,8 @@ void MorningStar::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 }
  
 
+
+
 void MorningStar::Create(float simonX, float simonY, int simonTrend)
 {
  
@@ -54,6 +56,8 @@ void MorningStar::Create(float simonX, float simonY, int simonTrend)
 		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL2_START - 1); // đặt sai index cho hàm update cập nhật ngay frame đầu
 		break; 
 	} 
+	
+	//PlaySound(L"Resources\\sound\\hit.wav", NULL, SND_FILENAME);
 }
 
 void MorningStar::UpdatePositionFitSimon()

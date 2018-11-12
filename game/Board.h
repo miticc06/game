@@ -24,7 +24,7 @@ private:
 
  public:
 	Board(int X, int Y);
-	void Render(Camera * camera, Simon * simon, int state, Weapon * weaponSub);
+	void Render(Camera * camera, Simon * simon, int state, Weapon * weaponSub, int RemainingTime);
 	~Board();
 };
 
