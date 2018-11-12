@@ -30,6 +30,9 @@ public:
 
  	void Draw(int x, int y);
 
+	void DrawRandomColor(int X, int Y);
+	void DrawRandomColorFlipX(int x, int y);
+
 	//Render with scale (-1, 1)
 	void DrawFlipX(int x, int y);
 	 

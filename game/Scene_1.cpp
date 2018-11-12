@@ -13,7 +13,12 @@ Scene_1::~Scene_1()
 
 void Scene_1::KeyState(BYTE * state)
 {
-	
+	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
+	{
+		return;
+	}
+
+
 	//simon->Jump();
 
 	//return;
@@ -75,6 +80,16 @@ void Scene_1::KeyState(BYTE * state)
 
 void Scene_1::OnKeyDown(int KeyCode)
 {
+	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
+	{
+		return;
+	}
+
+	// chưa xét khi hết time hoặc die thì sao?
+
+
+
+
 //	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
 	if (KeyCode == DIK_ESCAPE)
@@ -163,6 +178,11 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 void Scene_1::OnKeyUp(int KeyCode)
 {
+	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
+	{
+		return;
+	}
+
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 
 	switch (KeyCode)
@@ -201,6 +221,15 @@ void Scene_1::LoadResources()
 void Scene_1::Update(DWORD dt)
 {
 //	DebugOut(L"[DT] DT: %d\n", dt);
+
+
+	if (simon->GetFreeze() == true)
+	{
+		simon->UpdateFreeze(dt);
+		if (simon->GetFreeze() == true)
+			return;
+	}
+
 
 	if (_gameTime.GetTime() >= GAME_TIME_SCENE1)
 	{
@@ -260,7 +289,7 @@ void Scene_1::Render()
 			listEffect[i]->Render(camera);
 
 	simon->Render(camera);
-
+ 
 	board->Render(camera, simon, 1, simon->_weaponSub, GAME_TIME_SCENE1 - _gameTime.GetTime());
 
 
@@ -338,6 +367,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->_weaponMain);
 					objMorningStar->UpgradeLevel(); // Nâng cấp vũ khí roi
 					listItem[i]->SetFinish(true);
+					simon->SetFreeze(true); // bật trạng thái đóng băng
 					break;
 				}
  

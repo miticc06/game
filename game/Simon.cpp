@@ -250,11 +250,25 @@ void Simon::Render(Camera* camera)
 	
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	 
-	if (trend == -1)
-		_sprite->Draw((int)pos.x, (int)pos.y);
+
+
+	if (this->GetFreeze() == true)
+	{
+		if (trend == -1)
+			_sprite->DrawRandomColor((int)pos.x, (int)pos.y);
+		else
+			_sprite->DrawRandomColorFlipX((int)pos.x, (int)pos.y);
+	}
 	else
-		_sprite->DrawFlipX((int)pos.x, (int)pos.y);
-	 
+	{
+		if (trend == -1)
+			_sprite->Draw((int)pos.x, (int)pos.y);
+		else
+			_sprite->DrawFlipX((int)pos.x, (int)pos.y);
+	}
+
+
+
 	if (_weaponMain->GetFinish()==false)
 		_weaponMain->Render(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
 
@@ -262,7 +276,14 @@ void Simon::Render(Camera* camera)
 		_weaponSub->Render(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
 
 
-	 
+
+
+	
+
+
+
+
+	
 } 
  
 
@@ -459,6 +480,28 @@ void Simon::SetScore(int s)
 {
 	score = s;
 }
+
+bool Simon::GetFreeze()
+{
+	return isFreeze;
+}
+
+void Simon::SetFreeze(int f)
+{
+	isFreeze = f;
+	TimeFreeze = 0; // thời gian đã đóng băng
+}
+
+void Simon::UpdateFreeze(DWORD dt)
+{
+	if (TimeFreeze + dt >= TIME_FREEZE_MAX)
+	{
+		SetFreeze(false); // kết thúc đóng băng
+	}
+	else
+		TimeFreeze += dt;
+}
+ 
 
 bool Simon::isCollisionWithItem(Item * objItem)
 { 

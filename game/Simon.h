@@ -39,7 +39,7 @@
 #define SIMON_ANI_STANDING_ATTACKING_BEGIN 5
 #define SIMON_ANI_STANDING_ATTACKING_END 7
 
-
+#define TIME_FREEZE_MAX 500
 
 #include "GameObject.h"
 #include "Weapon.h"
@@ -52,6 +52,9 @@ private:
 	int Lives;
 	int score;
 
+
+	bool isFreeze; // Trạng thái đóng băng thay đổi màu liên tục
+	DWORD TimeFreeze; // thời gian đã đóng băng
 
 
 public:
@@ -70,12 +73,10 @@ public:
 
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-
 	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
-
-
 	virtual void Render(Camera * camera);
 	 
+//	void RenderSimon(Camera * camera)
 
 	void Left();  // set lại hướng của simon
 	void Right(); // set lại hướng của simon
@@ -96,6 +97,11 @@ public:
 	void SetLives(int l);
 	int GetScore();
 	void SetScore(int s);
+
+	bool GetFreeze();
+	void SetFreeze(int f);
+	void UpdateFreeze(DWORD dt);
+
 
 
 	bool isCollisionWithItem(Item * objItem);
