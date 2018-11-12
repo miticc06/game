@@ -13,7 +13,7 @@ Simon::Simon()
 	isAttacking = 0;
 
 	Health = 16; // simon dính 16 phát là chết
-	Lives = 5; // có 5 mạng sống
+	Lives = 3; // có 5 mạng sống
 	HeartCollect = 5;
 	score = 0;
 
