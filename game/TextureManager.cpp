@@ -37,6 +37,11 @@ void TextureManager::LoadResource()
 	AddTexture(eID::ITEMDAGGER, new GTexture("Resources/item/4.png"));
 	AddTexture(eID::LARGEHEART, new GTexture("Resources/item/1.png"));
 	AddTexture(eID::UPGRADEMORNINGSTAR, new GTexture("Resources/item/3.png"));
+	AddTexture(eID::MONNEY, new GTexture("Resources/item/2.png", 3,1,3));
+
+
+
+
 
 	AddTexture(eID::DAGGER, new GTexture("Resources/weapon/1.png"));
 	AddTexture(eID::MORNINGSTAR, new GTexture("Resources/weapon/morningstar.png", 4, 3, 12));

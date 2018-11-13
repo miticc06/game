@@ -20,7 +20,8 @@ void Sound::LoadResourceSound()
 
 	AddSound(eSound::soundStopTimer, L"Resources/sound/stoptimer.wav");
 	AddSound(eSound::soundDagger, L"Resources/sound/usingdagger.wav");
-	 
+	AddSound(eSound::soundDisplayMonney, L"Resources/sound/display_monney.wav");
+
 
 
 

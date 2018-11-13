@@ -63,6 +63,7 @@ public:
 	virtual void Render(Camera * camera) = 0;
  
 	int GetHealth();
+	void SetHealth(int h);
 	void SubHealth(int th); 
 	void SetTrend(int Trend);
 	int GetTrend();

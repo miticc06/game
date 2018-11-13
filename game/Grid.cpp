@@ -20,10 +20,14 @@ void Grid::ReadFileToGrid(char * filename)
 
 	if (inp)
 	{
-		while (inp >> id >> type >> trend >> x >> y >> w >> h)
+		int n;
+		inp >> n;
+
+		for (int i = 0; i < n; i++)
 		{
+			inp >> id >> type >> trend >> x >> y >> w >> h;
 			Insert(id, type, trend, x, y, w, h);
-		}
+		} 
 		inp.close();
 	} 
 }
@@ -85,10 +89,7 @@ void Grid::GetListObject(vector<Object*> &ListObj, GameObject * obj)
 			}
 		}
 }
-
  
- 
-
 void Grid::ResetTake()
 {
 	for (UINT i = 0; i < listObjectGame.size(); i++)

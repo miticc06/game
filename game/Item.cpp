@@ -8,6 +8,7 @@ Item::Item()
 	TimeWaitMax = 0;
 	TimeDisplayMax = 0;
 	TimeWaited = 0;
+	isFinish = 0;
 }
 
 

@@ -28,6 +28,11 @@ int GameObject::GetHealth()
 	return Health;
 }
 
+void GameObject::SetHealth(int h)
+{
+	Health = h;
+}
+
 void GameObject::SubHealth(int th)
 {
 	Health -= th;

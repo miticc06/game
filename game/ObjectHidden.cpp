@@ -3,8 +3,8 @@
  
 ObjectHidden::ObjectHidden(int X, int Y, int W, int H)
 {
-	x = (int)X;
-	y = (int)Y;
+	x = (float) X;
+	y = (float) Y;
 	width = W;
 	height = H;
 	type = eID::OBJECT_HIDDEN;

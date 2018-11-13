@@ -15,7 +15,7 @@ enum eSound
 	soundCollectWeapon = 4,
 	soundStopTimer = 5,
 	soundDagger = 6,
-
+	soundDisplayMonney = 7,
 
 
 

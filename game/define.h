@@ -83,6 +83,7 @@ enum eID
 	LARGEHEART = 81,
 	UPGRADEMORNINGSTAR = 82,
 	ITEMDAGGER = 83,
+	MONNEY = 84,
 
 
 	// other
@@ -118,48 +119,7 @@ typedef D3DXVECTOR2 GVector2;
 
 
 
-//
-//void GLTrace(char* format, ...)
-//{
-//	char *_traceFile = "C:\\Temp\\Sample_TH_game.log";
-//	int _traceNum = 1;
-//
-//	if (!_traceNum) return;
-//
-//	FILE *f = stderr;
-//	if (_traceFile != NULL)
-//	{
-//		if (fopen_s(&f, _traceFile, "a") != 0)
-//		{
-//			fprintf(stderr, "WARNING: Failed to open trace file '%s' for writing!\n", _traceFile);
-//			return;
-//		}
-//	}
-//	va_list ap;
-//	va_start(ap, format);
-//	fprintf(f, format, ap);
-//	va_end(ap);
-//	fprintf(f, "\n");
-//	if (_traceFile != NULL) fclose(f);
-//}
-//
-//void GLMessage(char* text)
-//{
-//	//	Game::GetInstance()->
-//		//MessageBoxA(G_hWnd, text, "Sample TH", MB_OK);
-//}
-//
-//void GLTitle(char* text) {
-//	//SetWindowTextA(G_hWnd, text);
-//}
-//
-//void OutDebug(const char * text)
-//{
-//	OutputDebugStringA(text);
-//	OutputDebugStringA("\n");
-//
-//}
-//
+
 
 
 
@@ -177,6 +137,6 @@ if(ptr) \
 	ptr = nullptr; \
 } \
 
-#endif // !SAFE_DELETE
+#endif
 
-#endif // !_DEFINE_H__
+#endif 

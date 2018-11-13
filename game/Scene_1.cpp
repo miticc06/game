@@ -100,7 +100,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 
 
-	if (KeyCode == DIK_1)
+	if (KeyCode == DIK_1) // vị trí simon
 	{
 		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->GetX() + 10, simon->GetY());
 	}
@@ -118,7 +118,11 @@ void Scene_1::OnKeyDown(int KeyCode)
 	}
 
 
-
+	if (KeyCode == DIK_3) // set vi tri simon 1275 
+	{ 
+		DebugOut(L"[SET POSITION SIMON] x = 1275 \n");
+		simon->SetPosition(1275.0f, 0);
+	}
 
 
 
@@ -272,7 +276,6 @@ void Scene_1::Update(DWORD dt)
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 	//DebugOut(L"[Grid] ListObject by Camera = %d\n", listObj.size());
 
-	 
 
 	simon->Update(dt, &listObj);
 
@@ -286,14 +289,11 @@ void Scene_1::Update(DWORD dt)
 		if (listItem[i]->GetFinish()== false)
 			listItem[i]->Update(dt, &listObj); // trong các hàm update chỉ kiểm tra va chạm với đất
 
-
 	for (UINT i = 0; i < listEffect.size(); i++)
 		if (listEffect[i]->GetFinish() == false)
 			listEffect[i]->Update(dt);
 
-
 	CheckCollision();
-
 }
 
 
@@ -345,7 +345,7 @@ void Scene_1::CheckCollision()
 
 	CheckCollisionSimonWithItem();
 
-
+	CheckCollisionSimonWithObjectHidden();
 }
 
 void Scene_1::CheckCollisionWeapon()
@@ -360,8 +360,8 @@ void Scene_1::CheckCollisionWeapon()
 					GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
 					gameObjTorch->SubHealth(1);
 
-					listEffect.push_back(new Hit(gameObjTorch->GetX()+14, gameObjTorch->GetY() + 14)); // hiệu ứng lửa
-					listEffect.push_back(new Fire(gameObjTorch->GetX() - 5, gameObjTorch->GetY()+8)); // hiệu ứng lửa
+					listEffect.push_back(new Hit((int)gameObjTorch->GetX()+14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng lửa
+					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY()+8)); // hiệu ứng lửa
 					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() +5, gameObjTorch->GetY()));
 
 					sound->Play(eSound::soundHit);
@@ -382,8 +382,8 @@ void Scene_1::CheckCollisionWeapon()
 
 					simon->_weaponSub->SetFinish(true);   // cây kiếm trúng object thì tắt luôn
 
-					listEffect.push_back(new Hit(gameObjTorch->GetX() + 14, gameObjTorch->GetY() + 14)); // hiệu ứng lửa
-					listEffect.push_back(new Fire(gameObjTorch->GetX() - 5, gameObjTorch->GetY() + 8)); // hiệu ứng lửa
+					listEffect.push_back(new Hit((int)gameObjTorch->GetX() + 14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng lửa
+					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY() + 8)); // hiệu ứng lửa
 					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
 
 					sound->Play(eSound::soundHit);
@@ -430,6 +430,16 @@ void Scene_1::CheckCollisionSimonWithItem()
 					break;
 				}
 
+				case eID::MONNEY:
+				{
+					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectItem);
+
+
+
+					break;
+				}
+
 
 				default:
 					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
@@ -447,6 +457,40 @@ void Scene_1::CheckCollisionSimonWithItem()
 
 }
 
+void Scene_1::CheckCollisionSimonWithObjectHidden()
+{
+	for (UINT i = 0; i < listObj.size(); i++)
+	{
+		if (listObj[i]->GetType() == eID::OBJECT_HIDDEN)
+		{
+			GameObject * gameObject = dynamic_cast<GameObject*>(listObj[i]);
+			if (gameObject->GetHealth() > 0)
+			{
+				LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]);
+				if (0 < e->t && e->t <= 1) // có va chạm xảy ra
+				{
+					switch (gameObject->GetId())
+					{
+					case 8:
+					{
+						sound->Play(eSound::soundDisplayMonney);
+						listItem.push_back(GetNewItem(gameObject->GetId(), eID::OBJECT_HIDDEN, simon->GetX(), simon->GetY()));
+						// chưa hiện effect 1000d
+						simon->SetScore(simon->GetScore() + 1000);
+
+						break;
+					}
+					}
+
+
+					gameObject->SubHealth(1); 
+
+				}
+			}
+		}
+	}
+}
+
 
 
 
@@ -462,6 +506,12 @@ Item * Scene_1::GetNewItem(int Id, eID Type, float X, float Y)
 
 		if (Id == 5)
 			return new ItemDagger(X, Y);
+	}
+
+	if (Type == eID::OBJECT_HIDDEN)
+	{
+		if (Id == 8)
+			return new Monney(1240, 305);
 
 	}
 

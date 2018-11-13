@@ -109,6 +109,7 @@
     <ClCompile Include="ObjectHidden.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Monney.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -216,6 +217,7 @@
     <ClInclude Include="ObjectHidden.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Monney.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

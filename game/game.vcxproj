@@ -139,6 +139,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="Monney.h" />
     <ClInclude Include="ObjectHidden.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Grid.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="Monney.cpp" />
     <ClCompile Include="ObjectHidden.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Grid.cpp" />

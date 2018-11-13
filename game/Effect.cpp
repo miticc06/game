@@ -15,8 +15,8 @@ Effect::~Effect()
 
 void Effect::Render(Camera * camera)
 {
-	D3DXVECTOR2 pos = camera->Transform(x, y);
-	_sprite->Draw(pos.x, pos.y); 
+	D3DXVECTOR2 pos = camera->Transform((float)x, (float)y);
+	_sprite->Draw((int)pos.x, (int)pos.y);
 
 }
 
