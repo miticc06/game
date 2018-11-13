@@ -6,9 +6,7 @@ Scene_2::Scene_2(Simon * _si, GameTime* _ga)
 {
 	simon = _si;
 	_gameTime = _ga;
-	
-
-
+	 
 	LoadResources();
 
 }
@@ -241,7 +239,6 @@ void Scene_2::LoadResources()
 	if (sound->isPlaying(eSound::musicState1) == false)
 		sound->Play(eSound::musicState1, true);
 
-//	SceneManager::GetInstance()->SetIsNotLoadResource(false);
 
 }
 
@@ -362,15 +359,14 @@ void Scene_2::CheckCollisionWeapon()
 	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
 	{
 		for (UINT i = 0; i < listObj.size(); i++)
-			if (listObj[i]->GetType() == eID::TORCH)
+			if (listObj[i]->GetType() == eID::CANDLE)
 				if (simon->_weaponMain->isCollision(listObj[i]) == true)
 				{
-					GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
-					gameObjTorch->SubHealth(1);
+					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+					gameObj->SubHealth(1);
 
-					listEffect.push_back(new Hit((int)gameObjTorch->GetX() + 14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng lửa
-					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY() + 8)); // hiệu ứng lửa
-					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
+					listEffect.push_back(new Hit((int)gameObj->GetX() + 10, (int)gameObj->GetY() + 14)); // hiệu ứng lửa
+					listItem.push_back(GetNewItem(gameObj->GetId(), eID::CANDLE, gameObj->GetX() + 5, gameObj->GetY()));
 
 					sound->Play(eSound::soundHit);
 				}
@@ -381,18 +377,17 @@ void Scene_2::CheckCollisionWeapon()
 	if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == false)
 	{
 		for (UINT i = 0; i < listObj.size(); i++)
-			if (listObj[i]->GetType() == eID::TORCH)
+			if (listObj[i]->GetType() == eID::CANDLE)
 				if (simon->_weaponSub->isCollision(listObj[i]) == true)
 				{
-					GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
+					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 
-					gameObjTorch->SubHealth(1);
+					gameObj->SubHealth(1);
 
 					simon->_weaponSub->SetFinish(true);   // cây kiếm trúng object thì tắt luôn
 
-					listEffect.push_back(new Hit((int)gameObjTorch->GetX() + 14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng lửa
-					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY() + 8)); // hiệu ứng lửa
-					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
+					listEffect.push_back(new Hit((int)gameObj->GetX() + 10, (int)gameObj->GetY() + 14)); // hiệu ứng lửa
+					listItem.push_back(GetNewItem(gameObj->GetId(), eID::CANDLE, gameObj->GetX() + 5, gameObj->GetY()));
 
 					sound->Play(eSound::soundHit);
 
@@ -419,6 +414,22 @@ void Scene_2::CheckCollisionSimonWithItem()
 					sound->Play(eSound::soundCollectItem);
 					break;
 				}
+
+
+
+
+
+				case eID::SMALLHEART:
+				{
+					simon->SetHeartCollect(simon->GetHeartCollect() + 1);
+					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectItem);
+					break;
+				}
+
+
+
+
 				case eID::UPGRADEMORNINGSTAR:
 				{
 					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->_weaponMain);
@@ -429,22 +440,13 @@ void Scene_2::CheckCollisionSimonWithItem()
 					break;
 				}
 
-				case eID::ITEMDAGGER:
-				{
-					SAFE_DELETE(simon->_weaponSub);
-					simon->_weaponSub = new Dagger();
-					listItem[i]->SetFinish(true);
-					sound->Play(eSound::soundCollectWeapon);
-					break;
-				}
+ 
 
 				case eID::MONNEY:
 				{
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
-
-
-
+					 
 					break;
 				}
 
@@ -477,25 +479,16 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 				LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]);
 				if (0 < e->t && e->t <= 1) // có va chạm xảy ra
 				{
-					switch (gameObject->GetId())
-					{
-					case 7: // đụng trúng cửa
-					{
+					//switch (gameObject->GetId())
+					//{
+					//case 7: // đụng trúng cửa
+					//{
 
 
-						break;
-					}
-
-					case 8:
-					{
-						sound->Play(eSound::soundDisplayMonney);
-						listItem.push_back(GetNewItem(gameObject->GetId(), eID::OBJECT_HIDDEN, simon->GetX(), simon->GetY()));
-						// chưa hiện effect 1000d
-						simon->SetScore(simon->GetScore() + 1000);
-
-						break;
-					}
-					}
+					//	break;
+					//}
+					// 
+					//}
 
 
 					gameObject->SubHealth(1);
@@ -511,24 +504,10 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 
 Item * Scene_2::GetNewItem(int Id, eID Type, float X, float Y)
 {
-	if (Type == eID::TORCH)
+	if (Type == eID::CANDLE)
 	{
-		if (Id == 1 || Id == 4)
-			return new LargeHeart(X, Y);
-
-		if (Id == 2 || Id == 3)
-			return new UpgradeMorningStar(X, Y);
-
-		if (Id == 5)
-			return new ItemDagger(X, Y);
-	}
-
-	if (Type == eID::OBJECT_HIDDEN)
-	{
-		if (Id == 8)
-			return new Monney(1240, 305);
-
-	}
+		return new SmallHeart(X, Y);
+	} 
 
 	return new LargeHeart(X, Y);
 }

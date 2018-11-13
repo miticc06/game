@@ -40,6 +40,7 @@ void TextureManager::LoadResource()
 	AddTexture(eID::LARGEHEART, new GTexture("Resources/item/1.png"));
 	AddTexture(eID::UPGRADEMORNINGSTAR, new GTexture("Resources/item/3.png"));
 	AddTexture(eID::MONNEY, new GTexture("Resources/item/2.png", 3,1,3));
+	AddTexture(eID::SMALLHEART, new GTexture("Resources/item/0.png"));
 
 
 

@@ -118,6 +118,7 @@
     <ClCompile Include="Candle.cpp">
       <Filter>Object\Ground</Filter>
     </ClCompile>
+    <ClCompile Include="SmallHeart.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -234,6 +235,7 @@
     <ClInclude Include="Candle.h">
       <Filter>Object\Ground</Filter>
     </ClInclude>
+    <ClInclude Include="SmallHeart.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

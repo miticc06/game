@@ -84,7 +84,7 @@ enum eID
 	UPGRADEMORNINGSTAR = 82,
 	ITEMDAGGER = 83,
 	MONNEY = 84,
-
+	SMALLHEART = 85,
 
 	// other
 	FONT = 101,

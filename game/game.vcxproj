@@ -143,6 +143,7 @@
     <ClInclude Include="Monney.h" />
     <ClInclude Include="ObjectHidden.h" />
     <ClInclude Include="Scene_2.h" />
+    <ClInclude Include="SmallHeart.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GSprite.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="Monney.cpp" />
     <ClCompile Include="ObjectHidden.cpp" />
     <ClCompile Include="Scene_2.cpp" />
+    <ClCompile Include="SmallHeart.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GSprite.cpp" />

@@ -23,7 +23,7 @@
 #include "GameTime.h"
 #include "Sound.h"
 #include "Monney.h"
-
+#include "SmallHeart.h"
 
 
 #define GAME_TIME_SCENE2 300
