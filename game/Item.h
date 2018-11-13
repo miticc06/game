@@ -21,7 +21,7 @@ protected:
 
 public:
 	Item();
-	~Item();
+	virtual ~Item();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPOBJECT> *listObject = NULL);

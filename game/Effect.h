@@ -20,7 +20,7 @@ protected:
 
 public:
 	Effect();
-	~Effect();
+	virtual ~Effect();
 
 	virtual void Render(Camera * camera);
 	virtual void Update(DWORD dt);

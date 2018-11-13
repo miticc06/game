@@ -1,20 +1,19 @@
-#ifndef __TORCH_H__
-#define __TORCH_H__
+#ifndef __Candle_H__
+#define __Candle_H__
+
 
 #include "GameObject.h"
-#include "TextureManager.h"
-
-class Torch : public GameObject
+class Candle : 	public GameObject
 {
-
 public:
-	Torch(int X = 0, int Y = 0);
-	~Torch();
+	Candle(int X, int Y);
+	~Candle();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera);
-
 };
 
+
 #endif
+

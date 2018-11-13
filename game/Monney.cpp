@@ -6,7 +6,7 @@
 Monney::Monney(float X, float Y)
 {
 	_texture = TextureManager::GetInstance()->GetTexture(eID::MONNEY);
-	_sprite = new GSprite(_texture, 100);
+	_sprite = new GSprite(_texture, 60);
 
 	this->x = X;
 	this->y = Y;
@@ -57,6 +57,7 @@ void Monney::Update(DWORD dt, vector<LPOBJECT>* listObject)
 
 	Item::Update(dt); // Update dt, dx, dy
 
+	_sprite->Update(dt); // update animation
 
 
 	// tam cho money roi xuong

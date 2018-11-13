@@ -29,9 +29,7 @@
 
 
 using namespace std;
-
-#define WINDOW_WIDTH 512
-#define WINDOW_HEIGHT 448
+ 
 
 #define COLOR_BLACK D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)  
 #define COLOR_KEY D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f) 
@@ -43,14 +41,15 @@ using namespace std;
 
 
 #define SCREEN_WIDTH 512
-#define SCREEN_HEIGHT 448
+#define SCREEN_HEIGHT 480 //512//448
 
 
 #define IS_DEBUG_RENDER_BBOX 1
  
  
-extern int Window_Width;
+extern int Window_Width; 
 extern int Window_Height;
+// kích thước màn hình
 
 extern int MapWidth;
 extern int MapHeight;
@@ -73,6 +72,7 @@ enum eID
 	// object
 	TORCH = 41,
 	OBJECT_HIDDEN = 42,
+	CANDLE = 43,
 
 	// weapon
 	MORNINGSTAR = 61,

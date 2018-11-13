@@ -9,6 +9,9 @@
 #include "Brick.h"
 #include "define.h"
 #include "ObjectHidden.h"
+#include "Candle.h"
+
+
 
 using namespace std;
 

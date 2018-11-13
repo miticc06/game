@@ -128,6 +128,7 @@
     <ClInclude Include="BoardHealth.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Candle.h" />
     <ClInclude Include="Dagger.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="BoardHealth.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Candle.cpp" />
     <ClCompile Include="Dagger.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="define.cpp" />

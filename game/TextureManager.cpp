@@ -33,6 +33,7 @@ void TextureManager::LoadResource()
 
 	AddTexture(eID::BRICK, new GTexture("Resources/ground/2.png"));
 	AddTexture(eID::TORCH, new GTexture("Resources/ground/0.png", 2, 1, 2));
+	AddTexture(eID::CANDLE, new GTexture("Resources/ground/1.png", 2, 1, 2));
 
 
 	AddTexture(eID::ITEMDAGGER, new GTexture("Resources/item/4.png"));

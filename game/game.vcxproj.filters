@@ -109,9 +109,14 @@
     <ClCompile Include="ObjectHidden.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Monney.cpp" />
     <ClCompile Include="Scene_2.cpp">
       <Filter>Framework\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Monney.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Candle.cpp">
+      <Filter>Object\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,9 +225,14 @@
     <ClInclude Include="ObjectHidden.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Monney.h" />
     <ClInclude Include="Scene_2.h">
       <Filter>Framework\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Monney.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Candle.h">
+      <Filter>Object\Ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

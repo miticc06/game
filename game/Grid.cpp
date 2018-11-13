@@ -7,7 +7,11 @@ Grid::Grid()
  
 Grid::~Grid()
 {
-	
+	//for (std::vector<GameObject*>::iterator it = listObjectGame.begin(); it != listObjectGame.end(); ++it)
+	//{
+	//	delete (*it);
+	//} 
+	//listObjectGame.clear();
 }
 
 void Grid::ReadFileToGrid(char * filename)
@@ -133,6 +137,7 @@ GameObject * Grid::GetNewObject(int type, int x, int y,int w, int h)
 	if (type == eID::BRICK) return new Brick(x, y, w, h);
 	if (type == eID::TORCH) return new Torch(x, y);
 	if (type == eID::OBJECT_HIDDEN) return new ObjectHidden(x, y, w, h);
+	if (type == eID::CANDLE) return new Candle(x, y);
 
 	return NULL;
 }

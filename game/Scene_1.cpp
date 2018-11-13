@@ -276,7 +276,7 @@ void Scene_1::Update(DWORD dt)
 
 
 
-	if (GAME_TIME_SCENE1 - _gameTime->GetTime() <= 2) // đúng còn lại 30 giây thì bật sound loop
+	if (GAME_TIME_SCENE1 - _gameTime->GetTime() <= 30 ) // đúng còn lại 30 giây thì bật sound loop
 	{
 		if (_gameTime->CheckIsJustChanged() == true) // Kiểm tra _time vừa thay đổi thì mới play nhạc. Nếu chỉ kt <=30s thì cứ mỗi deltatime nó sẽ Play nhạc -> thừa, ko đều
 		{
@@ -487,7 +487,6 @@ void Scene_1::CheckCollisionSimonWithObjectHidden()
 					{
 						 
 						SceneManager::GetInstance()->SetScene(new Scene_2(simon, _gameTime));
-					//	SceneManager::GetInstance()->SetIsNotLoadResource(true);
 
 						return;
 						break;
