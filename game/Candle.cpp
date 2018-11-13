@@ -1,4 +1,4 @@
-#include "Candle.h"
+﻿#include "Candle.h"
 
 
   
@@ -21,10 +21,10 @@ Candle::Candle(int X, int Y)
 
 void Candle::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	left = x;
-	top = y;
-	right = x + _texture->FrameWidth;
-	bottom = y + _texture->FrameHeight;
+	left = x - 5;
+	top = y -5;
+	right = x + _texture->FrameWidth+5;
+	bottom = y + _texture->FrameHeight+5; //Mở rộng BBOX cho dễ đánh trúng
 
 }
 
