@@ -26,7 +26,9 @@ public:
 	~MorningStar();
 	
 	void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
-	
+	void Render(Camera *camera);
+
+
 	void Create(float simonX, float simonY, int simonTrend);
 
 	void UpdatePositionFitSimon();
