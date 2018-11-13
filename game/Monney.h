@@ -1,19 +1,19 @@
 ﻿#ifndef __MONNEY_H__
+#define __MONNEY_H__
 
-#endif // !1
 
 
 #include "Item.h"
 
 
-#define MONEY_TIMEDISPLAYMAX 3000
+#define MONEY_TIMEDISPLAYMAX 5000
 #define MONEY_TIMEWAITMAX 300
 #define MONEY_GRAVITY 0.25f
 
 
 
 
-class Monney : 	public Item
+class Monney : public Item
 {
 public:
 	Monney(float X = 0, float Y = 0);
@@ -29,4 +29,8 @@ public:
 
 };
 
- 
+
+
+
+#endif // !__MONNEY_H__
+

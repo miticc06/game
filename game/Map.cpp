@@ -4,7 +4,7 @@
 
 Map::Map()
 {
-	LoadMap();
+
 }
 
 
@@ -13,12 +13,26 @@ Map::~Map()
 	SAFE_DELETE(_sprite);
 }
 
-void Map::LoadMap()
+void Map::LoadMap(eID type)
 {
-	ReadMapTXT("Resources/map/1.txt");
-	_texture = TextureManager::GetInstance()->GetTexture(eID::MAP1);
+	switch (type)
+	{
+	 
+	case eID::MAP1:
+		ReadMapTXT("Resources/map/1.txt");
+		break; 
+	case eID::MAP2:
+		ReadMapTXT("Resources/map/2.txt");
+		break;
+	default:
+		DebugOut(L"[MAP] Load map that bai!");
+		return;
+		break;
+	}
+
+	_texture = TextureManager::GetInstance()->GetTexture(type);
 	_sprite = new GSprite(_texture, 100);
-	
+
 
 	MapWidth = (_texture->FrameHeight)*(ColumnMatrix);  // Chiều dài của MAP
 	MapHeight = (_texture->FrameHeight)*(RowMatrix); //  chiều cao của MAP

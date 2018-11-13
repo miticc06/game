@@ -1,35 +1,34 @@
-﻿#include "Scene_1.h"
+﻿#include "Scene_2.h"
 
 
 
-Scene_1::Scene_1()
+Scene_2::Scene_2(Simon * _si, GameTime* _ga)
 {
+	simon = _si;
+	_gameTime = _ga;
+	
+
 
 	LoadResources();
 
 }
 
 
-Scene_1::~Scene_1()
+Scene_2::~Scene_2()
 {
 	SAFE_DELETE(TileMap);
 	SAFE_DELETE(board);
 	SAFE_DELETE(gridGame);
 	SAFE_DELETE(camera);
-
 }
 
-void Scene_1::KeyState(BYTE * state)
+void Scene_2::KeyState(BYTE * state)
 {
 	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
 	{
 		return;
 	}
-
-
-	//simon->Jump();
-
-	//return;
+	 
 
 	if (simon->isJumping && simon->isWalking)
 		return;
@@ -48,7 +47,7 @@ void Scene_1::KeyState(BYTE * state)
 	}
 	else
 		simon->Stop();
-	
+
 	if (simon->isJumping)
 		return;
 
@@ -61,7 +60,7 @@ void Scene_1::KeyState(BYTE * state)
 			simon->SetSpeed(0, vy);
 			return;
 		}
-			
+
 		simon->Right();
 		simon->Go();
 	}
@@ -82,11 +81,11 @@ void Scene_1::KeyState(BYTE * state)
 		{
 			simon->Stop();
 		}
-  
+
 
 }
 
-void Scene_1::OnKeyDown(int KeyCode)
+void Scene_2::OnKeyDown(int KeyCode)
 {
 	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
 	{
@@ -120,14 +119,14 @@ void Scene_1::OnKeyDown(int KeyCode)
 	{
 		POINT p;
 		GetCursorPos(&p);
-  		ScreenToClient(Game::GetInstance()->GetWindowHandle(), &p);
-		DebugOut(L"[MOUSE POSITION] x: %d , y = %d\n", p.x + (int)camera->GetXCam(), p.y+ (int)camera->GetYCam());
+		ScreenToClient(Game::GetInstance()->GetWindowHandle(), &p);
+		DebugOut(L"[MOUSE POSITION] x: %d , y = %d\n", p.x + (int)camera->GetXCam(), p.y + (int)camera->GetYCam());
 
 	}
 
 
 	if (KeyCode == DIK_3) // set vi tri simon 1275 
-	{ 
+	{
 		DebugOut(L"[SET POSITION SIMON] x = 1275 \n");
 		simon->SetPosition(1275.0f, 0);
 	}
@@ -149,7 +148,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 	if (KeyCode == DIK_Z)
 	{
-		if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == true && simon->GetHeartCollect()>0)
+		if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == true && simon->GetHeartCollect() > 0)
 		{
 			simon->SetHeartCollect(simon->GetHeartCollect() - 1); // giảm 1 heart
 			simon->Attack(simon->_weaponSub);
@@ -161,11 +160,11 @@ void Scene_1::OnKeyDown(int KeyCode)
 	{
 		return;
 	}
-	
-	
 
 
- 
+
+
+
 	if (KeyCode == DIK_SPACE)
 	{
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_RIGHT))
@@ -173,28 +172,22 @@ void Scene_1::OnKeyDown(int KeyCode)
 			simon->Stop();
 			float vx, vy;
 			simon->GetSpeed(vx, vy);
-			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetTrend()/**vx - 0.0001f*/,vy - SIMON_VJUMP);
+			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetTrend()/**vx - 0.0001f*/, vy - SIMON_VJUMP);
 			simon->isJumping = 1;
 			simon->isWalking = 1;
 		}
 		else
-		{
-			//simon->Stop();
-			//float vx, vy;
-			//simon->GetSpeed(vx, vy);
-			//simon->SetSpeed(0,/* vy - SIMON_VJUMP*/ -1.4f);
-			//simon->isJumping = 1;
-
+		{ 
 			simon->Jump();
 		}
 
 
-		
+
 	}
 
 }
 
-void Scene_1::OnKeyUp(int KeyCode)
+void Scene_2::OnKeyUp(int KeyCode)
 {
 	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
 	{
@@ -210,16 +203,22 @@ void Scene_1::OnKeyUp(int KeyCode)
 		break;
 	}
 }
-  
 
-void Scene_1::LoadResources()
-{   
+
+void Scene_2::LoadResources()
+{
 	TextureManager * _textureManager = TextureManager::GetInstance(); // Đã gọi load resource
 	sound = Sound::GetInstance();
 
-	simon = new Simon();
+	if (simon==NULL)
+		simon = new Simon();
+
+	if (_gameTime == NULL)
+		_gameTime = new GameTime();
+	  
 	TileMap = new Map();
-	TileMap->LoadMap(eID::MAP1);
+	TileMap->LoadMap(eID::MAP2);
+
 	camera = new Camera(Window_Width, Window_Height);
 	camera->SetPosition(0, 0);
 
@@ -230,26 +229,23 @@ void Scene_1::LoadResources()
 	simon->SetPositionBackup(SIMON_POSITION_DEFAULT);
 
 	gridGame = new Grid();
-	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
+	gridGame->ReadFileToGrid("Resources/map/Obj_2.txt"); // đọc các object từ file vào Grid
 
 
 
 	listItem.clear();
 	listEffect.clear();
 
-	_gameTime = new GameTime();
-	_gameTime->SetTime(0); // đếm lại từ 0
-
-
-
-
+	 
 	// bật nhạc game
-	sound->Play(eSound::musicState1, true);
+	if (sound->isPlaying(eSound::musicState1) == false)
+		sound->Play(eSound::musicState1, true);
 
-	//SceneManager::GetInstance()->SetIsNotLoadResource(false);
+//	SceneManager::GetInstance()->SetIsNotLoadResource(false);
+
 }
 
-void Scene_1::Update(DWORD dt)
+void Scene_2::Update(DWORD dt)
 {
 	if (simon->GetFreeze() == true)
 	{
@@ -259,7 +255,7 @@ void Scene_1::Update(DWORD dt)
 	}
 
 
-	if (_gameTime->GetTime() >= GAME_TIME_SCENE1) // hết thời gian
+	if (_gameTime->GetTime() >= GAME_TIME_SCENE2) // hết thời gian
 	{
 		sound->Play(eSound::musicLifeLost);
 		if (simon->GetLives() == 0)
@@ -276,7 +272,7 @@ void Scene_1::Update(DWORD dt)
 
 
 
-	if (GAME_TIME_SCENE1 - _gameTime->GetTime() <= 2) // đúng còn lại 30 giây thì bật sound loop
+	if (GAME_TIME_SCENE2 - _gameTime->GetTime() <= 2) // đúng còn lại 30 giây thì bật sound loop
 	{
 		if (_gameTime->CheckIsJustChanged() == true) // Kiểm tra _time vừa thay đổi thì mới play nhạc. Nếu chỉ kt <=30s thì cứ mỗi deltatime nó sẽ Play nhạc -> thừa, ko đều
 		{
@@ -298,7 +294,7 @@ void Scene_1::Update(DWORD dt)
 		listObj[i]->Update(dt, &listObj);  // đã kiểm tra "Alive" lúc lấy từ lưới ra
 
 	for (UINT i = 0; i < listItem.size(); i++)
-		if (listItem[i]->GetFinish()== false)
+		if (listItem[i]->GetFinish() == false)
 			listItem[i]->Update(dt, &listObj); // trong các hàm update chỉ kiểm tra va chạm với đất
 
 	for (UINT i = 0; i < listEffect.size(); i++)
@@ -312,7 +308,7 @@ void Scene_1::Update(DWORD dt)
 
 
 
-void Scene_1::Render()
+void Scene_2::Render()
 {
 
 	TileMap->DrawMap(camera);
@@ -322,26 +318,26 @@ void Scene_1::Render()
 		listObj[i]->Render(camera);
 
 	for (UINT i = 0; i < listItem.size(); i++)
-		if (listItem[i]->GetFinish()==false)
+		if (listItem[i]->GetFinish() == false)
 			listItem[i]->Render(camera);
-	 
+
 	for (UINT i = 0; i < listEffect.size(); i++)
 		if (listEffect[i]->GetFinish() == false)
 			listEffect[i]->Render(camera);
 
 	simon->Render(camera);
- 
-	board->Render(camera, simon, 1, simon->_weaponSub, GAME_TIME_SCENE1 - _gameTime->GetTime());
+
+	board->Render(camera, simon, 1, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime());
 
 
 
 }
 
-void Scene_1::ResetResource()
+void Scene_2::ResetResource()
 {
 	SAFE_DELETE(gridGame);
 	gridGame = new Grid();
-	gridGame->ReadFileToGrid("Resources/map/Obj_1.txt"); // đọc lại các object từ list
+	gridGame->ReadFileToGrid("Resources/map/Obj_2.txt"); // đọc lại các object từ list
 
 	listItem.clear();
 	listEffect.clear();
@@ -351,7 +347,7 @@ void Scene_1::ResetResource()
 	sound->Play(eSound::musicState1, true); // mở lại nhạc nền
 }
 
-void Scene_1::CheckCollision()
+void Scene_2::CheckCollision()
 {
 	CheckCollisionWeapon();
 
@@ -360,7 +356,7 @@ void Scene_1::CheckCollision()
 	CheckCollisionSimonWithObjectHidden();
 }
 
-void Scene_1::CheckCollisionWeapon()
+void Scene_2::CheckCollisionWeapon()
 {
 	// main weapon
 	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
@@ -372,9 +368,9 @@ void Scene_1::CheckCollisionWeapon()
 					GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
 					gameObjTorch->SubHealth(1);
 
-					listEffect.push_back(new Hit((int)gameObjTorch->GetX()+14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng lửa
-					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY()+8)); // hiệu ứng lửa
-					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() +5, gameObjTorch->GetY()));
+					listEffect.push_back(new Hit((int)gameObjTorch->GetX() + 14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng lửa
+					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY() + 8)); // hiệu ứng lửa
+					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
 
 					sound->Play(eSound::soundHit);
 				}
@@ -407,7 +403,7 @@ void Scene_1::CheckCollisionWeapon()
 
 }
 
-void Scene_1::CheckCollisionSimonWithItem()
+void Scene_2::CheckCollisionSimonWithItem()
 {
 	for (UINT i = 0; i < listItem.size(); i++)
 		if (listItem[i]->GetFinish() == false && listItem[i]->isWaitingDisplay() == false) // chưa kết thúc và "không phải" đang chờ để hiển thị
@@ -422,7 +418,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
 					break;
-				} 
+				}
 				case eID::UPGRADEMORNINGSTAR:
 				{
 					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->_weaponMain);
@@ -432,12 +428,12 @@ void Scene_1::CheckCollisionSimonWithItem()
 					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
- 
+
 				case eID::ITEMDAGGER:
 				{
 					SAFE_DELETE(simon->_weaponSub);
 					simon->_weaponSub = new Dagger();
- 					listItem[i]->SetFinish(true);
+					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
@@ -457,7 +453,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
 					break;
 				}
-				 
+
 
 
 			}
@@ -469,7 +465,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 
 }
 
-void Scene_1::CheckCollisionSimonWithObjectHidden()
+void Scene_2::CheckCollisionSimonWithObjectHidden()
 {
 	for (UINT i = 0; i < listObj.size(); i++)
 	{
@@ -485,11 +481,8 @@ void Scene_1::CheckCollisionSimonWithObjectHidden()
 					{
 					case 7: // đụng trúng cửa
 					{
-						 
-						SceneManager::GetInstance()->SetScene(new Scene_2(simon, _gameTime));
-					//	SceneManager::GetInstance()->SetIsNotLoadResource(true);
 
-						return;
+
 						break;
 					}
 
@@ -505,7 +498,7 @@ void Scene_1::CheckCollisionSimonWithObjectHidden()
 					}
 
 
-					gameObject->SubHealth(1); 
+					gameObject->SubHealth(1);
 
 				}
 			}
@@ -516,7 +509,7 @@ void Scene_1::CheckCollisionSimonWithObjectHidden()
 
 
 
-Item * Scene_1::GetNewItem(int Id, eID Type, float X, float Y)
+Item * Scene_2::GetNewItem(int Id, eID Type, float X, float Y)
 {
 	if (Type == eID::TORCH)
 	{

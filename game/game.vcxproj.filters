@@ -110,6 +110,9 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Monney.cpp" />
+    <ClCompile Include="Scene_2.cpp">
+      <Filter>Framework\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -218,6 +221,9 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Monney.h" />
+    <ClInclude Include="Scene_2.h">
+      <Filter>Framework\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

@@ -43,6 +43,9 @@ public:
 	void Play(eSound type, bool isLoop = false); 
 	void Stop(eSound type);
 	void LoadResourceSound();
+
+	bool isPlaying(eSound type);
+
 };
 
 #endif

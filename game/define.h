@@ -92,6 +92,8 @@ enum eID
 	BOARDHEALTH = 103,
 	MAP1 = 104,
 	RENDERBBOX =105,
+	MAP2 = 106,
+
 
 	// Effect
 	FIRE = 121,

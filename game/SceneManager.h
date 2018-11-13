@@ -1,7 +1,8 @@
-#ifndef __SCENEMANAGER_H__
+﻿#ifndef __SCENEMANAGER_H__
 #define __SCENEMANAGER_H__
 
 #include "Scene.h" 
+
 #include "define.h" 
 
 class SceneManager
@@ -10,6 +11,8 @@ private:
 	static SceneManager * _Instance;
 
 	Scene * _scene;
+
+//	bool isNotLoadResource; // kt chưa load resource. dùng cho thay đổi scene
 
 public:
 	SceneManager();
@@ -27,6 +30,10 @@ public:
 	void LoadResources();
 	void Update(DWORD dt);
 	void Render();
+
+	//void SetIsNotLoadResource(bool b);
+
+	Scene * GetScene();
 
 };
 

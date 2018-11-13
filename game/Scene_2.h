@@ -1,5 +1,6 @@
-﻿#ifndef __SCENE_1_H__
-#define __SCENE_1_H__
+﻿#ifndef __SCENE_2_H__
+#define __SCENE_2_H__
+
 
 #include "Scene.h"
 #include "Camera.h"
@@ -22,11 +23,13 @@
 #include "GameTime.h"
 #include "Sound.h"
 #include "Monney.h"
-#include "Scene_2.h"
 
-#define GAME_TIME_SCENE1 300
 
-class Scene_1 : public Scene
+
+#define GAME_TIME_SCENE2 300
+
+
+class Scene_2 : public Scene
 {
 private:
 
@@ -43,9 +46,10 @@ private:
 	vector <Effect*> listEffect;
 	GameTime * _gameTime;
 
+
 public:
-	Scene_1();
-	~Scene_1();
+	Scene_2(Simon * _si = NULL, GameTime* _ga = NULL);
+	~Scene_2();
 
 	void KeyState(BYTE *state);
 	void OnKeyDown(int KeyCode);
@@ -65,5 +69,7 @@ public:
 
 	Item * GetNewItem(int Id, eID Type, float X, float Y);
 };
+
+
 
 #endif

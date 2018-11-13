@@ -31,6 +31,11 @@ void Sound::LoadResourceSound()
 
 }
 
+bool Sound::isPlaying(eSound type)
+{
+	return _ArrSound[type]->IsSoundPlaying();
+}
+
 
 void Sound::AddSound(eSound type, LPTSTR filename)
 {
@@ -48,7 +53,7 @@ void Sound::Play(eSound type, bool isLoop)
 {
 	_ArrSound[type]->Play(0, isLoop);
 	//DSBPLAY_LOOPING             0x00000001 -> int = 1
-	 
+
 }
 
 void Sound::Stop(eSound type)
