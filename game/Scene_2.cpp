@@ -118,7 +118,8 @@ void Scene_2::OnKeyDown(int KeyCode)
 		POINT p;
 		GetCursorPos(&p);
 		ScreenToClient(Game::GetInstance()->GetWindowHandle(), &p);
-		DebugOut(L"[MOUSE POSITION] x: %d , y = %d\n", p.x + (int)camera->GetXCam(), p.y + (int)camera->GetYCam());
+	//	DebugOut(L"[MOUSE POSITION] x: %d , y = %d\n", p.x + (int)camera->GetXCam(), p.y + (int)camera->GetYCam());
+		DebugOut(L"[MOUSE POSITION] %d %d \n", p.x + (int)camera->GetXCam(), p.y + (int)camera->GetYCam());
 
 	}
 
@@ -129,7 +130,20 @@ void Scene_2::OnKeyDown(int KeyCode)
 		simon->SetPosition(1275.0f, 0);
 	}
 
+	if (KeyCode == DIK_4)  
+	{
+		DebugOut(L"[SET POSITION SIMON] x = .... \n");
+		simon->SetPosition(3100.0f, 0);
+	}
 
+
+	if (KeyCode == DIK_R)
+	{
+		DebugOut(L"[RESET GRID]");
+		SAFE_DELETE(gridGame);
+		gridGame = new Grid();
+		gridGame->ReadFileToGrid("Resources/map/Obj_2.txt"); // load lai
+	}
 
 
 	if (KeyCode == DIK_X)

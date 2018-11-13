@@ -31,7 +31,14 @@ void TextureManager::LoadResource()
 
 
 
-	AddTexture(eID::BRICK, new GTexture("Resources/ground/2.png"));
+	AddTexture(eID::TEX_BRICK_MODEL_1, new GTexture("Resources/ground/2.png")); // loại dành cho state 1
+	AddTexture(eID::TEX_BRICK_MODEL_2, new GTexture("Resources/ground/2-2.png")); // dành cho state 2
+	AddTexture(eID::TEX_BRICK_MODEL_3, new GTexture("Resources/ground/8.png")); // loại nhỏ
+
+
+
+
+
 	AddTexture(eID::TORCH, new GTexture("Resources/ground/0.png", 2, 1, 2));
 	AddTexture(eID::CANDLE, new GTexture("Resources/ground/1.png", 2, 1, 2));
 

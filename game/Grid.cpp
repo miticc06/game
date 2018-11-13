@@ -20,7 +20,7 @@ void Grid::ReadFileToGrid(char * filename)
 	ifstream inp;
 	inp.open(filename, ios::in);
 	 
-	int id, type, trend, x, y, w, h;
+	int id, type, trend, x, y, w, h, model;
 
 	if (inp)
 	{
@@ -29,8 +29,8 @@ void Grid::ReadFileToGrid(char * filename)
 
 		for (int i = 0; i < n; i++)
 		{
-			inp >> id >> type >> trend >> x >> y >> w >> h;
-			Insert(id, type, trend, x, y, w, h);
+			inp >> id >> type >> trend >> x >> y >> w >> h >> model;
+			Insert(id, type, trend, x, y, w, h, model);
 		} 
 		inp.close();
 	} 
@@ -102,7 +102,7 @@ void Grid::ResetTake()
 	}
 }
  
-void Grid::Insert(int id, int type, int trend, int x, int y, int w, int h)
+void Grid::Insert(int id, int type, int trend, int x, int y, int w, int h, int Model)
 { 
 	int Top = (int) floor( y / (float)GRID_CELL_HEIGHT);
 	int Bottom = (int)floor((y + h) / (float)GRID_CELL_HEIGHT);
@@ -110,10 +110,10 @@ void Grid::Insert(int id, int type, int trend, int x, int y, int w, int h)
 	int Left = (int)floor(x / (float)GRID_CELL_WIDTH);
 	int Right = (int)floor((x+w) / (float)GRID_CELL_WIDTH);
 
-	GameObject * dataObject = GetNewObject(type, x, y, w, h); 
+	GameObject * dataObject = GetNewObject(type, x, y, w, h, Model); 
 	if (dataObject == NULL)
 	{
-		DebugOut(L"[Insert Object GRID Fail] : Bo tay roi :v Khong tao duoc object!\n");
+		DebugOut(L"[Insert Object GRID Fail] :  Khong tao duoc object!\n");
 		return;
 	} 
 	dataObject->SetId(id);
@@ -132,9 +132,9 @@ void Grid::Insert(int id, int type, int trend, int x, int y, int w, int h)
 
 }
 
-GameObject * Grid::GetNewObject(int type, int x, int y,int w, int h)
+GameObject * Grid::GetNewObject(int type, int x, int y,int w, int h, int Model)
 {
-	if (type == eID::BRICK) return new Brick(x, y, w, h);
+	if (type == eID::BRICK) return new Brick(x, y, w, h, Model);
 	if (type == eID::TORCH) return new Torch(x, y);
 	if (type == eID::OBJECT_HIDDEN) return new ObjectHidden(x, y, w, h);
 	if (type == eID::CANDLE) return new Candle(x, y);

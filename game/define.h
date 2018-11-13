@@ -44,7 +44,7 @@ using namespace std;
 #define SCREEN_HEIGHT 480 //512//448
 
 
-#define IS_DEBUG_RENDER_BBOX 1
+#define IS_DEBUG_RENDER_BBOX 0
  
  
 extern int Window_Width; 
@@ -67,6 +67,10 @@ enum eID
 
 	// object nền
 	BRICK = 21,
+	TEX_BRICK_MODEL_1 = 22,
+	TEX_BRICK_MODEL_2 = 23,
+	TEX_BRICK_MODEL_3 = 24,
+
 
 
 	// object
