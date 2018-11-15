@@ -98,22 +98,31 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 		if (isWalking == true)
 		{
 			if (isProcessingOnStair == 1) // nếu ở giai đoạn bước chân thì set frame 12
-				_sprite->SelectIndex(SIMON_ANI_STAIR_BEGIN);
+			{
+				if (vy<0) // ddi len
+					_sprite->SelectIndex(SIMON_ANI_STAIR_GO_UP_BEGIN);
+				else 
+					_sprite->SelectIndex(SIMON_ANI_STAIR_GO_DOWN_BEGIN);
+			}
+				
 
-			if (isProcessingOnStair == 2) // nếu ở giai đoạn bước chân thì set frame 12
-				_sprite->SelectIndex(SIMON_ANI_STAIR_END);
+			if (isProcessingOnStair == 2) // nếu ở giai đoạn bước chân trụ thì set frame 13
+			{
+				if (vy < 0) // ddi len
+					_sprite->SelectIndex(SIMON_ANI_STAIR_GO_UP_END);
+				else
+					_sprite->SelectIndex(SIMON_ANI_STAIR_GO_DOWN_END);
+
+			}
 			
-
-
-
-
+			 
 
 			float kk = 8.0f;
 
 
 			DoCaoDiDuoc = DoCaoDiDuoc + abs(vy) * 16.0f;
 
-			if (DoCaoDiDuoc >= 8 && isProcessingOnStair == 1)
+			if (DoCaoDiDuoc >= 8.0f && isProcessingOnStair == 1)
 				isProcessingOnStair++;
 
 			if (DoCaoDiDuoc >= 16)
@@ -123,64 +132,21 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 			}
 			DebugOut(L"DoCaoDiDuoc = %f . dy = %f . y = %f\n", DoCaoDiDuoc,dy, y);
-
-/*
-			if (DoCaoDiDuoc >= kk)
-			{	
-				DoCaoDiDuoc -= kk;
-
-				DebugOut(L"Khoang bi tru = %f\n", DoCaoDiDuoc);
-
-				//if (vy < 0) // ddang ddi len
-				//{
-				//	x -= DoCaoDiDuoc;
-				//	y += DoCaoDiDuoc;
-
-				//}
-				//else
-				//{
-				//	x += DoCaoDiDuoc;
-				//	y -= DoCaoDiDuoc;
-				//}
-
-
-				DoCaoDiDuoc = 0;
-
-				isProcessingOnStair++;
-			} 
-			*/
-
-			/*if (isProcessingOnStair == 2)
-				_sprite->SelectIndex(SIMON_ANI_STAIR_BEGIN);
-*/
-
-
-			//if (index < SIMON_ANI_STAIR_BEGIN || index >= SIMON_ANI_STAIR_END)
-			//{
-			//	_sprite->SelectIndex(SIMON_ANI_STAIR_BEGIN);
-			//}
-			//else
-			//{
-			//	/*_sprite->Update(dt);
-			//	_sprite->Next();*/
-
-			//	_sprite->_timeLocal += dt;
-			//	if (_sprite->_timeLocal >= 100)
-			//	{
-			//		_sprite->_timeLocal = 0;
-			//		_sprite->Next();
-			//	}
-			//}
+			 
 		}
 		else
 		{
-			_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING);
+			if (this->trend == 1) // ddang di len
+				_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING_UP);
+			else
+				_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING_DOWN);
+
 
 		}
 
 
 
-		if (isProcessingOnStair == 3)
+		if (isProcessingOnStair == 3) 
 		{
 			isProcessingOnStair = 0;
 
@@ -262,29 +228,15 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 	 
 	/* Update về sprite */
 
+	 
 
-	
-
-	
-
-	//DebugOut(L"vx = %f \n",vx);
-
-	GameObject::Update(dt);  
-	//if (isJumping)
-	//{
-	//	dy = vy * 2.0f;
-	//	vy += /*0.0019f*/ 0.002f * 16;
-	//}
-	//else  
-		
-
-
+	GameObject::Update(dt);   
 
 
 
 	
 	if (isOnStair == false) // ko trên cầu thang thì mới có trọng lực
-		vy += SIMON_GRAVITY * dt;// Simple fall down'
+		vy += SIMON_GRAVITY * dt;// Simple fall down
 	else
 	{
 		this->dt = dt;

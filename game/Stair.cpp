@@ -2,7 +2,7 @@
 
  
  
-Stair::Stair(int X, int Y, int W, int H, int T)
+Stair::Stair(int X, int Y, int W, int H, int T, int Trend)
 {
 	x = X;
 	y = Y;
@@ -11,6 +11,7 @@ Stair::Stair(int X, int Y, int W, int H, int T)
 	t = T;
 	if (t == 1) // up
 		type = eID::STAIR_UP;
+	trend = Trend;
 }
 
 Stair::~Stair()

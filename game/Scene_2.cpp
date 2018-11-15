@@ -46,6 +46,10 @@ void Scene_2::KeyState(BYTE * state)
 					DebugOut(L"Y reset = %f\n", round(simon->GetY()));
 					simon->SetPosition(listObj[i]->GetX() - 25, round(simon->GetY()));// chỉnh lại vị trí simon
 	 
+					GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
+					simon->trendStair = gameobj->GetTrend();
+
+					simon->SetTrend(simon->trendStair);
 
 					simon->isOnStair = 1; 
 					simon->DoCaoDiDuoc = 0;
@@ -60,7 +64,8 @@ void Scene_2::KeyState(BYTE * state)
 			simon->isWalking = 1;
 
 			simon->isProcessingOnStair = 1;
-			 
+
+			simon->SetTrend(simon->trendStair);
 			simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * SIMON_SPEED_ONSTAIR);
 			return;
 		}
@@ -88,10 +93,14 @@ void Scene_2::KeyState(BYTE * state)
 		{
 			if (simon->isProcessingOnStair == 0) // nếu không có xử lí gì về cầu thang
 			{
-				simon->SetSpeed(-simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * -SIMON_SPEED_ONSTAIR); // ngược vận tốc
+				simon->SetTrend(simon->trendStair *-1);
+
+				simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * -SIMON_SPEED_ONSTAIR); // ngược vận tốc
 				simon->isWalking = 1;
 				simon->isProcessingOnStair = 1;
-				simon->DoCaoDiDuoc = 0;
+				simon->DoCaoDiDuoc = 0; 
+
+
 				return;
 			}  
 			

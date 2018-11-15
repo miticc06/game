@@ -37,14 +37,18 @@
 #define SIMON_ANI_STANDING_ATTACKING_END 7
 
 
-#define SIMON_ANI_STAIR_BEGIN 12
-#define SIMON_ANI_STAIR_END 13
+#define SIMON_ANI_STAIR_GO_UP_BEGIN 12
+#define SIMON_ANI_STAIR_GO_UP_END 13
+
+#define SIMON_ANI_STAIR_GO_DOWN_BEGIN 10
+#define SIMON_ANI_STAIR_GO_DOWN_END 11
 
 
 #define SIMON_SPEED_ONSTAIR 0.05f// 0.09f
 
 
-#define SIMON_ANI_STAIR_STANDING 12
+#define SIMON_ANI_STAIR_STANDING_UP 12
+#define SIMON_ANI_STAIR_STANDING_DOWN 10
 
 
 #define TIME_FREEZE_MAX 500
@@ -75,6 +79,10 @@ public:
 
 	bool isOnStair;
 	int isProcessingOnStair;  // có 2 giai đoạn 
+	bool trendStair;
+
+
+
 	float DoCaoDiDuoc = 0;//
 public:
 	Simon();

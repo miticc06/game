@@ -10,7 +10,7 @@ private:
 	int t; // kiểu object cầu thang, 1 ở dưới, 2 ở trên
 
 public:
-	Stair(int X, int Y, int W, int H, int T);
+	Stair(int X, int Y, int W, int H, int T, int Trend = 1);
 	virtual ~Stair();
 
 
