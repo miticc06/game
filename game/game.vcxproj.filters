@@ -122,6 +122,7 @@
     <ClCompile Include="Stair.cpp">
       <Filter>Object\Ground</Filter>
     </ClCompile>
+    <ClCompile Include="ExitStair.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -242,6 +243,7 @@
     <ClInclude Include="Stair.h">
       <Filter>Object\Ground</Filter>
     </ClInclude>
+    <ClInclude Include="ExitStair.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

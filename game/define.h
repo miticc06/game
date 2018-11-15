@@ -78,8 +78,10 @@ enum eID
 	OBJECT_HIDDEN = 42,
 	CANDLE = 43,
 	STAIR = 44,
+
 	STAIR_UP = 45,
 
+	STAIR_EXIT = 46,
 
 
 	// weapon

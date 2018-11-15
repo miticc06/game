@@ -53,7 +53,7 @@ void Scene_2::KeyState(BYTE * state)
 
 					simon->isOnStair = 1; 
 					simon->DoCaoDiDuoc = 0;
-					  
+					simon->trendY = -1; // hướng lên
 					DebugOut(L"VA cham cau thang\n");
 					break;
 				}
@@ -62,6 +62,7 @@ void Scene_2::KeyState(BYTE * state)
 		else
 		{ 
 			simon->isWalking = 1;
+			simon->trendY = -1; // hướng lên
 
 			simon->isProcessingOnStair = 1;
 
@@ -100,6 +101,7 @@ void Scene_2::KeyState(BYTE * state)
 				simon->isProcessingOnStair = 1;
 				simon->DoCaoDiDuoc = 0; 
 
+				simon->trendY = 1; // hướng xuống
 
 				return;
 			}  
@@ -268,7 +270,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 
 
-	if (KeyCode == DIK_SPACE)
+	if (KeyCode == DIK_SPACE && simon->isOnStair == false)
 	{
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		{

@@ -79,7 +79,8 @@ public:
 
 	bool isOnStair;
 	int isProcessingOnStair;  // có 2 giai đoạn 
-	bool trendStair;
+	int trendStair; // hướng của cầu thang đang đi, -1 đi qua trái, 1 đi qua phải
+	int trendY; // hướng đi theo trục y của simon
 
 
 
@@ -95,7 +96,6 @@ public:
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera);
-
 	void Left();  // set lại hướng của simon
 	void Right(); // set lại hướng của simon
 	void Go();
@@ -108,7 +108,9 @@ public:
 	int GetHeartCollect();
 
 	void CollisionWithBrick(vector<LPOBJECT> *coObjects = NULL);
- 
+	void CollisionWithExitStair(vector<LPOBJECT> *coObjects = NULL);
+	bool isCollisionWithItem(Item * objItem);
+
 	void Attack(Weapon *w);
 
 	int GetLives();
@@ -128,7 +130,6 @@ public:
 
 
 
-	bool isCollisionWithItem(Item * objItem);
 
 	bool LoseLife();
 	void SetPositionBackup(float X, float Y);  // lưu vị trí cần backup để simon die thì bắt đầu lại từ đây

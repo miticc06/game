@@ -11,7 +11,7 @@
 #include "ObjectHidden.h"
 #include "Candle.h"
 #include "Stair.h"
-
+#include "ExitStair.h"
 
 using namespace std;
 
