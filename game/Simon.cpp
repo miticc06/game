@@ -73,7 +73,8 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 		{
 			if (_weaponSub != NULL)
 			{
-				isAttacking = !(SIMON_ANI_SITTING_ATTACKING_END == index || SIMON_ANI_STANDING_ATTACKING_END == index);
+				isAttacking = !(SIMON_ANI_SITTING_ATTACKING_END == index || SIMON_ANI_STANDING_ATTACKING_END == index || 
+					SIMON_ANI_STAIR_UP_ATTACKING_END==index || SIMON_ANI_STAIR_DOWN_ATTACKING_END==index);
 			}
 		}
 	}
@@ -86,71 +87,103 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 	if (isOnStair)
 	{  
-	
-		if (isWalking == true)
+		if (isAttacking == true) // tấn công
 		{
-			if (isProcessingOnStair == 1) // nếu ở giai đoạn bước chân thì set frame 12
+			if (trendY == -1) // đang đi lên
 			{
-				if (vy < 0) // ddi len
-					_sprite->SelectIndex(SIMON_ANI_STAIR_GO_UP_BEGIN);
+				if (index < SIMON_ANI_STAIR_UP_ATTACKING_BEGIN || index >= SIMON_ANI_STAIR_UP_ATTACKING_END)
+				{
+					_sprite->SelectIndex(SIMON_ANI_STAIR_UP_ATTACKING_BEGIN);
+				}
 				else
-					_sprite->SelectIndex(SIMON_ANI_STAIR_GO_DOWN_BEGIN);
+				{
+					//cập nhật frame mới
+					_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+				}
 			}
-
-
-			if (isProcessingOnStair == 2) // nếu ở giai đoạn bước chân trụ thì set frame 13
+			else
 			{
-				if (vy < 0) // ddi len
-					_sprite->SelectIndex(SIMON_ANI_STAIR_GO_UP_END);
+				if (index < SIMON_ANI_STAIR_DOWN_ATTACKING_BEGIN || index >= SIMON_ANI_STAIR_DOWN_ATTACKING_END)
+				{
+					_sprite->SelectIndex(SIMON_ANI_STAIR_DOWN_ATTACKING_BEGIN);
+				}
 				else
-					_sprite->SelectIndex(SIMON_ANI_STAIR_GO_DOWN_END);
-
+				{
+					//cập nhật frame mới
+					_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+				}
 			}
 
 
-
-			float kk = 8.0f;
-
-
-			DoCaoDiDuoc = DoCaoDiDuoc + abs(vy) * 16.0f;
-
-			if (DoCaoDiDuoc >= 8.0f && isProcessingOnStair == 1)
-				isProcessingOnStair++;
-
-			if (DoCaoDiDuoc >= 16)
-			{
-				isProcessingOnStair++;
-				DoCaoDiDuoc = 0;
-
-			}
-		//	DebugOut(L"DoCaoDiDuoc = %f . dy = %f . y = %f\n", DoCaoDiDuoc, dy, y);
-
+			
 		}
 		else
 		{
-			if (this->trendY == -1) // ddang di len
-				_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING_UP);
+			if (isWalking == true)
+			{
+				if (isProcessingOnStair == 1) // nếu ở giai đoạn bước chân thì set frame 12
+				{
+					if (vy < 0) // ddi len
+						_sprite->SelectIndex(SIMON_ANI_STAIR_GO_UP_BEGIN);
+					else
+						_sprite->SelectIndex(SIMON_ANI_STAIR_GO_DOWN_BEGIN);
+				}
+
+
+				if (isProcessingOnStair == 2) // nếu ở giai đoạn bước chân trụ thì set frame 13
+				{
+					if (vy < 0) // ddi len
+						_sprite->SelectIndex(SIMON_ANI_STAIR_GO_UP_END);
+					else
+						_sprite->SelectIndex(SIMON_ANI_STAIR_GO_DOWN_END);
+
+				}
+
+
+
+				float kk = 8.0f;
+
+
+				DoCaoDiDuoc = DoCaoDiDuoc + abs(vy) * 16.0f;
+
+				if (DoCaoDiDuoc >= 8.0f && isProcessingOnStair == 1)
+					isProcessingOnStair++;
+
+				if (DoCaoDiDuoc >= 16)
+				{
+					isProcessingOnStair++;
+					DoCaoDiDuoc = 0;
+
+				}
+				//	DebugOut(L"DoCaoDiDuoc = %f . dy = %f . y = %f\n", DoCaoDiDuoc, dy, y);
+
+			}
 			else
-				_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING_DOWN); 
+			{
+				if (this->trendY == -1) // ddang di len
+					_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING_UP);
+				else
+					_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING_DOWN);
+			}
+			 
+			if (isProcessingOnStair == 3)
+			{
+				isProcessingOnStair = 0;
+
+				x = x + vx * 16;
+				y = y + vy * 16;
+
+				vx = 0; vy = 0;
+
+
+
+				DoCaoDiDuoc = 0;
+
+				isWalking = false;
+				return;
+			}
 		}
-
-		 
-		if (isProcessingOnStair == 3)
-		{
-			isProcessingOnStair = 0;
-
-			x = x + vx * 16;
-			y = y + vy * 16;
-
-			vx = 0; vy = 0;
-
-
-
-			DoCaoDiDuoc = 0;
-
-			isWalking = false;
-			return;
-		}
+	
 
 
 	//	DebugOut(L"_sprite index = %d \n", _sprite->GetIndex());
