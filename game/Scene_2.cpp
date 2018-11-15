@@ -43,7 +43,8 @@ void Scene_2::KeyState(BYTE * state)
 			{
 				if (listObj[i]->GetType() == eID::STAIR_UP && simon->isCollitionObjectWithObject(listObj[i]) == true)
 				{
-					simon->SetPosition(listObj[i]->GetX() - 25, simon->GetY());// chỉnh lại vị trí simon
+					DebugOut(L"Y reset = %f\n", round(simon->GetY()));
+					simon->SetPosition(listObj[i]->GetX() - 25, round(simon->GetY()));// chỉnh lại vị trí simon
 	 
 
 					simon->isOnStair = 1; 

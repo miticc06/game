@@ -107,36 +107,49 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 
 
-			DoCaoDiDuoc += abs(vy) * 10.0f;
 
-			float kk = 8.3f;
+			float kk = 8.0f;
 
+
+			DoCaoDiDuoc = DoCaoDiDuoc + abs(vy) * 16.0f;
+
+			if (DoCaoDiDuoc >= 8 && isProcessingOnStair == 1)
+				isProcessingOnStair++;
+
+			if (DoCaoDiDuoc >= 16)
+			{
+				isProcessingOnStair ++;
+				DoCaoDiDuoc = 0;
+
+			}
+			DebugOut(L"DoCaoDiDuoc = %f . dy = %f . y = %f\n", DoCaoDiDuoc,dy, y);
+
+/*
 			if (DoCaoDiDuoc >= kk)
 			{	
 				DoCaoDiDuoc -= kk;
 
 				DebugOut(L"Khoang bi tru = %f\n", DoCaoDiDuoc);
 
-				if (vy < 0) // ddang ddi len
-				{
-					x -= DoCaoDiDuoc;
-					y += DoCaoDiDuoc;
+				//if (vy < 0) // ddang ddi len
+				//{
+				//	x -= DoCaoDiDuoc;
+				//	y += DoCaoDiDuoc;
 
-				}
-				else
-				{
-					x += DoCaoDiDuoc;
-					y -= DoCaoDiDuoc;
-				}
+				//}
+				//else
+				//{
+				//	x += DoCaoDiDuoc;
+				//	y -= DoCaoDiDuoc;
+				//}
 
 
 				DoCaoDiDuoc = 0;
 
 				isProcessingOnStair++;
 			} 
+			*/
 
-			
-			DebugOut(L"DoCaoDiDuoc = %f\n", DoCaoDiDuoc);
 			/*if (isProcessingOnStair == 2)
 				_sprite->SelectIndex(SIMON_ANI_STAIR_BEGIN);
 */
@@ -170,14 +183,18 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 		if (isProcessingOnStair == 3)
 		{
 			isProcessingOnStair = 0;
+
+			x = x + vx*16;
+			y = y + vy*16;
+
 			vx = 0; vy = 0;
 
 
-			x = round(x / 16) * 16;
-			y = round(y / 16) * 16;
-
+			
+			DoCaoDiDuoc = 0;
 
 			isWalking = false;
+			return;
 		}
 
 
@@ -271,9 +288,15 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 	else
 	{
 		this->dt = dt;
-		dx = vx * 10;
-		dy = vy * 10;
-		//if (x/16)
+		dx = vx * 16;
+		dy = vy * 16;
+
+		x = x + dx;
+		y = y + dy;
+
+
+		return;
+		 
 	}
 
 
