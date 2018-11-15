@@ -13,7 +13,7 @@ public:
 	int _end;
 	int _index;
 	int _timeAni;	//thời gian chuyển frame
-	int _timeLocal;	//biến hỗ trợ đếm thời gian
+	int _timeLocal;	
 
 	GSprite();
 	GSprite(const GSprite &sprite);
@@ -47,7 +47,6 @@ public:
 	 
 	~GSprite();
 
-	//=======================================================================================================================
 	int R, G, B, A;
 	void SetARGB(int r = 255, int g = 255, int b = 255, int a = 255);
 };

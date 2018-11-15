@@ -27,7 +27,8 @@ void TextureManager::LoadResource()
 	AddTexture(eID::RENDERBBOX, new GTexture("textures/bbox.png")); // dùng để vẽ BBOX
 
 	AddTexture(eID::MAP1, new GTexture("Resources/map/1.png", 10, 4, 40));
-	AddTexture(eID::MAP2, new GTexture("Resources/map/2.png", 18, 4, 72));
+	//AddTexture(eID::MAP2, new GTexture("Resources/map/2.png", 18, 4, 72));
+	AddTexture(eID::MAP2, new GTexture("Resources/map/2.png", 18, 5, 90));
 
 
 

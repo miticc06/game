@@ -44,7 +44,7 @@ using namespace std;
 #define SCREEN_HEIGHT 480 //512//448
 
 
-#define IS_DEBUG_RENDER_BBOX 0
+#define IS_DEBUG_RENDER_BBOX 1
  
  
 extern int Window_Width; 
@@ -77,6 +77,10 @@ enum eID
 	TORCH = 41,
 	OBJECT_HIDDEN = 42,
 	CANDLE = 43,
+	STAIR = 44,
+	STAIR_UP = 45,
+
+
 
 	// weapon
 	MORNINGSTAR = 61,

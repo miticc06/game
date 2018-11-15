@@ -159,6 +159,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Scene_1.h" />
     <ClInclude Include="Simon.h" />
+    <ClInclude Include="Stair.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Torch.h" />
     <ClInclude Include="UpgradeMorningStar.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene_1.cpp" />
     <ClCompile Include="Simon.cpp" />
+    <ClCompile Include="Stair.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="UpgradeMorningStar.cpp" />

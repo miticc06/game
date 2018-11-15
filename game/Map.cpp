@@ -55,6 +55,26 @@ void Map::ReadMapTXT(char * filename)
 				fileIn >> TileMap[i][j]; 
 		fileIn.close(); 
 	}
+
+ 
+
+	//ofstream fileOut;
+	//int x;
+	//fileOut.open("C:\\Users\\MITICC06\\Desktop\\map2\\chuyendoi.txt", ios::out);
+	//for (int i = 0; i < RowMatrix; i++)
+	//{
+	//	for (int j = 0; j < ColumnMatrix; j++)
+	//	{
+	//		fileOut << TileMap[i][j] + 1 << ",";
+
+	//	}
+	//	fileOut << endl;
+
+	//}
+
+	//fileOut.close();
+
+
 }
 
 void Map::DrawMap(Camera *camera)
@@ -65,10 +85,10 @@ void Map::DrawMap(Camera *camera)
 	x = -(int(camera->GetXCam()) % _texture->FrameHeight);
 	y = -(int(camera->GetYCam()) % _texture->FrameHeight);
 
-	for (int i = 0; i < ScreenRow; i++)
+	for (int i = 0; i < ScreenRow+1; i++)
 	{ 
 		{
-			for (int j = 0; j < ScreenColumn +1; j++) // ngay đây dư 1 nên... pla pla..
+			for (int j = 0; j < ScreenColumn +1; j++) 
 			{
 				if (!(row + i < 0 || row + i>RowMatrix || j + column < 0 || j + column > ColumnMatrix))
  				{

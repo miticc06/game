@@ -36,6 +36,17 @@
 #define SIMON_ANI_STANDING_ATTACKING_BEGIN 5
 #define SIMON_ANI_STANDING_ATTACKING_END 7
 
+
+#define SIMON_ANI_STAIR_BEGIN 12
+#define SIMON_ANI_STAIR_END 13
+
+
+#define SIMON_SPEED_ONSTAIR 0.09f
+
+
+#define SIMON_ANI_STAIR_STANDING 12
+
+
 #define TIME_FREEZE_MAX 500
 
 
@@ -62,6 +73,9 @@ public:
 	bool isAttacking;
 
 
+	bool isOnStair;
+	int isProcessingOnStair;  // có 2 giai đoạn 
+	float DoCaoDiDuoc = 0;//
 public:
 	Simon();
 	~Simon();
@@ -97,6 +111,12 @@ public:
 	bool GetFreeze();
 	void SetFreeze(int f);
 	void UpdateFreeze(DWORD dt);
+
+
+
+
+	void GoUpStair();
+
 
 
 

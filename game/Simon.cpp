@@ -11,7 +11,7 @@ Simon::Simon()
 	isJumping = 0;
 	isSitting = 0;
 	isAttacking = 0;
-
+	isProcessingOnStair = 0;// ko phải đang xử lí
 	Health = SIMON_DEFAULT_HEALTH; // simon dính 16 phát là chết
 	Lives = 3; // có 5 mạng sống
 	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
@@ -90,78 +90,167 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 	{
 		_weaponSub->Update(dt);
 	}
-
-
-
-
-
-	if (isSitting == true)
+	 
+ 
+	if (isOnStair)
 	{
-		if (isAttacking == true) // tấn công
+
+		if (isWalking == true)
 		{
-			if (index < SIMON_ANI_SITTING_ATTACKING_BEGIN || index >= SIMON_ANI_SITTING_ATTACKING_END)
-			{
-				_sprite->SelectIndex(SIMON_ANI_SITTING_ATTACKING_BEGIN);
-			}
-			else
-			{
-				//cập nhật frame mới
-				_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+			if (isProcessingOnStair == 1) // nếu ở giai đoạn bước chân thì set frame 12
+				_sprite->SelectIndex(SIMON_ANI_STAIR_BEGIN);
+
+			if (isProcessingOnStair == 2) // nếu ở giai đoạn bước chân thì set frame 12
+				_sprite->SelectIndex(SIMON_ANI_STAIR_END);
+			
+
+
+
+
+			DoCaoDiDuoc += abs(vy) * 10.0f;
+
+			float kk = 8.3f;
+
+			if (DoCaoDiDuoc >= kk)
+			{	
+				DoCaoDiDuoc -= kk;
+
+				DebugOut(L"Khoang bi tru = %f\n", DoCaoDiDuoc);
+
+				if (vy < 0) // ddang ddi len
+				{
+					x -= DoCaoDiDuoc;
+					y += DoCaoDiDuoc;
+
+				}
+				else
+				{
+					x += DoCaoDiDuoc;
+					y -= DoCaoDiDuoc;
+				}
+
+
+				DoCaoDiDuoc = 0;
+
+				isProcessingOnStair++;
 			} 
+
+			
+			DebugOut(L"DoCaoDiDuoc = %f\n", DoCaoDiDuoc);
+			/*if (isProcessingOnStair == 2)
+				_sprite->SelectIndex(SIMON_ANI_STAIR_BEGIN);
+*/
+
+
+			//if (index < SIMON_ANI_STAIR_BEGIN || index >= SIMON_ANI_STAIR_END)
+			//{
+			//	_sprite->SelectIndex(SIMON_ANI_STAIR_BEGIN);
+			//}
+			//else
+			//{
+			//	/*_sprite->Update(dt);
+			//	_sprite->Next();*/
+
+			//	_sprite->_timeLocal += dt;
+			//	if (_sprite->_timeLocal >= 100)
+			//	{
+			//		_sprite->_timeLocal = 0;
+			//		_sprite->Next();
+			//	}
+			//}
 		}
 		else
-			_sprite->SelectIndex(SIMON_ANI_SITTING);
+		{
+			_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING);
+
+		}
+
+
+
+		if (isProcessingOnStair == 3)
+		{
+			isProcessingOnStair = 0;
+			vx = 0; vy = 0;
+
+
+			x = round(x / 16) * 16;
+			y = round(y / 16) * 16;
+
+
+			isWalking = false;
+		}
+
+
+		//DebugOut(L"_sprite index = %d \n", _sprite->GetIndex());
+	
 	}
 	else
-		if (isAttacking == true)
+		if (isSitting == true)
 		{
-			if (index < SIMON_ANI_STANDING_ATTACKING_BEGIN || index >= SIMON_ANI_STANDING_ATTACKING_END )
+			if (isAttacking == true) // tấn công
 			{
-				_sprite->SelectIndex(SIMON_ANI_STANDING_ATTACKING_BEGIN);
+				if (index < SIMON_ANI_SITTING_ATTACKING_BEGIN || index >= SIMON_ANI_SITTING_ATTACKING_END)
+				{
+					_sprite->SelectIndex(SIMON_ANI_SITTING_ATTACKING_BEGIN);
+				}
+				else
+				{
+					//cập nhật frame mới
+					_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+				} 
 			}
 			else
-			{
-				//cập nhật frame mới
-				_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
-			}
+				_sprite->SelectIndex(SIMON_ANI_SITTING);
 		}
 		else
-		if (isWalking == true) // đang di chuyển
-		{
-			if (isJumping == false) // ko nhảy
+			if (isAttacking == true)
 			{
-				if (index < SIMON_ANI_WALKING_BEGIN || index >= SIMON_ANI_WALKING_END)
-					_sprite->SelectIndex(SIMON_ANI_WALKING_BEGIN);
-
-				//cập nhật frame mới
-				_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+				if (index < SIMON_ANI_STANDING_ATTACKING_BEGIN || index >= SIMON_ANI_STANDING_ATTACKING_END )
+				{
+					_sprite->SelectIndex(SIMON_ANI_STANDING_ATTACKING_BEGIN);
+				}
+				else
+				{
+					//cập nhật frame mới
+					_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+				}
 			}
 			else
+			if (isWalking == true) // đang di chuyển
 			{
-				_sprite->SelectIndex(SIMON_ANI_JUMPING);
-			}
+				if (isJumping == false) // ko nhảy
+				{
+					if (index < SIMON_ANI_WALKING_BEGIN || index >= SIMON_ANI_WALKING_END)
+						_sprite->SelectIndex(SIMON_ANI_WALKING_BEGIN);
+
+					//cập nhật frame mới
+					_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+				}
+				else
+				{
+					_sprite->SelectIndex(SIMON_ANI_JUMPING);
+				}
 			
-		}
-		else
-			if (isJumping == true) // nếu ko đi mà chỉ nhảy
-			{
-				_sprite->SelectIndex(SIMON_ANI_JUMPING);
 			}
 			else
-			{
-				_sprite->SelectIndex(SiMON_ANI_IDLE);		// SIMON đứng yên
+				if (isJumping == true) // nếu ko đi mà chỉ nhảy
+				{
+					_sprite->SelectIndex(SIMON_ANI_JUMPING);
+				}
+				else
+				{
+					_sprite->SelectIndex(SiMON_ANI_IDLE);		// SIMON đứng yên
 
-			}
+				}
 	 
 	/* Update về sprite */
 
 
 	
 
-
 	
 
-
+	//DebugOut(L"vx = %f \n",vx);
 
 	GameObject::Update(dt);  
 	//if (isJumping)
@@ -171,9 +260,27 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 	//}
 	//else  
 		
+
+
+
+
+
 	
-	
-	vy += SIMON_GRAVITY * dt;// Simple fall down
+	if (isOnStair == false) // ko trên cầu thang thì mới có trọng lực
+		vy += SIMON_GRAVITY * dt;// Simple fall down'
+	else
+	{
+		this->dt = dt;
+		dx = vx * 10;
+		dy = vy * 10;
+		//if (x/16)
+	}
+
+
+
+
+
+
 	if (isJumping && isWalking)
 	{
 		dx = vx * dt *1.5f;
@@ -289,6 +396,9 @@ void Simon::Render(Camera* camera)
 
 void Simon::Left()
 {
+	if (isOnStair == true)
+		return;
+
 	// (isJumping == true || isAttacking == true)
 	//	return;
 	trend = -1;
@@ -296,6 +406,8 @@ void Simon::Left()
 
 void Simon::Right()
 {
+	if (isOnStair == true)
+		return;
 	//if (isJumping == true || isAttacking == true)
 	//	return;
 	trend = 1; // quay qua phải
@@ -303,6 +415,12 @@ void Simon::Right()
 
 void Simon::Go()
 {
+	if (isOnStair == true)
+	{
+		//isWalking = 1;
+		return;
+	}
+
 	if (isAttacking == true /*|| isJumping == true*/)
 		return;
 
@@ -313,6 +431,10 @@ void Simon::Go()
 
 void Simon::Sit()
 {
+
+	if (isOnStair == true)
+		return;
+
 	vx = 0;
 	isWalking = 0;
 
@@ -327,7 +449,8 @@ void Simon::Jump()
 	if (isJumping == true)
 		return;
 
-	
+	if (isOnStair == true)
+		return;
 
 
 	if (isSitting == true)
@@ -343,6 +466,9 @@ void Simon::Jump()
 void Simon::Stop()
 {
 	if (isAttacking == true)
+		return;
+
+	if (isOnStair)
 		return;
 
 	vx = 0;
@@ -381,8 +507,8 @@ void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-
-	CalcPotentialCollisions(coObjects, coEvents); // Lấy danh sách các va chạm
+	if (isOnStair==false)
+		CalcPotentialCollisions(coObjects, coEvents); // Lấy danh sách các va chạm
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -500,6 +626,17 @@ void Simon::UpdateFreeze(DWORD dt)
 	}
 	else
 		TimeFreeze += dt;
+}
+
+void Simon::GoUpStair()
+{
+	isOnStair = true; 
+	vx = trend * 0.5f;
+	vy = -1 * 0.5f; 
+
+
+	
+
 }
  
 

@@ -478,8 +478,9 @@ void Scene_1::CheckCollisionSimonWithObjectHidden()
 			GameObject * gameObject = dynamic_cast<GameObject*>(listObj[i]);
 			if (gameObject->GetHealth() > 0)
 			{
-				LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]);
-				if (0 < e->t && e->t <= 1) // có va chạm xảy ra
+				//LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]);
+				//if (0 < e->t && e->t <= 1) // có va chạm xảy ra
+				if (simon->isCollitionObjectWithObject(gameObject))
 				{
 					switch (gameObject->GetId())
 					{

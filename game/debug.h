@@ -7,4 +7,5 @@
 #include <time.h>
 #include <stdlib.h>
 
+#include <iostream>
 void DebugOut(wchar_t *fmt, ...);

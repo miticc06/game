@@ -10,7 +10,7 @@
 #include "define.h"
 #include "ObjectHidden.h"
 #include "Candle.h"
-
+#include "Stair.h"
 
 
 using namespace std;

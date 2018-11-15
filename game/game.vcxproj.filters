@@ -119,6 +119,9 @@
       <Filter>Object\Ground</Filter>
     </ClCompile>
     <ClCompile Include="SmallHeart.cpp" />
+    <ClCompile Include="Stair.cpp">
+      <Filter>Object\Ground</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -236,6 +239,9 @@
       <Filter>Object\Ground</Filter>
     </ClInclude>
     <ClInclude Include="SmallHeart.h" />
+    <ClInclude Include="Stair.h">
+      <Filter>Object\Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

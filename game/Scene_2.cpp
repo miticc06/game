@@ -31,20 +31,96 @@ void Scene_2::KeyState(BYTE * state)
 	if (simon->isJumping && simon->isWalking)
 		return;
 
-	if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
+
+
+
+
+	if (Game::GetInstance()->IsKeyDown(DIK_UP) && simon-> isProcessingOnStair == 0) // nhấn lên, và nó đang ko xử lí việc đi trên cầu thang
 	{
-		simon->Sit();
+		if (simon->isOnStair == false)
+		{
+			for (UINT i = 0; i < listObj.size(); i++)
+			{
+				if (listObj[i]->GetType() == eID::STAIR_UP && simon->isCollitionObjectWithObject(listObj[i]) == true)
+				{
+					simon->SetPosition(listObj[i]->GetX() - 25, simon->GetY());// chỉnh lại vị trí simon
+	 
 
-		if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
-			simon->Right();
+					simon->isOnStair = 1; 
+					simon->DoCaoDiDuoc = 0;
+					  
+					DebugOut(L"VA cham cau thang\n");
+					break;
+				}
+			} 
+		}
+		else
+		{ 
+			simon->isWalking = 1;
 
-		if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
-			simon->Left();
-
-		return;
+			simon->isProcessingOnStair = 1;
+			 
+			simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * SIMON_SPEED_ONSTAIR);
+			return;
+		}
+		
 	}
 	else
+	{
+		if (simon->isOnStair == true && simon->isProcessingOnStair == 0)
+		{ 
+			simon->SetSpeed(0, 0); 
+			simon->isWalking = 0;
+		}
+
+		
+	}
+
+
+
+
+
+
+	if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
+	{
+		if (simon->isOnStair) // ĐANG TRÊN cầu thang
+		{
+			if (simon->isProcessingOnStair == 0) // nếu không có xử lí gì về cầu thang
+			{
+				simon->SetSpeed(-simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * -SIMON_SPEED_ONSTAIR); // ngược vận tốc
+				simon->isWalking = 1;
+				simon->isProcessingOnStair = 1;
+				simon->DoCaoDiDuoc = 0;
+				return;
+			}  
+			
+		}
+		else // trường hợp bt
+		{
+			simon->Sit();
+
+			if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+				simon->Right();
+
+			if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+				simon->Left();
+
+			return;
+		}
+		
+	}
+	else // ko nhấn phím xuống
+	{
+		if (simon->isOnStair == true && simon->isProcessingOnStair == 0) // đang trên cầu thang, và không xử lí 
+		{
+			simon->SetSpeed(0, 0);
+			simon->isWalking = 0;
+			return;
+		}
+
 		simon->Stop();
+
+	}
 
 	if (simon->isJumping)
 		return;
@@ -77,6 +153,7 @@ void Scene_2::KeyState(BYTE * state)
 		}
 		else
 		{
+
 			simon->Stop();
 		}
 
@@ -118,9 +195,9 @@ void Scene_2::OnKeyDown(int KeyCode)
 		POINT p;
 		GetCursorPos(&p);
 		ScreenToClient(Game::GetInstance()->GetWindowHandle(), &p);
-	//	DebugOut(L"[MOUSE POSITION] x: %d , y = %d\n", p.x + (int)camera->GetXCam(), p.y + (int)camera->GetYCam());
-		DebugOut(L"[MOUSE POSITION] %d %d \n", p.x + (int)camera->GetXCam(), p.y + (int)camera->GetYCam());
+ 		DebugOut(L"[MOUSE POSITION] %d %d \n", p.x + (int)camera->GetXCam(), p.y + (int)camera->GetYCam());
 
+		
 	}
 
 
@@ -128,6 +205,10 @@ void Scene_2::OnKeyDown(int KeyCode)
 	{
 		DebugOut(L"[SET POSITION SIMON] x = 1275 \n");
 		simon->SetPosition(1275.0f, 0);
+		simon->isAttacking = 0;
+		simon->isWalking = 0;
+		simon->isOnStair = 0;
+		simon->isProcessingOnStair = 0;
 	}
 
 	if (KeyCode == DIK_4)  
@@ -314,9 +395,6 @@ void Scene_2::Update(DWORD dt)
 
 	CheckCollision();
 }
-
-
-
 
 
 void Scene_2::Render()

@@ -105,8 +105,6 @@ void GSprite::Draw(int X, int Y)
 		&p,
 		D3DCOLOR_XRGB(R, G, B)
 	);
-
-
 }
 
 void GSprite::DrawRandomColor(int X, int Y)
