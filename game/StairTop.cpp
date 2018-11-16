@@ -4,7 +4,7 @@
 
 StairTop::StairTop(int X, int Y, int Trend)
 { 
-	x = X;
+	x = X-25;
 	y = Y;
 	width = 50;
 	height = 50;

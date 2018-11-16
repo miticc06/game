@@ -602,9 +602,7 @@ void Simon::CollisionIsOnStair(vector<LPOBJECT> *coObjects)
 
 	}
 
-
-
-
+	 
 	if (trendY == -1) // đang đi lên
 	{
 		vector<LPOBJECT> listobj;
