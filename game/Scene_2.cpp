@@ -33,106 +33,225 @@ void Scene_2::KeyState(BYTE * state)
 
 
 
-
-
-	if (Game::GetInstance()->IsKeyDown(DIK_UP) && simon-> isProcessingOnStair == 0) // nhấn lên, và nó đang ko xử lí việc đi trên cầu thang
+	if (Game::GetInstance()->IsKeyDown(DIK_UP))
 	{
-		if (simon->isOnStair == false)
+		if (!simon->isOnStair) // chưa trên thang
 		{
 			for (UINT i = 0; i < listObj.size(); i++)
-			{
-				if (listObj[i]->GetType() == eID::STAIR_UP && simon->isCollitionObjectWithObject(listObj[i]) == true)
+				if (listObj[i]->GetType()==eID::STAIR_BOTTOM)
 				{
-					DebugOut(L"Y reset = %f\n", round(simon->GetY()));
-					simon->SetPosition(listObj[i]->GetX() - 25, round(simon->GetY()));// chỉnh lại vị trí simon
-	 
-					GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
-					simon->trendStair = gameobj->GetTrend();
+					if (simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với STAIR BOTOM
+					{
+						GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
+						simon->trendStair = gameobj->GetTrend(); // lưu hướng của cầu thang đang đi vào simon
+						simon->trendY = -1;// hướng đi lên
+						simon->SetTrend(simon->trendStair);// hướng của simon khi đi lên là hướng của cầu thang
 
-					simon->SetTrend(simon->trendStair);
+						simon->isOnStair = true; // set trạng thái đang trên cầu thang
+						simon->DoCaoDiDuoc = 0;
 
-					simon->isOnStair = 1; 
-					simon->DoCaoDiDuoc = 0;
-					simon->trendY = -1; // hướng lên
-					DebugOut(L"VA cham cau thang\n");
-					break;
+					}
 				}
-			} 
 		}
-		else
-		{ 
-			simon->isWalking = 1;
-			simon->trendY = -1; // hướng lên
+		else // nếu đã trên cầu thang
+		{
+			if (simon->isProcessingOnStair == 0 || simon->isProcessingOnStair == 3) // kết thúc xử lí trước đó
+			{
+				simon->isWalking = true;
+				simon->isProcessingOnStair = 1;
+				simon->trendY = -1;// hướng đi lên
+				simon->SetTrend(simon->trendStair);// hướng của simon khi đi lên là hướng của cầu thang
+				simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * SIMON_SPEED_ONSTAIR);
+			}
+			
 
-			simon->isProcessingOnStair = 1;
-
-			simon->SetTrend(simon->trendStair);
-			simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * SIMON_SPEED_ONSTAIR);
-			return;
 		}
-		
 	}
 	else
 	{
-		if (simon->isOnStair == true && simon->isProcessingOnStair == 0)
-		{ 
-			simon->SetSpeed(0, 0); 
-			simon->isWalking = 0;
-		}
-
-		
-	}
-
-
-
-
-
-
-	if (Game::GetInstance()->IsKeyDown(DIK_DOWN))
-	{
-		if (simon->isOnStair) // ĐANG TRÊN cầu thang
+		if (Game::GetInstance()->IsKeyDown(DIK_DOWN)) // ngược lại nếu nhấn nút xuống
 		{
-			if (simon->isProcessingOnStair == 0) // nếu không có xử lí gì về cầu thang
+			if (!simon->isOnStair) // chưa trên cầu thang
 			{
-				simon->SetTrend(simon->trendStair *-1);
 
-				simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * -SIMON_SPEED_ONSTAIR); // ngược vận tốc
-				simon->isWalking = 1;
-				simon->isProcessingOnStair = 1;
-				simon->DoCaoDiDuoc = 0; 
+				for (UINT i = 0; i < listObj.size(); i++)
+					if (listObj[i]->GetType() == eID::STAIR_TOP)
+					{
+						if (simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với STAIR TOP
+						{
+							GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
+							simon->trendStair = gameobj->GetTrend(); // lưu hướng của cầu thang đang đi vào simon
+							simon->trendY = 1;// hướng đi xuống
+							simon->SetTrend(simon->trendStair);// hướng của simon khi đi xuống là hướng của cầu thang
 
-				simon->trendY = 1; // hướng xuống
+							simon->isOnStair = true; // set trạng thái đang trên cầu thang
+							simon->DoCaoDiDuoc = 0; 
+						}
+					}
 
-				return;
-			}  
-			
+			}
+			else // đã ở trên cầu thang
+			{
+				if (simon->isProcessingOnStair == 0 || simon->isProcessingOnStair == 3) // kết thúc xử lí trước đó
+				{
+					simon->isWalking = true;
+					simon->isProcessingOnStair = 1;
+					simon->trendY = 1;// hướng đi xuống
+					simon->SetTrend(simon->trendStair*-1);// hướng của simon khi đi xuóng là ngược của cầu thang
+					simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, SIMON_SPEED_ONSTAIR);
+				}
+
+			}
 		}
-		else // trường hợp bt
-		{
-			simon->Sit();
-
-			if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
-				simon->Right();
-
-			if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
-				simon->Left();
-
-			return;
-		}
-		
 	}
-	else // ko nhấn phím xuống
-	{
-		if (simon->isOnStair == true && simon->isProcessingOnStair == 0) // đang trên cầu thang, và không xử lí 
-		{
-			simon->SetSpeed(0, 0);
-			simon->isWalking = 0;
-			return;
-		}
 
-		simon->Stop();
 
-	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//if (Game::GetInstance()->IsKeyDown(DIK_UP) && simon-> isProcessingOnStair == 0) // nhấn lên, và nó đang ko xử lí việc đi trên cầu thang
+	//{
+	//	if (simon->isOnStair == false)
+	//	{
+	//		for (UINT i = 0; i < listObj.size(); i++)
+	//		{
+	//			if (listObj[i]->GetType() == eID::STAIR_UP && simon->isCollitionObjectWithObject(listObj[i]) == true)
+	//			{
+	//				DebugOut(L"Y reset = %f\n", round(simon->GetY()));
+	//				simon->SetPosition(listObj[i]->GetX() - 25, round(simon->GetY()));// chỉnh lại vị trí simon
+	// 
+	//				GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
+	//				simon->trendStair = gameobj->GetTrend();
+
+	//				simon->SetTrend(simon->trendStair);
+
+	//				simon->isOnStair = 1; 
+	//				simon->DoCaoDiDuoc = 0;
+	//				simon->trendY = -1; // hướng lên
+	//				DebugOut(L"VA cham cau thang\n");
+	//				break;
+	//			}
+	//		} 
+	//	}
+	//	else
+	//	{ 
+	//		simon->isWalking = 1;
+	//		simon->trendY = -1; // hướng lên
+
+	//		simon->isProcessingOnStair = 1;
+
+	//		simon->SetTrend(simon->trendStair);
+	//		simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * SIMON_SPEED_ONSTAIR);
+	//		return;
+	//	}
+	//	
+	//}
+	//else
+	//{
+	//	if (simon->isOnStair == true && simon->isProcessingOnStair == 0)
+	//	{ 
+	//		simon->SetSpeed(0, 0); 
+	//		simon->isWalking = 0;
+	//	}
+
+	//	
+	//}
+
+
+
+
+
+
+	//if (Game::GetInstance()->IsKeyDown(DIK_DOWN)) // nhấn xuống
+	//{ 
+	//	if (simon->isOnStair) // ĐANG TRÊN cầu thang
+	//	{
+	//		if (simon->isProcessingOnStair == 0) // nếu không có xử lí gì về cầu thang
+	//		{
+	//			simon->SetTrend(-simon->trendStair);
+
+	//			simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * -SIMON_SPEED_ONSTAIR); // ngược vận tốc
+	//			simon->isWalking = 1;
+	//			simon->isProcessingOnStair = 1;
+	//			simon->DoCaoDiDuoc = 0; 
+
+	//			simon->trendY = 1; // hướng xuống
+
+	//			return;
+	//		}  
+	//		
+	//	}
+	//	else // nhấn xuống mà k trên cầu thang
+	//	{
+	//		bool isCollisionWith_STAIR_EXIT = false;
+	//		for (UINT i = 0; i < listObj.size(); i++)
+	//		{
+	//			if (listObj[i]->GetType() == eID::STAIR_EXIT && simon->isCollitionObjectWithObject(listObj[i]) == true) // trường hợp 1 là va chạm với đầu cầu thang
+	//			{
+ //					simon->SetPosition(listObj[i]->GetX() - 25, round(simon->GetY()));// chỉnh lại vị trí simon
+
+	//				GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
+	//				simon->trendStair = gameobj->GetTrend();
+
+	//				simon->SetTrend(simon->trendStair);
+
+	//				simon->isOnStair = 1;
+	//				simon->DoCaoDiDuoc = 0;
+	//				simon->trendY = 1; // hướng xuống
+	//				DebugOut(L"VA cham cau thang\n");
+	//				isCollisionWith_STAIR_EXIT = true;
+	//				break;
+	//			}
+	//		}
+
+	//		if (isCollisionWith_STAIR_EXIT == false) // trường hợp 2: ngồi bt
+	//		{
+	//			simon->Sit();
+	//			if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+	//				simon->Right();
+
+	//			if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+	//				simon->Left();
+	//		}
+
+	//		
+
+	//		return;
+	//	}
+	//	
+	//}
+	//else // ko nhấn phím xuống
+	//{
+	//	if (simon->isOnStair == true && simon->isProcessingOnStair == 0) // đang trên cầu thang, và không xử lí 
+	//	{
+	//		simon->SetSpeed(0, 0);
+	//		simon->isWalking = 0;
+	//		return;
+	//	}
+
+	//	simon->Stop();
+
+	//}
 
 	if (simon->isJumping)
 		return;
@@ -277,7 +396,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 			simon->Stop();
 			float vx, vy;
 			simon->GetSpeed(vx, vy);
-			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetTrend()/**vx - 0.0001f*/, vy - SIMON_VJUMP);
+			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetTrend(), vy - SIMON_VJUMP);
 			simon->isJumping = 1;
 			simon->isWalking = 1;
 		}

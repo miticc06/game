@@ -82,7 +82,9 @@ enum eID
 	STAIR_UP = 45,
 
 	STAIR_EXIT = 46,
-
+	STAIR_BOTTOM = 47,
+	STAIR_TOP = 48,
+	
 
 	// weapon
 	MORNINGSTAR = 61,

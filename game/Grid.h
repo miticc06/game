@@ -12,6 +12,9 @@
 #include "Candle.h"
 #include "Stair.h"
 #include "ExitStair.h"
+#include "StairTop.h"
+#include "StairBottom.h"
+
 
 using namespace std;
 

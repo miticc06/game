@@ -114,7 +114,7 @@ public:
 	int GetHeartCollect();
 
 	void CollisionWithBrick(vector<LPOBJECT> *coObjects = NULL);
-	void CollisionWithExitStair(vector<LPOBJECT> *coObjects = NULL);
+	void CollisionIsOnStair(vector<LPOBJECT> *coObjects = NULL);
 	bool isCollisionWithItem(Item * objItem);
 
 	void Attack(Weapon *w);
