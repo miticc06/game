@@ -53,6 +53,9 @@ void Dagger::RenderIcon(int X, int Y)
 bool Dagger::isCollision(Object * obj)
 {  
 	// dt, dx, dy đã update
+	GameObject *gameObj = dynamic_cast<GameObject*>(obj);
+	if (gameObj->GetHealth() <= 0) // vật này die rồi thì ko va chạm
+		return false;
 
 	return isCollitionObjectWithObject(obj);
 }

@@ -498,10 +498,7 @@ void Scene_2::Update(DWORD dt)
 	}
 #pragma endregion
 
-	
-
-
-	
+	 
 #pragma endregion
 
 	
@@ -518,25 +515,27 @@ void Scene_2::Update(DWORD dt)
 			listEffect[i]->Update(dt);
 
 	for (UINT i = 0; i < listEnemy.size(); i++)
-		if (listEnemy[i]->GetHealth() > 0) // còn máu
+	{
+		GameObject * enemy = dynamic_cast<GameObject *>(listEnemy[i]);
+		if (enemy->GetHealth() > 0) // còn máu
 		{
 			if (camera->checkObjectInCamera(
-				listEnemy[i]->GetX() ,
-				listEnemy[i]->GetY(),
-				listEnemy[i]->GetWidth(),
-				listEnemy[i]->GetHeight()) == false)  // vượt khỏi cam
+				enemy->GetX(),
+				enemy->GetY(),
+				enemy->GetWidth(),
+				enemy->GetHeight()) == false)  // vượt khỏi cam
 			{
-
-				listEnemy[i]->SetHealth(0); // ra khỏi cam thì coi như chết
-				if (dynamic_cast<Ghost*>(listEnemy[i]) != NULL) // object này là ghost
+				enemy->SetHealth(0); // ra khỏi cam thì coi như chết
+				if (dynamic_cast<Ghost*>(enemy) != NULL) // object này là ghost
 				{
 					CountEnemyGhost--; // giảm số lượng ghost hiện tại
 				}
-
 			}
 			else
-				listEnemy[i]->Update(dt);
+				enemy->Update(dt);
 		}
+	}
+		
 			
 #pragma endregion
 
@@ -564,7 +563,6 @@ void Scene_2::Render()
 			listEffect[i]->Render(camera);
 
 	for (UINT i = 0; i < listEnemy.size(); i++)
-		if (listEnemy[i]->GetHealth() > 0) // còn máu
 			listEnemy[i]->Render(camera);
 
 
@@ -595,52 +593,115 @@ void Scene_2::ResetResource()
 
 void Scene_2::CheckCollision()
 {
-	CheckCollisionWeapon();
+	CheckCollisionWeapon(listObj); // kt va chạm vũ khí với các object nền
 
-	CheckCollisionSimonWithItem();
-
+	CheckCollisionSimonWithItem(); 
 	CheckCollisionSimonWithObjectHidden();
+
+	CheckCollisionWithEnemy(); // kt vũ khí cới enemy và simon với enemy
+
 }
 
-void Scene_2::CheckCollisionWeapon()
+void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 {
 	// main weapon
 	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
 	{
-		for (UINT i = 0; i < listObj.size(); i++)
-			if (listObj[i]->GetType() == eID::CANDLE)
-				if (simon->_weaponMain->isCollision(listObj[i]) == true)
+		for (UINT i = 0; i < listObj.size(); i++) // đã kt object còn sống hay k trong hàm va chạm của vũ khí
+			if (simon->_weaponMain->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
+			{
+				bool RunEffectHit = false;
+
+				switch (listObj[i]->GetType())
+				{
+				case eID::CANDLE:
 				{
 					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 					gameObj->SubHealth(1);
+					listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+					RunEffectHit = true;
+					break;
+				}
 
-					listEffect.push_back(new Hit((int)gameObj->GetX() + 10, (int)gameObj->GetY() + 14)); // hiệu ứng lửa
-					listItem.push_back(GetNewItem(gameObj->GetId(), eID::CANDLE, gameObj->GetX() + 5, gameObj->GetY()));
+				case eID::GHOST:
+				{
+					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+					gameObj->SubHealth(1);
+					
+					if (rand() % 2 == 1) // tỉ lệ 50%
+					{
+						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+					}
+					
+					RunEffectHit = true;
+					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+					break;
+				}
 
+				default:
+					break;
+				}
+
+
+
+				if (RunEffectHit)
+				{
+					listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
 					sound->Play(eSound::soundHit);
 				}
+
+			}
 	}
 
 
 	// subweapon
 	if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == false)
 	{
-		for (UINT i = 0; i < listObj.size(); i++)
-			if (listObj[i]->GetType() == eID::CANDLE)
-				if (simon->_weaponSub->isCollision(listObj[i]) == true)
+		for (UINT i = 0; i < listObj.size(); i++)// đã kt object còn sống hay k trong hàm va chạm của vũ khí
+			if (simon->_weaponSub->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
+			{
+				bool RunEffectHit = false;
+
+				switch (listObj[i]->GetType())
+				{
+				case eID::CANDLE:
 				{
 					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+					gameObj->SubHealth(1);
+					listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+					RunEffectHit = true;
 
+					break;
+				}
+
+				case eID::GHOST:
+				{
+					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 					gameObj->SubHealth(1);
 
-					simon->_weaponSub->SetFinish(true);   // cây kiếm trúng object thì tắt luôn
-
-					listEffect.push_back(new Hit((int)gameObj->GetX() + 10, (int)gameObj->GetY() + 14)); // hiệu ứng lửa
-					listItem.push_back(GetNewItem(gameObj->GetId(), eID::CANDLE, gameObj->GetX() + 5, gameObj->GetY()));
-
-					sound->Play(eSound::soundHit);
-
+					if (rand() % 2 == 1) // tỉ lệ 50%
+					{
+						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+					}
+					RunEffectHit = true;
+					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+					break;
 				}
+
+				default:
+					break;
+				}
+
+
+
+
+				if (RunEffectHit)
+				{
+					listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
+					sound->Play(eSound::soundHit);
+					simon->_weaponSub->SetFinish(true); // hủy cây kiếm
+				}
+			}
 	}
 
 
@@ -664,10 +725,6 @@ void Scene_2::CheckCollisionSimonWithItem()
 					break;
 				}
 
-
-
-
-
 				case eID::SMALLHEART:
 				{
 					simon->SetHeartCollect(simon->GetHeartCollect() + 1);
@@ -675,8 +732,6 @@ void Scene_2::CheckCollisionSimonWithItem()
 					sound->Play(eSound::soundCollectItem);
 					break;
 				}
-
-
 
 
 				case eID::UPGRADEMORNINGSTAR:
@@ -687,9 +742,15 @@ void Scene_2::CheckCollisionSimonWithItem()
 					simon->SetFreeze(true); // bật trạng thái đóng băng
 					sound->Play(eSound::soundCollectWeapon);
 					break;
+				} 
+				case eID::ITEMDAGGER:
+				{
+					SAFE_DELETE(simon->_weaponSub);
+					simon->_weaponSub = new Dagger();
+					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectWeapon);
+					break;
 				}
-
- 
 
 				case eID::MONNEY:
 				{
@@ -748,6 +809,11 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 	}
 }
 
+void Scene_2::CheckCollisionWithEnemy()
+{
+	CheckCollisionWeapon(listEnemy);
+}
+
 
 
 
@@ -757,6 +823,33 @@ Item * Scene_2::GetNewItem(int Id, eID Type, float X, float Y)
 	{
 		return new SmallHeart(X, Y);
 	} 
+
+
+	if (Type == eID::GHOST)
+	{
+		int random = rand() % 10;
+		switch (random)
+		{
+		case 0:
+			return	new LargeHeart(X, Y);
+			break;
+		case 1:
+			return	new SmallHeart(X, Y);
+			break;
+		case 2:
+			return new ItemDagger(X, Y);
+			break;
+		case 3:
+			return new Monney(X, Y);
+			break;
+		case 4:
+			return new UpgradeMorningStar(X, Y);
+			break;
+		default: // 50% còn lại là SmallHeart
+			return new SmallHeart(X, Y);
+			break;
+		} 
+	}
 
 	return new LargeHeart(X, Y);
 }
