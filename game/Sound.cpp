@@ -22,6 +22,7 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::soundDagger, L"Resources/sound/usingdagger.wav");
 	AddSound(eSound::soundDisplayMonney, L"Resources/sound/display_monney.wav");
 
+	AddSound(eSound::soundHurting, L"Resources/sound/hurting.wav");
 
 
 

@@ -28,20 +28,20 @@ public:
 
  	void Update(int ellapseTime);
 
- 	void Draw(int x, int y);
+ 	void Draw(int x, int y, int alpha = 255);
 
-	void DrawRandomColor(int X, int Y);
-	void DrawRandomColorFlipX(int x, int y);
+	void DrawRandomColor(int X, int Y, int alpha = 255);
+	void DrawRandomColorFlipX(int x, int y, int alpha = 255);
 
 	//Render with scale (-1, 1)
-	void DrawFlipX(int x, int y);
+	void DrawFlipX(int x, int y, int alpha = 255);
 	 
-	void DrawFlipXIndex(int index, int x, int y);
+	void DrawFlipXIndex(int index, int x, int y, int alpha = 255);
 
 	 
-	void DrawRect(int X, int Y, RECT SrcRect);
+	void DrawRect(int X, int Y, RECT SrcRect, int alpha = 255);
 
-	void DrawIndex(int index, int X, int Y);
+	void DrawIndex(int index, int X, int Y, int alpha = 255);
 	 
 	int GetIndex();
 	 

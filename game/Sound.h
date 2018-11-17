@@ -16,7 +16,7 @@ enum eSound
 	soundStopTimer = 5,
 	soundDagger = 6,
 	soundDisplayMonney = 7,
-
+	soundHurting = 8,
 
 
 	musicState1 = 51,

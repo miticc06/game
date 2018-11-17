@@ -88,7 +88,7 @@ void GSprite::Update(int ellapseTime)
 	}
 }
 
-void GSprite::Draw(int X, int Y)
+void GSprite::Draw(int X, int Y, int alpha)
 {
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
 	RECT srect;
@@ -103,11 +103,11 @@ void GSprite::Draw(int X, int Y)
 		&srect,
 		NULL,
 		&p,
-		D3DCOLOR_XRGB(R, G, B)
+		D3DCOLOR_ARGB(alpha, R, G, B)
 	);
 }
 
-void GSprite::DrawRandomColor(int X, int Y)
+void GSprite::DrawRandomColor(int X, int Y, int alpha)
 {
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
 	RECT srect;
@@ -163,13 +163,13 @@ void GSprite::DrawRandomColor(int X, int Y)
 		&srect,
 		NULL,
 		&p,
-		D3DCOLOR_ARGB(255, RR,GG,BB)
+		D3DCOLOR_ARGB(alpha, RR,GG,BB)
 	);
 	 
 
 }
 
-void GSprite::DrawRandomColorFlipX(int x, int y)
+void GSprite::DrawRandomColorFlipX(int x, int y, int alpha)
 {
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
 
@@ -188,7 +188,7 @@ void GSprite::DrawRandomColorFlipX(int x, int y)
 	spriteHandler->SetTransform(&finalMt);
 
 	x -= _texture->FrameWidth;
-	this->DrawRandomColor(x, y);
+	this->DrawRandomColor(x, y, alpha);
 
 	spriteHandler->SetTransform(&oldMt);
 }
@@ -203,7 +203,7 @@ void GSprite::DrawRandomColorFlipX(int x, int y)
 
 
 
-void GSprite::DrawRect(int X, int Y, RECT SrcRect)
+void GSprite::DrawRect(int X, int Y, RECT SrcRect, int alpha)
 {
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
 
@@ -213,11 +213,11 @@ void GSprite::DrawRect(int X, int Y, RECT SrcRect)
 		&SrcRect,
 		NULL,
 		&position,
-		D3DCOLOR_XRGB(255, 255, 255)
+		D3DCOLOR_ARGB(alpha, 255, 255, 255)
 	);
 }
 
-void GSprite::DrawFlipX(int x, int y)
+void GSprite::DrawFlipX(int x, int y, int alpha)
 {
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
 
@@ -236,12 +236,12 @@ void GSprite::DrawFlipX(int x, int y)
 	spriteHandler->SetTransform(&finalMt);
 
 	x -= _texture->FrameWidth;
-	this->Draw(x, y);
+	this->Draw(x, y, alpha);
 
 	spriteHandler->SetTransform(&oldMt);
 }
 
-void GSprite::DrawFlipXIndex(int index, int x, int y)
+void GSprite::DrawFlipXIndex(int index, int x, int y, int alpha)
 {
 	RECT srect;
 
@@ -272,14 +272,14 @@ void GSprite::DrawFlipXIndex(int index, int x, int y)
 		&srect,
 		NULL,
 		&p,
-		D3DCOLOR_XRGB(R, G, B)
+		D3DCOLOR_ARGB(alpha, R, G, B)
 	);
 
 	spriteHandler->SetTransform(&oldMt);
 
 }
  
-void GSprite::DrawIndex(int index, int X, int Y)
+void GSprite::DrawIndex(int index, int X, int Y, int alpha)
 {
 	RECT srect;
 
@@ -298,7 +298,7 @@ void GSprite::DrawIndex(int index, int X, int Y)
 		&srect,
 		&center,
 		&position,
-		D3DCOLOR_XRGB(A, R, G, B)  //color
+		D3DCOLOR_ARGB(alpha, R, G, B)  //color
 		);
 }
  

@@ -65,6 +65,8 @@
 #define SIMON_DEFAULT_HEALTH 16
 #define SIMON_DEFAULT_HEARTCOLLECT 5
 
+#define SIMON_UNTOUCHABLE_TIME 2000 
+
 
 class Simon : public GameObject
 {
@@ -94,6 +96,8 @@ private:
 	float AutoGoX_TrendGo;
 	float AutoGoX_Backup_X;
 
+	
+
 public:
 	bool isWalking;
 	bool isJumping;
@@ -109,6 +113,10 @@ public:
 	bool isAutoGoX = 0; // đang ở chế độ auto go?
 
 	float DoCaoDiDuoc = 0;//
+
+	bool untouchable;
+	DWORD untouchable_start;
+
 public:
 	Simon();
 	~Simon();
@@ -147,10 +155,7 @@ public:
 	void SetFreeze(int f);
 	void UpdateFreeze(DWORD dt);
 
-
-
-
-	void GoUpStair();
+	void StartUntouchable();
 
 
 

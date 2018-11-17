@@ -101,7 +101,7 @@ public:
 
 	 
 	bool isCollitionObjectWithObject(Object *obj); 	// kiểm tra bằng AABB và Sweept AABB
-
+	bool checkAABB(Object *obj);
 
 	virtual ~Object();
 };

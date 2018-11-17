@@ -214,33 +214,27 @@ float Object::GetVy()
 
  
 bool Object::isCollitionObjectWithObject(Object * obj)	// kiểm tra bằng AABB và Sweept AABB
-{
-	float l, t, r, b;
-	float l1, t1, r1, b1;
-	this->GetBoundingBox(l, t, r, b);
-	obj->GetBoundingBox(l1, t1, r1, b1); // bbox obj
-
-
-	//if (dynamic_cast<Candle*>(obj) != NULL)
-	//{
-	//	DebugOut(L"obj1 - left = %f, top = %f, right = %f, bottom = %f \n", l, t, r, b);
-	//	DebugOut(L"obj2 - left = %f, top = %f, right = %f, bottom = %f \n", l1, t1, r1, b1);
-	//	DebugOut(L"AABB: %d \n", (int)(Game::GetInstance()->AABBCheck(l, t, r, b, l1, t1, r1, b1)));
-	//	DebugOut(L"----------------------------------------------------\n");
-
-	//}
-
-
-
-
-
-	if (Game::GetInstance()->AABBCheck(l, t, r, b, l1, t1, r1, b1)) // kiểm tra va chạm bằng AABB trước
+{  
+	if (checkAABB(obj)) // kiểm tra va chạm bằng AABB trước
 		return true;
 
 	LPCOLLISIONEVENT e = SweptAABBEx(obj); // kt va chạm giữa 2 object bằng sweptAABB
 	bool res = e->t > 0 && e->t <= 1.0f; // ĐK va chạm
 	SAFE_DELETE(e); 
 	return res;
+}
+
+bool Object::checkAABB(Object * obj)
+{
+	float l, t, r, b;
+	float l1, t1, r1, b1;
+	this->GetBoundingBox(l, t, r, b);
+	obj->GetBoundingBox(l1, t1, r1, b1);
+
+	if (Game::GetInstance()->checkAABB(l, t, r, b, l1, t1, r1, b1))
+		return true; 
+
+	return false;
 }
 
 Object::~Object()

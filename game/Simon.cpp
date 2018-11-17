@@ -363,21 +363,23 @@ void Simon::Render(Camera* camera)
 	
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	 
-
+	int alpha = 255;
+	if (untouchable) 
+		alpha = 128;
 
 	if (this->GetFreeze() == true)
 	{
 		if (trend == -1)
-			_sprite->DrawRandomColor((int)pos.x, (int)pos.y);
+			_sprite->DrawRandomColor((int)pos.x, (int)pos.y, alpha);
 		else
-			_sprite->DrawRandomColorFlipX((int)pos.x, (int)pos.y);
+			_sprite->DrawRandomColorFlipX((int)pos.x, (int)pos.y, alpha);
 	}
 	else
 	{
 		if (trend == -1)
-			_sprite->Draw((int)pos.x, (int)pos.y);
+			_sprite->Draw((int)pos.x, (int)pos.y, alpha);
 		else
-			_sprite->DrawFlipX((int)pos.x, (int)pos.y);
+			_sprite->DrawFlipX((int)pos.x, (int)pos.y, alpha);
 	}
 
 
@@ -387,16 +389,7 @@ void Simon::Render(Camera* camera)
 
 	if (_weaponSub != NULL && _weaponSub->GetFinish() == false)
 		_weaponSub->Render(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
-
-
-
-
-	
-
-
-
-
-	
+	 
 }
  
 void Simon::Left()
@@ -517,18 +510,31 @@ void Simon::SetHurt(LPCOLLISIONEVENT e)
 		isSitting = 0; // hủy trạng thái ngồi
 		y = y - 18; // kéo simon lên
 	}
-
-	if (e->nx !=0 )// hướng từ trái qua
+	
+	if (!isOnStair)
 	{
-		//this->trend = 1;
-		vx = SIMON_WALKING_SPEED * e->nx * 2;
-		vy = - SIMON_VJUMP;
-		isHurting = 1;
-		DebugOut(L"[SetHurt] Set vx = %f \n", vx);
+		if (e->nx != 0)
+		{
+			vx = SIMON_WALKING_SPEED * e->nx * 2;
+			vy = -SIMON_VJUMP;
+			isHurting = 1;
+			DebugOut(L"[SetHurt] Set vx = %f \n", vx);
+		}
 
+		if (e->ny != 0)
+		{
+			//vx = SIMON_WALKING_SPEED * e->nx * 2;
+			vy = -SIMON_VJUMP;
+			isHurting = 1;
+			DebugOut(L"[SetHurt] Set vy = %f \n", vy);
+		}
 	}
+	 
+	StartUntouchable(); // không cho các object đụng tiếp
 
-
+	_weaponMain->SetFinish(true);
+	SubHealth(2); // chạm enemy -2 máu
+	Sound::GetInstance()->Play(eSound::soundHurting);
 }
 
 void Simon::SetHeartCollect(int h)
@@ -735,7 +741,7 @@ bool Simon::isCollisionWithItem(Item * objItem)
 	this->GetBoundingBox(l, t, r, b);  // lấy BBOX của simon
 
 	objItem->GetBoundingBox(l1, t1, r1, b1);
-	if (Game::GetInstance()->AABBCheck(l, t, r, b, l1, t1, r1, b1) == true)
+	if (Game::GetInstance()->checkAABB(l, t, r, b, l1, t1, r1, b1) == true)
 	{
 		return true; // check with AABB
 	}
@@ -794,16 +800,12 @@ void Simon::UpdateFreeze(DWORD dt)
 		TimeFreeze += dt;
 }
 
-void Simon::GoUpStair()
+void Simon::StartUntouchable()
 {
-	isOnStair = true; 
-	vx = trend * 0.5f;
-	vy = -1 * 0.5f; 
-
-
-	
-
+	untouchable = true; 
+	untouchable_start = GetTickCount();
 }
+ 
 
 void Simon::SetAutoGoX(int TrendGo, int trendAfterGo, float Dx, float Speed)
 {

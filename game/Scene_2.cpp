@@ -403,6 +403,7 @@ void Scene_2::LoadResources()
 	listItem.clear();
 	listEffect.clear();
 	listEnemy.clear();
+	// chưa thu hồi bộ nhớ?
 	 
 	// bật nhạc game
 	if (sound->isPlaying(eSound::musicState1) == false)
@@ -411,8 +412,9 @@ void Scene_2::LoadResources()
 	CountEnemyGhost = 0;
 	TimeCreateGhost = 0;
 	isWaitProcessCreateGhost = false; // lúc đầu thì không cần chờ
+	CountEnemyGhost = 0;
 
-}
+ }
 
 void Scene_2::Update(DWORD dt)
 {
@@ -426,8 +428,8 @@ void Scene_2::Update(DWORD dt)
 	}
 #pragma endregion
 
-#pragma region Process_Gametime
-	if (_gameTime->GetTime() >= GAME_TIME_SCENE2) // hết thời gian
+#pragma region Process_Gametime_OR_Health
+	if (_gameTime->GetTime() >= GAME_TIME_SCENE2 || simon->GetHealth()<=0) // hết thời gian hoặc hết máu
 	{
 		sound->Play(eSound::musicLifeLost);
 		if (simon->GetLives() == 0)
@@ -625,10 +627,12 @@ void Scene_2::ResetResource()
 
 	listItem.clear();
 	listEffect.clear();
-	
+	listEnemy.clear();
+
 	CountEnemyGhost = 0;
 	TimeCreateGhost = 0;
 	isWaitProcessCreateGhost = false; // lúc đầu thì không cần chờ
+	CountEnemyGhost = 0;
 
 	_gameTime->SetTime(0); // đếm lại từ 0
 	sound->Stop(eSound::musicState1); // tắt nhạc nền
@@ -873,20 +877,39 @@ void Scene_2::CheckCollisionWithEnemy()
 
 void Scene_2::CheckCollisionSimonWithEnemy()
 {
-	for (UINT i = 0; i < listEnemy.size(); i++)
+	if (GetTickCount() - simon->untouchable_start > SIMON_UNTOUCHABLE_TIME)
 	{
-		GameObject * gameobj = dynamic_cast<GameObject *> (listEnemy[i]);
-		if (gameobj->GetHealth() > 0) // còn sống
+		simon->untouchable_start = 0;
+		simon->untouchable = false;
+	}
+	
+	if (simon->untouchable == false) // tắt chế độ ko cho đụng
+	{
+		for (UINT i = 0; i < listEnemy.size(); i++)
 		{
-			LPCOLLISIONEVENT e = simon->SweptAABBEx(gameobj);
-			if (e->t > 0 && e->t <= 1) // có va chạm
+			GameObject * gameobj = dynamic_cast<GameObject *> (listEnemy[i]);
+			if (gameobj->GetHealth() > 0) // còn sống
 			{
-				simon->SetHurt(e);
+				LPCOLLISIONEVENT e = simon->SweptAABBEx(gameobj);
+				if (e->t > 0 && e->t <= 1) // có va chạm
+				{
+					simon->SetHurt(e);
+					return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
+				}
+
+				if (simon->checkAABB(gameobj) == true)
+				{
+					LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetTrend(), 0, NULL);
+					simon->SetHurt(e);
+					return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
+				}
 
 			}
-
 		}
-	} 
+	}
+	
+
+	
 }
 
  
