@@ -27,6 +27,8 @@ void Scene_2::KeyState(BYTE * state)
 		return;
 	}
 	 
+	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
+		return;
 
 	if (simon->isJumping && simon->isWalking)
 		return;
@@ -53,8 +55,25 @@ void Scene_2::KeyState(BYTE * state)
 							simon->isOnStair = true; // set trạng thái đang trên cầu thang
 							simon->DoCaoDiDuoc = 0;
 
-							simon->SetPosition(gameobj->GetX(), simon->GetY()); // đặt lại vị trí X của simon
+							 
 
+							//if (gameobj->GetTrend() == 1)
+							//{
+							//	if (simon->GetX() + 15 < gameobj->GetX() + 25)
+							//		simon->SetAutoGoX(1, abs(gameobj->GetX() + 25 - simon->GetX() - 15 - 10), SIMON_WALKING_SPEED);
+							//	else
+							//		simon->SetAutoGoX(-1, abs(simon->GetX() + 15 - gameobj->GetX() - 25 -50), SIMON_WALKING_SPEED);
+							//}
+							//else
+							//{
+							//	if (simon->GetX()< gameobj->GetX())
+							//		simon->SetAutoGoX(1, gameobj->GetX() - simon->GetX(), SIMON_WALKING_SPEED);
+							//	else
+							//		simon->SetAutoGoX(-1, 0, SIMON_WALKING_SPEED); 
+							//}
+
+
+							simon->SetPosition(gameobj->GetX(), simon->GetY()); // đặt lại vị trí X của simon
 						}
 					}
 			}
@@ -91,8 +110,12 @@ void Scene_2::KeyState(BYTE * state)
 
 								simon->isOnStair = true; // set trạng thái đang trên cầu thang
 								simon->DoCaoDiDuoc = 0;
+
+							//	simon->SetAutoGoX(simon->GetTrend(), abs(simon->GetX() - gameobj->GetX()), SIMON_WALKING_SPEED);
+
 								simon->SetPosition(gameobj->GetX(), simon->GetY());
 								CountCollisionTop++;
+								//return;
 								break;
 							}
 						}
@@ -382,7 +405,25 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
-	if (KeyCode == DIK_X)
+	if (KeyCode == DIK_P) // tesst autogo 
+	{
+		simon->SetAutoGoX(simon->GetTrend(), 200, SIMON_WALKING_SPEED);
+	}
+
+
+
+	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
+		return;
+
+
+
+
+
+
+
+
+
+	if (KeyCode == DIK_X && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
 	{
 		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
 

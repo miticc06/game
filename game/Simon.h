@@ -50,7 +50,8 @@
 #define SIMON_ANI_STAIR_DOWN_ATTACKING_END 20
 
 
-#define SIMON_SPEED_ONSTAIR 0.05f// 0.09f
+#define SIMON_SPEED_ONSTAIR 0.09f//0.08f//0.05f
+
 
 
 #define SIMON_ANI_STAIR_STANDING_UP 12
@@ -76,6 +77,21 @@ private:
 
 	D3DXVECTOR2 PositionBackup;
 
+
+	bool isWalking_Backup;
+	bool isJumping_Backup;
+	bool isSitting_Backup;
+	bool isAttacking_Backup;
+	bool isOnStair_Backup;
+	int isProcessingOnStair_Backup;
+	int trendStair_Backup;
+	int trendY_Backup;
+
+	float AutoGoX_Dx;
+	float AutoGoX_Speed;
+	float AutoGoX_TrendGo;
+	float AutoGoX_Backup_X;
+
 public:
 	bool isWalking;
 	bool isJumping;
@@ -88,7 +104,7 @@ public:
 	int trendStair; // hướng của cầu thang đang đi, -1 đi qua trái, 1 đi qua phải
 	int trendY; // hướng đi theo trục y của simon
 
-
+	bool isAutoGoX = 0; // đang ở chế độ auto go?
 
 	float DoCaoDiDuoc = 0;//
 public:
@@ -135,9 +151,11 @@ public:
 
 
 
+	void SetAutoGoX(int TrendGo, int Dx, float Speed); // set các thông số auto và backup các trạng thái hiện tại
+	void RestoreBackupAutoGoX(); // khôi phục trạng thái 
 
 
-	bool LoseLife();
+	bool LoseLife(); // thiết lập lại 1 số thứ sau khi simon mất mạng
 	void SetPositionBackup(float X, float Y);  // lưu vị trí cần backup để simon die thì bắt đầu lại từ đây
 
 };

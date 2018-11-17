@@ -27,6 +27,11 @@ void Scene_1::KeyState(BYTE * state)
 	}
 
 
+
+	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
+		return;
+
+
 	//simon->Jump();
 
 	//return;
@@ -131,6 +136,22 @@ void Scene_1::OnKeyDown(int KeyCode)
 		DebugOut(L"[SET POSITION SIMON] x = 1275 \n");
 		simon->SetPosition(1275.0f, 0);
 	}
+
+
+
+
+	if (KeyCode == DIK_P) // tesst autogo 
+	{
+		simon->SetAutoGoX(simon->GetTrend(), 200, SIMON_WALKING_SPEED);
+	}
+
+
+
+
+
+	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
+		return;
+
 
 
 

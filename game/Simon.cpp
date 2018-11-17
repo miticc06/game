@@ -12,6 +12,8 @@ Simon::Simon()
 	isSitting = 0;
 	isAttacking = 0;
 	isProcessingOnStair = 0;// ko phải đang xử lí
+	isOnStair = 0;
+
 	Health = SIMON_DEFAULT_HEALTH; // simon dính 16 phát là chết
 	Lives = 3; // có 5 mạng sống
 	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
@@ -150,8 +152,31 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 					isProcessingOnStair++;
 
 				if (DoCaoDiDuoc >= 16)
-				{
-					isProcessingOnStair++;
+				{ 
+					isProcessingOnStair++; 
+
+					/* fix lỗi mỗi lần đi vượt quá 16px */
+					if (trend == 1 && trendY == -1) // đi lên bên phải
+					{
+						x -= (DoCaoDiDuoc - 16.0f);
+						y += (DoCaoDiDuoc - 16.0f);
+					}
+					if (trend == -1 && trendY == -1) // đi lên bên trái
+					{
+						x += (DoCaoDiDuoc - 16.0f);
+						y += (DoCaoDiDuoc - 16.0f);
+					}
+
+					if (trend == 1 && trendY == 1) // đi xuống bên phải
+					{
+						x -= (DoCaoDiDuoc - 16.0f);
+						y -= (DoCaoDiDuoc - 16.0f);
+					}
+					if (trend == -1 && trendY == 1) // đi xuống bên trái
+					{
+						x += (DoCaoDiDuoc - 16.0f);
+						y -= (DoCaoDiDuoc - 16.0f);
+					}
 					DoCaoDiDuoc = 0;
 
 				}
@@ -303,7 +328,17 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 		vy = 0;
 		isWalking = false;
 	}
-	
+	/*
+
+	if (isAutoGoX == true)
+	{
+		if (abs(x - AutoGoX_Backup_X) >= AutoGoX_Dx)
+		{
+			x = x - (abs(x - AutoGoX_Backup_X) - AutoGoX_Dx);
+			RestoreBackupAutoGoX();
+			isAutoGoX = false;
+		}
+	}*/
 
 }
 
@@ -752,6 +787,57 @@ void Simon::GoUpStair()
 
 	
 
+}
+
+void Simon::SetAutoGoX(int TrendGo, int Dx, float Speed)
+{
+	if (isAutoGoX == true)
+		return;
+
+	isAutoGoX = true;// chưa vào chế độ autoGo thì set
+
+	AutoGoX_Backup_X = x;
+
+	//Backup trạng thái
+	isWalking_Backup = isWalking;
+	isJumping_Backup = isJumping;
+	isSitting_Backup = isSitting;
+	isAttacking_Backup = isAttacking;
+	isOnStair_Backup = isOnStair;
+	isProcessingOnStair_Backup = isProcessingOnStair;
+	trendStair_Backup = trendStair;
+	trendY_Backup = trendY;
+
+	AutoGoX_Dx = Dx;
+	AutoGoX_Speed = Speed;
+	AutoGoX_TrendGo = TrendGo;
+
+	trend = TrendGo;
+ 	vx = Speed * TrendGo;
+	isWalking = 1;
+	isJumping = 0;
+	isSitting = 0;
+	isAttacking = 0;
+	isOnStair = 0;
+	isProcessingOnStair = 0;
+}
+
+void Simon::RestoreBackupAutoGoX()
+{
+
+	isWalking = isWalking_Backup;
+	isJumping = isJumping_Backup ;
+	isSitting = isSitting_Backup;
+	isAttacking = isAttacking_Backup;
+	isOnStair = isOnStair_Backup;
+	isProcessingOnStair = isProcessingOnStair_Backup;
+	trendStair = trendStair_Backup;
+	trendY = trendY_Backup;
+	  
+
+	//isWalking = 0; // tắt trạng thái đang đi
+	isAutoGoX = 0; // tắt trạng thái auto
+	vx = 0;
 }
  
 
