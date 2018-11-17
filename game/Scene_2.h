@@ -24,14 +24,20 @@
 #include "Sound.h"
 #include "Monney.h"
 #include "SmallHeart.h"
-
-
+#include "Enemy.h"
+#include "Ghost.h"
 #define GAME_TIME_SCENE2 300
 
+#define TIME_DISTANCE_CREATE_GHOST 1000 // 1 giây
 
 class Scene_2 : public Scene
 {
 private:
+	
+	int CountEnemyGhost; // số lượng ghost hiện tại
+	DWORD TimeCreateGhost; // thời điêm đã tạo ghost trước đó
+
+
 
 	Simon * simon;
 	Map * TileMap;
@@ -44,6 +50,8 @@ private:
 
 	vector <Item*> listItem;
 	vector <Effect*> listEffect;
+	vector <Enemy*> listEnemy;
+
 	GameTime * _gameTime;
 
 

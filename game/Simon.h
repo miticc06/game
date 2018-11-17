@@ -152,7 +152,7 @@ public:
 
 
 
-	void SetAutoGoX(int TrendGo, int TrendBackup, int Dx, float Speed); // set các thông số auto và backup các trạng thái hiện tại
+	void SetAutoGoX(int TrendGo, int TrendBackup, float Dx, float Speed); // set các thông số auto và backup các trạng thái hiện tại
 	void RestoreBackupAutoGoX(); // khôi phục trạng thái 
 
 

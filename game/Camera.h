@@ -1,7 +1,7 @@
 ﻿#ifndef __CAMERA_H__
 #define __CAMERA_H__
 
-#include "define.h"
+#include "define.h" 
 
 class Camera
 {
@@ -30,6 +30,8 @@ public:
 	float GetYCam(); 
 	int GetWidth();
 	int GetHeight();
+
+	bool checkObjectInCamera(float x, float y, float w, float h);
 
 };
 

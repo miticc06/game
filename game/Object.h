@@ -71,6 +71,8 @@ public:
 
 	float GetX();
 	float GetY();
+	float GetVx();
+	float GetVy();
 	int GetHeight();
 	int GetWidth();
 	eID GetType();

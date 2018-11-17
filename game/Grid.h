@@ -10,8 +10,6 @@
 #include "define.h"
 #include "ObjectHidden.h"
 #include "Candle.h"
-#include "Stair.h"
-#include "ExitStair.h"
 #include "StairTop.h"
 #include "StairBottom.h"
 

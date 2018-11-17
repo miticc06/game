@@ -78,13 +78,12 @@ enum eID
 	OBJECT_HIDDEN = 42,
 	CANDLE = 43,
 	STAIR = 44,
-
-	STAIR_UP = 45,
-
-	STAIR_EXIT = 46,
+/*	STAIR_UP = 45,
+	STAIR_EXIT = 46,*/
 	STAIR_BOTTOM = 47,
 	STAIR_TOP = 48,
-	
+
+
 
 	// weapon
 	MORNINGSTAR = 61,
@@ -109,7 +108,11 @@ enum eID
 
 	// Effect
 	FIRE = 121,
-	HIT = 122
+	HIT = 122,
+
+
+	// Enemy
+	GHOST = 141
 };
 
 

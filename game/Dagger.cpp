@@ -46,8 +46,7 @@ void Dagger::GetBoundingBox(float & left, float & top, float & right, float & bo
 
 void Dagger::RenderIcon(int X, int Y)
 {
-	_sprite->DrawFlipXIndex(0, X, Y);
-	//_sprite->DrawIndex(0, X, Y);
+	_sprite->DrawFlipXIndex(0, X, Y); 
 
 }
 

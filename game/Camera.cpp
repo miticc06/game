@@ -56,4 +56,13 @@ int Camera::GetHeight()
 {
 	return _height;
 }
+
+bool Camera::checkObjectInCamera(float x, float y, float w, float h)
+{
+	if (x + w < _xCam || _xCam + _width < x)
+		return false;
+	if (y + h < _yCam || _yCam + _height < y)
+		return false;
+	return true;
+}
  

@@ -135,12 +135,13 @@
     <ClInclude Include="DSutil.h" />
     <ClInclude Include="dxutil.h" />
     <ClInclude Include="Effect.h" />
-    <ClInclude Include="ExitStair.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fire.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="Monney.h" />
     <ClInclude Include="ObjectHidden.h" />
     <ClInclude Include="Scene_2.h" />
@@ -160,7 +161,6 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Scene_1.h" />
     <ClInclude Include="Simon.h" />
-    <ClInclude Include="Stair.h" />
     <ClInclude Include="StairBottom.h" />
     <ClInclude Include="StairTop.h" />
     <ClInclude Include="TextureManager.h" />
@@ -180,12 +180,13 @@
     <ClCompile Include="DSutil.cpp" />
     <ClCompile Include="dxutil.cpp" />
     <ClCompile Include="Effect.cpp" />
-    <ClCompile Include="ExitStair.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fire.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Monney.cpp" />
     <ClCompile Include="ObjectHidden.cpp" />
     <ClCompile Include="Scene_2.cpp" />
@@ -206,7 +207,6 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene_1.cpp" />
     <ClCompile Include="Simon.cpp" />
-    <ClCompile Include="Stair.cpp" />
     <ClCompile Include="StairBottom.cpp" />
     <ClCompile Include="StairTop.cpp" />
     <ClCompile Include="TextureManager.cpp" />

@@ -279,6 +279,11 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
+	if (KeyCode == DIK_G) // add ghost 
+	{
+		listEnemy.push_back(new Ghost(200, 200, 1));
+	}
+
 
 	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
 		return;
@@ -392,25 +397,29 @@ void Scene_2::LoadResources()
 
 	listItem.clear();
 	listEffect.clear();
-
+	listEnemy.clear();
 	 
 	// bật nhạc game
 	if (sound->isPlaying(eSound::musicState1) == false)
 		sound->Play(eSound::musicState1, true);
 
-
+	CountEnemyGhost = 0;
+	TimeCreateGhost = 0;
 }
 
 void Scene_2::Update(DWORD dt)
 {
+
+#pragma region Process_Freeze
 	if (simon->GetFreeze() == true)
 	{
 		simon->UpdateFreeze(dt);
 		if (simon->GetFreeze() == true)
 			return;
 	}
+#pragma endregion
 
-
+#pragma region Process_Gametime
 	if (_gameTime->GetTime() >= GAME_TIME_SCENE2) // hết thời gian
 	{
 		sound->Play(eSound::musicLifeLost);
@@ -435,17 +444,68 @@ void Scene_2::Update(DWORD dt)
 			sound->Play(eSound::soundStopTimer);
 		}
 	}
+#pragma endregion
 
 
+	 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
-	//DebugOut(L"[Grid] ListObject by Camera = %d\n", listObj.size());
-
 
 	simon->Update(dt, &listObj);
 
 	camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
 	camera->Update();
 
+#pragma region Process_Region_Create_Enemy_Ghost
+ 
+//	DebugOut(L"now = %d - listenemy = %d\n", CountEnemyGhost, listEnemy.size());
+	DWORD now = GetTickCount();
+
+#pragma region Vùng 1
+	if (simon->GetX() > 0 && simon->GetX() < 825)
+	{
+		if (now - TimeCreateGhost >= TIME_DISTANCE_CREATE_GHOST)
+		{
+			if (CountEnemyGhost < 3)
+			{
+				if (simon->GetVx() > 0) // vx>0 đang chạy về bên phải
+				{
+					// cho ghost chạy từ bên phải qua
+					listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326, -1));// 34 framewidth của ghost
+				}
+				else
+					if (simon->GetVx() < 0) // vx>0 đang chạy về bên trái
+					{
+						// cho ghost chạy từ bên trái qua 
+						listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326, 1));
+					}
+					else // đứng yên thì cứ random
+					{
+						int random = rand() % 2;
+						if (random == 0) // đi từ bên trái
+						{
+							listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326, 1));
+						}
+						else // đi từ bên phải
+						{
+							listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326, -1));
+						}
+					}
+				 
+				CountEnemyGhost++;
+				TimeCreateGhost = now; // set lại thời điểm đã tạo ghost
+			}
+		}
+	}
+#pragma endregion
+
+	
+
+
+	
+#pragma endregion
+
+	
+#pragma region Process_Update_Object
 	for (UINT i = 0; i < listObj.size(); i++)
 		listObj[i]->Update(dt, &listObj);  // đã kiểm tra "Alive" lúc lấy từ lưới ra
 
@@ -456,6 +516,31 @@ void Scene_2::Update(DWORD dt)
 	for (UINT i = 0; i < listEffect.size(); i++)
 		if (listEffect[i]->GetFinish() == false)
 			listEffect[i]->Update(dt);
+
+	for (UINT i = 0; i < listEnemy.size(); i++)
+		if (listEnemy[i]->GetHealth() > 0) // còn máu
+		{
+			if (camera->checkObjectInCamera(
+				listEnemy[i]->GetX() ,
+				listEnemy[i]->GetY(),
+				listEnemy[i]->GetWidth(),
+				listEnemy[i]->GetHeight()) == false)  // vượt khỏi cam
+			{
+
+				listEnemy[i]->SetHealth(0); // ra khỏi cam thì coi như chết
+				if (dynamic_cast<Ghost*>(listEnemy[i]) != NULL) // object này là ghost
+				{
+					CountEnemyGhost--; // giảm số lượng ghost hiện tại
+				}
+
+			}
+			else
+				listEnemy[i]->Update(dt);
+		}
+			
+#pragma endregion
+
+
 
 	CheckCollision();
 }
@@ -478,6 +563,11 @@ void Scene_2::Render()
 		if (listEffect[i]->GetFinish() == false)
 			listEffect[i]->Render(camera);
 
+	for (UINT i = 0; i < listEnemy.size(); i++)
+		if (listEnemy[i]->GetHealth() > 0) // còn máu
+			listEnemy[i]->Render(camera);
+
+
 	simon->Render(camera);
 
 	board->Render(camera, simon, 1, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime());
@@ -494,6 +584,9 @@ void Scene_2::ResetResource()
 
 	listItem.clear();
 	listEffect.clear();
+	
+	CountEnemyGhost = 0;
+	TimeCreateGhost = 0;
 
 	_gameTime->SetTime(0); // đếm lại từ 0
 	sound->Stop(eSound::musicState1); // tắt nhạc nền

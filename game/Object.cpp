@@ -202,9 +202,17 @@ float Object::GetY()
 	return y;
 }
 
+float Object::GetVx()
+{
+	return vx;
+}
 
-//#include "Candle.h"
+float Object::GetVy()
+{
+	return vy;
+}
 
+ 
 bool Object::isCollitionObjectWithObject(Object * obj)	// kiểm tra bằng AABB và Sweept AABB
 {
 	float l, t, r, b;

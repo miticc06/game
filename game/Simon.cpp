@@ -277,8 +277,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 	/* Update về sprite */
 
 	 
-	DebugOut(L"Update: vy = %f\n", vy);
-
+ 
 
 	GameObject::Update(dt);   
 
@@ -388,9 +387,7 @@ void Simon::Render(Camera* camera)
 
 	
 }
-
  
-
 void Simon::Left()
 {
 	if (isOnStair == true)
@@ -791,7 +788,7 @@ void Simon::GoUpStair()
 
 }
 
-void Simon::SetAutoGoX(int TrendGo, int trendAfterGo, int Dx, float Speed)
+void Simon::SetAutoGoX(int TrendGo, int trendAfterGo, float Dx, float Speed)
 {
 	if (isAutoGoX == true)
 		return;

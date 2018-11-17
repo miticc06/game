@@ -138,8 +138,6 @@ GameObject * Grid::GetNewObject(int type, int x, int y,int w, int h, int Model)
 	if (type == eID::TORCH) return new Torch(x, y);
 	if (type == eID::OBJECT_HIDDEN) return new ObjectHidden(x, y, w, h);
 	if (type == eID::CANDLE) return new Candle(x, y);
-	if (type == eID::STAIR) return new Stair(x, y, w, h, Model);
-	if (type == eID::STAIR_EXIT) return new ExitStair(x, y, w, h);
 
 	if (type == eID::STAIR_TOP) return new StairTop(x, y);
 	if (type == eID::STAIR_BOTTOM) return new StairBottom(x, y);

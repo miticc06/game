@@ -118,16 +118,20 @@
     <ClCompile Include="Candle.cpp">
       <Filter>Object\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="SmallHeart.cpp" />
-    <ClCompile Include="Stair.cpp">
-      <Filter>Object\Ground</Filter>
-    </ClCompile>
-    <ClCompile Include="ExitStair.cpp" />
     <ClCompile Include="StairBottom.cpp">
       <Filter>Object\Ground</Filter>
     </ClCompile>
     <ClCompile Include="StairTop.cpp">
       <Filter>Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallHeart.cpp">
+      <Filter>Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,16 +249,20 @@
     <ClInclude Include="Candle.h">
       <Filter>Object\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="SmallHeart.h" />
-    <ClInclude Include="Stair.h">
-      <Filter>Object\Ground</Filter>
-    </ClInclude>
-    <ClInclude Include="ExitStair.h" />
     <ClInclude Include="StairBottom.h">
       <Filter>Object\Ground</Filter>
     </ClInclude>
     <ClInclude Include="StairTop.h">
       <Filter>Object\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SmallHeart.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -311,6 +319,9 @@
     </Filter>
     <Filter Include="Framework\GameTime">
       <UniqueIdentifier>{b634eeb3-9cde-4281-8edf-d3919dd71d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemy">
+      <UniqueIdentifier>{3481e3b0-3f8e-49de-aaee-5981f511ce87}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
