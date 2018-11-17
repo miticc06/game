@@ -467,9 +467,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 				{
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
-
-
-
+					simon->SetScore(1000);
 					break;
 				}
 

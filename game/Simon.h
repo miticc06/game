@@ -49,6 +49,7 @@
 #define SIMON_ANI_STAIR_DOWN_ATTACKING_BEGIN 18
 #define SIMON_ANI_STAIR_DOWN_ATTACKING_END 20
 
+#define SIMON_ANI_HURTING 8
 
 #define SIMON_SPEED_ONSTAIR 0.09f//0.08f//0.05f
 
@@ -98,7 +99,7 @@ public:
 	bool isJumping;
 	bool isSitting;
 	bool isAttacking;
-
+	bool isHurting;
 
 	bool isOnStair;
 	int isProcessingOnStair;  // có 2 giai đoạn 
@@ -126,6 +127,7 @@ public:
 	void Jump();
 	void Stop();
 
+	void SetHurt(LPCOLLISIONEVENT e);
 
 	void SetHeartCollect(int h);
 	int GetHeartCollect();

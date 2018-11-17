@@ -28,15 +28,18 @@
 #include "Ghost.h"
 #define GAME_TIME_SCENE2 300
 
-#define TIME_DISTANCE_CREATE_GHOST 1000 // 1 giây
+#define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo
+#define ThoiGianChoDeXuLiTaoGhost 3000 // 3 giây
 
 class Scene_2 : public Scene
 {
 private:
 	
 	int CountEnemyGhost; // số lượng ghost hiện tại
-	DWORD TimeCreateGhost; // thời điêm đã tạo ghost trước đó
-
+	DWORD TimeCreateGhost; // thời điểm bắt đầu tạo ghost
+	DWORD TimeWaitProcessCreateGhost; // Thời điểm bắt đầu chờ xử lí việc tạo ghost
+	bool isWaitProcessCreateGhost; // chờ xử lí việc tạo ghost
+	bool isAllowCheckTimeWaitProcessCreateGhost = false; // cho phép kt thời gian chờ xử lí tạo ghost
 
 
 	Simon * simon;
@@ -77,6 +80,7 @@ public:
 	void CheckCollisionSimonWithItem();
 	void CheckCollisionSimonWithObjectHidden();
 	void CheckCollisionWithEnemy();
+	void CheckCollisionSimonWithEnemy();
 
 	Item * GetNewItem(int Id, eID Type, float X, float Y);
 };

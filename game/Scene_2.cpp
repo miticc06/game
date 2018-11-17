@@ -32,7 +32,9 @@ void Scene_2::KeyState(BYTE * state)
 
 	if (simon->isJumping && simon->isWalking)
 		return;
-
+	
+	if (simon->isHurting)
+		return;
 
 	if (!simon->isJumping)
 	{
@@ -213,6 +215,8 @@ void Scene_2::OnKeyDown(int KeyCode)
 		return;
 	}
 
+
+
 	// chưa xét khi hết time hoặc die thì sao?
 
 
@@ -291,7 +295,8 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 
 
-
+	if (simon->isHurting)
+		return;
 
 
 
@@ -405,6 +410,8 @@ void Scene_2::LoadResources()
 
 	CountEnemyGhost = 0;
 	TimeCreateGhost = 0;
+	isWaitProcessCreateGhost = false; // lúc đầu thì không cần chờ
+
 }
 
 void Scene_2::Update(DWORD dt)
@@ -446,7 +453,6 @@ void Scene_2::Update(DWORD dt)
 	}
 #pragma endregion
 
-
 	 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 
@@ -455,48 +461,76 @@ void Scene_2::Update(DWORD dt)
 	camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
 	camera->Update();
 
+
+
+//	Cần tạo khoảng chờ khi tạo bot
+
+
+
+
 #pragma region Process_Region_Create_Enemy_Ghost
  
 //	DebugOut(L"now = %d - listenemy = %d\n", CountEnemyGhost, listEnemy.size());
 	DWORD now = GetTickCount();
 
-#pragma region Vùng 1
-	if (simon->GetX() > 0 && simon->GetX() < 825)
+
+
+	if (isWaitProcessCreateGhost == false) // nếu không phải chờ xử lí thì vào xử lí
 	{
-		if (now - TimeCreateGhost >= TIME_DISTANCE_CREATE_GHOST)
+#pragma region Vùng 1
+		if (simon->GetX() > 0 && simon->GetX() < 825)
 		{
-			if (CountEnemyGhost < 3)
+ 			if (now - TimeCreateGhost >= ThoiGianChoGiua2GhostDuocTao)
 			{
-				if (simon->GetVx() > 0) // vx>0 đang chạy về bên phải
+				if (CountEnemyGhost < 3)
 				{
-					// cho ghost chạy từ bên phải qua
-					listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326, -1));// 34 framewidth của ghost
-				}
-				else
-					if (simon->GetVx() < 0) // vx>0 đang chạy về bên trái
+					if (simon->GetVx() > 0) // vx>0 đang chạy về bên phải
 					{
-						// cho ghost chạy từ bên trái qua 
-						listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326, 1));
+						// cho ghost chạy từ bên phải qua
+						listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326, -1));// 34 framewidth của ghost
 					}
-					else // đứng yên thì cứ random
-					{
-						int random = rand() % 2;
-						if (random == 0) // đi từ bên trái
+					else
+						if (simon->GetVx() < 0) // vx>0 đang chạy về bên trái
 						{
+							// cho ghost chạy từ bên trái qua 
 							listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326, 1));
 						}
-						else // đi từ bên phải
+						else // đứng yên thì cứ random
 						{
-							listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326, -1));
+							int random = rand() % 2;
+							if (random == 0) // đi từ bên trái
+							{
+								listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326, 1));
+							}
+							else // đi từ bên phải
+							{
+								listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326, -1));
+							}
 						}
+					CountEnemyGhost++;
+					if (CountEnemyGhost == 3)
+					{
+						isWaitProcessCreateGhost = true; // phải chờ đến khi cả 3 ghost bị giết
+						isAllowCheckTimeWaitProcessCreateGhost = false; 
 					}
-				 
-				CountEnemyGhost++;
-				TimeCreateGhost = now; // set lại thời điểm đã tạo ghost
+					TimeCreateGhost = now; // set lại thời điểm đã tạo ghost
+				}
 			}
 		}
-	}
 #pragma endregion
+	}
+	else
+	{
+		if (isAllowCheckTimeWaitProcessCreateGhost)
+		{
+			if (now - TimeWaitProcessCreateGhost >= ThoiGianChoDeXuLiTaoGhost) // đã chờ đủ
+			{
+				isWaitProcessCreateGhost = false; // không phải chờ nữa
+			}
+		} 
+	}
+
+	
 
 	 
 #pragma endregion
@@ -529,6 +563,12 @@ void Scene_2::Update(DWORD dt)
 				if (dynamic_cast<Ghost*>(enemy) != NULL) // object này là ghost
 				{
 					CountEnemyGhost--; // giảm số lượng ghost hiện tại
+					if (CountEnemyGhost == 0)
+					{
+						TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+						isWaitProcessCreateGhost = true;
+						isAllowCheckTimeWaitProcessCreateGhost = true;
+					}
 				}
 			}
 			else
@@ -542,6 +582,9 @@ void Scene_2::Update(DWORD dt)
 
 
 	CheckCollision();
+
+
+	
 }
 
 
@@ -585,6 +628,7 @@ void Scene_2::ResetResource()
 	
 	CountEnemyGhost = 0;
 	TimeCreateGhost = 0;
+	isWaitProcessCreateGhost = false; // lúc đầu thì không cần chờ
 
 	_gameTime->SetTime(0); // đếm lại từ 0
 	sound->Stop(eSound::musicState1); // tắt nhạc nền
@@ -635,6 +679,12 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 					
 					RunEffectHit = true;
 					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+					if (CountEnemyGhost == 0)
+					{
+						TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+						isWaitProcessCreateGhost = true;
+						isAllowCheckTimeWaitProcessCreateGhost = true;
+					}
 					break;
 				}
 
@@ -685,6 +735,12 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 					}
 					RunEffectHit = true;
 					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+					if (CountEnemyGhost == 0)
+					{
+						TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+						isWaitProcessCreateGhost = true;
+						isAllowCheckTimeWaitProcessCreateGhost = true;
+					}
 					break;
 				}
 
@@ -756,7 +812,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 				{
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
-					 
+					simon->SetScore(1000);
 					break;
 				}
 
@@ -812,10 +868,28 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 void Scene_2::CheckCollisionWithEnemy()
 {
 	CheckCollisionWeapon(listEnemy);
+	CheckCollisionSimonWithEnemy();
 }
 
+void Scene_2::CheckCollisionSimonWithEnemy()
+{
+	for (UINT i = 0; i < listEnemy.size(); i++)
+	{
+		GameObject * gameobj = dynamic_cast<GameObject *> (listEnemy[i]);
+		if (gameobj->GetHealth() > 0) // còn sống
+		{
+			LPCOLLISIONEVENT e = simon->SweptAABBEx(gameobj);
+			if (e->t > 0 && e->t <= 1) // có va chạm
+			{
+				simon->SetHurt(e);
 
+			}
 
+		}
+	} 
+}
+
+ 
 
 Item * Scene_2::GetNewItem(int Id, eID Type, float X, float Y)
 {

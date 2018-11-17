@@ -2,7 +2,7 @@
 #define __GHOST_H__
 
 
-#define GHOST_SPEED 0.05f
+#define GHOST_SPEED 0.08f
 
 #include "Enemy.h"
 class Ghost : public GameObject

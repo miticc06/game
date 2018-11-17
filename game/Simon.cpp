@@ -27,6 +27,7 @@ Simon::Simon()
 	isWalking = 0;
 
 	isAutoGoX = 0;
+	isHurting = 0;
 
 	vx = 0;
 	vy = 0; 
@@ -157,12 +158,9 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 						_sprite->SelectIndex(SIMON_ANI_STAIR_GO_DOWN_END);
 
 				}
-
-
-
+				 
 				float kk = 8.0f;
-
-
+				 
 				DoCaoDiDuoc = DoCaoDiDuoc + abs(vy) * 16.0f;
 
 				if (DoCaoDiDuoc >= 8.0f && isProcessingOnStair == 1)
@@ -208,76 +206,89 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 			} 
 		}
 	
-
-
 	//	DebugOut(L"_sprite index = %d \n", _sprite->GetIndex());
 
 	}
 	else
-		if (isSitting == true)
+	{
+		if (isHurting)
 		{
-			if (isAttacking == true) // tấn công
-			{
-				if (index < SIMON_ANI_SITTING_ATTACKING_BEGIN || index >= SIMON_ANI_SITTING_ATTACKING_END)
-				{
-					_sprite->SelectIndex(SIMON_ANI_SITTING_ATTACKING_BEGIN);
-				}
-				else
-				{
-					//cập nhật frame mới
-					_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
-				}
-			}
-			else
-				_sprite->SelectIndex(SIMON_ANI_SITTING);
+			_sprite->SelectIndex(SIMON_ANI_HURTING);
 		}
 		else
-			if (isAttacking == true)
-			{
-				if (index < SIMON_ANI_STANDING_ATTACKING_BEGIN || index >= SIMON_ANI_STANDING_ATTACKING_END)
-				{
-					_sprite->SelectIndex(SIMON_ANI_STANDING_ATTACKING_BEGIN);
-				}
-				else
-				{
-					//cập nhật frame mới
-					_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
-				}
-			}
-			else
-				if (isWalking == true) // đang di chuyển
-				{
-					if (isJumping == false) // ko nhảy
-					{
-						if (index < SIMON_ANI_WALKING_BEGIN || index >= SIMON_ANI_WALKING_END)
-							_sprite->SelectIndex(SIMON_ANI_WALKING_BEGIN);
+		{
 
+			if (isSitting == true)
+			{
+				if (isAttacking == true) // tấn công
+				{
+					if (index < SIMON_ANI_SITTING_ATTACKING_BEGIN || index >= SIMON_ANI_SITTING_ATTACKING_END)
+					{
+						_sprite->SelectIndex(SIMON_ANI_SITTING_ATTACKING_BEGIN);
+					}
+					else
+					{
 						//cập nhật frame mới
 						_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
 					}
-					else
-					{
-						_sprite->SelectIndex(SIMON_ANI_JUMPING);
-					}
-
 				}
 				else
-					if (isJumping == true) // nếu ko đi mà chỉ nhảy
+					_sprite->SelectIndex(SIMON_ANI_SITTING);
+			}
+			else
+				if (isAttacking == true)
+				{
+					if (index < SIMON_ANI_STANDING_ATTACKING_BEGIN || index >= SIMON_ANI_STANDING_ATTACKING_END)
 					{
-						_sprite->SelectIndex(SIMON_ANI_JUMPING);
+						_sprite->SelectIndex(SIMON_ANI_STANDING_ATTACKING_BEGIN);
 					}
 					else
 					{
-						_sprite->SelectIndex(SiMON_ANI_IDLE);		// SIMON đứng yên
+						//cập nhật frame mới
+						_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+					}
+				}
+				else
+					if (isWalking == true) // đang di chuyển
+					{
+						if (isJumping == false) // ko nhảy
+						{
+							if (index < SIMON_ANI_WALKING_BEGIN || index >= SIMON_ANI_WALKING_END)
+								_sprite->SelectIndex(SIMON_ANI_WALKING_BEGIN);
+
+							//cập nhật frame mới
+							_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+						}
+						else
+						{
+							_sprite->SelectIndex(SIMON_ANI_JUMPING);
+						}
 
 					}
+					else
+						if (isJumping == true) // nếu ko đi mà chỉ nhảy
+						{
+							_sprite->SelectIndex(SIMON_ANI_JUMPING);
+						}
+						else
+						{
+							_sprite->SelectIndex(SiMON_ANI_IDLE);		// SIMON đứng yên
 
+						}
+
+
+		}
+	}
 #pragma endregion
 
 	/* Update về sprite */
 
 	 
- 
+	if (isHurting)
+	{
+		int a = 1;
+	}
+
 
 	GameObject::Update(dt);   
 
@@ -452,6 +463,8 @@ void Simon::Jump()
 	if (isAttacking == true)
 		return;
 	
+	if (isHurting)
+		return;
 
 	vy -= SIMON_VJUMP;
 	isJumping = true;
@@ -465,7 +478,11 @@ void Simon::Stop()
 	if (isOnStair)
 		return;
 
+	if (isHurting)
+		return;
+
 	vx = 0;
+	DebugOut(L"[STOP] Set vx = %f \n", vx);
 
 	//if (vx!=0)
 	//	vx -= dt*SIMON_GRAVITY*0.1*trend;
@@ -483,6 +500,35 @@ void Simon::Stop()
 		y = y - 18; // kéo simon lên
 	}
 	
+}
+
+void Simon::SetHurt(LPCOLLISIONEVENT e)
+{
+	if (isHurting == true)
+		return;
+	if (e->nx == 0 && e->ny == 0) // ko có va chạm
+		return;
+
+	isWalking = 0;
+	isAttacking = 0;
+	isJumping = 0;
+	if (isSitting == true) // nếu simon đang ngồi
+	{
+		isSitting = 0; // hủy trạng thái ngồi
+		y = y - 18; // kéo simon lên
+	}
+
+	if (e->nx !=0 )// hướng từ trái qua
+	{
+		//this->trend = 1;
+		vx = SIMON_WALKING_SPEED * e->nx * 2;
+		vy = - SIMON_VJUMP;
+		isHurting = 1;
+		DebugOut(L"[SetHurt] Set vx = %f \n", vx);
+
+	}
+
+
 }
 
 void Simon::SetHeartCollect(int h)
@@ -538,41 +584,12 @@ void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 			vy = 0;
 			isJumping = false; // kết thúc nhảy
 		}
+		
+		if (nx != 0 || ny != 0)
+		{
+			isHurting = 0; 
+		}
 
-		//// Collision logic with Goombas
-		//for (UINT i = 0; i < coEventsResult.size(); i++)
-		//{
-		//	LPCOLLISIONEVENT e = coEventsResult[i];
-		//	if (dynamic_cast<Goomba *>(e->obj))
-		//	{
-		//		Goomba *goomba = dynamic_cast<Goomba *>(e->obj);
-		//		// jump on top >> kill Goomba and deflect a bit 
-		//		if (e->ny < 0)
-		//		{
-		//			if (goomba->GetState() != GOOMBA_STATE_DIE)
-		//			{
-		//				goomba->SetState(GOOMBA_STATE_DIE);
-		//				vy = -MARIO_JUMP_DEFLECT_SPEED;
-		//			}
-		//		}
-		//		else if (e->nx != 0)
-		//		{
-		//			if (untouchable == 0)
-		//			{
-		//				if (goomba->GetState() != GOOMBA_STATE_DIE)
-		//				{
-		//					if (level > MARIO_LEVEL_SMALL)
-		//					{
-		//						level = MARIO_LEVEL_SMALL;
-		//						StartUntouchable();
-		//					}
-		//					else
-		//						SetState(MARIO_STATE_DIE);
-		//				}
-		//			}
-		//		}
-		//	}
-		//}
 	}
 
 	// clean up collision events
@@ -864,7 +881,8 @@ bool Simon::LoseLife()
 	isWalking = 0;
 
 	isAutoGoX = 0;
-	
+	isHurting = 0;
+
 	vx = 0;
 	vy = 0;
 
