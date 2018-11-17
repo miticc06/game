@@ -29,7 +29,7 @@
 #define GAME_TIME_SCENE2 300
 
 #define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo
-#define ThoiGianChoDeXuLiTaoGhost 3000 // 3 giây
+#define ThoiGianChoDeXuLiTaoGhost 2500 // 2.5 giây
 
 class Scene_2 : public Scene
 {

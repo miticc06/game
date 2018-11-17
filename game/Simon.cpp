@@ -475,7 +475,7 @@ void Simon::Stop()
 		return;
 
 	vx = 0;
-	DebugOut(L"[STOP] Set vx = %f \n", vx);
+	//DebugOut(L"[STOP] Set vx = %f \n", vx);
 
 	//if (vx!=0)
 	//	vx -= dt*SIMON_GRAVITY*0.1*trend;
@@ -518,7 +518,7 @@ void Simon::SetHurt(LPCOLLISIONEVENT e)
 			vx = SIMON_WALKING_SPEED * e->nx * 2;
 			vy = -SIMON_VJUMP;
 			isHurting = 1;
-			DebugOut(L"[SetHurt] Set vx = %f \n", vx);
+			//DebugOut(L"[SetHurt] Set vx = %f \n", vx);
 		}
 
 		if (e->ny != 0)
@@ -526,7 +526,7 @@ void Simon::SetHurt(LPCOLLISIONEVENT e)
 			//vx = SIMON_WALKING_SPEED * e->nx * 2;
 			vy = -SIMON_VJUMP;
 			isHurting = 1;
-			DebugOut(L"[SetHurt] Set vy = %f \n", vy);
+			//DebugOut(L"[SetHurt] Set vy = %f \n", vy);
 		}
 	}
 	 

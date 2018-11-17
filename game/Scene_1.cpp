@@ -312,8 +312,11 @@ void Scene_1::Update(DWORD dt)
 
 	simon->Update(dt, &listObj);
 
-	camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
-	camera->Update();
+	if (camera->AllowFollowSimon())
+	{
+		camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
+	} 
+	camera->Update(dt);
 
 	for (UINT i = 0; i < listObj.size(); i++)
 		listObj[i]->Update(dt, &listObj);  // đã kiểm tra "Alive" lúc lấy từ lưới ra

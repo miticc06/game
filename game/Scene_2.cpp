@@ -30,6 +30,9 @@ void Scene_2::KeyState(BYTE * state)
 	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
 		return;
 
+	if (camera->GetIsAutoGoX()) // camera đang chế độ tự đi thì ko xét phím
+		return;
+
 	if (simon->isJumping && simon->isWalking)
 		return;
 	
@@ -288,11 +291,17 @@ void Scene_2::OnKeyDown(int KeyCode)
 		listEnemy.push_back(new Ghost(200, 200, 1));
 	}
 
+	if (KeyCode == DIK_C) // test AUTO GO CAM
+	{
+		camera->SetAutoGoX(200.0f, SIMON_WALKING_SPEED);
+	}
+
 
 	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
 		return;
 
-
+	if (camera->GetIsAutoGoX()) // camera đang chế độ tự đi thì ko xét phím
+		return;
 
 
 	if (simon->isHurting)
@@ -459,9 +468,11 @@ void Scene_2::Update(DWORD dt)
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 
 	simon->Update(dt, &listObj);
-
-	camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
-	camera->Update();
+	if (camera->AllowFollowSimon())
+	{
+		camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
+	}
+	camera->Update(dt);
 
 
 
@@ -479,8 +490,8 @@ void Scene_2::Update(DWORD dt)
 
 	if (isWaitProcessCreateGhost == false) // nếu không phải chờ xử lí thì vào xử lí
 	{
-#pragma region Vùng 1
-		if (simon->GetX() > 0 && simon->GetX() < 825)
+#pragma region Vùng 1 & Vùng 2
+		if ((simon->GetX() >= 0 && simon->GetX() <=825.0f) || (simon->GetX() > 2200 && simon->GetX() < 2775))
 		{
  			if (now - TimeCreateGhost >= ThoiGianChoGiua2GhostDuocTao)
 			{
@@ -883,7 +894,7 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 		simon->untouchable = false;
 	}
 	
-	if (simon->untouchable == false) // tắt chế độ ko cho đụng
+	if (simon->untouchable == false) // đã tắt chế độ ko cho chạm
 	{
 		for (UINT i = 0; i < listEnemy.size(); i++)
 		{
@@ -897,7 +908,7 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 					return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
 				}
 
-				if (simon->checkAABB(gameobj) == true)
+				if (simon->checkAABB(gameobj) == true) 
 				{
 					LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetTrend(), 0, NULL);
 					simon->SetHurt(e);
