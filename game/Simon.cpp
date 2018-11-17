@@ -18,6 +18,23 @@ Simon::Simon()
 	Lives = 3; // có 5 mạng sống
 	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
 	score = 0;
+	
+
+
+	isAttacking = 0;
+	isJumping = 0;
+ 	isSitting = 0;
+	isWalking = 0;
+
+	isAutoGoX = 0;
+
+	vx = 0;
+	vy = 0; 
+	isProcessingOnStair = 0;
+	DoCaoDiDuoc = 0;
+	isFreeze = 0;
+	TimeFreeze = 0;
+	trend = 1;
 
 
 	_weaponMain =  new MorningStar();
@@ -177,8 +194,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 						x += (DoCaoDiDuoc - 16.0f);
 						y -= (DoCaoDiDuoc - 16.0f);
 					}
-					DoCaoDiDuoc = 0;
-
+					DoCaoDiDuoc = 0; 
 				}
 				//	DebugOut(L"DoCaoDiDuoc = %f . dy = %f . y = %f\n", DoCaoDiDuoc, dy, y);
 
@@ -189,23 +205,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 					_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING_UP);
 				else
 					_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING_DOWN);
-			}
-			 
-			if (isProcessingOnStair == 3)
-			{
-				//isProcessingOnStair = 0;
-
-				//x = x + vx * 16;
-				//y = y + vy * 16;
-
-				 
-
-
-				//DoCaoDiDuoc = 0;
-
-				//isWalking = false;
-			//	return;
-			}
+			} 
 		}
 	
 
@@ -277,6 +277,8 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 	/* Update về sprite */
 
 	 
+	DebugOut(L"Update: vy = %f\n", vy);
+
 
 	GameObject::Update(dt);   
 
@@ -290,10 +292,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 		this->dt = dt;
 		dx = vx * 16;
 		dy = vy * 16;
-
-		/*x = x + dx;
-		y = y + dy; 
-*/
+		 
 	} 
 
 
@@ -328,7 +327,8 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 		vy = 0;
 		isWalking = false;
 	}
-	/*
+
+
 
 	if (isAutoGoX == true)
 	{
@@ -337,8 +337,12 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 			x = x - (abs(x - AutoGoX_Backup_X) - AutoGoX_Dx);
 			RestoreBackupAutoGoX();
 			isAutoGoX = false;
+
+			
+
+
 		}
-	}*/
+	}
 
 }
 
@@ -726,8 +730,6 @@ bool Simon::isCollisionWithItem(Item * objItem)
 }
 
 
-
-
 void Simon::Attack(Weapon * w)
 { 
 	if (isAttacking == true && dynamic_cast<MorningStar*>(w)!=NULL) // đang tấn công mà là roi thì bỏ qua
@@ -789,7 +791,7 @@ void Simon::GoUpStair()
 
 }
 
-void Simon::SetAutoGoX(int TrendGo, int Dx, float Speed)
+void Simon::SetAutoGoX(int TrendGo, int trendAfterGo, int Dx, float Speed)
 {
 	if (isAutoGoX == true)
 		return;
@@ -811,6 +813,8 @@ void Simon::SetAutoGoX(int TrendGo, int Dx, float Speed)
 	AutoGoX_Dx = Dx;
 	AutoGoX_Speed = Speed;
 	AutoGoX_TrendGo = TrendGo;
+	this->TrendAfterGo = trendAfterGo;
+
 
 	trend = TrendGo;
  	vx = Speed * TrendGo;
@@ -824,20 +828,23 @@ void Simon::SetAutoGoX(int TrendGo, int Dx, float Speed)
 
 void Simon::RestoreBackupAutoGoX()
 {
-
 	isWalking = isWalking_Backup;
-	isJumping = isJumping_Backup ;
+	isJumping = isJumping_Backup;
 	isSitting = isSitting_Backup;
 	isAttacking = isAttacking_Backup;
 	isOnStair = isOnStair_Backup;
 	isProcessingOnStair = isProcessingOnStair_Backup;
 	trendStair = trendStair_Backup;
 	trendY = trendY_Backup;
-	  
+	 
+	trend = TrendAfterGo; // set hướng sau khi đi
 
-	//isWalking = 0; // tắt trạng thái đang đi
+	isWalking = 0; // tắt trạng thái đang đi
 	isAutoGoX = 0; // tắt trạng thái auto
+	
 	vx = 0;
+	vy = 0;
+	// đi xong thì cho simon đứng yên
 }
  
 
@@ -859,6 +866,16 @@ bool Simon::LoseLife()
 	isSitting = 0;
 	isWalking = 0;
 
+	isAutoGoX = 0;
+	
+	vx = 0;
+	vy = 0;
+
+	isOnStair = 0;
+	isProcessingOnStair = 0;
+	DoCaoDiDuoc = 0;
+	isFreeze = 0;
+	TimeFreeze = 0;
 	trend = 1;
 
 	x = PositionBackup.x;

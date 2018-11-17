@@ -86,6 +86,7 @@ private:
 	int isProcessingOnStair_Backup;
 	int trendStair_Backup;
 	int trendY_Backup;
+	int TrendAfterGo;
 
 	float AutoGoX_Dx;
 	float AutoGoX_Speed;
@@ -151,7 +152,7 @@ public:
 
 
 
-	void SetAutoGoX(int TrendGo, int Dx, float Speed); // set các thông số auto và backup các trạng thái hiện tại
+	void SetAutoGoX(int TrendGo, int TrendBackup, int Dx, float Speed); // set các thông số auto và backup các trạng thái hiện tại
 	void RestoreBackupAutoGoX(); // khôi phục trạng thái 
 
 

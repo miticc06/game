@@ -142,7 +142,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 	if (KeyCode == DIK_P) // tesst autogo 
 	{
-		simon->SetAutoGoX(simon->GetTrend(), 200, SIMON_WALKING_SPEED);
+		simon->SetAutoGoX(simon->GetTrend(), simon->GetTrend(), 200, SIMON_WALKING_SPEED);
 	}
 
 
