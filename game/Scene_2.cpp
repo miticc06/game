@@ -490,7 +490,7 @@ void Scene_2::Update(DWORD dt)
 	 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 
-	simon->Update(dt, &listObj);
+	simon->Update(dt, camera, &listObj);
 	if (camera->AllowFollowSimon())
 	{
 		camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon

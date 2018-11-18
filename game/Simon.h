@@ -126,7 +126,7 @@ public:
 
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
+	virtual void Update(DWORD dt, Camera* camera, vector<LPOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera);
 	void Left();  // set lại hướng của simon
 	void Right(); // set lại hướng của simon

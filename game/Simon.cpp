@@ -66,13 +66,13 @@ void Simon::GetBoundingBox(float & left, float & top, float & right, float & bot
  	
 }
 
-void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void Simon::Update(DWORD dt, Camera* camera, vector<LPOBJECT>* coObjects)
 { 
 	 
-	if (x < 0)
-		x = 0.0f;
-	if (x + SIMON_BBOX_WIDTH > MapWidth)
-		x = (float)(MapWidth - SIMON_BBOX_WIDTH);
+	if (x < camera->GetBoundaryLeft()-16)
+		x = camera->GetBoundaryLeft()-16;
+	if (x + SIMON_BBOX_WIDTH > camera->GetBoundaryRight() + Window_Width)
+		x = (float)(camera->GetBoundaryRight() + Window_Width - SIMON_BBOX_WIDTH);
 	/* Không cho lọt khỏi camera */
 
 
@@ -283,12 +283,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 
 	/* Update về sprite */
 
-	 
-	if (isHurting)
-	{
-		int a = 1;
-	}
-
+	  
 
 	GameObject::Update(dt);   
 
@@ -313,7 +308,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 		
 	if (isOnStair == false)
 	{
-		CollisionWithBrick(coObjects); // check Collision and update x, y for simon
+ 		CollisionWithBrick(coObjects); // check Collision and update x, y for simon
 	}
 	 
 

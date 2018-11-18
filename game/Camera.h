@@ -13,7 +13,8 @@ protected:
 	int _height;
 
 	float _boundaryLeft; // biên giới hạn bên trái 
-	float _boundaryRight; // biên giới hạn bên phải
+	float _boundaryRight; // biên giới hạn bên phải, không bao gồm đoạn simon đi được ở cuối - Window_Width 
+
 	//float _boundaryLeftBackup; // backup lại biên, dùng cho trường hợp simo 
 	//float _boundaryRightBackup; // biên giới hạn bên phải
 

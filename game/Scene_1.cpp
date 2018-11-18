@@ -310,7 +310,7 @@ void Scene_1::Update(DWORD dt)
 	//DebugOut(L"[Grid] ListObject by Camera = %d\n", listObj.size());
 
 
-	simon->Update(dt, &listObj);
+	simon->Update(dt, camera, &listObj);
 
 	if (camera->AllowFollowSimon())
 	{
