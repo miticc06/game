@@ -71,7 +71,7 @@ void Scene_2::KeyState(BYTE * state)
 							
 							
 							//simon->SetPosition(gameobj->GetX(), simon->GetY()); // đặt lại vị trí X của simon
-							DebugOut(L"bat dau len cau thang!\n");
+						//	DebugOut(L"bat dau len cau thang!\n");
 
 
 							return;
@@ -80,7 +80,7 @@ void Scene_2::KeyState(BYTE * state)
 			}
 			else // nếu đã trên cầu thang
 			{
-				DebugOut(L"Da o tren cau thang!\n");
+			//	DebugOut(L"Da o tren cau thang!\n");
 
 				if (simon->isProcessingOnStair == 0 || simon->isProcessingOnStair == 3) // kết thúc xử lí trước đó
 				{
@@ -92,7 +92,7 @@ void Scene_2::KeyState(BYTE * state)
 				
 					float vvx, vvy;
 					simon->GetSpeed(vvx, vvy);
-					DebugOut(L"vy = %f\n", vvy);
+					//DebugOut(L"vy = %f\n", vvy);
 				}
 
 
@@ -605,13 +605,13 @@ void Scene_2::Update(DWORD dt)
  					switch (i)	
 					{
 					case 0: 
-						listPanther[i] = new Panther(1398.0f, 232.0f, trendPanther);
+						listPanther[i] = new Panther(1398.0f, 225.0f, trendPanther, trendPanther == -1 ? 20.0f : 9.0f);
 						break;
 					case 1:
-						listPanther[i] = new Panther(1783.0f, 165.0f, trendPanther);
+						listPanther[i] = new Panther(1783.0f, 160.0f, trendPanther, trendPanther == -1 ? 278.0f : 0.0f);
 						break;
 					case 2:
-						listPanther[i] = new Panther(1923.0f, 232.0f, trendPanther);
+						listPanther[i] = new Panther(1923.0f, 225.0f, trendPanther, trendPanther == -1 ? 68.0f : 66.0f);
 						break;
 					}
 					CountEnemyPanther++;
@@ -671,7 +671,19 @@ void Scene_2::Update(DWORD dt)
 	{
 		for (UINT i = 0; i < listPanther.size(); i++)
 			if (listPanther[i]->GetHealth() > 0) // còn máu
-				listPanther[i]->Update(dt, simon, &listObj); 
+			{
+				if (camera->checkObjectInCamera(
+					listPanther[i]->GetX(),
+					listPanther[i]->GetY(),
+					listPanther[i]->GetWidth(),
+					listPanther[i]->GetHeight())) // nếu Panther nằm trong camera thì update
+					// vì do Grid load object nền (Brick) dựa vào vùng camera, nên có nguy cơ khiến 1 số object Panther không xét được va chạm đất.
+				{
+					listPanther[i]->Update(dt, simon, &listObj);
+				}
+					
+			}
+				
 	}
 
 
