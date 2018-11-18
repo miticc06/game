@@ -348,9 +348,7 @@ void Simon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 			RestoreBackupAutoGoX();
 			isAutoGoX = false;
 
-			
-
-
+			DebugOut(L"[SIMON] end auto go X\n"); 
 		}
 	}
 

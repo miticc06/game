@@ -243,46 +243,46 @@ void Game::SweptAABB(
 	float t_exit; 
 
 	t = -1.0f;			// no collision
-	nx = ny = 0;
+	nx = ny = 0.0f;
 
 	//
 	// Broad-phase test 
 	//
 
-	float bl = dx > 0 ? ml : ml + dx;
-	float bt = dy > 0 ? mt : mt + dy;
-	float br = dx > 0 ? mr + dx : mr;
-	float bb = dy > 0 ? mb + dy : mb;
+	float bl = dx > 0.0f ? ml : ml + dx;
+	float bt = dy > 0.0f ? mt : mt + dy;
+	float br = dx > 0.0f ? mr + dx : mr;
+	float bb = dy > 0.0f ? mb + dy : mb;
 
 	if (br < sl || bl > sr || bb < st || bt > sb) return;
  
-	if (dx == 0 && dy == 0) return;		// moving object is not moving > obvious no collision
+	if (dx == 0.0f && dy == 0.0f) return;		// moving object is not moving > obvious no collision
 
-	if (dx > 0)
+	if (dx > 0.0f)
 	{
 		dx_entry = sl - mr; 
 		dx_exit = sr - ml;
 	}
 	else
-		if (dx < 0)
+		if (dx < 0.0f)
 		{
 			dx_entry = sr - ml;
 			dx_exit = sl- mr;
 		}
 
 
-	if (dy > 0)
+	if (dy > 0.0f)
 	{
 		dy_entry = st - mb;
 		dy_exit = sb - mt;
 	}
-	else if (dy < 0)
+	else if (dy < 0.0f)
 	{
 		dy_entry = sb - mt;
 		dy_exit = st - mb;
 	}
 
-	if (dx == 0)
+	if (dx == 0.0f)
 	{
 		tx_entry = -99999999999.0f;
 		tx_exit = 99999999999.0f;
@@ -293,7 +293,7 @@ void Game::SweptAABB(
 		tx_exit = dx_exit / dx;
 	}
 	
-	if (dy == 0)
+	if (dy == 0.0f)
 	{
 		ty_entry = -99999999999.0f;
 		ty_exit = 99999999999.0f;
@@ -313,16 +313,17 @@ void Game::SweptAABB(
 	if (t_entry > t_exit) return; 
 
 	t = t_entry; 
+//	DebugOut(L"t = %f\n", t);
 
 	if (tx_entry > ty_entry)
 	{
 		ny = 0.0f;
-		dx > 0 ? nx = -1.0f : nx = 1.0f;
+		dx > 0.0f ? nx = -1.0f : nx = 1.0f;
 	}
 	else 
 	{
 		nx = 0.0f;
-		dy > 0?ny = -1.0f:ny = 1.0f;
+		dy > 0.0f?ny = -1.0f:ny = 1.0f;
 	}
 
 }

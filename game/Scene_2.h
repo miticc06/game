@@ -30,16 +30,27 @@
 
 #define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo
 #define ThoiGianChoDeXuLiTaoGhost 2500 // 2.5 giây
+#define ViTriCameraDiChuyenTruocKhiQuaCua 2825.0f
+#define ViTriCameraDiChuyenSauKhiQuaCua 3073.0f
+
 
 class Scene_2 : public Scene
 {
 private:
 	
+	/*Xử lí liên quan tạo ghost*/
 	int CountEnemyGhost; // số lượng ghost hiện tại
 	DWORD TimeCreateGhost; // thời điểm bắt đầu tạo ghost
 	DWORD TimeWaitProcessCreateGhost; // Thời điểm bắt đầu chờ xử lí việc tạo ghost
 	bool isWaitProcessCreateGhost; // chờ xử lí việc tạo ghost
 	bool isAllowCheckTimeWaitProcessCreateGhost = false; // cho phép kt thời gian chờ xử lí tạo ghost
+
+	/*Xử lí liên quan đi qua cửa*/
+	bool isProcessingGoThroughTheDoor1;
+	bool isDoneSimonGoThroughTheDoor1; 
+	bool isDoneCameraGoThroughTheDoor1;
+
+
 
 
 	Simon * simon;
@@ -50,11 +61,8 @@ private:
 	Sound * sound;
 
 	vector<Object*> listObj;
-
 	vector <Item*> listItem;
 	vector <Effect*> listEffect;
-
-
 	vector <Object*> listEnemy;
 
 	GameTime * _gameTime;

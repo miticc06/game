@@ -12,6 +12,12 @@ protected:
 	int _width;
 	int _height;
 
+	float _boundaryLeft; // biên giới hạn bên trái 
+	float _boundaryRight; // biên giới hạn bên phải
+	//float _boundaryLeftBackup; // backup lại biên, dùng cho trường hợp simo 
+	//float _boundaryRightBackup; // biên giới hạn bên phải
+
+
 	float vx;
 	DWORD dt;
 
@@ -36,10 +42,19 @@ public:
 	int GetHeight();
 
 	bool checkObjectInCamera(float x, float y, float w, float h);
+	
 	bool AllowFollowSimon();
+	void SetAllowFollowSimon(bool b);
+
 
 	void SetAutoGoX(float Dx, float Speed); // set các thông số auto
+	void StopAutoGoX();
 	bool GetIsAutoGoX();
+
+	void SetBoundary(float left, float right); // set biên giới hạn cho camera
+	float GetBoundaryRight();
+	float GetBoundaryLeft();
+
 };
 
 #endif

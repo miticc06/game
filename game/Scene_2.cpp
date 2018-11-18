@@ -267,7 +267,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_4)  
 	{
 		DebugOut(L"[SET POSITION SIMON] x = .... \n");
-		simon->SetPosition(3100.0f, 0);
+		simon->SetPosition(2830.0f, 0);
 	}
 
 
@@ -397,7 +397,7 @@ void Scene_2::LoadResources()
 
 	camera = new Camera(Window_Width, Window_Height);
 	camera->SetPosition(0, 0);
-
+	camera->SetBoundary(0, 2560.0f); // biên camera khi chưa qua cửa
 
 	board = new Board(0, 0);
 
@@ -423,6 +423,8 @@ void Scene_2::LoadResources()
 	isWaitProcessCreateGhost = false; // lúc đầu thì không cần chờ
 	CountEnemyGhost = 0;
 
+	isProcessingGoThroughTheDoor1 = false; // ban đầu chưa cần xử lí qua cửa
+	isDoneSimonGoThroughTheDoor1 = false;
  }
 
 void Scene_2::Update(DWORD dt)
@@ -463,6 +465,27 @@ void Scene_2::Update(DWORD dt)
 		}
 	}
 #pragma endregion
+
+	if (isProcessingGoThroughTheDoor1)
+	{
+		if (isDoneSimonGoThroughTheDoor1 == false) // simon chưa hoàn thành việc qua cửa
+		{
+			if (camera->GetXCam() >= ViTriCameraDiChuyenTruocKhiQuaCua) // camera đã AutoGo xong đến vị trí 2825.0f
+			{
+				simon->SetAutoGoX(1, 1, abs(3143.0f - simon->GetX()), SIMON_WALKING_SPEED); // bắt đầu cho simon di chuyển tự động đến vị trí tiếp theo
+			}
+		}
+		else
+		{
+			if (camera->GetXCam() + 1.0f >= ViTriCameraDiChuyenSauKhiQuaCua)
+			{
+				camera->SetBoundary(ViTriCameraDiChuyenSauKhiQuaCua, camera->GetBoundaryRight());
+				camera->SetAllowFollowSimon(true);
+				isProcessingGoThroughTheDoor1 = false; // xong việc xử lí qua cửa 1
+				camera->StopAutoGoX(); // dừng việc tự di chuyển
+			}
+		}
+	}
 
 	 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
@@ -857,19 +880,37 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 			GameObject * gameObject = dynamic_cast<GameObject*>(listObj[i]);
 			if (gameObject->GetHealth() > 0)
 			{
+
 				LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]);
-				if (0 < e->t && e->t <= 1) // có va chạm xảy ra
+
+				//DebugOut(L"e->t = %f, nx = %f, ny = %f \n", e->t, e->nx, e->ny);
+
+				
+				if (0.0f < e->t && e->t <= 1.0f) // có va chạm xảy ra
 				{
-					//switch (gameObject->GetId())
-					//{
-					//case 7: // đụng trúng cửa
-					//{
 
+					switch (gameObject->GetId())
+					{
+					case 64: // đụng trúng cửa
+					{ 
+						//di chuyển camera đến ViTriCameraDiChuyenTruocKhiQuaCua = 2825.0f
+						camera->SetBoundary(camera->GetBoundaryLeft(), camera->GetBoundaryRight() + 1000);// mở biên phải rộng ra thêm để chạy AutoGo
+						camera->SetAutoGoX(abs(ViTriCameraDiChuyenTruocKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
+						simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
+						isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
+						isDoneSimonGoThroughTheDoor1 = false;
+						break;
+					}
 
-					//	break;
-					//}
-					// 
-					//}
+					case 67: // đụng trúng box xác nhận simon đã qua cửa
+					{
+						isDoneSimonGoThroughTheDoor1 = true;
+						camera->SetAutoGoX(abs(ViTriCameraDiChuyenSauKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
+						isDoneCameraGoThroughTheDoor1 = false;
+						break;
+					}
+					 
+					}
 
 
 					gameObject->SubHealth(1);

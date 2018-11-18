@@ -1,4 +1,4 @@
-#include "Camera.h"
+﻿#include "Camera.h"
 
  
   
@@ -11,6 +11,9 @@ Camera::Camera(int w, int h/*, int b_left, int b_right*/)
 	isAllowFollowSimon = true;
 	isAutoGoX = false;
 	 
+	// Biên mặc định ban đầu là kích thước MAP
+	_boundaryLeft = 0;
+	_boundaryRight = (float)(MapWidth - Window_Width);
 }
 
 Camera::~Camera()
@@ -40,11 +43,11 @@ void Camera::Update(DWORD dt)
 
 
 
-	if (_xCam < 0)
-		_xCam = 0;
+	if (_xCam < _boundaryLeft)
+		_xCam = _boundaryLeft;
 
-	if (_xCam > MapWidth - Window_Width)
-		_xCam = (float)(MapWidth - Window_Width);
+	if (_xCam > _boundaryRight)
+		_xCam = _boundaryRight;
 
 }
 D3DXVECTOR2 Camera::Transform(float xWorld, float yWorld)
@@ -93,6 +96,11 @@ bool Camera::AllowFollowSimon()
 	return isAllowFollowSimon;
 }
 
+void Camera::SetAllowFollowSimon(bool b)
+{
+	isAllowFollowSimon = b;
+}
+
 void Camera::SetAutoGoX(float Dx, float Speed)
 {
 	if (isAutoGoX == true)
@@ -104,8 +112,29 @@ void Camera::SetAutoGoX(float Dx, float Speed)
 	isAllowFollowSimon = false;
 }
 
+void Camera::StopAutoGoX()
+{
+	isAutoGoX = false;
+}
+
 bool Camera::GetIsAutoGoX()
 {
 	return isAutoGoX;
+}
+
+void Camera::SetBoundary(float left, float right)
+{
+	_boundaryLeft = left;
+	_boundaryRight = right;
+}
+
+float Camera::GetBoundaryRight()
+{
+	return _boundaryRight;
+}
+
+float Camera::GetBoundaryLeft()
+{
+	return _boundaryLeft;
 }
  
