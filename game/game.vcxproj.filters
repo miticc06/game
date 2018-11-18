@@ -133,6 +133,9 @@
     <ClCompile Include="SmallHeart.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Panther.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -263,6 +266,9 @@
     </ClInclude>
     <ClInclude Include="SmallHeart.h">
       <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Panther.h">
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

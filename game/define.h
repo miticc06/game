@@ -112,7 +112,8 @@ enum eID
 
 
 	// Enemy
-	GHOST = 141
+	GHOST = 141,
+	PANTHER = 142
 };
 
 

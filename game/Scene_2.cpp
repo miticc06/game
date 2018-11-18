@@ -254,10 +254,10 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
-	if (KeyCode == DIK_3) // set vi tri simon 1275 
+	if (KeyCode == DIK_3) // set vi tri simon   
 	{
-		DebugOut(L"[SET POSITION SIMON] x = 1275 \n");
-		simon->SetPosition(1275.0f, 0);
+		DebugOut(L"[SET POSITION SIMON] x = 1140.0f \n");
+		simon->SetPosition(1140.0f, 0);
 		simon->isAttacking = 0;
 		simon->isWalking = 0;
 		simon->isOnStair = 0;
@@ -425,6 +425,16 @@ void Scene_2::LoadResources()
 
 	isProcessingGoThroughTheDoor1 = false; // ban đầu chưa cần xử lí qua cửa
 	isDoneSimonGoThroughTheDoor1 = false;
+
+	isAllowRenewPanther = true;
+	CountEnemyPanther = 0;
+	listPanther.clear();
+	if (listPanther.size() == 0)
+	{
+		listPanther.push_back(NULL);
+		listPanther.push_back(NULL);
+		listPanther.push_back(NULL);
+	}
  }
 
 void Scene_2::Update(DWORD dt)
@@ -440,7 +450,7 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 
 #pragma region Process_Gametime_OR_Health
-	if (_gameTime->GetTime() >= GAME_TIME_SCENE2 || simon->GetHealth()<=0) // hết thời gian hoặc hết máu
+	if (_gameTime->GetTime() >= GAME_TIME_SCENE2 || simon->GetHealth() <= 0) // hết thời gian hoặc hết máu
 	{
 		sound->Play(eSound::musicLifeLost);
 		if (simon->GetLives() == 0)
@@ -466,6 +476,8 @@ void Scene_2::Update(DWORD dt)
 	}
 #pragma endregion
 
+#pragma region Process Gate 1
+
 	if (isProcessingGoThroughTheDoor1)
 	{
 		if (isDoneSimonGoThroughTheDoor1 == false) // simon chưa hoàn thành việc qua cửa
@@ -487,7 +499,10 @@ void Scene_2::Update(DWORD dt)
 		}
 	}
 
-	 
+#pragma endregion
+
+
+
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 
 	simon->Update(dt, camera, &listObj);
@@ -499,13 +514,13 @@ void Scene_2::Update(DWORD dt)
 
 
 
-//	Cần tạo khoảng chờ khi tạo bot
+	//	Cần tạo khoảng chờ khi tạo bot
 
 
 
 
 #pragma region Process_Region_Create_Enemy_Ghost
- 
+
 //	DebugOut(L"now = %d - listenemy = %d\n", CountEnemyGhost, listEnemy.size());
 	DWORD now = GetTickCount();
 
@@ -514,9 +529,9 @@ void Scene_2::Update(DWORD dt)
 	if (isWaitProcessCreateGhost == false) // nếu không phải chờ xử lí thì vào xử lí
 	{
 #pragma region Vùng 1 & Vùng 2
-		if ((simon->GetX() >= 0 && simon->GetX() <=825.0f) || (simon->GetX() > 2200 && simon->GetX() < 2775))
+		if ((simon->GetX() >=-16.0f /* 0.0f */ && simon->GetX() <= 825.0f) || (simon->GetX() > 2200 && simon->GetX() < 2775))
 		{
- 			if (now - TimeCreateGhost >= ThoiGianChoGiua2GhostDuocTao)
+			if (now - TimeCreateGhost >= ThoiGianChoGiua2GhostDuocTao)
 			{
 				if (CountEnemyGhost < 3)
 				{
@@ -547,7 +562,7 @@ void Scene_2::Update(DWORD dt)
 					if (CountEnemyGhost == 3)
 					{
 						isWaitProcessCreateGhost = true; // phải chờ đến khi cả 3 ghost bị giết
-						isAllowCheckTimeWaitProcessCreateGhost = false; 
+						isAllowCheckTimeWaitProcessCreateGhost = false;
 					}
 					TimeCreateGhost = now; // set lại thời điểm đã tạo ghost
 				}
@@ -563,12 +578,52 @@ void Scene_2::Update(DWORD dt)
 			{
 				isWaitProcessCreateGhost = false; // không phải chờ nữa
 			}
-		} 
+		}
 	}
 
-	
 
-	 
+
+
+#pragma endregion
+
+
+#pragma region Process_Region_Create_Panther
+	if (REGION_CREATE_PANTHER_LEFT < simon->GetX() && simon->GetX() < REGION_CREATE_PANTHER_RIGHT)
+	{
+		if (isAllowRenewPanther)
+		{
+			if (CountEnemyPanther == 0) // không còn Panther nào sống thì mới dc tạo lại cả 3
+			{  
+				int trendPanther = abs(REGION_CREATE_PANTHER_LEFT - simon->GetX()) < abs(REGION_CREATE_PANTHER_RIGHT - simon->GetX()) ? -1 : 1; // hướng mặt của Panther quay về hướng simon
+
+				for (UINT i = 0; i < 3; i++)
+				{ 
+					if (listPanther[i] != NULL)
+					{
+						SAFE_DELETE(listPanther[i]);
+					} 
+ 					switch (i)	
+					{
+					case 0: 
+						listPanther[i] = new Panther(1398.0f, 232.0f, trendPanther);
+						break;
+					case 1:
+						listPanther[i] = new Panther(1783.0f, 165.0f, trendPanther);
+						break;
+					case 2:
+						listPanther[i] = new Panther(1923.0f, 232.0f, trendPanther);
+						break;
+					}
+					CountEnemyPanther++;
+				}
+			}
+			isAllowRenewPanther = false;
+		}
+	}
+	else
+	{
+		isAllowRenewPanther = true;
+	}
 #pragma endregion
 
 	
@@ -611,8 +666,15 @@ void Scene_2::Update(DWORD dt)
 				enemy->Update(dt);
 		}
 	}
-		
-			
+	
+	if (CountEnemyPanther > 0)
+	{
+		for (UINT i = 0; i < listPanther.size(); i++)
+			if (listPanther[i]->GetHealth() > 0) // còn máu
+				listPanther[i]->Update(dt, simon, &listObj); 
+	}
+
+
 #pragma endregion
 
 
@@ -644,7 +706,15 @@ void Scene_2::Render()
 	for (UINT i = 0; i < listEnemy.size(); i++)
 			listEnemy[i]->Render(camera);
 
+	if (CountEnemyPanther > 0)
+	{
+		for (UINT i = 0; i < listPanther.size(); i++)
+			if (listPanther[i]->GetHealth() > 0) // còn máu
+				listPanther[i]->Render(camera);
 
+	}
+
+	 
 	simon->Render(camera);
 
 	board->Render(camera, simon, 1, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime());
@@ -671,6 +741,17 @@ void Scene_2::ResetResource()
 	_gameTime->SetTime(0); // đếm lại từ 0
 	sound->Stop(eSound::musicState1); // tắt nhạc nền
 	sound->Play(eSound::musicState1, true); // mở lại nhạc nền
+
+
+	isAllowRenewPanther = true;
+	CountEnemyPanther = 0;
+	listPanther.clear();
+	if (listPanther.size() ==0)
+	{
+		listPanther.push_back(NULL);
+		listPanther.push_back(NULL);
+		listPanther.push_back(NULL);
+	}
 }
 
 void Scene_2::CheckCollision()
@@ -709,7 +790,7 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 				{
 					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 					gameObj->SubHealth(1);
-					
+					simon->SetScore(simon->GetScore() + 100);
 					if (rand() % 2 == 1) // tỉ lệ 50%
 					{
 						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
@@ -723,6 +804,7 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 						isWaitProcessCreateGhost = true;
 						isAllowCheckTimeWaitProcessCreateGhost = true;
 					}
+
 					break;
 				}
 
@@ -766,6 +848,7 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 				{
 					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 					gameObj->SubHealth(1);
+					simon->SetScore(simon->GetScore() + 100);
 
 					if (rand() % 2 == 1) // tỉ lệ 50%
 					{

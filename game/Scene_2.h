@@ -26,12 +26,17 @@
 #include "SmallHeart.h"
 #include "Enemy.h"
 #include "Ghost.h"
+#include "Panther.h"
 #define GAME_TIME_SCENE2 300
 
 #define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo
 #define ThoiGianChoDeXuLiTaoGhost 2500 // 2.5 giây
 #define ViTriCameraDiChuyenTruocKhiQuaCua 2825.0f
 #define ViTriCameraDiChuyenSauKhiQuaCua 3073.0f
+
+#define REGION_CREATE_PANTHER_LEFT 1090.0f
+#define REGION_CREATE_PANTHER_RIGHT 2305.0f
+
 
 
 class Scene_2 : public Scene
@@ -50,6 +55,9 @@ private:
 	bool isDoneSimonGoThroughTheDoor1; 
 	bool isDoneCameraGoThroughTheDoor1;
 
+	/*Xử lí liên quan tạo Panther*/
+	bool isAllowRenewPanther;
+	bool CountEnemyPanther;
 
 
 
@@ -64,6 +72,8 @@ private:
 	vector <Item*> listItem;
 	vector <Effect*> listEffect;
 	vector <Object*> listEnemy;
+
+	vector <Panther*> listPanther;
 
 	GameTime * _gameTime;
 

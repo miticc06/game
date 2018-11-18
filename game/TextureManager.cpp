@@ -67,6 +67,7 @@ void TextureManager::LoadResource()
 
 	//enemy
 	AddTexture(eID::GHOST, new GTexture("Resources/enemy/1.png", 2, 1, 2));
+	AddTexture(eID::PANTHER, new GTexture("Resources/enemy/2.png", 4, 1, 4));
 
 	
 

@@ -144,6 +144,7 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Monney.h" />
     <ClInclude Include="ObjectHidden.h" />
+    <ClInclude Include="Panther.h" />
     <ClInclude Include="Scene_2.h" />
     <ClInclude Include="SmallHeart.h" />
     <ClInclude Include="Sound.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Monney.cpp" />
     <ClCompile Include="ObjectHidden.cpp" />
+    <ClCompile Include="Panther.cpp" />
     <ClCompile Include="Scene_2.cpp" />
     <ClCompile Include="SmallHeart.cpp" />
     <ClCompile Include="Sound.cpp" />
