@@ -27,7 +27,7 @@
 #include "Enemy.h"
 #include "Ghost.h"
 #include "Panther.h"
-
+#include "Bat.h"
 
 #define GAME_TIME_SCENE2 300
 

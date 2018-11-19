@@ -305,6 +305,13 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 	}
 
+	if (KeyCode == DIK_B) // create BAT
+	{
+		listEnemy.push_back(new Bat(camera->GetXCam() + camera->GetWidth() -100 , simon->GetY() + 20, -1));
+
+	}
+
+
 	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
 		return;
 
@@ -733,6 +740,13 @@ void Scene_2::Update(DWORD dt)
 						CountEnemyPanther--;
 					}
 				}
+				break;
+			}
+
+
+			case eID::BAT:
+			{
+				enemy->Update(dt);
 				break;
 			}
 

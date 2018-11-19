@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Bat.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="BoardHealth.h" />
     <ClInclude Include="Brick.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bat.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="BoardHealth.cpp" />
     <ClCompile Include="Brick.cpp" />

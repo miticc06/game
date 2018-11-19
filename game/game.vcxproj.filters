@@ -139,6 +139,9 @@
     <ClCompile Include="Gate.cpp">
       <Filter>Object\Ground</Filter>
     </ClCompile>
+    <ClCompile Include="Bat.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -275,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="Gate.h">
       <Filter>Object\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Bat.h">
+      <Filter>Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

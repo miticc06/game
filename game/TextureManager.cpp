@@ -73,6 +73,7 @@ void TextureManager::LoadResource()
 	AddTexture(eID::PANTHER, new GTexture("Resources/enemy/2.png", 4, 1, 4));
 
 	
+	AddTexture(eID::BAT, new GTexture("Resources/enemy/0.png", 4, 1, 4));
 
 
 
