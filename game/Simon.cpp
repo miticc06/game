@@ -584,6 +584,13 @@ void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 			isJumping = false; // kết thúc nhảy
 		}
 		
+
+		 
+
+
+
+
+
 		if (nx != 0 || ny != 0)
 		{
 			isHurting = 0; 

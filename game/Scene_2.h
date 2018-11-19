@@ -27,7 +27,7 @@
 #include "Enemy.h"
 #include "Ghost.h"
 #include "Panther.h"
-#define GAME_TIME_SCENE2 300
+#define GAME_TIME_SCENE2 30
 
 #define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo
 #define ThoiGianChoDeXuLiTaoGhost 2500 // 2.5 giây
@@ -57,7 +57,7 @@ private:
 
 	/*Xử lí liên quan tạo Panther*/
 	bool isAllowRenewPanther;
-	bool CountEnemyPanther;
+	int CountEnemyPanther;
 
 
 

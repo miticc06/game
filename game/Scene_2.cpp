@@ -608,7 +608,7 @@ void Scene_2::Update(DWORD dt)
 						listPanther[i] = new Panther(1398.0f, 225.0f, trendPanther, trendPanther == -1 ? 20.0f : 9.0f);
 						break;
 					case 1:
-						listPanther[i] = new Panther(1783.0f, 160.0f, trendPanther, trendPanther == -1 ? 278.0f : 0.0f);
+						listPanther[i] = new Panther(1783.0f, 160.0f, trendPanther, trendPanther == -1 ? 278.0f : 180.0f);
 						break;
 					case 2:
 						listPanther[i] = new Panther(1923.0f, 225.0f, trendPanther, trendPanther == -1 ? 68.0f : 66.0f);
@@ -680,6 +680,15 @@ void Scene_2::Update(DWORD dt)
 					// vì do Grid load object nền (Brick) dựa vào vùng camera, nên có nguy cơ khiến 1 số object Panther không xét được va chạm đất.
 				{
 					listPanther[i]->Update(dt, simon, &listObj);
+				}
+				else // nằm ngoài camera
+				{
+			//		if (listPanther[i]->GetX() < REGION_CREATE_PANTHER_LEFT || REGION_CREATE_PANTHER_RIGHT < listPanther[i]->GetX()) // và ngoài vùng hoạt động
+					if (listPanther[i]->GetIsStart())// ngoài cam và đã được kích hoạt r
+					{
+						listPanther[i]->SetHealth(0); // cho Panther chết
+						CountEnemyPanther--;
+					}
 				}
 					
 			}

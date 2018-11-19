@@ -46,7 +46,8 @@ void Panther::Update(DWORD dt, Simon * simon, vector<LPOBJECT>* coObjects)
 		isSitting = false;
 		isRunning = true;
 		// chuyển qua trạng thái chạy
-		vx = trend * PANTHER_SPEED_RUNNING;
+		Run();
+
 		isStart = 1;
 		isAutoGoX = 1;
 	}
@@ -101,14 +102,30 @@ void Panther::Update(DWORD dt, Simon * simon, vector<LPOBJECT>* coObjects)
 	{
 		float min_tx, min_ty, nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
-		if (nx != 0)
-			vx = 0;
-		if (ny != 0)
+		
+		//x += min_tx * dx + nx * 0.4f;
+		x += dx;
+		if (ny == -1) // chỉ xét va chạm hướng xuống
+			y += min_ty * dy + ny * 0.4f;
+		else 		
+			y += dy;
+		 
+		if (ny == -1)
 		{
 			vy = 0;
-			isJumping = false; // kết thúc nhảy
+			if (isJumping)
+			{
+				isJumping = false; // kết thúc nhảy
+				if (x < simon->GetX()) // simon ở bên phải
+				{
+					trend = 1; // đổi hướng panther qua phải 
+				}
+				else
+				{
+					trend = -1; // đổi hướng panther qua trái
+				}
+				Run();
+			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++)
@@ -123,6 +140,9 @@ void Panther::Update(DWORD dt, Simon * simon, vector<LPOBJECT>* coObjects)
 			x = x - (abs(x - AutoGoX_Backup_X) - AutoGoX_Dx);
 			isAutoGoX = false;
 			vx = 0;
+
+			Jump(); // Sau khi chạy xong thì nhảy
+
 			DebugOut(L"[PANTHER] end auto go X\n");
 		}
 	}
@@ -145,6 +165,27 @@ void Panther::Render(Camera * camera)
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
 
+}
+
+bool Panther::GetIsStart()
+{
+	return isStart;
+}
+
+void Panther::Jump()
+{
+	if (isJumping == true)
+		return;
+	vy -= PANTHER_VYJUMP;
+	vx = PANTHER_VXJUMP * trend;
+	isJumping = true;
+
+}
+
+void Panther::Run()
+{
+	vx = PANTHER_SPEED_RUNNING * trend;
+	isRunning = true;
 }
 
 

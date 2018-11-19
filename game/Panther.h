@@ -5,7 +5,9 @@
 #define PANTHER_ANI_RUNNING_BEGIN 1
 #define PANTHER_ANI_RUNNING_END 3
 
-#define PANTHER_SPEED_RUNNING 0.2f
+#define PANTHER_SPEED_RUNNING 0.18f
+#define PANTHER_VYJUMP 0.6f
+#define PANTHER_VXJUMP 0.4f
 
 #include "GameObject.h"
 #include "Simon.h"
@@ -31,6 +33,10 @@ public:
 	void Update(DWORD dt, Simon * simon,  vector<LPOBJECT> *coObjects = NULL);
 	void Render(Camera *camera);
 
+	bool GetIsStart(); 
+
+	void Jump();
+	void Run();
 };
 
 
