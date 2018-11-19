@@ -444,6 +444,10 @@ void Scene_2::LoadResources()
 	isAllowRenewPanther = true;
 	CountEnemyPanther = 0;
  
+
+	TimeCreateBat = 0;
+	TimeWaitCreateBat = 0;
+	isAllowCreateBat = 0;
  }
 
 
@@ -469,6 +473,12 @@ void Scene_2::ResetResource()
 
 	isAllowRenewPanther = true;
 	CountEnemyPanther = 0;
+
+
+	TimeCreateBat = 0;
+	TimeWaitCreateBat = 0;
+	isAllowCreateBat = 0;
+
 }
 
 void Scene_2::Update(DWORD dt)
@@ -675,6 +685,25 @@ void Scene_2::Update(DWORD dt)
 	}
 #pragma endregion
 
+
+#pragma region Create_Bat
+
+	
+
+	if (isAllowCreateBat)
+	{ 
+		DWORD now = GetTickCount();
+		if (now - TimeCreateBat >= TimeWaitCreateBat) // đủ thời gian chờ
+		{
+			TimeCreateBat = now; // đặt lại thời gian đã tạo bat
+			listEnemy.push_back(new Bat(camera->GetXCam() + camera->GetWidth() - 10, simon->GetY() + 40, -1));
+
+			TimeWaitCreateBat = 4000 + (rand() % 3000);
+		}
+	}
+
+#pragma endregion
+
 	
 #pragma region Process_Update_Object
 	for (UINT i = 0; i < listObj.size(); i++)
@@ -746,7 +775,19 @@ void Scene_2::Update(DWORD dt)
 
 			case eID::BAT:
 			{
-				enemy->Update(dt);
+				if (camera->checkObjectInCamera(
+					enemy->GetX(),
+					enemy->GetY(),
+					enemy->GetWidth(),
+					enemy->GetHeight())) // nếu bat nằm trong camera thì update
+				{
+					enemy->Update(dt);
+				}
+				else
+				{
+					enemy->SetHealth(0); // ra khỏi cam coi như chết
+				}
+				
 				break;
 			}
 
@@ -901,6 +942,27 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
  					break;
 				} 
 
+				case eID::BAT:
+				{
+					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+					gameObj->SubHealth(1);
+					simon->SetScore(simon->GetScore() + 200);
+					if (rand() % 2 == 1) // tỉ lệ 50%
+					{
+						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+					}
+
+					RunEffectHit = true;
+					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+					if (CountEnemyGhost == 0)
+					{
+						TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+						isWaitProcessCreateGhost = true;
+						isAllowCheckTimeWaitProcessCreateGhost = true;
+					}
+					break;
+				}
+				
 				default:
 					break;
 				}
@@ -1097,6 +1159,12 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 
 						simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn
 						
+
+						TimeCreateBat = GetTickCount(); 
+						TimeWaitCreateBat = 2000;
+						isAllowCreateBat = true;
+
+
 						break;
 					}
 					 
@@ -1114,8 +1182,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 void Scene_2::CheckCollisionWithEnemy()
 {
 	CheckCollisionWeapon(listEnemy); // enemy bt
-//	CheckCollisionWeapon(listEnemy); //
-	CheckCollisionSimonWithEnemy();
+ 	CheckCollisionSimonWithEnemy();
 }
 
 void Scene_2::CheckCollisionSimonWithEnemy()
@@ -1222,9 +1289,10 @@ Item * Scene_2::GetNewItem(int Id, eID Type, float X, float Y)
 	} 
 
 
-	if (Type == eID::GHOST)
+	if (Type == eID::GHOST || Type == eID::PANTHER || Type == eID::BAT)
 	{
 		int random = rand() % 10;
+ 
 		switch (random)
 		{
 		case 0:

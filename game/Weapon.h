@@ -51,6 +51,7 @@ public:
 
 	void SetFinish(bool b);
 	  
+	
  
 };
 

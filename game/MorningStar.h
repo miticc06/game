@@ -37,7 +37,7 @@ public:
  
 	void UpgradeLevel();
 
-
+	int GetLevel();
 	bool isCollision(Object* obj);
 };
 

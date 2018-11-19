@@ -54,7 +54,7 @@ void Gate::Render(Camera * camera)
 		case 2:
 		{
 			_sprite->_timeLocal += dt;
-			if (_sprite->_timeLocal >= 500)
+			if (_sprite->_timeLocal >= 100)
 			{
 				_sprite->_timeLocal = 0;
 				_sprite->Next();
@@ -63,6 +63,17 @@ void Gate::Render(Camera * camera)
 			break;
 		}
 		case 3:
+		{
+			_sprite->_timeLocal += dt;
+			if (_sprite->_timeLocal >= 100)
+			{
+				_sprite->_timeLocal = 0;
+				_sprite->Next();
+				isStart++;
+			}
+			break;
+		}
+		case 4:
 		{
 			_sprite->_timeLocal += dt;
 			if (_sprite->_timeLocal >= 500)

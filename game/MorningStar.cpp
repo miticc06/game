@@ -174,6 +174,11 @@ void MorningStar::UpgradeLevel()
 	level++;
 }
 
+int MorningStar::GetLevel()
+{
+	return level;
+}
+
 bool MorningStar::isCollision(Object * obj)
 {
 	if (level==0 && _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1)

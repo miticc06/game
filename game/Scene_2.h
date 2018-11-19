@@ -63,7 +63,15 @@ private:
 	bool isAllowRenewPanther;
 	int CountEnemyPanther;
 
+	/*Xử lí liên quan tạo Bat*/
+	DWORD TimeCreateBat; // thời điểm đã tạo BAT
+	DWORD TimeWaitCreateBat; // thời gian phải chờ để tạo bot
+	bool isAllowCreateBat; // cho phép tạo Bat
 
+
+	bool isAllRenewBat;
+
+	int CountEnemyBat;
 
 	Simon * simon;
 	Map * TileMap;

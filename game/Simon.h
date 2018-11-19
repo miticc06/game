@@ -121,7 +121,7 @@ public:
 	Simon();
 	~Simon();
 
-	Weapon* _weaponMain;
+	MorningStar* _weaponMain;
 	Weapon* _weaponSub;
 
 
