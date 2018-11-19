@@ -1011,6 +1011,9 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						isDoneSimonGoThroughTheDoor1 = true;
 						camera->SetAutoGoX(abs(ViTriCameraDiChuyenSauKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
 						isDoneCameraGoThroughTheDoor1 = false;
+
+						simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn
+						
 						break;
 					}
 					 
