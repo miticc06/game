@@ -308,7 +308,12 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPOBJECT>* coObjects)
 		
 	if (isOnStair == false)
 	{
- 		CollisionWithBrick(coObjects); // check Collision and update x, y for simon
+		if (isAutoGoX == false)
+ 			CollisionWithBrick(coObjects); // check Collision and update x, y for simon
+		else
+		{
+			x += dx;
+		}
 	}
 	 
 
@@ -516,7 +521,6 @@ void Simon::SetHurt(LPCOLLISIONEVENT e)
 
 		if (e->ny != 0)
 		{
-			//vx = SIMON_WALKING_SPEED * e->nx * 2;
 			vy = -SIMON_VJUMP;
 			isHurting = 1;
 			//DebugOut(L"[SetHurt] Set vy = %f \n", vy);

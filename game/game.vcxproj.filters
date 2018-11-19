@@ -136,6 +136,9 @@
     <ClCompile Include="Panther.cpp">
       <Filter>Object\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Gate.cpp">
+      <Filter>Object\Ground</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -269,6 +272,9 @@
     </ClInclude>
     <ClInclude Include="Panther.h">
       <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Gate.h">
+      <Filter>Object\Ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

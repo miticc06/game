@@ -12,7 +12,7 @@
 #include "Candle.h"
 #include "StairTop.h"
 #include "StairBottom.h"
-
+#include "Gate.h"
 
 using namespace std;
 

@@ -132,6 +132,7 @@
     <ClInclude Include="Dagger.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="Gate.h" />
     <ClInclude Include="DSutil.h" />
     <ClInclude Include="dxutil.h" />
     <ClInclude Include="Effect.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Dagger.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="define.cpp" />
+    <ClCompile Include="Gate.cpp" />
     <ClCompile Include="DSutil.cpp" />
     <ClCompile Include="dxutil.cpp" />
     <ClCompile Include="Effect.cpp" />

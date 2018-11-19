@@ -27,12 +27,16 @@
 #include "Enemy.h"
 #include "Ghost.h"
 #include "Panther.h"
-#define GAME_TIME_SCENE2 30
+
+
+#define GAME_TIME_SCENE2 300
 
 #define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo
 #define ThoiGianChoDeXuLiTaoGhost 2500 // 2.5 giây
-#define ViTriCameraDiChuyenTruocKhiQuaCua 2825.0f
+#define ViTriCameraDiChuyenTruocKhiQuaCua 2809.0f
 #define ViTriCameraDiChuyenSauKhiQuaCua 3073.0f
+
+#define BienPhaiCameraKhiChuaQuaCua1 2576.0f
 
 #define REGION_CREATE_PANTHER_LEFT 1090.0f
 #define REGION_CREATE_PANTHER_RIGHT 2305.0f
@@ -72,8 +76,7 @@ private:
 	vector <Item*> listItem;
 	vector <Effect*> listEffect;
 	vector <Object*> listEnemy;
-
-	vector <Panther*> listPanther;
+	 
 
 	GameTime * _gameTime;
 
@@ -99,7 +102,7 @@ public:
 	void CheckCollisionSimonWithObjectHidden();
 	void CheckCollisionWithEnemy();
 	void CheckCollisionSimonWithEnemy();
-
+	void CheckCollisionSimonWithGate();
 	Item * GetNewItem(int Id, eID Type, float X, float Y);
 };
 

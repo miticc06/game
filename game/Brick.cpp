@@ -14,7 +14,9 @@ Brick::Brick(int X, int Y, int W, int H, int Model)
 	case 3:
 		_texture = TextureManager::GetInstance()->GetTexture(eID::TEX_BRICK_MODEL_3); // loại nhỏ
 		break;
-
+	case 4: // loại trong suốt 
+		_texture = TextureManager::GetInstance()->GetTexture(eID::TEX_BRICK_TRANSPARENT); // loại nhỏ
+		break;
 	default:
 		DebugOut(L"[BRICK] Get Texture that bai! Ko nhan dang duoc Model!\n");
 		break;

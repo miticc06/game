@@ -141,7 +141,7 @@ GameObject * Grid::GetNewObject(int type, int x, int y,int w, int h, int Model)
 
 	if (type == eID::STAIR_TOP) return new StairTop(x, y);
 	if (type == eID::STAIR_BOTTOM) return new StairBottom(x, y);
-
+	if (type == eID::GATE) return new Gate(x, y);
 
 	return NULL;
 }
