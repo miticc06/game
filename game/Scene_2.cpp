@@ -36,6 +36,11 @@ void Scene_2::KeyState(BYTE * state)
 	if (simon->isJumping && simon->isWalking)
 		return;
 	
+	//if (simon->isHurting && simon->isOnStair)
+	//{
+	//	simon->isHurting = 0;
+	//}
+
 	if (simon->isHurting)
 		return;
 
@@ -345,6 +350,12 @@ void Scene_2::OnKeyDown(int KeyCode)
 			simon->Attack(simon->_weaponSub);
 			sound->Play(eSound::soundDagger);
 		}
+	}
+
+	if (KeyCode == DIK_D)
+	{
+		listItem.push_back(new ItemDagger(simon->GetX(),simon->GetY()));
+
 	}
 
 	if (simon->isJumping && simon->isWalking)
@@ -1030,6 +1041,28 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 					CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
 					break;
 				} 
+
+
+				case eID::BAT:
+				{
+					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+					gameObj->SubHealth(1);
+					simon->SetScore(simon->GetScore() + 200);
+					if (rand() % 2 == 1) // tỉ lệ 50%
+					{
+						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+					}
+
+					RunEffectHit = true;
+					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+					if (CountEnemyGhost == 0)
+					{
+						TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+						isWaitProcessCreateGhost = true;
+						isAllowCheckTimeWaitProcessCreateGhost = true;
+					}
+					break;
+				}
 
 				default:
 					break;

@@ -2,6 +2,8 @@
 #define __GATE_H__
 
 #include "GameObject.h"
+#include "Sound.h"
+
 class Gate :
 	public GameObject
 {

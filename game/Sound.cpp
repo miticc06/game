@@ -23,6 +23,7 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::soundDisplayMonney, L"Resources/sound/display_monney.wav");
 
 	AddSound(eSound::soundHurting, L"Resources/sound/hurting.wav");
+	AddSound(eSound::soundOpenDoor, L"Resources/sound/opendoor.wav");
 
 
 

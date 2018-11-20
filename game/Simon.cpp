@@ -526,7 +526,14 @@ void Simon::SetHurt(LPCOLLISIONEVENT e)
 			//DebugOut(L"[SetHurt] Set vy = %f \n", vy);
 		}
 	}
-	 
+	else
+	{
+		//vx = 0;
+		//vy = 0;
+		isWalking = 1;
+		//isHurting = 1;
+	}
+
 	StartUntouchable(); // không cho các object đụng tiếp
 
 	_weaponMain->SetFinish(true);

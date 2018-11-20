@@ -17,7 +17,7 @@ enum eSound
 	soundDagger = 6,
 	soundDisplayMonney = 7,
 	soundHurting = 8,
-
+	soundOpenDoor = 9,
 
 	musicState1 = 51,
 	musicLifeLost = 52
