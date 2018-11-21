@@ -7,7 +7,7 @@ Panther::Panther(float X, float Y, int Trend, float autoGoX_Dx)
 	type = eID::PANTHER;
 	Health = 1;
 	vx = vy = 0;
-	trend = Trend;
+	direction = Trend;
 	x = X;
 	y = Y;
 	AutoGoX_Backup_X = x;
@@ -39,7 +39,7 @@ void Panther::Update(DWORD dt, Simon * simon, vector<LPGAMEOBJECT>* coObjects)
 	vy += SIMON_GRAVITY * dt; // Simple fall down
 
 	float DistanceLimit = 177.0f;
-	if (trend == 1)
+	if (direction == 1)
 		DistanceLimit -= 85;
 	if (abs(simon->GetX() - (x+_texture->FrameWidth)) <= DistanceLimit && isStart == 0)
 	{
@@ -118,11 +118,11 @@ void Panther::Update(DWORD dt, Simon * simon, vector<LPGAMEOBJECT>* coObjects)
 				isJumping = false; // kết thúc nhảy
 				if (x < simon->GetX()) // simon ở bên phải
 				{
-					trend = 1; // đổi hướng panther qua phải 
+					direction = 1; // đổi hướng panther qua phải 
 				}
 				else
 				{
-					trend = -1; // đổi hướng panther qua trái
+					direction = -1; // đổi hướng panther qua trái
 				}
 				Run();
 			}
@@ -157,7 +157,7 @@ void Panther::Render(Camera * camera)
 //	_sprite->Update(dt);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
-	if (trend == -1)
+	if (direction == -1)
 		_sprite->Draw((int)pos.x, (int)pos.y);
 	else
 		_sprite->DrawFlipX((int)pos.x, (int)pos.y);
@@ -177,14 +177,14 @@ void Panther::Jump()
 	if (isJumping == true)
 		return;
 	vy -= PANTHER_VYJUMP;
-	vx = PANTHER_VXJUMP * trend;
+	vx = PANTHER_VXJUMP * direction;
 	isJumping = true;
 
 }
 
 void Panther::Run()
 {
-	vx = PANTHER_SPEED_RUNNING * trend;
+	vx = PANTHER_SPEED_RUNNING * direction;
 	isRunning = true;
 }
 

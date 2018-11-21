@@ -8,7 +8,7 @@ StairTop::StairTop(int X, int Y, int Trend)
 	y = Y;
 	width = 50;
 	height = 50;
-	trend = Trend;
+	direction = Trend;
 	type = eID::STAIR_TOP;
 
 	y -= width;

@@ -3,13 +3,20 @@
  
 #include "Effect.h"
 
-#define BROKENBRICK_GRAVITY 0.005f 
+#define BROKENBRICK_GRAVITY 0.0015f 
 
 
 class BrokenBrick : public Effect
 {
 private:
 	int _model;
+	DWORD dt;
+	float dx;
+	float dy;
+	float vx;
+	float vy;
+	int direction;
+
 
 public:
 	BrokenBrick(int X, int Y, int Model);

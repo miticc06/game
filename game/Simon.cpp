@@ -35,7 +35,7 @@ Simon::Simon()
 	DoCaoDiDuoc = 0;
 	isFreeze = 0;
 	TimeFreeze = 0;
-	trend = 1;
+	direction = 1;
 
 
 	_weaponMain =  new MorningStar();
@@ -171,23 +171,23 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 					isProcessingOnStair++; 
 
 					/* fix lỗi mỗi lần đi vượt quá 16px */
-					if (trend == 1 && trendY == -1) // đi lên bên phải
+					if (direction == 1 && trendY == -1) // đi lên bên phải
 					{
 						x -= (DoCaoDiDuoc - 16.0f);
 						y += (DoCaoDiDuoc - 16.0f);
 					}
-					if (trend == -1 && trendY == -1) // đi lên bên trái
+					if (direction == -1 && trendY == -1) // đi lên bên trái
 					{
 						x += (DoCaoDiDuoc - 16.0f);
 						y += (DoCaoDiDuoc - 16.0f);
 					}
 
-					if (trend == 1 && trendY == 1) // đi xuống bên phải
+					if (direction == 1 && trendY == 1) // đi xuống bên phải
 					{
 						x -= (DoCaoDiDuoc - 16.0f);
 						y -= (DoCaoDiDuoc - 16.0f);
 					}
-					if (trend == -1 && trendY == 1) // đi xuống bên trái
+					if (direction == -1 && trendY == 1) // đi xuống bên trái
 					{
 						x += (DoCaoDiDuoc - 16.0f);
 						y -= (DoCaoDiDuoc - 16.0f);
@@ -367,14 +367,14 @@ void Simon::Render(Camera* camera)
 
 	if (this->GetFreeze() == true)
 	{
-		if (trend == -1)
+		if (direction == -1)
 			_sprite->DrawRandomColor((int)pos.x, (int)pos.y, alpha);
 		else
 			_sprite->DrawRandomColorFlipX((int)pos.x, (int)pos.y, alpha);
 	}
 	else
 	{
-		if (trend == -1)
+		if (direction == -1)
 			_sprite->Draw((int)pos.x, (int)pos.y, alpha);
 		else
 			_sprite->DrawFlipX((int)pos.x, (int)pos.y, alpha);
@@ -397,7 +397,7 @@ void Simon::Left()
 
 	// (isJumping == true || isAttacking == true)
 	//	return;
-	trend = -1;
+	direction = -1;
 }
 
 void Simon::Right()
@@ -406,7 +406,7 @@ void Simon::Right()
 		return;
 	//if (isJumping == true || isAttacking == true)
 	//	return;
-	trend = 1; // quay qua phải
+	direction = 1; // quay qua phải
 }
 
 void Simon::Go()
@@ -420,7 +420,7 @@ void Simon::Go()
 	if (isAttacking == true /*|| isJumping == true*/)
 		return;
 
-	vx = SIMON_WALKING_SPEED * trend;
+	vx = SIMON_WALKING_SPEED * direction;
 	isWalking = 1;
 	
 }
@@ -476,10 +476,10 @@ void Simon::Stop()
 	//DebugOut(L"[STOP] Set vx = %f \n", vx);
 
 	//if (vx!=0)
-	//	vx -= dt*SIMON_GRAVITY*0.1*trend;
-	//if (trend == 1 && vx < 0) 
+	//	vx -= dt*SIMON_GRAVITY*0.1*direction;
+	//if (direction == 1 && vx < 0) 
 	//	vx = 0;
-	//if (trend == -1 && vx > 0) 
+	//if (direction == -1 && vx > 0) 
 	//	vx = 0;
 	// tóm lại là vx = 0 :v
 
@@ -758,7 +758,7 @@ void Simon::Attack(Weapon * w)
 		return;
 
 	isAttacking = true; // set trang thái tấn công
-	w->Create(this->x, this->y, this->trend); // set vị trí weapon theo simon
+	w->Create(this->x, this->y, this->direction); // set vị trí weapon theo simon
 }
 
 int Simon::GetLives()
@@ -834,7 +834,7 @@ void Simon::SetAutoGoX(int TrendGo, int trendAfterGo, float Dx, float Speed)
 	this->TrendAfterGo = trendAfterGo;
 
 
-	trend = TrendGo;
+	direction = TrendGo;
  	vx = Speed * TrendGo;
 	isWalking = 1;
 	isJumping = 0;
@@ -855,7 +855,7 @@ void Simon::RestoreBackupAutoGoX()
 	trendStair = trendStair_Backup;
 	trendY = trendY_Backup;
 	 
-	trend = TrendAfterGo; // set hướng sau khi đi
+	direction = TrendAfterGo; // set hướng sau khi đi
 
 	isWalking = 0; // tắt trạng thái đang đi
 	isAutoGoX = 0; // tắt trạng thái auto
@@ -895,7 +895,7 @@ bool Simon::LoseLife()
 	DoCaoDiDuoc = 0;
 	isFreeze = 0;
 	TimeFreeze = 0;
-	trend = 1;
+	direction = 1;
 
 	x = PositionBackup.x;
 	y = PositionBackup.y;

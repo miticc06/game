@@ -42,7 +42,7 @@ protected:
 	int Health;
 	int id; // ID của object
 
-	int trend;	// hướng -1 : trái, 1: phải
+	int direction;	// hướng -1 : trái, 1: phải
 	eID type; // Loại Object
 
 	float x;
@@ -75,8 +75,8 @@ public:
 	int GetHealth();
 	void SetHealth(int h);
 	void SubHealth(int th);
-	void SetTrend(int Trend);
-	int GetTrend();
+	void SetDirection(int d);
+	int GetDirection();
 	void SetId(int ID);
 	int GetId();
 	 

@@ -58,20 +58,20 @@ void Scene_2::KeyState(BYTE * state)
 						if (simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với STAIR BOTOM
 						{
 							GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
-							simon->trendStair = gameobj->GetTrend(); // lưu hướng của cầu thang đang đi vào simon
+							simon->trendStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon
 							simon->trendY = -1;// hướng đi lên
-							simon->SetTrend(simon->trendStair);// hướng của simon khi đi lên là hướng của cầu thang
+							simon->SetDirection(simon->trendStair);// hướng của simon khi đi lên là hướng của cầu thang
 
 							simon->isOnStair = true; // set trạng thái đang trên cầu thang
 							simon->DoCaoDiDuoc = 0; 
 
 							if (simon->GetX() < gameobj->GetX())
 							{
-								simon->SetAutoGoX(1, gameobj->GetTrend(), gameobj->GetX() - simon->GetX(), SIMON_WALKING_SPEED);
-								// hướng sau khi autogo phải là hướng của cầu thang:  gameobj->GetTrend()
+								simon->SetAutoGoX(1, gameobj->GetDirection(), gameobj->GetX() - simon->GetX(), SIMON_WALKING_SPEED);
+								// hướng sau khi autogo phải là hướng của cầu thang:  gameobj->GetDirection()
 							}
 							else
-								simon->SetAutoGoX(-1, gameobj->GetTrend(), simon->GetX() - gameobj->GetX(), SIMON_WALKING_SPEED);
+								simon->SetAutoGoX(-1, gameobj->GetDirection(), simon->GetX() - gameobj->GetX(), SIMON_WALKING_SPEED);
 
 							
 							
@@ -92,8 +92,8 @@ void Scene_2::KeyState(BYTE * state)
 					simon->isWalking = true;
 					simon->isProcessingOnStair = 1;
 					simon->trendY = -1;// hướng đi lên
-					simon->SetTrend(simon->trendStair);// hướng của simon khi đi lên là hướng của cầu thang
-					simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, -1 * SIMON_SPEED_ONSTAIR);
+					simon->SetDirection(simon->trendStair);// hướng của simon khi đi lên là hướng của cầu thang
+					simon->SetSpeed(simon->GetDirection()* SIMON_SPEED_ONSTAIR, -1 * SIMON_SPEED_ONSTAIR);
 				
 					float vvx, vvy;
 					simon->GetSpeed(vvx, vvy);
@@ -116,9 +116,9 @@ void Scene_2::KeyState(BYTE * state)
 							if (simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với STAIR TOP
 							{
 								GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
-								simon->trendStair = gameobj->GetTrend(); // lưu hướng của cầu thang đang đi vào simon
+								simon->trendStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon
 								simon->trendY = 1;// hướng đi xuống
-								simon->SetTrend(simon->trendStair);// hướng của simon khi đi xuống là hướng của cầu thang
+								simon->SetDirection(simon->trendStair);// hướng của simon khi đi xuống là hướng của cầu thang
 
 								simon->isOnStair = true; // set trạng thái đang trên cầu thang
 								simon->DoCaoDiDuoc = 0;
@@ -126,11 +126,11 @@ void Scene_2::KeyState(BYTE * state)
 
 								if (simon->GetX() < gameobj->GetX())
 								{
-									simon->SetAutoGoX(1, - gameobj->GetTrend(), gameobj->GetX() - simon->GetX(), SIMON_WALKING_SPEED);
-									// hướng sau khi autogo phải là hướng của cầu thang:  gameobj->GetTrend()
+									simon->SetAutoGoX(1, - gameobj->GetDirection(), gameobj->GetX() - simon->GetX(), SIMON_WALKING_SPEED);
+									// hướng sau khi autogo phải là hướng của cầu thang:  gameobj->GetDirection()
 								}
 								else
-									simon->SetAutoGoX(-1, - gameobj->GetTrend(), simon->GetX() - gameobj->GetX(), SIMON_WALKING_SPEED);
+									simon->SetAutoGoX(-1, - gameobj->GetDirection(), simon->GetX() - gameobj->GetX(), SIMON_WALKING_SPEED);
 
 
 
@@ -162,8 +162,8 @@ void Scene_2::KeyState(BYTE * state)
 						simon->isWalking = true;
 						simon->isProcessingOnStair = 1;
 						simon->trendY = 1;// hướng đi xuống
-						simon->SetTrend(simon->trendStair*-1);// hướng của simon khi đi xuóng là ngược của cầu thang
-						simon->SetSpeed(simon->GetTrend()* SIMON_SPEED_ONSTAIR, SIMON_SPEED_ONSTAIR);
+						simon->SetDirection(simon->trendStair*-1);// hướng của simon khi đi xuóng là ngược của cầu thang
+						simon->SetSpeed(simon->GetDirection()* SIMON_SPEED_ONSTAIR, SIMON_SPEED_ONSTAIR);
 					}
 
 				}
@@ -293,7 +293,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 	if (KeyCode == DIK_P) // tesst autogo 
 	{
-		simon->SetAutoGoX(simon->GetTrend(),-1,  200, SIMON_WALKING_SPEED);
+		simon->SetAutoGoX(simon->GetDirection(),-1,  200, SIMON_WALKING_SPEED);
 	}
 
 
@@ -397,7 +397,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 			simon->Stop();
 			float vx, vy;
 			simon->GetSpeed(vx, vy);
-			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetTrend(), vy - SIMON_VJUMP);
+			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetDirection(), vy - SIMON_VJUMP);
 			simon->isJumping = 1;
 			simon->isWalking = 1;
 		}
@@ -1138,10 +1138,10 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 						sound->Play(eSound::soundDisplayMonney);
 						listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
 						listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
-						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 7)); // hiệu ứng hit
-
-
-						
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick 
 					}
 					break;
 				}
@@ -1306,7 +1306,7 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 
 				if (simon->checkAABB(gameobj) == true)
 				{
-					LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetTrend(), 0, NULL);
+					LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetDirection(), 0, NULL);
 					simon->SetHurt(e);
 					return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
 				}
@@ -1329,7 +1329,7 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 //					}
 //					if (simon->checkAABB(listPanther[i]) == true)
 //					{
-//						LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetTrend(), 0, NULL);
+//						LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetDirection(), 0, NULL);
 //						simon->SetHurt(e);
 //						return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
 //					}

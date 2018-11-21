@@ -20,7 +20,7 @@ void Grid::ReadFileToGrid(char * filename)
 	ifstream inp;
 	inp.open(filename, ios::in);
 	 
-	int id, type, trend, x, y, w, h, model;
+	int id, type, direction, x, y, w, h, model;
 
 	if (inp)
 	{
@@ -29,8 +29,8 @@ void Grid::ReadFileToGrid(char * filename)
 
 		for (int i = 0; i < n; i++)
 		{
-			inp >> id >> type >> trend >> x >> y >> w >> h >> model;
-			Insert(id, type, trend, x, y, w, h, model);
+			inp >> id >> type >> direction >> x >> y >> w >> h >> model;
+			Insert(id, type, direction, x, y, w, h, model);
 		} 
 		inp.close();
 	} 
@@ -102,7 +102,7 @@ void Grid::ResetTake()
 	}
 }
  
-void Grid::Insert(int id, int type, int trend, int x, int y, int w, int h, int Model)
+void Grid::Insert(int id, int type, int direction, int x, int y, int w, int h, int Model)
 { 
 	int Top = (int) floor( y / (float)GRID_CELL_HEIGHT);
 	int Bottom = (int)floor((y + h) / (float)GRID_CELL_HEIGHT);
@@ -117,7 +117,7 @@ void Grid::Insert(int id, int type, int trend, int x, int y, int w, int h, int M
 		return;
 	} 
 	dataObject->SetId(id);
-	dataObject->SetTrend(trend); 
+	dataObject->SetDirection(direction); 
 	dataObject->SetIsTake(false);
 
 	listObjectGame.push_back(dataObject);

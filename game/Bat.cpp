@@ -10,7 +10,7 @@ Bat::Bat(float X, float Y, int Trend)
 	this->x = X;
 	this->y = Y;
 	this->yBackup = y;
-	this->trend = Trend;
+	this->direction = Trend;
 	this->Health = 1;
 
 	vy = BAT_SPEED_Y;
@@ -60,7 +60,7 @@ void Bat::Render(Camera * camera)
 	if (_sprite->GetIndex()==0)
 		_sprite->Update(dt);
 	D3DXVECTOR2 pos = camera->Transform(x, y);
-	if (trend == -1)
+	if (direction == -1)
 		_sprite->Draw((int)pos.x, (int)pos.y);
 	else
 		_sprite->DrawFlipX((int)pos.x, (int)pos.y);

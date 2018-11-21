@@ -37,7 +37,7 @@ public:
 	void GetListObject(vector<GameObject*> &ListObj, GameObject * obj);
 
 
-	void Insert(int id, int type, int trend, int x, int y, int w, int h, int Model); //Thêm object vào grid
+	void Insert(int id, int type, int direction, int x, int y, int w, int h, int Model); //Thêm object vào grid
 
 	GameObject * GetNewObject(int type, int x, int y, int w, int h, int Model);
 

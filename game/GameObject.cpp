@@ -8,7 +8,7 @@ GameObject::GameObject()
 {
 	x = y = 0;
 	vx = vy = 0;
-	trend = 1;	
+	direction = 1;	
 	Health = 1;  // Alive
 }
 
@@ -39,14 +39,14 @@ void GameObject::SubHealth(int th)
 		Health = 0;
 }
  
-void GameObject::SetTrend(int Trend)
+void GameObject::SetDirection(int d)
 {
-	trend = Trend;
+	direction = d;
 }
 
-int GameObject::GetTrend()
+int GameObject::GetDirection()
 {
-	return trend;
+	return direction;
 }
 
 void GameObject::SetId(int ID)

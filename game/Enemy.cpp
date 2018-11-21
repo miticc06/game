@@ -21,7 +21,7 @@ void Enemy::Render(Camera * camera)
 	_sprite->Update(dt);
 	  
  	D3DXVECTOR2 pos = camera->Transform(x, y);
-	if (trend == -1)
+	if (direction == -1)
 		_sprite->Draw((int)pos.x, (int)pos.y);
 	else
 		_sprite->DrawFlipX((int)pos.x, (int)pos.y);

@@ -24,6 +24,7 @@ public:
 
 	virtual void Render(Camera * camera);
 	virtual void Update(DWORD dt);
+
 	bool GetFinish();
 	void SetFinish(int b);
 };

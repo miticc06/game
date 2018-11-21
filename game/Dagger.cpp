@@ -27,7 +27,7 @@ void Dagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Dagger::Create(float simonX, float simonY, int simonTrend)
 {
 	Weapon::Create(simonX, simonY + 10, simonTrend);
-	vx = DAGGER_SPEED * trend;
+	vx = DAGGER_SPEED * direction;
 }
 
 void Dagger::GetBoundingBox(float & left, float & top, float & right, float & bottom)

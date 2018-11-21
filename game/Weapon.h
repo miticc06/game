@@ -16,7 +16,7 @@ class Weapon : public GameObject
 {
 protected: 
 	 
-	//int trend;		// hướng trái = -1, phải = 1;
+	//int direction;		// hướng trái = -1, phải = 1;
 
 	bool isFinish;
 
@@ -26,8 +26,8 @@ public:
 	Weapon();
 	~Weapon();			 
 
-	int GetTrend();
-	void SetTrend(int Trend);
+	int GetDirection();
+	void SetDirection(int Trend);
 
 	virtual void Create(float simonX, float simonY, int simonTrend);
  

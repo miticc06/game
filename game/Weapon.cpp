@@ -12,21 +12,21 @@ Weapon::~Weapon()
 { 
 }
 
-int Weapon::GetTrend()
+int Weapon::GetDirection()
 {
-	return trend;
+	return direction;
 }
 
-void Weapon::SetTrend(int Trend)
+void Weapon::SetDirection(int Trend)
 {
-	this->trend = Trend;
+	this->direction = Trend;
 }
 
 void Weapon::Create(float simonX, float simonY, int simonTrend)
 {
 	this->x = simonX;
 	this->y = simonY;
-	this->trend = simonTrend;
+	this->direction = simonTrend;
 	isFinish = 0;
 }
 
@@ -43,7 +43,7 @@ void Weapon::Render(Camera * camera)
 {
 	//DebugOut(L"WEAPON: index = %d \n", _sprite->GetIndex());
 	D3DXVECTOR2 pos = camera->Transform(x, y);
-	if (trend == -1)
+	if (direction == -1)
 		_sprite->Draw((int)pos.x, (int)pos.y);
 	else
 		_sprite->DrawFlipX((int)pos.x, (int)pos.y);

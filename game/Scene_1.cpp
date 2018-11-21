@@ -142,7 +142,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 	if (KeyCode == DIK_P) // tesst autogo 
 	{
-		simon->SetAutoGoX(simon->GetTrend(), simon->GetTrend(), 200, SIMON_WALKING_SPEED);
+		simon->SetAutoGoX(simon->GetDirection(), simon->GetDirection(), 200, SIMON_WALKING_SPEED);
 	}
 
 
@@ -194,7 +194,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 			simon->Stop();
 			float vx, vy;
 			simon->GetSpeed(vx, vy);
-			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetTrend()/**vx - 0.0001f*/,vy - SIMON_VJUMP);
+			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetDirection()/**vx - 0.0001f*/,vy - SIMON_VJUMP);
 			simon->isJumping = 1;
 			simon->isWalking = 1;
 		}

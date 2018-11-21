@@ -36,7 +36,7 @@ void MorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void MorningStar::Render(Camera * camera)
 {
 	D3DXVECTOR2 pos = camera->Transform(x, y);
-	if (trend == -1)
+	if (direction == -1)
 		_sprite->Draw((int)pos.x, (int)pos.y);
 	else
 		_sprite->DrawFlipX((int)pos.x, (int)pos.y);
@@ -85,7 +85,7 @@ void MorningStar::Create(float simonX, float simonY, int simonTrend)
 
 void MorningStar::UpdatePositionFitSimon()
 {
-	if (trend == -1)
+	if (direction == -1)
 	{
 		this->x = x - 65;
 	}
@@ -101,7 +101,7 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 	{
 	case 0: 
 	{
-		if (trend == 1)
+		if (direction == 1)
 		{
 			left = x + 78;
 			top = y + 15;
@@ -120,7 +120,7 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 	}
 	case 1:
 	{
-		if (trend == 1)
+		if (direction == 1)
 		{
 			left = x + 78;
 			top = y + 15;
@@ -139,7 +139,7 @@ void MorningStar::GetBoundingBox(float & left, float & top, float & right, float
 	}
 	case 2:
 	{
-		if (trend == 1)
+		if (direction == 1)
 		{
 			left = x + 78;
 			top = y + 15;

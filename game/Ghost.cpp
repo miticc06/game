@@ -6,14 +6,14 @@ Ghost::Ghost(float X,  float Y, int Trend)
 {
 	x = X;
 	y = Y;
-	this->trend = Trend;
+	this->direction = Trend;
 
 	_texture = TextureManager::GetInstance()->GetTexture(eID::GHOST);
 	_sprite = new GSprite(_texture, 100);
 
 	Health = 1; // sét máu
 	type = eID::GHOST;
-	vx = GHOST_SPEED_X* this->trend;
+	vx = GHOST_SPEED_X* this->direction;
 }
 
 Ghost::~Ghost()
@@ -57,7 +57,7 @@ void Ghost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (nx != 0)
 		{ 
 			vx *= -1;
-			trend *= -1;
+			direction *= -1;
 		}
 
 		if (ny != 0)
@@ -79,7 +79,7 @@ void Ghost::Render(Camera * camera)
 	_sprite->Update(dt);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
-	if (trend == -1)
+	if (direction == -1)
 		_sprite->Draw((int)pos.x, (int)pos.y);
 	else
 		_sprite->DrawFlipX((int)pos.x, (int)pos.y);
