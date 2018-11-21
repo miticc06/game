@@ -17,9 +17,8 @@ MorningStar::~MorningStar()
 
 void MorningStar::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 { 
-	this->dt = dt;
-	this->dx = vx * dt;
-	this->dy = vy * dt;
+	Weapon::Update(dt);
+
 	// update for check collision
 
 	isFinish = (_sprite->GetIndex() == 3 && level == 0) + (_sprite->GetIndex() == 7 && level == 1) + (_sprite->GetIndex() == 11 && level == 2);

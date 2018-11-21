@@ -317,6 +317,23 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
+	if (KeyCode == DIK_H) // create hollywater
+	{
+		simon->_weaponSub = new HolyWater();
+
+	}
+
+	if (KeyCode == DIK_F) // create hollywater
+	{
+		simon->SetHealth(16);
+		simon->SetLives(9999);
+		simon->SetHeartCollect(9999);
+		_gameTime->SetTime(0);
+		simon->_weaponSub = new HolyWater();
+
+	}
+
+
 	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
 		return;
 
@@ -596,24 +613,24 @@ void Scene_2::Update(DWORD dt)
 					if (simon->GetVx() > 0) // vx>0 đang chạy về bên phải
 					{
 						// cho ghost chạy từ bên phải qua
-						listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326, -1));// 34 framewidth của ghost
+						listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326 - 10, -1));// 34 framewidth của ghost
 					}
 					else
 						if (simon->GetVx() < 0) // vx>0 đang chạy về bên trái
 						{
 							// cho ghost chạy từ bên trái qua 
-							listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326, 1));
+							listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326 - 10, 1));
 						}
 						else // đứng yên thì cứ random
 						{
 							int random = rand() % 2;
 							if (random == 0) // đi từ bên trái
 							{
-								listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326, 1));
+								listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326 - 10, 1));
 							}
 							else // đi từ bên phải
 							{
-								listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326, -1));
+								listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326 - 10, -1));
 							}
 						}
 					CountEnemyGhost++;
@@ -756,7 +773,7 @@ void Scene_2::Update(DWORD dt)
 					}
 				}
 				else
-					enemy->Update(dt); 
+					enemy->Update(dt, &listObj);
 				break;
 			}
 
@@ -1075,7 +1092,23 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 				{
 					listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
 					sound->Play(eSound::soundHit);
-					simon->_weaponSub->SetFinish(true); // hủy cây kiếm
+					switch (simon->_weaponSub->GetType())
+					{
+					case eID::HOLYWATER:
+					{
+						//HolyWater * objHolyWater = dynamic_cast<HolyWater *>(simon->_weaponSub);
+						//if (objHolyWater->is==true)
+						break;
+					}
+
+					case eID::DAGGER:
+					{
+
+						simon->_weaponSub->SetFinish(true); // hủy cây kiếm 
+						break;
+					}
+
+					}
 				}
 			}
 	}
@@ -1123,6 +1156,15 @@ void Scene_2::CheckCollisionSimonWithItem()
 				{
 					SAFE_DELETE(simon->_weaponSub);
 					simon->_weaponSub = new Dagger();
+					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectWeapon);
+					break;
+				}
+
+				case eID::ITEMHOLYWATER:
+				{
+					SAFE_DELETE(simon->_weaponSub);
+					simon->_weaponSub = new HolyWater();
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectWeapon);
 					break;
@@ -1318,7 +1360,17 @@ Item * Scene_2::GetNewItem(int Id, eID Type, float X, float Y)
 {
 	if (Type == eID::CANDLE)
 	{
-		return new SmallHeart(X, Y);
+		switch (Id)
+		{ 
+		case 71:
+			return new ItemHolyWater(X, Y);
+			break;
+
+		default:
+			return new SmallHeart(X, Y);
+			break;
+		}
+		
 	} 
 
 

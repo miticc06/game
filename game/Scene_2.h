@@ -28,6 +28,9 @@
 #include "Ghost.h"
 #include "Panther.h"
 #include "Bat.h"
+#include "HolyWater.h"
+#include "ItemHolyWater.h"
+
 
 #define GAME_TIME_SCENE2 300
 

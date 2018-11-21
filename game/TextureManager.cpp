@@ -50,6 +50,7 @@ void TextureManager::LoadResource()
 	AddTexture(eID::UPGRADEMORNINGSTAR, new GTexture("Resources/item/3.png"));
 	AddTexture(eID::MONNEY, new GTexture("Resources/item/2.png", 3,1,3));
 	AddTexture(eID::SMALLHEART, new GTexture("Resources/item/0.png"));
+	AddTexture(eID::ITEMHOLYWATER, new GTexture("Resources/item/9.png"));
 
 
 
@@ -57,6 +58,7 @@ void TextureManager::LoadResource()
 	// Weapon
 	AddTexture(eID::DAGGER, new GTexture("Resources/weapon/1.png"));
 	AddTexture(eID::MORNINGSTAR, new GTexture("Resources/weapon/morningstar.png", 4, 3, 12));
+	AddTexture(eID::HOLYWATER, new GTexture("Resources/weapon/2.png", 4,1, 4));
 
 
 	//player

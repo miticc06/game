@@ -16,13 +16,7 @@ Dagger::~Dagger()
 
 void Dagger::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 {  
-
-	this->dt = dt;
-	dx = vx * dt;
-	dy = vy * dt;
-
-
-
+	Weapon::Update(dt); // update dt,dx,dy
 
 
 	x += dx;

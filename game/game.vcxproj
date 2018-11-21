@@ -144,6 +144,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Ghost.h" />
+    <ClInclude Include="HolyWater.h" />
+    <ClInclude Include="ItemHolyWater.h" />
     <ClInclude Include="Monney.h" />
     <ClInclude Include="ObjectHidden.h" />
     <ClInclude Include="Panther.h" />
@@ -192,6 +194,8 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="HolyWater.cpp" />
+    <ClCompile Include="ItemHolyWater.cpp" />
     <ClCompile Include="Monney.cpp" />
     <ClCompile Include="ObjectHidden.cpp" />
     <ClCompile Include="Panther.cpp" />

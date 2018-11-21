@@ -61,9 +61,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Framework\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Framework\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Scene_1.cpp">
       <Filter>Framework\Scene</Filter>
     </ClCompile>
@@ -141,6 +138,15 @@
     </ClCompile>
     <ClCompile Include="Bat.cpp">
       <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="HolyWater.cpp">
+      <Filter>Object\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemHolyWater.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Framework\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -281,6 +287,12 @@
     </ClInclude>
     <ClInclude Include="Bat.h">
       <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="HolyWater.h">
+      <Filter>Object\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemHolyWater.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

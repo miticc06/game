@@ -101,7 +101,7 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPOBJECT>* coObjects)
 
 	if (_weaponSub != NULL && _weaponSub->GetFinish() == false)
 	{
-		_weaponSub->Update(dt);
+		_weaponSub->Update(dt, coObjects);
 	}
 
 
@@ -566,8 +566,7 @@ void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 			list_Brick.push_back(coObjects->at(i));
 
 	
-	CalcPotentialCollisions(&list_Brick, coEvents); // Lấy danh sách các va chạm
-
+	CalcPotentialCollisions(&list_Brick, coEvents); // Lấy danh sách các va chạm 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
@@ -576,8 +575,7 @@ void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, nx = 0, ny;
-
+		float min_tx, min_ty, nx = 0, ny; 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 		// nếu ko va chạm thì min_tx,min_ty = 1.0, còn nếu có thì nó trả về thời gian va chạm. 
 		//Còn nx,ny là hướng va chạm,  = 0 nếu ko va chạm;
@@ -587,21 +585,14 @@ void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 		y += min_ty * dy + ny * 0.4f; // ny = -1 thì hướng từ trên xuống....
 
 		if (nx != 0)
-			vx = 0; // nếu mà nx, ny <>0  thì nó va chạm rồi. mà chạm rồi thì dừng vận tốc cho nó đừng chạy nữa
+			;//	vx = 0; 
 
 		if (ny != 0)
 		{
 			vy = 0;
 			isJumping = false; // kết thúc nhảy
 		}
-		
-
 		 
-
-
-
-
-
 		if (nx != 0 || ny != 0)
 		{
 			isHurting = 0; 

@@ -88,7 +88,7 @@ enum eID
 	// weapon
 	MORNINGSTAR = 61,
 	DAGGER = 62,
-
+	HOLYWATER = 63,
 
 	// item
 	LARGEHEART = 81,
@@ -96,6 +96,7 @@ enum eID
 	ITEMDAGGER = 83,
 	MONNEY = 84,
 	SMALLHEART = 85,
+	ITEMHOLYWATER =86,
 
 	// other
 	FONT = 101,

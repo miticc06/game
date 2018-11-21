@@ -41,10 +41,20 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 	 
 	if (weaponSub != NULL)
 	{
-		if (weaponSub->GetType() == eID::DAGGER)
+		switch (weaponSub->GetType())
 		{
+		case eID::DAGGER:
 			weaponSub->RenderIcon(330, 40);
-		}
+			break;
+
+		case eID::HOLYWATER:
+			weaponSub->RenderIcon(332, 33);
+			break;
+
+
+		default:
+			break;
+		} 
 
 	}
 

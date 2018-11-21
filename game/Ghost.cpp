@@ -13,7 +13,7 @@ Ghost::Ghost(float X,  float Y, int Trend)
 
 	Health = 1; // sét máu
 	type = eID::GHOST;
-	vx = GHOST_SPEED* this->trend;
+	vx = GHOST_SPEED_X* this->trend;
 }
 
 Ghost::~Ghost()
@@ -30,8 +30,45 @@ void Ghost::GetBoundingBox(float & left, float & top, float & right, float & bot
 
 void Ghost::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 {
-	GameObject::Update(dt);
-	x += dx;
+	GameObject::Update(dt); 
+	vy += GHOST_GRAVITY * dt;
+
+	vector<LPOBJECT> listObject_Brick;
+	listObject_Brick.clear();
+	for (UINT i = 0; i < coObjects->size(); i++)
+		if (coObjects->at(i)->GetType() == eID::BRICK)
+			listObject_Brick.push_back(coObjects->at(i));
+
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+	coEvents.clear();
+	CalcPotentialCollisions(&listObject_Brick, coEvents); // Lấy danh sách các va chạm 
+	if (coEvents.size() == 0)
+	{
+		y += dy;
+		x += dx;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
+		if (nx != 0)
+		{ 
+			vx *= -1;
+			trend *= -1;
+		}
+
+		if (ny != 0)
+		{
+			vy = 0;
+			//vx = 0;
+		}
+	}
+	for (UINT i = 0; i < coEvents.size(); i++)
+		delete coEvents[i];
+
 }
 
 void Ghost::Render(Camera * camera)

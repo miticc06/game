@@ -32,7 +32,10 @@ void Weapon::Create(float simonX, float simonY, int simonTrend)
 
 void Weapon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 {
-	_sprite->Update(dt);
+	this->dt = dt;
+	dx = vx * dt;
+	dy = vy * dt;
+	
 }
  
 

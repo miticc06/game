@@ -16,8 +16,7 @@ void GameObject::Update(DWORD dt, vector<LPOBJECT> *coObjects)
 {
 	this->dt = dt;
 	dx = vx*dt;
-	dy = vy*dt;
-	
+	dy = vy*dt; 
 }
 
 
