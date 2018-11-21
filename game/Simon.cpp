@@ -709,11 +709,11 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 				float min_tx, min_ty, nx = 0, ny;
 
 				FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-			//	x += min_tx * dx + nx * 0.4f;
+				x += min_tx * dx + nx * 0.4f;
 				y += min_ty * dy + ny * 0.4f;
-				if (/*nx != 0 ||*/ ny != 0)
+				if (nx != 0 || ny != 0)
 				{
-					//vx = 0;
+					vx = 0;
 					vy = 0;
 					isOnStair = false; // kết thúc việc đang trên cầu thang
 					isWalking = false;

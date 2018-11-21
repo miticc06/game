@@ -288,7 +288,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		simon->SetPosition(3084.0f, 310.0f);
 
 
-		camera->SetBoundary(3073, camera->GetBoundaryRight() + 1000);// mở biên phải rộng ra thêm để chạy AutoGo
+		camera->SetBoundary(3073, camera->GetBoundaryRight() + 1023);// mở biên phải rộng ra thêm để chạy AutoGo
 		//camera->SetAutoGoX(abs(ViTriCameraDiChuyenTruocKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
 		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
 		isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
@@ -578,7 +578,7 @@ void Scene_2::ResetResource()
 	isAllowCreateBat = 0;
 
 	isStopWatch = 0;
-
+	camera->SetAllowFollowSimon(true);
 }
 
 void Scene_2::Update(DWORD dt)
@@ -886,35 +886,7 @@ void Scene_2::Update(DWORD dt)
 			}
 		}
 	}
-
-	/*
-	if (CountEnemyPanther > 0)
-	{
-		for (UINT i = 0; i < listPanther.size(); i++)
-			if (listPanther[i]->GetHealth() > 0) // còn máu
-			{
-				if (camera->checkObjectInCamera(
-					listPanther[i]->GetX(),
-					listPanther[i]->GetY(),
-					listPanther[i]->GetWidth(),
-					listPanther[i]->GetHeight())) // nếu Panther nằm trong camera thì update
-					// vì do Grid load object nền (Brick) dựa vào vùng camera, nên có nguy cơ khiến 1 số object Panther không xét được va chạm đất.
-				{
-					listPanther[i]->Update(dt, simon, &listObj);
-				}
-				else // nằm ngoài camera
-				{
-					if (listPanther[i]->GetIsStart())// ngoài cam và đã được kích hoạt r
-					{
-						listPanther[i]->SetHealth(0); // cho Panther chết
-						CountEnemyPanther--;
-					}
-				}
-
-			}
-
-	}
-*/
+	  
 
 #pragma endregion
 
@@ -947,14 +919,7 @@ void Scene_2::Render()
 	for (UINT i = 0; i < listEnemy.size(); i++)
 		listEnemy[i]->Render(camera);
 
-
-	//if (CountEnemyPanther > 0)
-	//{
-	//	for (UINT i = 0; i < listPanther.size(); i++)
-	//		if (listPanther[i]->GetHealth() > 0) // còn máu
-	//			listPanther[i]->Render(camera);
-	//}
-
+	 
 
 	simon->Render(camera);
 
@@ -1238,7 +1203,21 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 						break;
 					}
 
+					case 51: // id 51: brick 2 -> effect
+					{
+						if (simon->_weaponMain->isCollision(listObj[i]) == true)
+						{
+							gameObject->SubHealth(1);
+							listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
+							listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+							listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+							listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+							listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick 
+							sound->Play(eSound::soundBrokenBrick);
 
+						}
+						break;
+					}
 
 					}
 				}
@@ -1371,7 +1350,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						isDoneCameraGoThroughTheDoor1 = false;
 						simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
 						TimeCreateBat = GetTickCount();
-						TimeWaitCreateBat = 2000;
+						TimeWaitCreateBat = 3000;
 						isAllowCreateBat = true;
 						StateCurrent = 2;// set hiển thị đang ở state2
 						camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
@@ -1389,8 +1368,9 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 					case 45: // id 45: object ẩn -> trở lên trước khi xuống hồ nước
 					{
 						camera->SetPosition(camera->GetXCam(), 0);
-						simon->SetPosition(3165, 385);
+						simon->SetPosition(3152, 345);
 						isAllowCreateBat = true;  // không cho tạo Bat
+						TimeWaitCreateBat = 3000 + rand() % 1000;
 						break;
 					}
 					}
@@ -1443,31 +1423,7 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 			}
 		}
 #pragma endregion
-		//
-		//#pragma region Va chạm với Enemy Panther 
-		//		if (CountEnemyPanther > 0)
-		//		{
-		//			for (UINT i = 0; i < listPanther.size(); i++)
-		//				if (listPanther[i]->GetHealth() > 0)// còn sống
-		//				{
-		//					LPCOLLISIONEVENT e = simon->SweptAABBEx(listPanther[i]);
-		//					if (e->t > 0 && e->t <= 1) // có va chạm
-		//					{
-		//						simon->SetHurt(e);
-		//						return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
-		//					}
-		//					if (simon->checkAABB(listPanther[i]) == true)
-		//					{
-		//						LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetDirection(), 0, NULL);
-		//						simon->SetHurt(e);
-		//						return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
-		//					}
-		//				}
-		//		}
-		//
-		//#pragma endregion
-		//
-		//
+	 
 	}
 
 
@@ -1488,7 +1444,7 @@ void Scene_2::CheckCollisionSimonWithGate()
 					if (objGate->GetStart() == 0)
 					{
 						//di chuyển camera đến ViTriCameraDiChuyenTruocKhiQuaCua = 2825.0f
-						camera->SetBoundary(camera->GetBoundaryLeft(), camera->GetBoundaryRight() + 1000);// mở biên phải rộng ra thêm để chạy AutoGo
+						camera->SetBoundary(camera->GetBoundaryLeft(), camera->GetBoundaryRight() + 1064+100);// mở biên phải rộng ra thêm để chạy AutoGo
 						camera->SetAutoGoX(abs(ViTriCameraDiChuyenTruocKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
 						simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
 						isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
