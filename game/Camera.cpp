@@ -14,6 +14,7 @@ Camera::Camera(int w, int h/*, int b_left, int b_right*/)
 	// Biên mặc định ban đầu là kích thước MAP
 	_boundaryLeft = 0;
 	_boundaryRight = (float)(MapWidth - Window_Width);
+	_xCamBackup = _yCamBackup = 0;
 }
 
 Camera::~Camera()
@@ -136,5 +137,17 @@ float Camera::GetBoundaryRight()
 float Camera::GetBoundaryLeft()
 {
 	return _boundaryLeft;
+}
+
+void Camera::SetPositionBackup(float X, float Y)
+{
+	_xCamBackup = X;
+	_yCamBackup = Y;
+}
+
+void Camera::RestorePosition()
+{
+	_xCam = _xCamBackup;
+	_yCam = _yCamBackup;
 }
  

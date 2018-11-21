@@ -18,7 +18,7 @@ using namespace std;
 
 #define GRID_CELL_WIDTH 256
 #define GRID_CELL_HEIGHT 224
-#define GRID_BASE 10
+#define GRID_BASE 100
 
 
 

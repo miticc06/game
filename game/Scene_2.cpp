@@ -282,6 +282,30 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
+	if (KeyCode == DIK_9) // đứng ngay cầu thang gần xuoosg hồ nước
+	{
+		DebugOut(L"[SET POSITION SIMON] x = .... \n");
+		simon->SetPosition(3084.0f, 310.0f);
+
+
+		camera->SetBoundary(3073, camera->GetBoundaryRight() + 1000);// mở biên phải rộng ra thêm để chạy AutoGo
+		//camera->SetAutoGoX(abs(ViTriCameraDiChuyenTruocKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
+		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
+		isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
+		isDoneSimonGoThroughTheDoor1 = false; 
+
+
+		isDoneSimonGoThroughTheDoor1 = true;
+	//	camera->SetAutoGoX(abs(ViTriCameraDiChuyenSauKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
+		isDoneCameraGoThroughTheDoor1 = false;
+		simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
+		TimeCreateBat = GetTickCount();
+		TimeWaitCreateBat = 2000;
+		isAllowCreateBat = true;
+		StateCurrent = 2;// set hiển thị đang ở state2
+		camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
+	}
+
 	if (KeyCode == DIK_R)
 	{
 		DebugOut(L"[RESET GRID]");
@@ -575,7 +599,8 @@ void Scene_2::Update(DWORD dt)
 		sound->Play(eSound::musicLifeLost);
 		if (simon->GetLives() == 0)
 			return;
-		bool result = simon->LoseLife();
+		bool result = simon->LoseLife(); // đã khôi phục x,y
+		camera->RestorePosition(); // khôi phục vị trí camera;
 		if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
 		{
 			ResetResource(); // reset lại game
@@ -1349,11 +1374,27 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						TimeWaitCreateBat = 2000;
 						isAllowCreateBat = true;
 						StateCurrent = 2;// set hiển thị đang ở state2
+						camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
+						gameObject->SubHealth(1);
 						break;
 					}
 
+					case 41: // id 41: object ẩn -> xuống hồ nước
+					{
+						camera->SetPosition(camera->GetXCam(), 384-10);
+						simon->SetPosition(3150, 405);
+						isAllowCreateBat = false;  // không cho tạo Bat
+						break;
 					}
-					gameObject->SubHealth(1);
+					case 45: // id 45: object ẩn -> trở lên trước khi xuống hồ nước
+					{
+						camera->SetPosition(camera->GetXCam(), 0);
+						simon->SetPosition(3165, 385);
+						isAllowCreateBat = true;  // không cho tạo Bat
+						break;
+					}
+					}
+					
 				}
 			}
 		}

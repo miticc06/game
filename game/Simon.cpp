@@ -681,9 +681,10 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 
 		if (CountCollisionTop > 0) // có va chạm với top, và nó đang đi lên
 		{ 
+			float backupVy = vy;
 
 			y = y - 50; // kéo simon lên cao, để tạo va chạm giả xuống mặt đất. tính thời gian tiếp đất
-			vy = 50; // vận tốc kéo xuống lớn
+			vy = 15; // vận tốc kéo xuống lớn
 			dy = vy * dt; // cập nhật lại dy
 
 			 
@@ -692,9 +693,11 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 			coEvents.clear();
 			vector<LPGAMEOBJECT> list_Brick;
 			list_Brick.clear();
+
 			for (UINT i = 0; i < coObjects->size(); i++)
 				if (coObjects->at(i)->GetType() == eType::BRICK)
 					list_Brick.push_back(coObjects->at(i));
+
 			CalcPotentialCollisions(&list_Brick, coEvents);
 			if (coEvents.size() == 0)
 			{
@@ -706,11 +709,11 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 				float min_tx, min_ty, nx = 0, ny;
 
 				FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-				x += min_tx * dx + nx * 0.4f;
+			//	x += min_tx * dx + nx * 0.4f;
 				y += min_ty * dy + ny * 0.4f;
-				if (nx != 0 || ny != 0)
+				if (/*nx != 0 ||*/ ny != 0)
 				{
-					vx = 0;
+					//vx = 0;
 					vy = 0;
 					isOnStair = false; // kết thúc việc đang trên cầu thang
 					isWalking = false;
@@ -720,6 +723,9 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 
 			for (UINT i = 0; i < coEvents.size(); i++)
 				delete coEvents[i];
+			
+			vy = backupVy;
+			dy = vy * dt; // cập nhật lại dy
 
 			return; // ko cần xét tiếp
 		}

@@ -9,6 +9,10 @@ protected:
 	 
 	float _xCam;
 	float _yCam;
+	
+	float _xCamBackup;
+	float _yCamBackup;
+
 	int _width;
 	int _height;
 
@@ -55,6 +59,9 @@ public:
 	void SetBoundary(float left, float right); // set biên giới hạn cho camera
 	float GetBoundaryRight();
 	float GetBoundaryLeft();
+
+	void SetPositionBackup(float X, float Y); 
+	void RestorePosition();
 
 };
 
