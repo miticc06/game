@@ -12,11 +12,11 @@
 
 
 
-class Weapon : public Object
+class Weapon : public GameObject
 {
 protected: 
 	 
-	int trend;		// hướng trái = -1, phải = 1;
+	//int trend;		// hướng trái = -1, phải = 1;
 
 	bool isFinish;
 

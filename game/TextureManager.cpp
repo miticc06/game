@@ -67,6 +67,7 @@ void TextureManager::LoadResource()
 	//effect
 	AddTexture(eID::FIRE, new GTexture("Resources/other/1.png", 4, 1, 4));
 	AddTexture(eID::HIT, new GTexture("Resources/other/0.png", 2,1,2));
+	AddTexture(eID::BROKENBRICK, new GTexture("Resources/other/BrokenBrick64.png", 4,4,16));
 
 
 

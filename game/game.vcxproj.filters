@@ -148,6 +148,7 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Framework\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="BrokenBrick.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -294,6 +295,7 @@
     <ClInclude Include="ItemHolyWater.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="BrokenBrick.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

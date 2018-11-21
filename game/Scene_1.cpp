@@ -398,7 +398,7 @@ void Scene_1::CheckCollisionWeapon()
 
 					listEffect.push_back(new Hit((int)gameObjTorch->GetX()+14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng lửa
 					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY()+8)); // hiệu ứng lửa
-					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() +5, gameObjTorch->GetY()));
+					listItem.push_back(GetNewItem(gameObjTorch->GetId(), gameObjTorch->GetType(), gameObjTorch->GetX() +5, gameObjTorch->GetY()));
 
 					sound->Play(eSound::soundHit);
 				}
@@ -418,9 +418,9 @@ void Scene_1::CheckCollisionWeapon()
 
 					simon->_weaponSub->SetFinish(true);   // cây kiếm trúng object thì tắt luôn
 
-					listEffect.push_back(new Hit((int)gameObjTorch->GetX() + 14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng lửa
+					listEffect.push_back(new Hit((int)gameObjTorch->GetX() + 14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng hit
 					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY() + 8)); // hiệu ứng lửa
-					listItem.push_back(GetNewItem(gameObjTorch->GetId(), eID::TORCH, gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
+					listItem.push_back(GetNewItem(gameObjTorch->GetId(), gameObjTorch->GetType(), gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
 
 					sound->Play(eSound::soundHit);
 
@@ -470,7 +470,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 				{
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
-					simon->SetScore(1000);
+					simon->SetScore(simon->GetScore() + 1000);
 					break;
 				}
 
@@ -499,9 +499,7 @@ void Scene_1::CheckCollisionSimonWithObjectHidden()
 		{
 			GameObject * gameObject = dynamic_cast<GameObject*>(listObj[i]);
 			if (gameObject->GetHealth() > 0)
-			{
-				//LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]);
-				//if (0 < e->t && e->t <= 1) // có va chạm xảy ra
+			{ 
 				if (simon->isCollitionObjectWithObject(gameObject))
 				{
 					switch (gameObject->GetId())
@@ -518,9 +516,9 @@ void Scene_1::CheckCollisionSimonWithObjectHidden()
 					case 8:
 					{
 						sound->Play(eSound::soundDisplayMonney);
-						listItem.push_back(GetNewItem(gameObject->GetId(), eID::OBJECT_HIDDEN, simon->GetX(), simon->GetY()));
+						listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), simon->GetX(), simon->GetY()));
 						// chưa hiện effect 1000d
-						simon->SetScore(simon->GetScore() + 1000);
+						
 
 						break;
 					}

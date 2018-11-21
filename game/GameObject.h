@@ -1,7 +1,4 @@
-﻿#pragma once
-
-
- 
+﻿#pragma once 
 
 #include "define.h"
 #include "GSprite.h"
@@ -15,41 +12,14 @@ using namespace std;
  
 class GameObject; 
 typedef GameObject * LPGAMEOBJECT;
-//
-//struct CollisionEvent;
-//typedef CollisionEvent * LPCOLLISIONEVENT;
-//struct CollisionEvent
-//{
-//	LPGAMEOBJECT obj;
-//	float t, nx, ny;
-//	CollisionEvent(float t, float nx, float ny, LPGAMEOBJECT obj = NULL) 
-//	{ 
-//		this->t = t; 
-//		this->nx = nx; 
-//		this->ny = ny; 
-//		this->obj = obj; 
-//	}
-//
-//	static bool compare(const LPCOLLISIONEVENT &a, LPCOLLISIONEVENT &b)
-//	{
-//		return a->t < b->t;
-//	}
-//};
-//
-
-
-
-
+  
 class GameObject : public Object
 {
 protected:
-	int Health; 
-
+	int Health;  
 	int id; // ID của object
-	  
-
-protected:
-
+	   
+protected: 
 	int trend;	// hướng -1 : trái, 1: phải
 	   
 

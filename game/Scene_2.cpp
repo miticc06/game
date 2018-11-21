@@ -275,6 +275,12 @@ void Scene_2::OnKeyDown(int KeyCode)
 		simon->SetPosition(2830.0f, 0);
 	}
 
+	if (KeyCode == DIK_5)
+	{
+		DebugOut(L"[SET POSITION SIMON] x = .... \n");
+		simon->SetPosition(2060.0f, 0);
+	}
+
 
 	if (KeyCode == DIK_R)
 	{
@@ -1113,6 +1119,41 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 			}
 	}
 
+	// main weapon with brick
+#pragma region Object Brick
+	for (UINT i = 0; i < listObj.size(); i++)
+	{
+		if (listObj[i]->GetType() == eID::BRICK)
+		{
+			GameObject * gameObject = dynamic_cast<GameObject*>(listObj[i]);
+			if (gameObject->GetHealth() > 0)
+			{
+				switch (gameObject->GetId())
+				{
+				case 72: // id 72: brick -> a bonus
+				{
+					if (simon->_weaponMain->isCollision(listObj[i]) == true)
+					{
+						gameObject->SubHealth(1);
+						sound->Play(eSound::soundDisplayMonney);
+						listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
+						listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 7)); // hiệu ứng hit
+
+
+						
+					}
+					break;
+				}
+				}
+			}
+			
+
+			 
+		}
+	}
+
+#pragma endregion
 
 
 }
@@ -1197,6 +1238,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 
 void Scene_2::CheckCollisionSimonWithObjectHidden()
 {
+#pragma region Object Hidden
 	for (UINT i = 0; i < listObj.size(); i++)
 	{
 		if (listObj[i]->GetType() == eID::OBJECT_HIDDEN)
@@ -1204,54 +1246,33 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 			GameObject * gameObject = dynamic_cast<GameObject*>(listObj[i]);
 			if (gameObject->GetHealth() > 0)
 			{
-
 				LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]);
-
-				//DebugOut(L"e->t = %f, nx = %f, ny = %f \n", e->t, e->nx, e->ny);
-
-				
+				//DebugOut(L"e->t = %f, nx = %f, ny = %f \n", e->t, e->nx, e->ny); 
 				if (0.0f < e->t && e->t <= 1.0f) // có va chạm xảy ra
 				{
-
 					switch (gameObject->GetId())
 					{
-					//case 64: // đụng trúng cửa
-					//{ 
-					//	//di chuyển camera đến ViTriCameraDiChuyenTruocKhiQuaCua = 2825.0f
-					//	camera->SetBoundary(camera->GetBoundaryLeft(), camera->GetBoundaryRight() + 1000);// mở biên phải rộng ra thêm để chạy AutoGo
-					//	camera->SetAutoGoX(abs(ViTriCameraDiChuyenTruocKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
-					//	simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
-					//	isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
-					//	isDoneSimonGoThroughTheDoor1 = false;
-					//	break;
-					//}
-
 					case 67: // đụng trúng box xác nhận simon đã qua cửa
 					{
 						isDoneSimonGoThroughTheDoor1 = true;
 						camera->SetAutoGoX(abs(ViTriCameraDiChuyenSauKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
 						isDoneCameraGoThroughTheDoor1 = false;
-
-						simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn
-						
-
-						TimeCreateBat = GetTickCount(); 
+						simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
+						TimeCreateBat = GetTickCount();
 						TimeWaitCreateBat = 2000;
 						isAllowCreateBat = true;
-
-
 						break;
 					}
-					 
+
 					}
-
-
 					gameObject->SubHealth(1);
-
 				}
 			}
 		}
 	}
+
+#pragma endregion
+
 }
 
 void Scene_2::CheckCollisionWithEnemy()
@@ -1399,6 +1420,21 @@ Item * Scene_2::GetNewItem(int Id, eID Type, float X, float Y)
 			return new SmallHeart(X, Y);
 			break;
 		} 
+	}
+
+	if (Type == eID::BRICK)
+	{
+		switch (Id)
+		{
+		case 72:
+			return new Monney(X, Y);
+			break;
+
+		default:
+			return new SmallHeart(X, Y);
+			break;
+		}
+
 	}
 
 	return new LargeHeart(X, Y);

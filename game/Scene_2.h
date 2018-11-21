@@ -30,7 +30,7 @@
 #include "Bat.h"
 #include "HolyWater.h"
 #include "ItemHolyWater.h"
-
+#include "BrokenBrick.h"
 
 #define GAME_TIME_SCENE2 300
 

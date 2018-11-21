@@ -128,6 +128,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="BoardHealth.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="BrokenBrick.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Candle.h" />
     <ClInclude Include="Dagger.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="BoardHealth.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="BrokenBrick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Candle.cpp" />
     <ClCompile Include="Dagger.cpp" />

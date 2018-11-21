@@ -110,6 +110,7 @@ enum eID
 	// Effect
 	FIRE = 121,
 	HIT = 122,
+	BROKENBRICK = 123,
 
 
 	// Enemy
