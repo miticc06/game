@@ -21,7 +21,7 @@ public:
 
 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void Update(DWORD dt, vector<LPOBJECT> *listObject = NULL);
+	void Update(DWORD dt, vector<LPGAMEOBJECT> *listObject = NULL);
 
 
 

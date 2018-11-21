@@ -24,7 +24,7 @@ void ObjectHidden::GetBoundingBox(float & left, float & top, float & right, floa
 	bottom = y + height;
 }
 
-void ObjectHidden::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void ObjectHidden::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

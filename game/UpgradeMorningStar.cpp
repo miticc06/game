@@ -28,7 +28,7 @@ void UpgradeMorningStar::GetBoundingBox(float & left, float & top, float & right
 	bottom = y + _texture->FrameHeight;
 }
 
-void UpgradeMorningStar::Update(DWORD dt, vector<LPOBJECT>* listObject)
+void UpgradeMorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {
 	if (TimeWaited < TimeWaitMax)
 	{
@@ -46,7 +46,7 @@ void UpgradeMorningStar::Update(DWORD dt, vector<LPOBJECT>* listObject)
 	 
 	Item::Update(dt); // Update dt, dx, dy 
 
-	vector<LPOBJECT> listObject_Brick;
+	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < listObject->size(); i++)
 		if (listObject->at(i)->GetType() == eID::BRICK)

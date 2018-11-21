@@ -26,7 +26,7 @@ void LargeHeart::GetBoundingBox(float & left, float & top, float & right, float 
 	bottom = y + _texture->FrameHeight;
 }
 
-void LargeHeart::Update(DWORD dt, vector<LPOBJECT>* listObject)
+void LargeHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {
 	if (TimeWaited < TimeWaitMax)
 	{
@@ -43,7 +43,7 @@ void LargeHeart::Update(DWORD dt, vector<LPOBJECT>* listObject)
 
 	Item::Update(dt); // Update dt, dx, dy
 
-	vector<LPOBJECT> listObject_Brick;
+	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < listObject->size(); i++)
 		if (listObject->at(i)->GetType() == eID::BRICK)

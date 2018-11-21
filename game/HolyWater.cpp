@@ -18,7 +18,7 @@ HolyWater::~HolyWater()
 	
 }
 
-void HolyWater::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isFinish)
 		return;
@@ -27,7 +27,7 @@ void HolyWater::Update(DWORD dt, vector<LPOBJECT>* coObjects)
 	if (!isCollisionBrick)
 		vy += HOLYWATER_GRAVITY * dt;
 
-	vector<LPOBJECT> listObject_Brick;
+	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)
 		if (coObjects->at(i)->GetType() == eID::BRICK)
@@ -105,7 +105,7 @@ void HolyWater::RenderIcon(int X, int Y)
 	_spriteIcon->Draw(X,Y);
 }
 
-bool HolyWater::isCollision(Object * obj)
+bool HolyWater::isCollision(GameObject * obj)
 {
 	if (isFinish == true)
 		return false;

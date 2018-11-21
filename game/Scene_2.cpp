@@ -920,7 +920,7 @@ void Scene_2::CheckCollision()
 
 }
 
-void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
+void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 {
 	// main weapon
 	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
@@ -934,7 +934,7 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 				{
 				case eID::CANDLE:
 				{
-					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+					GameObject *gameObj = listObj[i];
 					gameObj->SubHealth(1);
 					listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
 					RunEffectHit = true;
@@ -943,7 +943,7 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 
 				case eID::GHOST:
 				{
-					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+					GameObject *gameObj = listObj[i];
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 100);
 					if (rand() % 2 == 1) // tỉ lệ 50%
@@ -964,7 +964,7 @@ void Scene_2::CheckCollisionWeapon(vector<Object*> listObj)
 
 				case eID::PANTHER:
 				{
-					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+					GameObject *gameObj = listObj[i];
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 200);
 					if (rand() % 2 == 1) // tỉ lệ 50%

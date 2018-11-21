@@ -19,7 +19,7 @@ public:
 	HolyWater();
 	virtual ~HolyWater();
 
-	void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
+	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 
 	void Create(float simonX, float simonY, int simonTrend);
 
@@ -27,7 +27,7 @@ public:
 	void UpdatePositionFitSimon();
 
 	void RenderIcon(int X, int Y);
-	bool isCollision(Object* obj);
+	bool isCollision(GameObject* obj);
 	void Render(Camera *camera);
  
 };

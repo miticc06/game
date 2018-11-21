@@ -27,7 +27,7 @@ void Gate::GetBoundingBox(float & left, float & top, float & right, float & bott
 
 }
 
-void Gate::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void Gate::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	GameObject::Update(dt); // update dt
 }

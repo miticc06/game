@@ -126,7 +126,7 @@ public:
 
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	virtual void Update(DWORD dt, Camera* camera, vector<LPOBJECT> *coObjects = NULL);
+	virtual void Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera);
 	void Left();  // set lại hướng của simon
 	void Right(); // set lại hướng của simon
@@ -140,8 +140,8 @@ public:
 	void SetHeartCollect(int h);
 	int GetHeartCollect();
 
-	void CollisionWithBrick(vector<LPOBJECT> *coObjects = NULL);
-	void CollisionIsOnStair(vector<LPOBJECT> *coObjects = NULL);
+	void CollisionWithBrick(vector<LPGAMEOBJECT> *coObjects = NULL);
+	void CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects = NULL);
 	bool isCollisionWithItem(Item * objItem);
 
 	void Attack(Weapon *w);

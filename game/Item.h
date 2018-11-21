@@ -7,7 +7,7 @@
 #include "GameObject.h" 
 #include "define.h" 
 
-class Item : public Object
+class Item : public GameObject
 {
 protected: 
 
@@ -24,7 +24,7 @@ public:
 	virtual ~Item();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
-	virtual void Update(DWORD dt, vector<LPOBJECT> *listObject = NULL);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *listObject = NULL);
 	virtual void Render(Camera * camera);
 	virtual bool isWaitingDisplay(); // đang chờ object hiển thi? - simon chưa được ăn
  

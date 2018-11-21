@@ -28,7 +28,7 @@ void Candle::GetBoundingBox(float & left, float & top, float & right, float & bo
 
 }
 
-void Candle::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void Candle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	_sprite->Update(dt); // update animation
 }

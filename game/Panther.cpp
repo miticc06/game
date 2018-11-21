@@ -33,7 +33,7 @@ void Panther::GetBoundingBox(float & left, float & top, float & right, float & b
 	bottom = y + _texture->FrameHeight;
 }
 
-void Panther::Update(DWORD dt, Simon * simon, vector<LPOBJECT>* coObjects)
+void Panther::Update(DWORD dt, Simon * simon, vector<LPGAMEOBJECT>* coObjects)
 {
 	GameObject::Update(dt);
 	vy += SIMON_GRAVITY * dt; // Simple fall down
@@ -84,7 +84,7 @@ void Panther::Update(DWORD dt, Simon * simon, vector<LPOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	coEvents.clear();
-	vector<LPOBJECT> list_Brick;
+	vector<LPGAMEOBJECT> list_Brick;
 	list_Brick.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{

@@ -36,7 +36,7 @@ void Grid::ReadFileToGrid(char * filename)
 	} 
 }
 
-void Grid::GetListObject(vector<Object*>& ListObj, Camera * camera)
+void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 {
 	ListObj.clear(); // clear list
 	ResetTake();
@@ -65,7 +65,7 @@ void Grid::GetListObject(vector<Object*>& ListObj, Camera * camera)
 		}
 }
 
-void Grid::GetListObject(vector<Object*> &ListObj, GameObject * obj)
+void Grid::GetListObject(vector<GameObject*> &ListObj, GameObject * obj)
 {
 	ListObj.clear(); // clear list
 	ResetTake();

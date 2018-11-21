@@ -29,7 +29,7 @@ void StairTop::GetBoundingBox(float & left, float & top, float & right, float & 
 
 }
 
-void StairTop::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void StairTop::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 }
 

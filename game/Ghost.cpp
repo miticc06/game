@@ -28,12 +28,12 @@ void Ghost::GetBoundingBox(float & left, float & top, float & right, float & bot
 	bottom = y + _texture->FrameHeight;
 }
 
-void Ghost::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void Ghost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	GameObject::Update(dt); 
 	vy += GHOST_GRAVITY * dt;
 
-	vector<LPOBJECT> listObject_Brick;
+	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)
 		if (coObjects->at(i)->GetType() == eID::BRICK)

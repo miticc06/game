@@ -17,7 +17,7 @@ Item::~Item()
 	 
 }
 
-void Item::Update(DWORD dt, vector<LPOBJECT> *listObject)
+void Item::Update(DWORD dt, vector<LPGAMEOBJECT> *listObject)
 { 
 	this->dt = dt;
 	dx = vx * dt;

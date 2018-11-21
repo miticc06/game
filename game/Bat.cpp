@@ -30,7 +30,7 @@ void Bat::GetBoundingBox(float & left, float & top, float & right, float & botto
 
 }
 
-void Bat::Update(DWORD dt, vector<LPOBJECT>* listObject)
+void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {  
 	// vượt quá biên độ trục y cho phép thì đổi chiều vy
 	if (y - yBackup >= DeltaY)

@@ -14,7 +14,7 @@ Dagger::~Dagger()
 {
 }
 
-void Dagger::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void Dagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {  
 	Weapon::Update(dt); // update dt,dx,dy
 
@@ -44,7 +44,7 @@ void Dagger::RenderIcon(int X, int Y)
 
 }
 
-bool Dagger::isCollision(Object * obj)
+bool Dagger::isCollision(GameObject * obj)
 {  
 	// dt, dx, dy đã update
 	GameObject *gameObj = dynamic_cast<GameObject*>(obj);

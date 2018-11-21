@@ -162,7 +162,6 @@
     <ClInclude Include="LargeHeart.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MorningStar.h" />
-    <ClInclude Include="Object.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Scene_1.h" />
@@ -214,7 +213,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MorningStar.cpp" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scene_1.cpp" />

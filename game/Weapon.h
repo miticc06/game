@@ -32,10 +32,10 @@ public:
 	virtual void Create(float simonX, float simonY, int simonTrend);
  
 
-	virtual void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL); 
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL); 
  	virtual void Render(Camera *camera); 
 	virtual void UpdatePositionFitSimon(); 
-	virtual bool isCollision(Object* obj) = 0; // kiểm tra vũ khí này có va chạm với object kia hay không?
+	virtual bool isCollision(GameObject* obj) = 0; // kiểm tra vũ khí này có va chạm với object kia hay không?
 
 	virtual void RenderIcon(int X, int Y) = 0; 
 	bool GetFinish();

@@ -49,9 +49,6 @@
     <ClCompile Include="LargeHeart.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="UpgradeMorningStar.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
@@ -195,9 +192,6 @@
     </ClInclude>
     <ClInclude Include="LargeHeart.h">
       <Filter>Object\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="UpgradeMorningStar.h">
       <Filter>Object\Item</Filter>

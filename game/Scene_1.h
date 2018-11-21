@@ -37,7 +37,7 @@ private:
 	Board * board;
 	Sound * sound;
 
-	vector<LPOBJECT> listObj;
+	vector<LPGAMEOBJECT> listObj;
 
 	vector <Item*> listItem;
 	vector <Effect*> listEffect;

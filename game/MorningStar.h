@@ -25,7 +25,7 @@ public:
 	MorningStar();
 	~MorningStar();
 	
-	void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
+	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	void Render(Camera *camera);
 
 
@@ -38,7 +38,7 @@ public:
 	void UpgradeLevel();
 
 	int GetLevel();
-	bool isCollision(Object* obj);
+	bool isCollision(GameObject* obj);
 };
 
 

@@ -30,7 +30,7 @@ void Weapon::Create(float simonX, float simonY, int simonTrend)
 	isFinish = 0;
 }
 
-void Weapon::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void Weapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->dt = dt;
 	dx = vx * dt;

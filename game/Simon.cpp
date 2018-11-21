@@ -66,7 +66,7 @@ void Simon::GetBoundingBox(float & left, float & top, float & right, float & bot
  	
 }
 
-void Simon::Update(DWORD dt, Camera* camera, vector<LPOBJECT>* coObjects)
+void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 { 
 	 
 	if (x < camera->GetBoundaryLeft()-16)
@@ -551,7 +551,7 @@ int Simon::GetHeartCollect()
 	return HeartCollect;
 }
 
-void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
+void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 {
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -559,7 +559,7 @@ void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 	coEvents.clear();
 
 	 
-	vector<LPOBJECT> list_Brick;
+	vector<LPGAMEOBJECT> list_Brick;
 	list_Brick.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)
 		if (coObjects->at(i)->GetType() == eID::BRICK)
@@ -605,12 +605,12 @@ void Simon::CollisionWithBrick(vector<LPOBJECT>* coObjects)
 		delete coEvents[i];
 }
 
-void Simon::CollisionIsOnStair(vector<LPOBJECT> *coObjects)
+void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 {
 	if (trendY == 1) // đang đi xuống
 	{
 		int CountCollisionBottom = 0;
-		vector<LPOBJECT> listobj;
+		vector<LPGAMEOBJECT> listobj;
 		listobj.clear();
 		for (UINT i = 0; i < (*coObjects).size(); i++)
 			if ((*coObjects)[i]->GetType() == eID::STAIR_BOTTOM) // nếu là object ở dưới
@@ -627,7 +627,7 @@ void Simon::CollisionIsOnStair(vector<LPOBJECT> *coObjects)
 			vector<LPCOLLISIONEVENT> coEvents;
 			vector<LPCOLLISIONEVENT> coEventsResult;
 			coEvents.clear();
-			vector<LPOBJECT> list_Brick;
+			vector<LPGAMEOBJECT> list_Brick;
 			list_Brick.clear();
 			for (UINT i = 0; i < coObjects->size(); i++)
 				if (coObjects->at(i)->GetType() == eID::BRICK)
@@ -666,7 +666,7 @@ void Simon::CollisionIsOnStair(vector<LPOBJECT> *coObjects)
 	 
 	if (trendY == -1) // đang đi lên
 	{
-		vector<LPOBJECT> listobj;
+		vector<LPGAMEOBJECT> listobj;
 		int CountCollisionTop = 0;
 		listobj.clear();
 		for (UINT i = 0; i < (*coObjects).size(); i++)
@@ -690,7 +690,7 @@ void Simon::CollisionIsOnStair(vector<LPOBJECT> *coObjects)
 			vector<LPCOLLISIONEVENT> coEvents;
 			vector<LPCOLLISIONEVENT> coEventsResult;
 			coEvents.clear();
-			vector<LPOBJECT> list_Brick;
+			vector<LPGAMEOBJECT> list_Brick;
 			list_Brick.clear();
 			for (UINT i = 0; i < coObjects->size(); i++)
 				if (coObjects->at(i)->GetType() == eID::BRICK)

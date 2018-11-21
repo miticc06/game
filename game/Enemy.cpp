@@ -11,7 +11,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void Enemy::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	GameObject::Update(dt); // lưu dt, cập cập nhật dxdy
 }

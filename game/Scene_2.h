@@ -83,10 +83,10 @@ private:
 	Board * board;
 	Sound * sound;
 
-	vector<Object*> listObj;
+	vector<GameObject*> listObj;
 	vector <Item*> listItem;
 	vector <Effect*> listEffect;
-	vector <Object*> listEnemy;
+	vector <GameObject*> listEnemy;
 	 
 
 	GameTime * _gameTime;
@@ -108,7 +108,7 @@ public:
 
 
 	void CheckCollision();
-	void CheckCollisionWeapon(vector<Object*> listObj);
+	void CheckCollisionWeapon(vector<GameObject*> listObj);
 	void CheckCollisionSimonWithItem();
 	void CheckCollisionSimonWithObjectHidden();
 	void CheckCollisionWithEnemy();

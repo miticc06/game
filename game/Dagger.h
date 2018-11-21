@@ -12,7 +12,7 @@ public:
 	Dagger();
 	~Dagger();
 
-	void Update(DWORD dt, vector<LPOBJECT> *coObjects = NULL);
+	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 
 	void Create(float simonX, float simonY, int simonTrend);
 	 
@@ -20,7 +20,7 @@ public:
 	void RenderIcon(int X, int Y);
 
 
-	bool isCollision(Object* obj);
+	bool isCollision(GameObject* obj);
 
 	void Render(Camera *camera);
 

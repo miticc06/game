@@ -40,7 +40,7 @@ void Monney::GetBoundingBox(float & left, float & top, float & right, float & bo
 
 }
 
-void Monney::Update(DWORD dt, vector<LPOBJECT>* listObject)
+void Monney::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {
 	if (TimeWaited < TimeWaitMax)
 	{
@@ -64,7 +64,7 @@ void Monney::Update(DWORD dt, vector<LPOBJECT>* listObject)
 
 
 
-	vector<LPOBJECT> listObject_Brick;
+	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < listObject->size(); i++)
 		if (listObject->at(i)->GetType() == eID::BRICK)

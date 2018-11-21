@@ -15,7 +15,7 @@ MorningStar::~MorningStar()
 {
 }
 
-void MorningStar::Update(DWORD dt, vector<LPOBJECT>* coObjects)
+void MorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 { 
 	Weapon::Update(dt);
 
@@ -178,7 +178,7 @@ int MorningStar::GetLevel()
 	return level;
 }
 
-bool MorningStar::isCollision(Object * obj)
+bool MorningStar::isCollision(GameObject * obj)
 {
 	if (level==0 && _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL0_START + 1)
 		return false; // frame đầu và frame chuẩn bị đánh thì ko xét va chạm
