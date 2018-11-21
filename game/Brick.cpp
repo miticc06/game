@@ -6,23 +6,29 @@ Brick::Brick(int X, int Y, int W, int H, int Model)
 	switch (Model)
 	{
 	case 1:
-		_texture = TextureManager::GetInstance()->GetTexture(eID::TEX_BRICK_MODEL_1);
+		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_MODEL_1); // loại màn 1
 		break;
 	case 2:
-		_texture = TextureManager::GetInstance()->GetTexture(eID::TEX_BRICK_MODEL_2);
+		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_MODEL_2); // loại màn 2
 		break;
 	case 3:
-		_texture = TextureManager::GetInstance()->GetTexture(eID::TEX_BRICK_MODEL_3); // loại nhỏ
+		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_MODEL_3); // loại nhỏ 16px
 		break;
-	case 4: // loại trong suốt 
-		_texture = TextureManager::GetInstance()->GetTexture(eID::TEX_BRICK_TRANSPARENT); // loại nhỏ
+	case 4: 
+		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_TRANSPARENT);// loại trong suốt 
+		break;
+	case 5:
+		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_MODEL_3_3_32);// loại 3 ô nhỏ - 32px 
+		break;
+	case 6:
+		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_MODEL_3_4_32);// loại đủ 4 ô nhỏ - 32px
 		break;
 	default:
 		DebugOut(L"[BRICK] Get Texture that bai! Ko nhan dang duoc Model!\n");
 		break;
 	}
 
-	type = eID::BRICK; 
+	type = eType::BRICK; 
 	_sprite = new GSprite(_texture, 1000);
 	this->x = (float)X;
 	this->y = (float)Y;

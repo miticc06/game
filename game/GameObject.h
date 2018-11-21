@@ -43,7 +43,7 @@ protected:
 	int id; // ID của object
 
 	int direction;	// hướng -1 : trái, 1: phải
-	eID type; // Loại Object
+	eType type; // Loại Object
 
 	float x;
 	float y;
@@ -91,7 +91,7 @@ public:
 	float GetVy();
 	int GetHeight();
 	int GetWidth();
-	eID GetType();
+	eType GetType();
 
 
 	bool GetIsTake();

@@ -6,14 +6,14 @@
 #include "GTexture.h"
 class TextureManager
 {
-	unordered_map<eID, GTexture*> _ArrTextures;
+	unordered_map<eType, GTexture*> _ArrTextures;
 	
 public:
 	static TextureManager* __Instance;
 	static TextureManager* GetInstance();
 
-	void AddTexture(eID type, GTexture* texture);
-	GTexture* GetTexture(eID type);
+	void AddTexture(eType type, GTexture* texture);
+	GTexture* GetTexture(eType type);
 
 	void LoadResource();
 

@@ -9,7 +9,7 @@ string Board::FillNumber(string s, UINT MaxNumber)
 
 Board::Board(int X, int Y)
 {
- 	_texture = TextureManager::GetInstance()->GetTexture(eID::BOARD);
+ 	_texture = TextureManager::GetInstance()->GetTexture(eType::BOARD);
 	_sprite = new GSprite(_texture, 0);
 	x = X;
 	y = Y;
@@ -43,11 +43,11 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 	{
 		switch (weaponSub->GetType())
 		{
-		case eID::DAGGER:
+		case eType::DAGGER:
 			weaponSub->RenderIcon(330, 40);
 			break;
 
-		case eID::HOLYWATER:
+		case eType::HOLYWATER:
 			weaponSub->RenderIcon(332, 33);
 			break;
 

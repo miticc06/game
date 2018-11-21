@@ -4,10 +4,10 @@
  
 LargeHeart::LargeHeart(float X, float Y)
 {
- 	_texture = TextureManager::GetInstance()->GetTexture(eID::LARGEHEART);
+ 	_texture = TextureManager::GetInstance()->GetTexture(eType::LARGEHEART);
 
 	_sprite = new GSprite(_texture, 100);
-	type = eID::LARGEHEART;
+	type = eType::LARGEHEART;
 
 	this->x = X;
 	this->y = Y;
@@ -32,30 +32,24 @@ void LargeHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	{
 		TimeWaited += dt;
 		return;
-	}
-
+	} 
 	TimeDisplayed += dt;
 	if (TimeDisplayed >= TimeDisplayMax)
 	{
 		isFinish = true;
 		return;
-	}
-
-	Item::Update(dt); // Update dt, dx, dy
-
+	} 
+	Item::Update(dt); // Update dt, dx, dy 
 	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < listObject->size(); i++)
-		if (listObject->at(i)->GetType() == eID::BRICK)
+		if (listObject->at(i)->GetType() == eType::BRICK)
 			listObject_Brick.push_back(listObject->at(i));
 
 	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
-
-	coEvents.clear();
-
-	CalcPotentialCollisions(&listObject_Brick, coEvents); // Lấy danh sách các va chạm
-
+	vector<LPCOLLISIONEVENT> coEventsResult; 
+	coEvents.clear(); 
+	CalcPotentialCollisions(&listObject_Brick, coEvents); // Lấy danh sách các va chạm 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{ 
@@ -63,21 +57,16 @@ void LargeHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	}
 	else
 	{
-		float min_tx, min_ty, nx = 0, ny;
-
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-	  
-		y += min_ty * dy + ny * 0.4f; 
- 
+		float min_tx, min_ty, nx = 0, ny; 
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny); 
+		y += min_ty * dy + ny * 0.4f;  
 		if (ny != 0)
 		{
 			vy = 0;
  		} 
 	}
-
  	for (UINT i = 0; i < coEvents.size(); i++)
-		delete coEvents[i];
-
+		delete coEvents[i]; 
 }
  
 

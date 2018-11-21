@@ -4,10 +4,10 @@
 
 HolyWater::HolyWater()
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eID::HOLYWATER);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::HOLYWATER);
 	_sprite = new GSprite(_texture, 70);
-	type = eID::HOLYWATER;
-	_spriteIcon = new GSprite(TextureManager::GetInstance()->GetTexture(eID::ITEMHOLYWATER), 200);
+	type = eType::HOLYWATER;
+	_spriteIcon = new GSprite(TextureManager::GetInstance()->GetTexture(eType::ITEMHOLYWATER), 200);
 
 	isCollisionBrick = false;
 	isFinish = true;
@@ -30,7 +30,7 @@ void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)
-		if (coObjects->at(i)->GetType() == eID::BRICK)
+		if (coObjects->at(i)->GetType() == eType::BRICK)
 			listObject_Brick.push_back(coObjects->at(i));
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -68,16 +68,17 @@ void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		delete coEvents[i]; 
 }
 
-void HolyWater::Create(float simonX, float simonY, int simonTrend)
+void HolyWater::Create(float simonX, float simonY, int simonDirection)
 {
 	if (isFinish == false)
 		return;
-	Weapon::Create(simonX, simonY, simonTrend);
+	Weapon::Create(simonX, simonY, simonDirection);
 	UpdatePositionFitSimon();
-	vx = HOLLYWATER_SPEED_X * simonTrend;
+	vx = HOLLYWATER_SPEED_X * simonDirection;
 	vy = - HOLLYWATER_SPEED_Y;
 	isCollisionBrick = false;
 	_sprite->SelectIndex(0);
+	Sound::GetInstance()->Play(eSound::soundHolyWater);
 }
 
 void HolyWater::GetBoundingBox(float & left, float & top, float & right, float & bottom)

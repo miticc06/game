@@ -4,7 +4,7 @@
 
 Font::Font()
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eID::FONT);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::FONT);
 	_sprite = new GSprite(_texture, 0);
 }
 

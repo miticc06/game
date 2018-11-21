@@ -26,7 +26,7 @@ private:
 
 
 public:
-	Panther(float X, float Y, int Trend, float autoGoX_Dx);
+	Panther(float X, float Y, int Direction, float autoGoX_Dx);
 	virtual ~Panther();
 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);

@@ -7,7 +7,7 @@ ObjectHidden::ObjectHidden(int X, int Y, int W, int H)
 	y = (float) Y;
 	width = W;
 	height = H;
-	type = eID::OBJECT_HIDDEN;
+	type = eType::OBJECT_HIDDEN;
 	id = 0; // set sau
 	Health = 1;
 }

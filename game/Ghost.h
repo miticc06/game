@@ -10,7 +10,7 @@
 class Ghost : public GameObject
 {
 public:
-	Ghost(float X, float Y, int Trend);
+	Ghost(float X, float Y, int Direction);
 	virtual ~Ghost();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

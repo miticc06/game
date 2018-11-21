@@ -5,11 +5,11 @@
 
 Torch::Torch(int X, int Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eID::TORCH);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::TORCH);
 	_sprite = new GSprite(_texture, 100);
 	this->x = (float)X;
 	this->y = (float)Y;
-	type = eID::TORCH;
+	type = eType::TORCH;
 	Health = 1; 
 }
 

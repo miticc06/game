@@ -80,13 +80,13 @@
       <Filter>Framework\Animation</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
-      <Filter>Framework\Effect</Filter>
+      <Filter>Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Fire.cpp">
-      <Filter>Framework\Effect</Filter>
+      <Filter>Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Hit.cpp">
-      <Filter>Framework\Effect</Filter>
+      <Filter>Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="GameTime.cpp">
       <Filter>Framework\GameTime</Filter>
@@ -105,9 +105,6 @@
     </ClCompile>
     <ClCompile Include="Scene_2.cpp">
       <Filter>Framework\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Monney.cpp">
-      <Filter>Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="Candle.cpp">
       <Filter>Object\Ground</Filter>
@@ -145,7 +142,15 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Framework\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="BrokenBrick.cpp" />
+    <ClCompile Include="Bonus.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="BrokenBrick.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="PotRoast.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -227,13 +232,13 @@
       <Filter>Framework\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Fire.h">
-      <Filter>Framework\Effect</Filter>
+      <Filter>Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Effect.h">
-      <Filter>Framework\Effect</Filter>
+      <Filter>Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Hit.h">
-      <Filter>Framework\Effect</Filter>
+      <Filter>Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="GameTime.h">
       <Filter>Framework\GameTime</Filter>
@@ -252,9 +257,6 @@
     </ClInclude>
     <ClInclude Include="Scene_2.h">
       <Filter>Framework\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Monney.h">
-      <Filter>Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="Candle.h">
       <Filter>Object\Ground</Filter>
@@ -289,7 +291,15 @@
     <ClInclude Include="ItemHolyWater.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="BrokenBrick.h" />
+    <ClInclude Include="Bonus.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="BrokenBrick.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="PotRoast.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -337,9 +347,6 @@
     <Filter Include="Framework\Board\Font">
       <UniqueIdentifier>{f85bd4fe-bdbb-43f7-b818-60bdf95399fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Effect">
-      <UniqueIdentifier>{56fc4ff3-9a31-4d61-8eb7-2830a90becca}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Sound">
       <UniqueIdentifier>{aa2ae68b-90ec-4fa1-bc51-19d6f5f9391c}</UniqueIdentifier>
     </Filter>
@@ -348,6 +355,9 @@
     </Filter>
     <Filter Include="Object\Enemy">
       <UniqueIdentifier>{3481e3b0-3f8e-49de-aaee-5981f511ce87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Effect">
+      <UniqueIdentifier>{56fc4ff3-9a31-4d61-8eb7-2830a90becca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -13,11 +13,11 @@
 
 
 
-class Monney : public Item
+class Bonus : public Item
 {
 public:
-	Monney(float X = 0, float Y = 0);
-	~Monney();
+	Bonus(float X = 0, float Y = 0);
+	~Bonus();
 
 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);

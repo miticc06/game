@@ -21,7 +21,7 @@
 #include "Hit.h"
 #include "GameTime.h"
 #include "Sound.h"
-#include "Monney.h"
+#include "Bonus.h"
 #include "Scene_2.h"
 
 #define GAME_TIME_SCENE1 300
@@ -63,7 +63,7 @@ public:
 	void CheckCollisionSimonWithItem();
 	void CheckCollisionSimonWithObjectHidden();
 
-	Item * GetNewItem(int Id, eID Type, float X, float Y);
+	Item * GetNewItem(int Id, eType Type, float X, float Y);
 };
 
 #endif

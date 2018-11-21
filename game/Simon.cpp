@@ -3,9 +3,9 @@
 
 Simon::Simon()
 {
- 	_texture = TextureManager::GetInstance()->GetTexture(eID::SIMON);
+ 	_texture = TextureManager::GetInstance()->GetTexture(eType::SIMON);
 	_sprite = new GSprite(_texture, 250);
-	type = eID::SIMON;
+	type = eType::SIMON;
 
 	isWalking = 0;
 	isJumping = 0;
@@ -109,7 +109,7 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 	{  
 		if (isAttacking == true) // tấn công
 		{
-			if (trendY == -1) // đang đi lên
+			if (directionY == -1) // đang đi lên
 			{
 				if (index < SIMON_ANI_STAIR_UP_ATTACKING_BEGIN || index >= SIMON_ANI_STAIR_UP_ATTACKING_END)
 				{
@@ -171,23 +171,23 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 					isProcessingOnStair++; 
 
 					/* fix lỗi mỗi lần đi vượt quá 16px */
-					if (direction == 1 && trendY == -1) // đi lên bên phải
+					if (direction == 1 && directionY == -1) // đi lên bên phải
 					{
 						x -= (DoCaoDiDuoc - 16.0f);
 						y += (DoCaoDiDuoc - 16.0f);
 					}
-					if (direction == -1 && trendY == -1) // đi lên bên trái
+					if (direction == -1 && directionY == -1) // đi lên bên trái
 					{
 						x += (DoCaoDiDuoc - 16.0f);
 						y += (DoCaoDiDuoc - 16.0f);
 					}
 
-					if (direction == 1 && trendY == 1) // đi xuống bên phải
+					if (direction == 1 && directionY == 1) // đi xuống bên phải
 					{
 						x -= (DoCaoDiDuoc - 16.0f);
 						y -= (DoCaoDiDuoc - 16.0f);
 					}
-					if (direction == -1 && trendY == 1) // đi xuống bên trái
+					if (direction == -1 && directionY == 1) // đi xuống bên trái
 					{
 						x += (DoCaoDiDuoc - 16.0f);
 						y -= (DoCaoDiDuoc - 16.0f);
@@ -199,7 +199,7 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else
 			{
-				if (this->trendY == -1) // ddang di len
+				if (this->directionY == -1) // ddang di len
 					_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING_UP);
 				else
 					_sprite->SelectIndex(SIMON_ANI_STAIR_STANDING_DOWN);
@@ -562,7 +562,7 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 	vector<LPGAMEOBJECT> list_Brick;
 	list_Brick.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)
-		if (coObjects->at(i)->GetType() == eID::BRICK)
+		if (coObjects->at(i)->GetType() == eType::BRICK)
 			list_Brick.push_back(coObjects->at(i));
 
 	
@@ -607,13 +607,13 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 
 void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 {
-	if (trendY == 1) // đang đi xuống
+	if (directionY == 1) // đang đi xuống
 	{
 		int CountCollisionBottom = 0;
 		vector<LPGAMEOBJECT> listobj;
 		listobj.clear();
 		for (UINT i = 0; i < (*coObjects).size(); i++)
-			if ((*coObjects)[i]->GetType() == eID::STAIR_BOTTOM) // nếu là object ở dưới
+			if ((*coObjects)[i]->GetType() == eType::STAIR_BOTTOM) // nếu là object ở dưới
 			{
 				if (this->isCollitionObjectWithObject((*coObjects)[i]))
 				{
@@ -630,7 +630,7 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 			vector<LPGAMEOBJECT> list_Brick;
 			list_Brick.clear();
 			for (UINT i = 0; i < coObjects->size(); i++)
-				if (coObjects->at(i)->GetType() == eID::BRICK)
+				if (coObjects->at(i)->GetType() == eType::BRICK)
 					list_Brick.push_back(coObjects->at(i));
 			CalcPotentialCollisions(&list_Brick, coEvents);
 			if (coEvents.size() == 0)
@@ -664,13 +664,13 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 	}
 
 	 
-	if (trendY == -1) // đang đi lên
+	if (directionY == -1) // đang đi lên
 	{
 		vector<LPGAMEOBJECT> listobj;
 		int CountCollisionTop = 0;
 		listobj.clear();
 		for (UINT i = 0; i < (*coObjects).size(); i++)
-			if ((*coObjects)[i]->GetType() == eID::STAIR_TOP) // nếu là object ở trên
+			if ((*coObjects)[i]->GetType() == eType::STAIR_TOP) // nếu là object ở trên
 			{
 				if (this->isCollitionObjectWithObject((*coObjects)[i])) // có va chạm với top stair
 				{
@@ -693,7 +693,7 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 			vector<LPGAMEOBJECT> list_Brick;
 			list_Brick.clear();
 			for (UINT i = 0; i < coObjects->size(); i++)
-				if (coObjects->at(i)->GetType() == eID::BRICK)
+				if (coObjects->at(i)->GetType() == eType::BRICK)
 					list_Brick.push_back(coObjects->at(i));
 			CalcPotentialCollisions(&list_Brick, coEvents);
 			if (coEvents.size() == 0)
@@ -809,7 +809,7 @@ void Simon::StartUntouchable()
 }
  
 
-void Simon::SetAutoGoX(int TrendGo, int trendAfterGo, float Dx, float Speed)
+void Simon::SetAutoGoX(int DirectionGo, int directionAfterGo, float Dx, float Speed)
 {
 	if (isAutoGoX == true)
 		return;
@@ -825,17 +825,17 @@ void Simon::SetAutoGoX(int TrendGo, int trendAfterGo, float Dx, float Speed)
 	isAttacking_Backup = isAttacking;
 	isOnStair_Backup = isOnStair;
 	isProcessingOnStair_Backup = isProcessingOnStair;
-	trendStair_Backup = trendStair;
-	trendY_Backup = trendY;
+	directionStair_Backup = directionStair;
+	directionY_Backup = directionY;
 
 	AutoGoX_Dx = Dx;
 	AutoGoX_Speed = Speed;
-	AutoGoX_TrendGo = TrendGo;
-	this->TrendAfterGo = trendAfterGo;
+	AutoGoX_DirectionGo = DirectionGo;
+	this->directionAfterGo = directionAfterGo;
 
 
-	direction = TrendGo;
- 	vx = Speed * TrendGo;
+	direction = DirectionGo;
+ 	vx = Speed * DirectionGo;
 	isWalking = 1;
 	isJumping = 0;
 	isSitting = 0;
@@ -852,10 +852,10 @@ void Simon::RestoreBackupAutoGoX()
 	isAttacking = isAttacking_Backup;
 	isOnStair = isOnStair_Backup;
 	isProcessingOnStair = isProcessingOnStair_Backup;
-	trendStair = trendStair_Backup;
-	trendY = trendY_Backup;
+	directionStair = directionStair_Backup;
+	directionY = directionY_Backup;
 	 
-	direction = TrendAfterGo; // set hướng sau khi đi
+	direction = directionAfterGo; // set hướng sau khi đi
 
 	isWalking = 0; // tắt trạng thái đang đi
 	isAutoGoX = 0; // tắt trạng thái auto

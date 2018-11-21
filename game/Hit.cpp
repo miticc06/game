@@ -6,7 +6,7 @@ Hit::Hit(int X, int Y)
 {
 	this->x = X;
 	this->y = Y;
-	_texture = TextureManager::GetInstance()->GetTexture(eID::HIT);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::HIT);
 	_sprite = new GSprite(_texture, 250);
 
 }

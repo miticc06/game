@@ -3,14 +3,14 @@
  
 
 
-StairBottom::StairBottom(int X, int Y, int Trend)
+StairBottom::StairBottom(int X, int Y, int Direction)
 {
 	x = X-25;
 	y = Y;
 	width = 50;
 	height = 50;
-	direction = Trend;
-	type = eID::STAIR_BOTTOM;
+	direction = Direction;
+	type = eType::STAIR_BOTTOM;
 
 
 	y -= width;

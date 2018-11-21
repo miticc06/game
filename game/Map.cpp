@@ -13,15 +13,15 @@ Map::~Map()
 	SAFE_DELETE(_sprite);
 }
 
-void Map::LoadMap(eID type)
+void Map::LoadMap(eType type)
 {
 	switch (type)
 	{
 	 
-	case eID::MAP1:
+	case eType::MAP1:
 		ReadMapTXT("Resources/map/1.txt");
 		break; 
-	case eID::MAP2:
+	case eType::MAP2:
 		ReadMapTXT("Resources/map/2.txt");
 		break;
 	default:

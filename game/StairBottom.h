@@ -8,7 +8,7 @@ private:
 	int height;
  
 public:
-	StairBottom(int X, int Y, int Trend = 1);
+	StairBottom(int X, int Y, int Direction = 1);
 	virtual ~StairBottom();
 
 

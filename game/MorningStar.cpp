@@ -4,10 +4,10 @@
 
 MorningStar::MorningStar()
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eID::MORNINGSTAR);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::MORNINGSTAR);
 	_sprite = new GSprite(_texture, 90);
 	this->level = 0;
-	type = eID::MORNINGSTAR;
+	type = eType::MORNINGSTAR;
 }
 
 
@@ -60,11 +60,11 @@ void MorningStar::Render(Camera * camera)
 
 
 
-void MorningStar::Create(float simonX, float simonY, int simonTrend)
+void MorningStar::Create(float simonX, float simonY, int simonDirection)
 {
  
 
-	Weapon::Create(simonX, simonY, simonTrend);
+	Weapon::Create(simonX, simonY, simonDirection);
 
 	UpdatePositionFitSimon();
 	switch (level)

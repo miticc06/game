@@ -4,9 +4,9 @@
 
 UpgradeMorningStar::UpgradeMorningStar(float X, float Y) 
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eID::UPGRADEMORNINGSTAR);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::UPGRADEMORNINGSTAR);
 	_sprite = new GSprite(_texture, 100);
-	type = eID::UPGRADEMORNINGSTAR;
+	type = eType::UPGRADEMORNINGSTAR;
 
 	this->x = X;
 	this->y = Y;
@@ -49,7 +49,7 @@ void UpgradeMorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < listObject->size(); i++)
-		if (listObject->at(i)->GetType() == eID::BRICK)
+		if (listObject->at(i)->GetType() == eType::BRICK)
 			listObject_Brick.push_back(listObject->at(i));
 
 	vector<LPCOLLISIONEVENT> coEvents;

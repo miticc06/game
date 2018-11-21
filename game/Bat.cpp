@@ -1,20 +1,20 @@
 ﻿#include "Bat.h"
 
  
-Bat::Bat(float X, float Y, int Trend)
+Bat::Bat(float X, float Y, int Direction)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eID::BAT);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::BAT);
 	_sprite = new GSprite(_texture, 70);
-	type = eID::BAT;
+	type = eType::BAT;
 
 	this->x = X;
 	this->y = Y;
 	this->yBackup = y;
-	this->direction = Trend;
+	this->direction = Direction;
 	this->Health = 1;
 
 	vy = BAT_SPEED_Y;
-	vx = BAT_SPEED_X* Trend;
+	vx = BAT_SPEED_X* Direction;
 }
 
 Bat::~Bat()

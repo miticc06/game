@@ -2,17 +2,17 @@
 
  
 
-Ghost::Ghost(float X,  float Y, int Trend)
+Ghost::Ghost(float X,  float Y, int Direction)
 {
 	x = X;
 	y = Y;
-	this->direction = Trend;
+	this->direction = Direction;
 
-	_texture = TextureManager::GetInstance()->GetTexture(eID::GHOST);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::GHOST);
 	_sprite = new GSprite(_texture, 100);
 
 	Health = 1; // sét máu
-	type = eID::GHOST;
+	type = eType::GHOST;
 	vx = GHOST_SPEED_X* this->direction;
 }
 
@@ -36,7 +36,7 @@ void Ghost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)
-		if (coObjects->at(i)->GetType() == eID::BRICK)
+		if (coObjects->at(i)->GetType() == eType::BRICK)
 			listObject_Brick.push_back(coObjects->at(i));
 
 	vector<LPCOLLISIONEVENT> coEvents;

@@ -4,7 +4,7 @@
 
 BoardHealth::BoardHealth()
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eID::BOARDHEALTH);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::BOARDHEALTH);
 	_sprite = new GSprite(_texture, 0);
 
 } 

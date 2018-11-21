@@ -134,14 +134,14 @@ void Grid::Insert(int id, int type, int direction, int x, int y, int w, int h, i
 
 GameObject * Grid::GetNewObject(int type, int x, int y,int w, int h, int Model)
 {
-	if (type == eID::BRICK) return new Brick(x, y, w, h, Model);
-	if (type == eID::TORCH) return new Torch(x, y);
-	if (type == eID::OBJECT_HIDDEN) return new ObjectHidden(x, y, w, h);
-	if (type == eID::CANDLE) return new Candle(x, y);
+	if (type == eType::BRICK) return new Brick(x, y, w, h, Model);
+	if (type == eType::TORCH) return new Torch(x, y);
+	if (type == eType::OBJECT_HIDDEN) return new ObjectHidden(x, y, w, h);
+	if (type == eType::CANDLE) return new Candle(x, y);
 
-	if (type == eID::STAIR_TOP) return new StairTop(x, y);
-	if (type == eID::STAIR_BOTTOM) return new StairBottom(x, y);
-	if (type == eID::GATE) return new Gate(x, y);
+	if (type == eType::STAIR_TOP) return new StairTop(x, y);
+	if (type == eType::STAIR_BOTTOM) return new StairBottom(x, y);
+	if (type == eType::GATE) return new Gate(x, y);
 
 	return NULL;
 }

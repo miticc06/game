@@ -2,18 +2,18 @@
 
 
 
-Panther::Panther(float X, float Y, int Trend, float autoGoX_Dx)
+Panther::Panther(float X, float Y, int Direction, float autoGoX_Dx)
 {
-	type = eID::PANTHER;
+	type = eType::PANTHER;
 	Health = 1;
 	vx = vy = 0;
-	direction = Trend;
+	direction = Direction;
 	x = X;
 	y = Y;
 	AutoGoX_Backup_X = x;
 	AutoGoX_Dx = autoGoX_Dx;
 
-	_texture = TextureManager::GetInstance()->GetTexture(eID::PANTHER);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::PANTHER);
 	_sprite = new GSprite(_texture, 200);
 
 	isSitting = 1;
@@ -88,7 +88,7 @@ void Panther::Update(DWORD dt, Simon * simon, vector<LPGAMEOBJECT>* coObjects)
 	list_Brick.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		if (coObjects->at(i)->GetType() == eID::BRICK)
+		if (coObjects->at(i)->GetType() == eType::BRICK)
 			list_Brick.push_back(coObjects->at(i));
 	}
 

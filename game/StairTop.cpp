@@ -2,14 +2,14 @@
 
  
 
-StairTop::StairTop(int X, int Y, int Trend)
+StairTop::StairTop(int X, int Y, int Direction)
 { 
 	x = X-25;
 	y = Y;
 	width = 50;
 	height = 50;
-	direction = Trend;
-	type = eID::STAIR_TOP;
+	direction = Direction;
+	type = eType::STAIR_TOP;
 
 	y -= width;
 

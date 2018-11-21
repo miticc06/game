@@ -1,16 +1,16 @@
-﻿#include "Monney.h"
+﻿#include "Bonus.h"
 
 
  
 
-Monney::Monney(float X, float Y)
+Bonus::Bonus(float X, float Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eID::MONNEY);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::BONUS);
 	_sprite = new GSprite(_texture, 60);
 
 	this->x = X;
 	this->y = Y;
-	type = eID::MONNEY;
+	type = eType::BONUS;
 	  
 	vx = 0;
 	vy = 0;
@@ -27,11 +27,11 @@ Monney::Monney(float X, float Y)
 		 
 }
 
-Monney::~Monney()
+Bonus::~Bonus()
 {
 }
 
-void Monney::GetBoundingBox(float & left, float & top, float & right, float & bottom)
+void Bonus::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
 	left = x;
 	top = y;
@@ -40,7 +40,7 @@ void Monney::GetBoundingBox(float & left, float & top, float & right, float & bo
 
 }
 
-void Monney::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
+void Bonus::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {
 	if (TimeWaited < TimeWaitMax)
 	{
@@ -67,7 +67,7 @@ void Monney::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < listObject->size(); i++)
-		if (listObject->at(i)->GetType() == eID::BRICK)
+		if (listObject->at(i)->GetType() == eType::BRICK)
 			listObject_Brick.push_back(listObject->at(i));
 
 	vector<LPCOLLISIONEVENT> coEvents;

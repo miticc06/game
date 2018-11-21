@@ -4,9 +4,9 @@
 
 Dagger::Dagger()
 {
- 	_texture = TextureManager::GetInstance()->GetTexture(eID::DAGGER);
+ 	_texture = TextureManager::GetInstance()->GetTexture(eType::DAGGER);
 	_sprite = new GSprite(_texture, 0);
-	type = eID::DAGGER;
+	type = eType::DAGGER;
 }
 
 
@@ -24,9 +24,9 @@ void Dagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// xử lí ra khỏi cam thì xóa
 }
 
-void Dagger::Create(float simonX, float simonY, int simonTrend)
+void Dagger::Create(float simonX, float simonY, int simonDirection)
 {
-	Weapon::Create(simonX, simonY + 10, simonTrend);
+	Weapon::Create(simonX, simonY + 10, simonDirection);
 	vx = DAGGER_SPEED * direction;
 }
 

@@ -147,9 +147,10 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="HolyWater.h" />
     <ClInclude Include="ItemHolyWater.h" />
-    <ClInclude Include="Monney.h" />
+    <ClInclude Include="Bonus.h" />
     <ClInclude Include="ObjectHidden.h" />
     <ClInclude Include="Panther.h" />
+    <ClInclude Include="PotRoast.h" />
     <ClInclude Include="Scene_2.h" />
     <ClInclude Include="SmallHeart.h" />
     <ClInclude Include="Sound.h" />
@@ -197,9 +198,10 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="HolyWater.cpp" />
     <ClCompile Include="ItemHolyWater.cpp" />
-    <ClCompile Include="Monney.cpp" />
+    <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="ObjectHidden.cpp" />
     <ClCompile Include="Panther.cpp" />
+    <ClCompile Include="PotRoast.cpp" />
     <ClCompile Include="Scene_2.cpp" />
     <ClCompile Include="SmallHeart.cpp" />
     <ClCompile Include="Sound.cpp" />

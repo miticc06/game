@@ -4,9 +4,9 @@
  
 ItemDagger::ItemDagger(float X, float Y)
 {
- 	_texture = TextureManager::GetInstance()->GetTexture(eID::ITEMDAGGER);
+ 	_texture = TextureManager::GetInstance()->GetTexture(eType::ITEMDAGGER);
 	_sprite = new GSprite(_texture, 0);
-	type = eID::ITEMDAGGER;
+	type = eType::ITEMDAGGER;
 
 	this->x = X;
 	this->y = Y;
@@ -49,7 +49,7 @@ void ItemDagger::Update(DWORD dt, vector<LPGAMEOBJECT> *listObject)
 	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < listObject->size(); i++)
-		if (listObject->at(i)->GetType() == eID::BRICK)
+		if (listObject->at(i)->GetType() == eType::BRICK)
 			listObject_Brick.push_back(listObject->at(i));
 
 	vector<LPCOLLISIONEVENT> coEvents;

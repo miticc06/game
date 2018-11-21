@@ -4,7 +4,7 @@ Fire::Fire(int X, int Y)
 {
 	this->x = X;
 	this->y = Y;
-	_texture = TextureManager::GetInstance()->GetTexture(eID::FIRE);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::FIRE);
 	_sprite = new GSprite(_texture, 150);
 }
 

@@ -5,7 +5,7 @@ BrokenBrick::BrokenBrick(int X, int Y, int Model)
 	this->x = X;
 	this->y = Y;
 	dx = dy = vx = vy = 0;
-	_texture = TextureManager::GetInstance()->GetTexture(eID::BROKENBRICK);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::BROKENBRICK);
 	_sprite = new GSprite(_texture, 50);
 	_model = Model;
 

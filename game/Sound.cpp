@@ -14,6 +14,7 @@ Sound::Sound()
 void Sound::LoadResourceSound()
 {
 	AddSound(eSound::soundWhip, L"Resources/sound/usingwhip.wav");
+	AddSound(eSound::soundHolyWater, L"Resources/sound/holywater.wav");
 	AddSound(eSound::soundHit, L"Resources/sound/hit.wav");
 	AddSound(eSound::soundCollectItem, L"Resources/sound/collectitem.wav");
 	AddSound(eSound::soundCollectWeapon, L"Resources/sound/collectweapon.wav");
@@ -24,6 +25,7 @@ void Sound::LoadResourceSound()
 
 	AddSound(eSound::soundHurting, L"Resources/sound/hurting.wav");
 	AddSound(eSound::soundOpenDoor, L"Resources/sound/opendoor.wav");
+	AddSound(eSound::soundBrokenBrick, L"Resources/sound/broken_brick.wav");
 
 
 

@@ -29,7 +29,7 @@ public:
 	void Render(Camera *camera);
 
 
-	void Create(float simonX, float simonY, int simonTrend);
+	void Create(float simonX, float simonY, int simonDirection);
 
 	void UpdatePositionFitSimon();
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);

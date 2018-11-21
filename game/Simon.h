@@ -87,13 +87,13 @@ private:
 	bool isAttacking_Backup;
 	bool isOnStair_Backup;
 	int isProcessingOnStair_Backup;
-	int trendStair_Backup;
-	int trendY_Backup;
-	int TrendAfterGo;
+	int directionStair_Backup;
+	int directionY_Backup;
+	int directionAfterGo;
 
 	float AutoGoX_Dx;
 	float AutoGoX_Speed;
-	float AutoGoX_TrendGo;
+	float AutoGoX_DirectionGo;
 	float AutoGoX_Backup_X;
 
 	
@@ -107,8 +107,8 @@ public:
 
 	bool isOnStair;
 	int isProcessingOnStair;  // có 2 giai đoạn 
-	int trendStair; // hướng của cầu thang đang đi, -1 đi qua trái, 1 đi qua phải
-	int trendY; // hướng đi theo trục y của simon
+	int directionStair; // hướng của cầu thang đang đi, -1 đi qua trái, 1 đi qua phải
+	int directionY; // hướng đi theo trục y của simon
 
 	bool isAutoGoX = 0; // đang ở chế độ auto go?
 
@@ -159,7 +159,7 @@ public:
 
 
 
-	void SetAutoGoX(int TrendGo, int TrendBackup, float Dx, float Speed); // set các thông số auto và backup các trạng thái hiện tại
+	void SetAutoGoX(int DirectionGo, int DirectionBackup, float Dx, float Speed); // set các thông số auto và backup các trạng thái hiện tại
 	void RestoreBackupAutoGoX(); // khôi phục trạng thái 
 
 

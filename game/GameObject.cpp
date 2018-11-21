@@ -115,7 +115,7 @@ int GameObject::GetWidth()
 	return _texture->FrameWidth;
 }
 
-eID GameObject::GetType()
+eType GameObject::GetType()
 {
 	return type;
 }
@@ -148,7 +148,7 @@ void GameObject::RenderBoundingBox(Camera * camera)
 		pos.x,
 		pos.y,
 		TextureManager::GetInstance()->GetTexture(
-			eID::RENDERBBOX)->Texture,
+			eType::RENDERBBOX)->Texture,
 		rect.left,
 		rect.top,
 		rect.right,

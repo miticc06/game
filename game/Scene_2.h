@@ -22,7 +22,7 @@
 #include "Hit.h"
 #include "GameTime.h"
 #include "Sound.h"
-#include "Monney.h"
+#include "Bonus.h"
 #include "SmallHeart.h"
 #include "Enemy.h"
 #include "Ghost.h"
@@ -31,6 +31,7 @@
 #include "HolyWater.h"
 #include "ItemHolyWater.h"
 #include "BrokenBrick.h"
+#include "PotRoast.h"
 
 #define GAME_TIME_SCENE2 300
 
@@ -114,7 +115,7 @@ public:
 	void CheckCollisionWithEnemy();
 	void CheckCollisionSimonWithEnemy();
 	void CheckCollisionSimonWithGate();
-	Item * GetNewItem(int Id, eID Type, float X, float Y);
+	Item * GetNewItem(int Id, eType Type, float X, float Y);
 };
 
 

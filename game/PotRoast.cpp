@@ -1,29 +1,30 @@
-﻿#include "ItemHolyWater.h"
-
+﻿#include "PotRoast.h"
 
  
-	 
 
-ItemHolyWater::ItemHolyWater(float X, float Y)
+PotRoast::PotRoast(int X, int Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::ITEMHOLYWATER);
-	_sprite = new GSprite(_texture, 0);
-	type = eType::ITEMHOLYWATER;
+	_texture = TextureManager::GetInstance()->GetTexture(eType::POTROAST);
+	_sprite = new GSprite(_texture, 100);
 
-	this->x = X;
-	this->y = Y;
-	vy = ITEMHOLYWATER_GRAVITY;
-	TimeDisplayMax = ITEMHOLYWATER_TIMEDISPLAYMAX;
+	x = X;
+	y = Y;
+	Health = 1;
+	type = eType::POTROAST;
+
+	vy = POTROAST_GRAVITY;
+	TimeDisplayMax = POTROAST_TIMEDISPLAYMAX; // set time hiển thị tối đa
 	TimeDisplayed = 0;
 	TimeWaited = 0;
-	TimeWaitMax = ITEMHOLYWATER_TIMEWAITMAX;
+	TimeWaitMax = POTROAST_TIMEWAITMAX;
+
 }
 
-ItemHolyWater::~ItemHolyWater()
+PotRoast::~PotRoast()
 {
 }
 
-void ItemHolyWater::GetBoundingBox(float & left, float & top, float & right, float & bottom)
+void PotRoast::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
 	left = x;
 	top = y;
@@ -31,24 +32,20 @@ void ItemHolyWater::GetBoundingBox(float & left, float & top, float & right, flo
 	bottom = y + _texture->FrameHeight;
 }
 
-void ItemHolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
+void PotRoast::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {
 	if (TimeWaited < TimeWaitMax)
 	{
 		TimeWaited += dt;
 		return;
 	}
-
 	TimeDisplayed += dt;
 	if (TimeDisplayed >= TimeDisplayMax)
 	{
 		isFinish = true;
 		return;
 	}
-
-	Item::Update(dt); // Update dt, dx, dy
-
-
+	Item::Update(dt); // Update dt, dx, dy 
 	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();
 	for (UINT i = 0; i < listObject->size(); i++)
@@ -57,35 +54,23 @@ void ItemHolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-
 	coEvents.clear();
-
-
-	CalcPotentialCollisions(&listObject_Brick, coEvents); // Lấy danh sách các va chạm
-
-
-
+	CalcPotentialCollisions(&listObject_Brick, coEvents); // Lấy danh sách các va chạm 
+	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
 		y += dy;
-
 	}
 	else
 	{
 		float min_tx, min_ty, nx = 0, ny;
-
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-
 		y += min_ty * dy + ny * 0.4f;
-
 		if (ny != 0)
 		{
 			vy = 0;
 		}
 	}
-
-
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
-
 }

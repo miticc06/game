@@ -18,6 +18,9 @@ enum eSound
 	soundDisplayMonney = 7,
 	soundHurting = 8,
 	soundOpenDoor = 9,
+	soundBrokenBrick = 10,
+	soundHolyWater = 11,
+
 
 	musicState1 = 51,
 	musicLifeLost = 52

@@ -53,14 +53,14 @@ void Scene_2::KeyState(BYTE * state)
 			if (!simon->isOnStair) // chưa trên thang
 			{
 				for (UINT i = 0; i < listObj.size(); i++)
-					if (listObj[i]->GetType() == eID::STAIR_BOTTOM)
+					if (listObj[i]->GetType() == eType::STAIR_BOTTOM)
 					{
 						if (simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với STAIR BOTOM
 						{
 							GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
-							simon->trendStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon
-							simon->trendY = -1;// hướng đi lên
-							simon->SetDirection(simon->trendStair);// hướng của simon khi đi lên là hướng của cầu thang
+							simon->directionStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon
+							simon->directionY = -1;// hướng đi lên
+							simon->SetDirection(simon->directionStair);// hướng của simon khi đi lên là hướng của cầu thang
 
 							simon->isOnStair = true; // set trạng thái đang trên cầu thang
 							simon->DoCaoDiDuoc = 0; 
@@ -91,8 +91,8 @@ void Scene_2::KeyState(BYTE * state)
 				{
 					simon->isWalking = true;
 					simon->isProcessingOnStair = 1;
-					simon->trendY = -1;// hướng đi lên
-					simon->SetDirection(simon->trendStair);// hướng của simon khi đi lên là hướng của cầu thang
+					simon->directionY = -1;// hướng đi lên
+					simon->SetDirection(simon->directionStair);// hướng của simon khi đi lên là hướng của cầu thang
 					simon->SetSpeed(simon->GetDirection()* SIMON_SPEED_ONSTAIR, -1 * SIMON_SPEED_ONSTAIR);
 				
 					float vvx, vvy;
@@ -111,14 +111,14 @@ void Scene_2::KeyState(BYTE * state)
 				{
 					int CountCollisionTop = 0;
 					for (UINT i = 0; i < listObj.size(); i++)
-						if (listObj[i]->GetType() == eID::STAIR_TOP)
+						if (listObj[i]->GetType() == eType::STAIR_TOP)
 						{
 							if (simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với STAIR TOP
 							{
 								GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
-								simon->trendStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon
-								simon->trendY = 1;// hướng đi xuống
-								simon->SetDirection(simon->trendStair);// hướng của simon khi đi xuống là hướng của cầu thang
+								simon->directionStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon
+								simon->directionY = 1;// hướng đi xuống
+								simon->SetDirection(simon->directionStair);// hướng của simon khi đi xuống là hướng của cầu thang
 
 								simon->isOnStair = true; // set trạng thái đang trên cầu thang
 								simon->DoCaoDiDuoc = 0;
@@ -161,8 +161,8 @@ void Scene_2::KeyState(BYTE * state)
 					{
 						simon->isWalking = true;
 						simon->isProcessingOnStair = 1;
-						simon->trendY = 1;// hướng đi xuống
-						simon->SetDirection(simon->trendStair*-1);// hướng của simon khi đi xuóng là ngược của cầu thang
+						simon->directionY = 1;// hướng đi xuống
+						simon->SetDirection(simon->directionStair*-1);// hướng của simon khi đi xuóng là ngược của cầu thang
 						simon->SetSpeed(simon->GetDirection()* SIMON_SPEED_ONSTAIR, SIMON_SPEED_ONSTAIR);
 					}
 
@@ -340,6 +340,16 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
+	if (KeyCode == DIK_H)
+	{
+		simon->SetHealth(9999);
+		simon->SetLives(9999);
+		simon->SetHeartCollect(9999);
+		_gameTime->SetTime(0);
+		simon->_weaponSub = new HolyWater();
+	}
+
+
 	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
 		return;
 
@@ -442,7 +452,7 @@ void Scene_2::LoadResources()
 		_gameTime = new GameTime();
 	  
 	TileMap = new Map();
-	TileMap->LoadMap(eID::MAP2);
+	TileMap->LoadMap(eType::MAP2);
 
 	camera = new Camera(Window_Width, Window_Height);
 	camera->SetPosition(0, 0);
@@ -675,40 +685,11 @@ void Scene_2::Update(DWORD dt)
 		{
 			if (CountEnemyPanther == 0) // không còn Panther nào sống thì mới dc tạo lại cả 3
 			{  
-				int trendPanther = abs(REGION_CREATE_PANTHER_LEFT - simon->GetX()) < abs(REGION_CREATE_PANTHER_RIGHT - simon->GetX()) ? -1 : 1; // hướng mặt của Panther quay về hướng simon
-
-				for (UINT i = 0; i < 3; i++)
-				{ 
-					/*if (listPanther[i] != NULL)
-					{
-						SAFE_DELETE(listPanther[i]);
-					} 
- 					switch (i)	
-					{
-					case 0: 
-						listPanther[i] = new Panther(1398.0f, 225.0f, trendPanther, trendPanther == -1 ? 20.0f : 9.0f);
-						break;
-					case 1:
-						listPanther[i] = new Panther(1783.0f, 160.0f, trendPanther, trendPanther == -1 ? 278.0f : 180.0f);
-						break;
-					case 2:
-						listPanther[i] = new Panther(1923.0f, 225.0f, trendPanther, trendPanther == -1 ? 68.0f : 66.0f);
-						break;
-					}*/
-					switch (i)
-					{
-					case 0:
-						listEnemy.push_back(new Panther(1398.0f, 225.0f, trendPanther, trendPanther == -1 ? 20.0f : 9.0f));
-						break;
-					case 1:
-						listEnemy.push_back(new Panther(1783.0f, 160.0f, trendPanther, trendPanther == -1 ? 278.0f : 180.0f));
-						break;
-					case 2:
-						listEnemy.push_back(new Panther(1923.0f, 225.0f, trendPanther, trendPanther == -1 ? 68.0f : 66.0f));
- 						break;
-					}
-					CountEnemyPanther++;
-				}
+				int directionPanther = abs(REGION_CREATE_PANTHER_LEFT - simon->GetX()) < abs(REGION_CREATE_PANTHER_RIGHT - simon->GetX()) ? -1 : 1; // hướng mặt của Panther quay về hướng simon
+				listEnemy.push_back(new Panther(1398.0f, 225.0f, directionPanther, directionPanther == -1 ? 20.0f : 9.0f));
+				listEnemy.push_back(new Panther(1783.0f, 160.0f, directionPanther, directionPanther == -1 ? 278.0f : 180.0f));
+				listEnemy.push_back(new Panther(1923.0f, 225.0f, directionPanther, directionPanther == -1 ? 68.0f : 66.0f));
+				CountEnemyPanther += 3;
 			}
 			isAllowRenewPanther = false;
 		}
@@ -758,7 +739,7 @@ void Scene_2::Update(DWORD dt)
 		{
 			switch (enemy->GetType())
 			{
-			case eID::GHOST:
+			case eType::GHOST:
 			{
 				if (camera->checkObjectInCamera(
 					enemy->GetX(),
@@ -783,7 +764,7 @@ void Scene_2::Update(DWORD dt)
 				break;
 			}
 
-			case eID::PANTHER:
+			case eType::PANTHER:
 			{
 				Panther * objPanther = dynamic_cast<Panther *>(enemy);
 				if (camera->checkObjectInCamera(
@@ -807,7 +788,7 @@ void Scene_2::Update(DWORD dt)
 			}
 
 
-			case eID::BAT:
+			case eType::BAT:
 			{
 				if (camera->checkObjectInCamera(
 					enemy->GetX(),
@@ -932,7 +913,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 				switch (listObj[i]->GetType())
 				{
-				case eID::CANDLE:
+				case eType::CANDLE:
 				{
 					GameObject *gameObj = listObj[i];
 					gameObj->SubHealth(1);
@@ -941,7 +922,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					break;
 				}
 
-				case eID::GHOST:
+				case eType::GHOST:
 				{
 					GameObject *gameObj = listObj[i];
 					gameObj->SubHealth(1);
@@ -962,7 +943,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					break;
 				}
 
-				case eID::PANTHER:
+				case eType::PANTHER:
 				{
 					GameObject *gameObj = listObj[i];
 					gameObj->SubHealth(1);
@@ -976,7 +957,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
  					break;
 				} 
 
-				case eID::BAT:
+				case eType::BAT:
 				{
 					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 					gameObj->SubHealth(1);
@@ -1021,7 +1002,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 				switch (listObj[i]->GetType())
 				{
-				case eID::CANDLE:
+				case eType::CANDLE:
 				{
 					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 					gameObj->SubHealth(1);
@@ -1031,7 +1012,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					break;
 				}
 
-				case eID::GHOST:
+				case eType::GHOST:
 				{
 					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 					gameObj->SubHealth(1);
@@ -1051,7 +1032,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					}
 					break;
 				}
-				case eID::PANTHER:
+				case eType::PANTHER:
 				{
 					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 					gameObj->SubHealth(1);
@@ -1066,7 +1047,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 				} 
 
 
-				case eID::BAT:
+				case eType::BAT:
 				{
 					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 					gameObj->SubHealth(1);
@@ -1100,14 +1081,14 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					sound->Play(eSound::soundHit);
 					switch (simon->_weaponSub->GetType())
 					{
-					case eID::HOLYWATER:
+					case eType::HOLYWATER:
 					{
 						//HolyWater * objHolyWater = dynamic_cast<HolyWater *>(simon->_weaponSub);
 						//if (objHolyWater->is==true)
 						break;
 					}
 
-					case eID::DAGGER:
+					case eType::DAGGER:
 					{
 
 						simon->_weaponSub->SetFinish(true); // hủy cây kiếm 
@@ -1123,13 +1104,45 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 #pragma region Object Brick
 	for (UINT i = 0; i < listObj.size(); i++)
 	{
-		if (listObj[i]->GetType() == eID::BRICK)
+		if (listObj[i]->GetType() == eType::BRICK)
 		{
-			GameObject * gameObject = dynamic_cast<GameObject*>(listObj[i]);
+			GameObject * gameObject = listObj[i];
 			if (gameObject->GetHealth() > 0)
 			{
 				switch (gameObject->GetId())
 				{
+
+				case 39: // id 39 : brick 4 ô-> chỉ hiện effect
+				{
+					if (simon->_weaponMain->isCollision(listObj[i]) == true)
+					{
+						gameObject->SubHealth(1);
+						listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick 
+						sound->Play(eSound::soundBrokenBrick);
+					}
+					break;
+				}
+
+				case 40: // id 72: brick -> a bonus
+				{
+					if (simon->_weaponMain->isCollision(listObj[i]) == true)
+					{
+						gameObject->SubHealth(1);
+						listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
+						listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick 
+						sound->Play(eSound::soundBrokenBrick);
+					}
+					break;
+				}
+
 				case 72: // id 72: brick -> a bonus
 				{
 					if (simon->_weaponMain->isCollision(listObj[i]) == true)
@@ -1142,9 +1155,14 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
 						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
 						listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick 
+						sound->Play(eSound::soundBrokenBrick);
+
 					}
 					break;
 				}
+
+
+
 				}
 			}
 			
@@ -1167,7 +1185,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 			{
 				switch (listItem[i]->GetType())
 				{
-				case eID::LARGEHEART:
+				case eType::LARGEHEART:
 				{
 					simon->SetHeartCollect(simon->GetHeartCollect() + 5);
 					listItem[i]->SetFinish(true);
@@ -1175,7 +1193,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 					break;
 				}
 
-				case eID::SMALLHEART:
+				case eType::SMALLHEART:
 				{
 					simon->SetHeartCollect(simon->GetHeartCollect() + 1);
 					listItem[i]->SetFinish(true);
@@ -1184,7 +1202,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 				}
 
 
-				case eID::UPGRADEMORNINGSTAR:
+				case eType::UPGRADEMORNINGSTAR:
 				{
 					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->_weaponMain);
 					objMorningStar->UpgradeLevel(); // Nâng cấp vũ khí roi
@@ -1193,7 +1211,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 					sound->Play(eSound::soundCollectWeapon);
 					break;
 				} 
-				case eID::ITEMDAGGER:
+				case eType::ITEMDAGGER:
 				{
 					SAFE_DELETE(simon->_weaponSub);
 					simon->_weaponSub = new Dagger();
@@ -1202,7 +1220,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 					break;
 				}
 
-				case eID::ITEMHOLYWATER:
+				case eType::ITEMHOLYWATER:
 				{
 					SAFE_DELETE(simon->_weaponSub);
 					simon->_weaponSub = new HolyWater();
@@ -1211,11 +1229,20 @@ void Scene_2::CheckCollisionSimonWithItem()
 					break;
 				}
 
-				case eID::MONNEY:
+				case eType::BONUS:
 				{
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
 					simon->SetScore(1000);
+					break;
+				}
+
+
+				case eType::POTROAST:
+				{
+					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectItem); 
+					simon->SetHealth(min(simon->GetHealth() + 6, 16)); // tăng 6 đơn vị máu
 					break;
 				}
 
@@ -1241,7 +1268,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 #pragma region Object Hidden
 	for (UINT i = 0; i < listObj.size(); i++)
 	{
-		if (listObj[i]->GetType() == eID::OBJECT_HIDDEN)
+		if (listObj[i]->GetType() == eType::OBJECT_HIDDEN)
 		{
 			GameObject * gameObject = dynamic_cast<GameObject*>(listObj[i]);
 			if (gameObject->GetHealth() > 0)
@@ -1349,7 +1376,7 @@ void Scene_2::CheckCollisionSimonWithGate()
 {
 	for (UINT i = 0; i < listObj.size(); i++)
 	{
-		if (listObj[i]->GetType() == eID::GATE)
+		if (listObj[i]->GetType() == eType::GATE)
 		{
 			if (simon->isCollitionObjectWithObject(listObj[i]))
 			{
@@ -1377,12 +1404,16 @@ void Scene_2::CheckCollisionSimonWithGate()
 
  
 
-Item * Scene_2::GetNewItem(int Id, eID Type, float X, float Y)
+Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 {
-	if (Type == eID::CANDLE)
+	if (Type == eType::CANDLE)
 	{
 		switch (Id)
 		{ 
+		case 40:
+			return new ItemHolyWater(X, Y);
+			break;
+
 		case 71:
 			return new ItemHolyWater(X, Y);
 			break;
@@ -1395,7 +1426,7 @@ Item * Scene_2::GetNewItem(int Id, eID Type, float X, float Y)
 	} 
 
 
-	if (Type == eID::GHOST || Type == eID::PANTHER || Type == eID::BAT)
+	if (Type == eType::GHOST || Type == eType::PANTHER || Type == eType::BAT)
 	{
 		int random = rand() % 10;
  
@@ -1411,23 +1442,30 @@ Item * Scene_2::GetNewItem(int Id, eID Type, float X, float Y)
 			return new ItemDagger(X, Y);
 			break;
 		case 3:
-			return new Monney(X, Y);
+			return new Bonus(X, Y);
 			break;
 		case 4:
 			return new UpgradeMorningStar(X, Y);
 			break;
-		default: // 50% còn lại là SmallHeart
+		case 5:
+			return new ItemHolyWater(X, Y);
+			break;
+
+		default: // còn lại là SmallHeart
 			return new SmallHeart(X, Y);
 			break;
 		} 
 	}
 
-	if (Type == eID::BRICK)
+	if (Type == eType::BRICK)
 	{
 		switch (Id)
 		{
+		case 40:
+			return new PotRoast(X, Y);
+			break;
 		case 72:
-			return new Monney(X, Y);
+			return new Bonus(X, Y);
 			break;
 
 		default:

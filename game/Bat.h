@@ -15,7 +15,7 @@ private:
 	float yBackup; // vị trí của y ban dầu
  
 public:
-	Bat(float X = 0, float Y = 0, int Trend = -1);
+	Bat(float X = 0, float Y = 0, int Direction = -1);
 	virtual ~Bat();
 	  
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);

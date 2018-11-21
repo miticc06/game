@@ -9,11 +9,11 @@ Candle::~Candle()
 
 Candle::Candle(int X, int Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eID::CANDLE);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::CANDLE);
 	_sprite = new GSprite(_texture, 100);
 	this->x = (float)X;
 	this->y = (float)Y;
-	type = eID::CANDLE;
+	type = eType::CANDLE;
 	Health = 1;
 }
 

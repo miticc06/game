@@ -60,7 +60,7 @@ extern int ScreenRow;
 
 
 // ID của Sprite, object
-enum eID
+enum eType
 {
 	SIMON = 01,
 
@@ -72,6 +72,8 @@ enum eID
 	TEX_BRICK_MODEL_3 = 24,
 	TEX_BRICK_TRANSPARENT = 25,
 	GATE = 26,
+	TEX_BRICK_MODEL_3_3_32 = 27,
+	TEX_BRICK_MODEL_3_4_32 = 28,
 
 	// object
 	TORCH = 41,
@@ -94,9 +96,10 @@ enum eID
 	LARGEHEART = 81,
 	UPGRADEMORNINGSTAR = 82,
 	ITEMDAGGER = 83,
-	MONNEY = 84,
+	BONUS = 84,
 	SMALLHEART = 85,
 	ITEMHOLYWATER =86,
+	POTROAST = 87,
 
 	// other
 	FONT = 101,

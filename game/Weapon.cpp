@@ -17,16 +17,16 @@ int Weapon::GetDirection()
 	return direction;
 }
 
-void Weapon::SetDirection(int Trend)
+void Weapon::SetDirection(int Direction)
 {
-	this->direction = Trend;
+	this->direction = Direction;
 }
 
-void Weapon::Create(float simonX, float simonY, int simonTrend)
+void Weapon::Create(float simonX, float simonY, int simonDirection)
 {
 	this->x = simonX;
 	this->y = simonY;
-	this->direction = simonTrend;
+	this->direction = simonDirection;
 	isFinish = 0;
 }
 

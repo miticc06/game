@@ -4,9 +4,9 @@
 
 Gate::Gate(int X, int Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eID::GATE);
+	_texture = TextureManager::GetInstance()->GetTexture(eType::GATE);
 	_sprite = new GSprite(_texture, 200);
-	type = eID::GATE;
+	type = eType::GATE;
 	Health = 1;
 	isStart = 0;
 	x = X;

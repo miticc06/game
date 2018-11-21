@@ -27,9 +27,9 @@ public:
 	~Weapon();			 
 
 	int GetDirection();
-	void SetDirection(int Trend);
+	void SetDirection(int Direction);
 
-	virtual void Create(float simonX, float simonY, int simonTrend);
+	virtual void Create(float simonX, float simonY, int simonDirection);
  
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL); 
