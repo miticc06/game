@@ -32,6 +32,8 @@
 #include "ItemHolyWater.h"
 #include "BrokenBrick.h"
 #include "PotRoast.h"
+#include "StopWatch.h"
+#include "ItemStopWatch.h"
 
 #define GAME_TIME_SCENE2 300
 
@@ -90,6 +92,9 @@ private:
 
 	GameTime * _gameTime;
 	int StateCurrent;
+
+	/*Xử lí stopWatch*/
+	bool isStopWatch;
 
 public:
 	Scene_2(Simon * _si = NULL, GameTime* _ga = NULL);

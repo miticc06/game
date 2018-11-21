@@ -69,15 +69,15 @@ void Ghost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
 
+
+	_sprite->Update(dt); // update frame ani
 }
 
 void Ghost::Render(Camera * camera)
 {
 	if (Health <= 0)
 		return;
-
-	_sprite->Update(dt);
-
+	 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
 		_sprite->Draw((int)pos.x, (int)pos.y);

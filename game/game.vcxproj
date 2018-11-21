@@ -148,6 +148,7 @@
     <ClInclude Include="HolyWater.h" />
     <ClInclude Include="ItemHolyWater.h" />
     <ClInclude Include="Bonus.h" />
+    <ClInclude Include="ItemStopWatch.h" />
     <ClInclude Include="ObjectHidden.h" />
     <ClInclude Include="Panther.h" />
     <ClInclude Include="PotRoast.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Simon.h" />
     <ClInclude Include="StairBottom.h" />
     <ClInclude Include="StairTop.h" />
+    <ClInclude Include="StopWatch.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Torch.h" />
     <ClInclude Include="UpgradeMorningStar.h" />
@@ -199,6 +201,7 @@
     <ClCompile Include="HolyWater.cpp" />
     <ClCompile Include="ItemHolyWater.cpp" />
     <ClCompile Include="Bonus.cpp" />
+    <ClCompile Include="ItemStopWatch.cpp" />
     <ClCompile Include="ObjectHidden.cpp" />
     <ClCompile Include="Panther.cpp" />
     <ClCompile Include="PotRoast.cpp" />
@@ -221,6 +224,7 @@
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="StairBottom.cpp" />
     <ClCompile Include="StairTop.cpp" />
+    <ClCompile Include="StopWatch.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Torch.cpp" />
     <ClCompile Include="UpgradeMorningStar.cpp" />

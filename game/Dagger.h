@@ -3,7 +3,7 @@
 
 #include "Weapon.h"
 #include "TextureManager.h"
-
+#include "Sound.h"
 #define DAGGER_SPEED 0.35f
 
 class Dagger : 	public Weapon

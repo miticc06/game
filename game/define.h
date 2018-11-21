@@ -91,6 +91,8 @@ enum eType
 	MORNINGSTAR = 61,
 	DAGGER = 62,
 	HOLYWATER = 63,
+	STOPWATCH = 64,
+
 
 	// item
 	LARGEHEART = 81,

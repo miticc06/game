@@ -151,6 +151,12 @@
     <ClCompile Include="PotRoast.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="ItemStopWatch.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="StopWatch.cpp">
+      <Filter>Object\Weapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -299,6 +305,12 @@
     </ClInclude>
     <ClInclude Include="PotRoast.h">
       <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemStopWatch.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="StopWatch.h">
+      <Filter>Object\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

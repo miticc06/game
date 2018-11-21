@@ -28,6 +28,7 @@ void Dagger::Create(float simonX, float simonY, int simonDirection)
 {
 	Weapon::Create(simonX, simonY + 10, simonDirection);
 	vx = DAGGER_SPEED * direction;
+	Sound::GetInstance()->Play(eSound::soundDagger);
 }
 
 void Dagger::GetBoundingBox(float & left, float & top, float & right, float & bottom)

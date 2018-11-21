@@ -50,7 +50,9 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 		case eType::HOLYWATER:
 			weaponSub->RenderIcon(332, 33);
 			break;
-
+		case eType::STOPWATCH:
+			weaponSub->RenderIcon(332, 31);
+			break;
 
 		default:
 			break;
