@@ -492,6 +492,8 @@ void Scene_2::LoadResources()
 	TimeCreateBat = 0;
 	TimeWaitCreateBat = 0;
 	isAllowCreateBat = 0;
+
+	StateCurrent = 1;
  }
 
 
@@ -882,7 +884,7 @@ void Scene_2::Render()
 	 
 	simon->Render(camera);
 
-	board->Render(camera, simon, 1, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime());
+	board->Render(camera, simon, StateCurrent , simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime());
 
 
 
@@ -1270,7 +1272,8 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 	{
 		if (listObj[i]->GetType() == eType::OBJECT_HIDDEN)
 		{
-			GameObject * gameObject = dynamic_cast<GameObject*>(listObj[i]);
+			GameObject * gameObject = listObj[i];
+
 			if (gameObject->GetHealth() > 0)
 			{
 				LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]);
@@ -1288,6 +1291,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						TimeCreateBat = GetTickCount();
 						TimeWaitCreateBat = 2000;
 						isAllowCreateBat = true;
+						StateCurrent = 2;// set hiển thị đang ở state2
 						break;
 					}
 

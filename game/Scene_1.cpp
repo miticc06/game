@@ -393,7 +393,7 @@ void Scene_1::CheckCollisionWeapon()
 			if (listObj[i]->GetType() == eType::TORCH)
 				if (simon->_weaponMain->isCollision(listObj[i]) == true)
 				{
-					GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
+					GameObject *gameObjTorch = listObj[i];
 					gameObjTorch->SubHealth(1);
 
 					listEffect.push_back(new Hit((int)gameObjTorch->GetX()+14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng lửa
@@ -412,7 +412,7 @@ void Scene_1::CheckCollisionWeapon()
 			if (listObj[i]->GetType() == eType::TORCH)
 				if (simon->_weaponSub->isCollision(listObj[i]) == true)
 				{
-					GameObject *gameObjTorch = dynamic_cast<GameObject*>(listObj[i]);
+					GameObject *gameObjTorch = listObj[i] ;
 
 					gameObjTorch->SubHealth(1);
 
@@ -497,7 +497,7 @@ void Scene_1::CheckCollisionSimonWithObjectHidden()
 	{
 		if (listObj[i]->GetType() == eType::OBJECT_HIDDEN)
 		{
-			GameObject * gameObject = dynamic_cast<GameObject*>(listObj[i]);
+			GameObject * gameObject = listObj[i];
 			if (gameObject->GetHealth() > 0)
 			{ 
 				if (simon->isCollitionObjectWithObject(gameObject))

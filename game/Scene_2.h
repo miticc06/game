@@ -72,9 +72,7 @@ private:
 	DWORD TimeWaitCreateBat; // thời gian phải chờ để tạo bot
 	bool isAllowCreateBat; // cho phép tạo Bat
 
-
-	bool isAllRenewBat;
-
+	 
 	int CountEnemyBat;
 
 	Simon * simon;
@@ -91,7 +89,7 @@ private:
 	 
 
 	GameTime * _gameTime;
-
+	int StateCurrent;
 
 public:
 	Scene_2(Simon * _si = NULL, GameTime* _ga = NULL);
