@@ -77,6 +77,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::FIRE, new GTexture("Resources/other/1.png", 4, 1, 4));
 	AddTexture(eType::HIT, new GTexture("Resources/other/0.png", 2,1,2));
 	AddTexture(eType::BROKENBRICK, new GTexture("Resources/other/BrokenBrick.png", 4,4,16));
+	AddTexture(eType::STEAM, new GTexture("Resources/other/2.png"));
 
 
 
@@ -86,6 +87,7 @@ void TextureManager::LoadResource()
 
 	
 	AddTexture(eType::BAT, new GTexture("Resources/enemy/0.png", 4, 1, 4));
+	AddTexture(eType::FISHMEN, new GTexture("Resources/enemy/3.png", 3, 1, 3));
 
 
 

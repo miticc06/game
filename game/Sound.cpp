@@ -26,6 +26,8 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::soundHurting, L"Resources/sound/hurting.wav");
 	AddSound(eSound::soundOpenDoor, L"Resources/sound/opendoor.wav");
 	AddSound(eSound::soundBrokenBrick, L"Resources/sound/broken_brick.wav");
+	AddSound(eSound::soundSplashwater, L"Resources/sound/splashwater.wav");
+	AddSound(eSound::soundFallingDownWaterSurface, L"Resources/sound/fallingdownwatersurface.wav");
 
 
 

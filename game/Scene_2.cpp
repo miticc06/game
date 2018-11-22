@@ -282,7 +282,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
-	if (KeyCode == DIK_9) // đứng ngay cầu thang gần xuoosg hồ nước
+	if (KeyCode == DIK_8) // đứng xuoosg hồ nước
 	{
 		DebugOut(L"[SET POSITION SIMON] x = .... \n");
 		simon->SetPosition(3084.0f, 310.0f);
@@ -304,7 +304,50 @@ void Scene_2::OnKeyDown(int KeyCode)
 		isAllowCreateBat = true;
 		StateCurrent = 2;// set hiển thị đang ở state2
 		camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
+
+
+
+
+		camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
+		simon->SetPosition(3150, 405);
+		isAllowCreateBat = false;  // không cho tạo Bat
+
+
+
 	}
+
+
+
+	if (KeyCode == DIK_9) // đứng ngay cầu thang gần xuoosg hồ nước
+	{
+		DebugOut(L"[SET POSITION SIMON] x = .... \n");
+		simon->SetPosition(3084.0f, 310.0f);
+
+
+		camera->SetBoundary(3073, camera->GetBoundaryRight() + 1023);// mở biên phải rộng ra thêm để chạy AutoGo
+		//camera->SetAutoGoX(abs(ViTriCameraDiChuyenTruocKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
+		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
+		isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
+		isDoneSimonGoThroughTheDoor1 = false;
+
+
+		isDoneSimonGoThroughTheDoor1 = true;
+		//	camera->SetAutoGoX(abs(ViTriCameraDiChuyenSauKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
+		isDoneCameraGoThroughTheDoor1 = false;
+		simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
+		TimeCreateBat = GetTickCount();
+		TimeWaitCreateBat = 2000;
+		isAllowCreateBat = true;
+		StateCurrent = 2;// set hiển thị đang ở state2
+		camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
+	}
+
+
+
+
+
+
+
 
 	if (KeyCode == DIK_R)
 	{
@@ -371,6 +414,23 @@ void Scene_2::OnKeyDown(int KeyCode)
 		simon->SetHeartCollect(9999);
 		_gameTime->SetTime(0);
 		simon->_weaponSub = new HolyWater();
+	}
+
+
+
+	if (KeyCode == DIK_M) // tesst fishmen
+	{ 
+		float vtx = simon->GetX() + 100;
+		float vty = 805;
+		listEnemy.push_back(new Fishmen(vtx, vty, -1));
+
+		listEffect.push_back(new Steam(vtx, vty, 1));
+		listEffect.push_back(new Steam(vtx, vty, 2));
+		listEffect.push_back(new Steam(vtx, vty, 3));
+
+		sound->Play(eSound::soundSplashwater);
+
+
 	}
 
 
@@ -808,7 +868,7 @@ void Scene_2::Update(DWORD dt)
 	{
 		for (UINT i = 0; i < listEnemy.size(); i++)
 		{
-			GameObject * enemy = dynamic_cast<GameObject *>(listEnemy[i]);
+			GameObject * enemy = listEnemy[i];
 			if (enemy->GetHealth() > 0) // còn máu
 			{
 				switch (enemy->GetType())
@@ -871,6 +931,26 @@ void Scene_2::Update(DWORD dt)
 						enemy->GetHeight())) // nếu bat nằm trong camera thì update
 					{
 						enemy->Update(dt);
+					}
+					else
+					{
+						enemy->SetHealth(0); // ra khỏi cam coi như chết
+					}
+
+					break;
+				}
+
+
+
+				case eType::FISHMEN:
+				{
+					if (camera->checkObjectInCamera(
+						enemy->GetX(),
+						enemy->GetY(),
+						enemy->GetWidth(),
+						enemy->GetHeight())) // nếu nằm trong camera thì update
+					{
+						enemy->Update(dt, &listObj);
 					}
 					else
 					{
@@ -1360,7 +1440,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 
 					case 41: // id 41: object ẩn -> xuống hồ nước
 					{
-						camera->SetPosition(camera->GetXCam(), 384-10);
+						camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
 						simon->SetPosition(3150, 405);
 						isAllowCreateBat = false;  // không cho tạo Bat
 						break;
@@ -1373,6 +1453,26 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						TimeWaitCreateBat = 3000 + rand() % 1000;
 						break;
 					}
+
+					case 65: //id 65 : object ẩn->bonus
+					{
+						sound->Play(eSound::soundDisplayMonney);
+						listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), simon->GetX(), simon->GetY()));
+
+						break;
+					}
+
+
+					case 66: //id 66: object ẩn -> chạm nước -> chết
+					{
+						simon->SetHealth(0);
+						sound->Play(eSound::soundFallingDownWaterSurface);
+
+
+						break;
+					}
+
+
 					}
 					
 				}
@@ -1496,10 +1596,10 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 		switch (random)
 		{
 		case 0:
-			return	new LargeHeart(X, Y);
+			return new LargeHeart(X, Y);
 			break;
 		case 1:
-			return	new SmallHeart(X, Y);
+			return new SmallHeart(X, Y);
 			break;
 		case 2:
 			return new ItemDagger(X, Y);
@@ -1537,6 +1637,14 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 			return new SmallHeart(X, Y);
 			break;
 		}
+
+	}
+
+
+	if (Type == eType::OBJECT_HIDDEN)
+	{
+		if (Id == 65)
+			return new Bonus(3763.0f,587.0f);
 
 	}
 

@@ -134,6 +134,7 @@
     <ClInclude Include="Dagger.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="Fishmen.h" />
     <ClInclude Include="Gate.h" />
     <ClInclude Include="DSutil.h" />
     <ClInclude Include="dxutil.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Simon.h" />
     <ClInclude Include="StairBottom.h" />
     <ClInclude Include="StairTop.h" />
+    <ClInclude Include="Steam.h" />
     <ClInclude Include="StopWatch.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Torch.h" />
@@ -187,6 +189,7 @@
     <ClCompile Include="Dagger.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="define.cpp" />
+    <ClCompile Include="Fishmen.cpp" />
     <ClCompile Include="Gate.cpp" />
     <ClCompile Include="DSutil.cpp" />
     <ClCompile Include="dxutil.cpp" />
@@ -224,6 +227,7 @@
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="StairBottom.cpp" />
     <ClCompile Include="StairTop.cpp" />
+    <ClCompile Include="Steam.cpp" />
     <ClCompile Include="StopWatch.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Torch.cpp" />

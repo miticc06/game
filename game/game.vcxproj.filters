@@ -157,6 +157,12 @@
     <ClCompile Include="StopWatch.cpp">
       <Filter>Object\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="Fishmen.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Steam.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -311,6 +317,12 @@
     </ClInclude>
     <ClInclude Include="StopWatch.h">
       <Filter>Object\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Fishmen.h">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Steam.h">
+      <Filter>Object\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

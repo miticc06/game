@@ -34,6 +34,8 @@
 #include "PotRoast.h"
 #include "StopWatch.h"
 #include "ItemStopWatch.h"
+#include "Fishmen.h"
+#include "Steam.h"
 
 #define GAME_TIME_SCENE2 300
 
@@ -47,6 +49,7 @@
 #define REGION_CREATE_PANTHER_LEFT 1090.0f
 #define REGION_CREATE_PANTHER_RIGHT 2305.0f
 
+#define CAMERA_POSITION_Y_LAKE 374.0f
 
 
 class Scene_2 : public Scene

@@ -20,6 +20,9 @@ enum eSound
 	soundOpenDoor = 9,
 	soundBrokenBrick = 10,
 	soundHolyWater = 11,
+	soundSplashwater = 12,
+	soundFallingDownWaterSurface = 13,
+
 
 
 	musicState1 = 51,

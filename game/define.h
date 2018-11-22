@@ -116,12 +116,13 @@ enum eType
 	FIRE = 121,
 	HIT = 122,
 	BROKENBRICK = 123,
-
-
+	STEAM = 124,
+	
 	// Enemy
 	GHOST = 141,
 	PANTHER = 142,
 	BAT = 143,
+	FISHMEN = 144
 };
 
 
