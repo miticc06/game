@@ -287,45 +287,36 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 
 	/* Update về sprite */
 
-	  
-
-	GameObject::Update(dt);   
-
-
-
-	
+	GameObject::Update(dt);
 	if (isOnStair == false) // ko trên cầu thang thì mới có trọng lực
 	{
 		if (isJumping)
 		{
-			dx = vx * 16;
-			dy = vy * 16;
-			vy += SIMON_GRAVITY_JUMPING * 16;//dt;
+			dx = vx * dt;
+			dy = vy * dt;
+			vy += SIMON_GRAVITY_JUMPING * dt;
 		}
 		else
 			vy += SIMON_GRAVITY * dt;// Simple fall down
 	} 
-	else
-	{
-		this->dt = dt;
-		dx = vx * 16;
-		dy = vy * 16;
-	} 
+	//else // ngược lại đang trên thang
+	//{ 
+	//	dx = vx * dt;
+	//	dy = vy * dt;
+	//} 
 
 
-	if (isJumping && isWalking)
-	{
-	//	dx = vx * dt *1.5f; 
-	}
+	//if (isJumping && isWalking)
+	//{
+	////	dx = vx * dt *1.5f; 
+	//}
 		
 	if (isOnStair == false)
 	{
 		if (isAutoGoX == false)
  			CollisionWithBrick(coObjects); // check Collision and update x, y for simon
-		else
-		{
+		else 
 			x += dx;
-		}
 	}
 	 
 
@@ -333,11 +324,7 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 
 	if (isOnStair == true)
 		CollisionIsOnStair(coObjects);
-		 
-	 
-	 
-
-
+		  
 	_weaponMain->SetPosition(this->x, this->y);
 	_weaponMain->SetSpeed(vx, vy); // set vận tốc để kt va chạm
 	_weaponMain->UpdatePositionFitSimon();
@@ -349,8 +336,7 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 		vy = 0;
 		isWalking = false;
 	}
-
-
+	 
 
 	if (isAutoGoX == true)
 	{

@@ -45,7 +45,9 @@ using namespace std;
 
 
 #define IS_DEBUG_RENDER_BBOX 1
- 
+
+#define MAX_FRAME_RATE 90
+//#define DT_DEFAULT dt//1000/MAX_FRAME_RATE
  
 extern int Window_Width; 
 extern int Window_Height;

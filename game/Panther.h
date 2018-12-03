@@ -6,8 +6,11 @@
 #define PANTHER_ANI_RUNNING_END 3
 
 #define PANTHER_SPEED_RUNNING 0.18f
-#define PANTHER_VYJUMP 0.6f
-#define PANTHER_VXJUMP 0.4f
+#define PANTHER_VYJUMP 0.3f
+#define PANTHER_VXJUMP 0.2f
+
+#define PANTHER_GRAVITY 0.005f
+#define PANTHER_GRAVITY_JUMPING 0.001f
 
 #include "GameObject.h"
 #include "Simon.h"

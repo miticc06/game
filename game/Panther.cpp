@@ -36,7 +36,17 @@ void Panther::GetBoundingBox(float & left, float & top, float & right, float & b
 void Panther::Update(DWORD dt, Simon * simon, vector<LPGAMEOBJECT>* coObjects)
 {
 	GameObject::Update(dt);
-	vy += SIMON_GRAVITY * dt; // Simple fall down
+
+
+	if (isJumping)
+	{
+		dx = vx * dt;
+		dy = vy * dt;
+		vy += PANTHER_GRAVITY_JUMPING * dt;
+	}
+	else
+		vy += PANTHER_GRAVITY * dt;// Simple fall down
+
 
 	float DistanceLimit = 177.0f;
 	if (direction == 1)
@@ -51,14 +61,7 @@ void Panther::Update(DWORD dt, Simon * simon, vector<LPGAMEOBJECT>* coObjects)
 		isStart = 1;
 		isAutoGoX = 1;
 	}
-
-
-	
-
-
-
-
-
+	 
 	
 	if (isSitting)
 	{
@@ -68,12 +71,16 @@ void Panther::Update(DWORD dt, Simon * simon, vector<LPGAMEOBJECT>* coObjects)
 	{
 		if (isRunning)
 		{
-			if (PANTHER_ANI_RUNNING_BEGIN <= _sprite->GetIndex() && _sprite->GetIndex() < PANTHER_ANI_RUNNING_END)
+			if (!isJumping) // ko đang nhảy thì chạy => đang nhảy thì cho animation đứng yên
 			{
-				_sprite->Update(dt);
+				if (PANTHER_ANI_RUNNING_BEGIN <= _sprite->GetIndex() && _sprite->GetIndex() < PANTHER_ANI_RUNNING_END)
+				{
+					_sprite->Update(dt);
+				}
+				else
+					_sprite->SelectIndex(PANTHER_ANI_RUNNING_BEGIN);
 			}
-			else
-				_sprite->SelectIndex(PANTHER_ANI_RUNNING_BEGIN);
+			
 		}
 	}
 
@@ -176,7 +183,7 @@ void Panther::Jump()
 {
 	if (isJumping == true)
 		return;
-	vy -= PANTHER_VYJUMP;
+	vy = -PANTHER_VYJUMP;
 	vx = PANTHER_VXJUMP * direction;
 	isJumping = true;
 
