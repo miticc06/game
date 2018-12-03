@@ -513,9 +513,9 @@ void Scene_2::OnKeyDown(int KeyCode)
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		{
 			simon->Stop();
-			float vx, vy;
-			simon->GetSpeed(vx, vy);
-			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetDirection(), vy - SIMON_VJUMP);
+			//float vx, vy;
+			//simon->GetSpeed(vx, vy);
+			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetDirection(),  - SIMON_VJUMP);
 			simon->isJumping = 1;
 			simon->isWalking = 1;
 		}

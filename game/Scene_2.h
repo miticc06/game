@@ -52,7 +52,7 @@
 #define CAMERA_BOUNDARY_LAKE_LEFT 3075.0f
 #define CAMERA_BOUNDARY_LAKE_RIGHT 4111.0f-Window_Width
 
-
+#pragma region define FISHMEN
 
 #define FISHMEN_ZONE_1_LEFT 3065
 #define FISHMEN_ZONE_1_RIGHT 3193 
@@ -86,6 +86,9 @@
 #define FISHMEN_ZONE_8_LEFT 3956
 #define FISHMEN_ZONE_8_RIGHT 4095
 #define FISHMEN_POS_8 4017 
+
+#pragma endregion
+
 
 
 

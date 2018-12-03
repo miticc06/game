@@ -54,14 +54,18 @@ void Simon::GetBoundingBox(float & left, float & top, float & right, float & bot
 		left = x + 15;
 		top = y - 1; // không chỉnh lại y bởi vì hàm Sit() đã điều chỉnh
 		right = x + SIMON_BBOX_WIDTH - 17+5-3;
-		bottom = y + SIMON_BBOX_SITTING_HEIGHT -3;
+		bottom = y + SIMON_BBOX_SITTING_HEIGHT;
 	}
 	else
 	{ 
 		left = x +15;
 		top = y -1 ;
 		right = x + SIMON_BBOX_WIDTH - 17+5-3;
-		bottom = y + SIMON_BBOX_HEIGHT - 3;
+		bottom = y + SIMON_BBOX_HEIGHT;
+
+		if (isJumping)
+			bottom = y + SIMON_BBOX_JUMPING_HEIGHT;
+
 	}
  	
 }
@@ -291,19 +295,27 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 
 	
 	if (isOnStair == false) // ko trên cầu thang thì mới có trọng lực
-		vy += SIMON_GRAVITY * dt;// Simple fall down
+	{
+		if (isJumping)
+		{
+			dx = vx * 16;
+			dy = vy * 16;
+			vy += SIMON_GRAVITY_JUMPING * 16;//dt;
+		}
+		else
+			vy += SIMON_GRAVITY * dt;// Simple fall down
+	} 
 	else
 	{
 		this->dt = dt;
 		dx = vx * 16;
 		dy = vy * 16;
-		 
 	} 
 
 
 	if (isJumping && isWalking)
 	{
-		dx = vx * dt *1.5f; 
+	//	dx = vx * dt *1.5f; 
 	}
 		
 	if (isOnStair == false)
@@ -455,9 +467,8 @@ void Simon::Jump()
 		return;
 	
 	if (isHurting)
-		return;
-
-	vy -= SIMON_VJUMP;
+		return; 
+	vy =- SIMON_VJUMP;
 	isJumping = true;
 }
 
@@ -480,7 +491,7 @@ void Simon::Stop()
 	if (isSitting == true) // nếu simon đang ngồi
 	{
 		isSitting = 0; // hủy trạng thái ngồi
-		y = y - 18; // kéo simon lên
+		y = y - PULL_UP_SIMON_AFTER_SITTING; // kéo simon lên
 	}
 	
 }
@@ -498,10 +509,10 @@ void Simon::SetHurt(LPCOLLISIONEVENT e)
 	if (isSitting == true) // nếu simon đang ngồi
 	{
 		isSitting = 0; // hủy trạng thái ngồi
-		y = y - 18; // kéo simon lên
+		y = y - PULL_UP_SIMON_AFTER_SITTING; // kéo simon lên
 	}
 	
-	if (!isOnStair)
+	if (!isOnStair && !isAutoGoX) // ko "đang tự đi" và ko "đang trên thang" thì bật ra
 	{
 		if (e->nx != 0)
 		{
@@ -574,15 +585,16 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 
 		// block 
 		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.4f; // ny = -1 thì hướng từ trên xuống....
-
-		if (nx != 0)
-			;//	vx = 0; 
+		y += min_ty * dy + ny * 0.4f;
 
 		if (ny != 0)
 		{
 			vy = 0;
-			isJumping = false; // kết thúc nhảy
+			if (isJumping)
+			{
+				isJumping = false; // kết thúc nhảy
+				y = y - PULL_UP_SIMON_AFTER_JUMPING; // kéo simon lên tránh overlaping
+			}
 		}
 		 
 		if (nx != 0 || ny != 0)
@@ -675,8 +687,8 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 		{ 
 			float backupVy = vy;
 
-			y = y - 50; // kéo simon lên cao, để tạo va chạm giả xuống mặt đất. tính thời gian tiếp đất
-			vy = 15; // vận tốc kéo xuống lớn
+			y = y - 50; // kéo simon lên cao, để tạo va chạm giả xuống mặt đất, tránh overlaping. tính thời gian tiếp đất
+			vy = 9999999999.0f; // vận tốc kéo xuống lớn để chạm đất ngay trong 1 frame
 			dy = vy * dt; // cập nhật lại dy
 
 			 
