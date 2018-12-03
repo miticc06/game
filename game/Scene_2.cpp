@@ -1559,13 +1559,18 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						break;
 					}
 
-					case 41: // id 41: object ẩn -> xuống hồ nước
+					case 41: // id 41: object ẩn -> bắt đầu xuống hồ nước
 					{
 						camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
 						camera->SetBoundary(CAMERA_BOUNDARY_LAKE_LEFT, CAMERA_BOUNDARY_LAKE_RIGHT);
 						simon->SetPosition(3150, 405);
 						isAllowCreateBat = false;  // không cho tạo Bat
 						isAllowCreateFishmen = true;
+						gameObject->SetHealth(0);
+
+
+						gridGame->Insert(GRID_INSERT_OBJECT__DIRAKHOIHONUOC_LEFT); // thêm object ẩn để có thể đi lên
+
 						break;
 					}
 					case 45: // id 45: object ẩn -> trở lên trước khi xuống hồ nước
@@ -1575,6 +1580,11 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						isAllowCreateBat = true;  // không cho tạo Bat
 						isAllowCreateFishmen = false;
 						TimeWaitCreateBat = 3000 + rand() % 1000;
+						gameObject->SetHealth(0);
+
+						gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_LEFT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
+						 
+
 						break;
 					}
 
@@ -1725,7 +1735,7 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 	}
 
 
-	if (Type == eType::GHOST || Type == eType::PANTHER || Type == eType::BAT)
+	if (Type == eType::GHOST || Type == eType::PANTHER || Type == eType::BAT || Type==eType::FISHMEN)
 	{
 		int random = rand() % 10;
 
