@@ -474,15 +474,7 @@ void Simon::Stop()
 
 	vx = 0;
 	//DebugOut(L"[STOP] Set vx = %f \n", vx);
-
-	//if (vx!=0)
-	//	vx -= dt*SIMON_GRAVITY*0.1*direction;
-	//if (direction == 1 && vx < 0) 
-	//	vx = 0;
-	//if (direction == -1 && vx > 0) 
-	//	vx = 0;
-	// tóm lại là vx = 0 :v
-
+	 
 
 	isWalking = 0;
 	if (isSitting == true) // nếu simon đang ngồi

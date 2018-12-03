@@ -5,8 +5,6 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "GSprite.h"
-
-
 #include "Brick.h"
 #include "Simon.h" 
 #include "Map.h"
@@ -50,6 +48,40 @@
 #define REGION_CREATE_PANTHER_RIGHT 2305.0f
 
 #define CAMERA_POSITION_Y_LAKE 374.0f
+  
+#define FISHMEN_ZONE_1_LEFT 3065
+#define FISHMEN_ZONE_1_RIGHT 3193 
+#define FISHMEN_POS_1 3121 
+
+#define FISHMEN_ZONE_2_LEFT 3193
+#define FISHMEN_ZONE_2_RIGHT 3326
+#define FISHMEN_POS_2 3254 
+
+#define FISHMEN_ZONE_3_LEFT 3326
+#define FISHMEN_ZONE_3_RIGHT 3458
+#define FISHMEN_POS_3 3382 
+
+#define FISHMEN_ZONE_4_LEFT 3458
+#define FISHMEN_ZONE_4_RIGHT 3571
+#define FISHMEN_POS_4 3505 
+
+#define FISHMEN_ZONE_5_LEFT 3571
+#define FISHMEN_ZONE_5_RIGHT 3707
+#define FISHMEN_POS_5 3636 
+
+#define FISHMEN_ZONE_6_LEFT 3707
+#define FISHMEN_ZONE_6_RIGHT 3829
+#define FISHMEN_POS_6 3760 
+
+#define FISHMEN_ZONE_7_LEFT 3829
+#define FISHMEN_ZONE_7_RIGHT 3956
+#define FISHMEN_POS_7 3881 
+
+
+#define FISHMEN_ZONE_8_LEFT 3956
+#define FISHMEN_ZONE_8_RIGHT 4095
+#define FISHMEN_POS_8 4017 
+
 
 
 class Scene_2 : public Scene
@@ -71,6 +103,13 @@ private:
 	/*Xử lí liên quan tạo Panther*/
 	bool isAllowRenewPanther;
 	int CountEnemyPanther;
+
+
+	/*Xử lí liên quan tạo Fishmen*/
+	bool isAllowCreateFishmen;
+	int CountEnemyFishmen;
+	DWORD TimeCreateFishmen;
+	DWORD TimeWaitCreateFishmen;
 
 	/*Xử lí liên quan tạo Bat*/
 	DWORD TimeCreateBat; // thời điểm đã tạo BAT

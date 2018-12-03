@@ -16,6 +16,8 @@ Fishmen::Fishmen(float X, float Y, int Direction)
 	yInit = y;
 	isAllowRunAnimation = false;
 	_sprite->SelectIndex(FISHMEN_ANI_JUMP);
+
+	isRunning = 0;
 }
 
 Fishmen::~Fishmen()
@@ -24,9 +26,9 @@ Fishmen::~Fishmen()
 
 void Fishmen::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	left = x;
-	top = y;
-	right = x + _texture->FrameWidth;
+	left = x+5;
+	top = y + 15;
+	right = x + _texture->FrameWidth-5;
 	bottom = y + _texture->FrameHeight;
 }
 
@@ -36,8 +38,13 @@ void Fishmen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	{ 
 		vy = FISHMEN_SPEED_Y_DOWN;
 	}
-	 
+	if (isRunning)
+	{
+		vx = direction * 0.05f;
 
+		vy += 0.01f;// Gravity
+	}
+	
 	GameObject::Update(dt); // update dt,dx,dy 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult; 
@@ -57,18 +64,25 @@ void Fishmen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	{
 		float min_tx, min_ty, nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-		x += min_tx * dx + nx * 0.4f;
+		
+	/*	x += min_tx * dx + nx * 0.4f;
+		
 		if (nx != 0)
 			vx = 0;
-
+*/
 		if (ny == -1)
 		{
 			vy = 0;
 			y += min_ty * dy + ny * 0.4f;
 			isAllowRunAnimation = true;
+			isRunning = true;
 		}
 		else
+		{
 			y += dy;
+			x += dx;
+
+		}
 	} 
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i]; 
@@ -79,8 +93,16 @@ void Fishmen::Render(Camera * camera)
 	if (Health <= 0)
 		return;
 
-	if (isAllowRunAnimation)
-		;//	_sprite->Update(dt);
+	if (isRunning)
+	{
+		int index = _sprite->GetIndex();
+		if (0 < index && index <= 2)
+			_sprite->Update(dt);
+		else
+			_sprite->SelectIndex(1);
+
+	}
+		
 	 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)

@@ -104,6 +104,26 @@ float GameObject::GetVy()
 	return vy;
 }
 
+void GameObject::SetX(float X)
+{
+	x = X;
+}
+
+void GameObject::SetY(float Y)
+{
+	y = Y;
+}
+
+void GameObject::SetVx(float VX)
+{
+	vx = VX;
+}
+
+void GameObject::SetVy(float VY)
+{
+	vy = VY;
+}
+
 
 int GameObject::GetHeight()
 {

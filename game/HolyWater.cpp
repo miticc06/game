@@ -119,8 +119,12 @@ bool HolyWater::isCollision(GameObject * obj)
 
 void HolyWater::Render(Camera * camera)
 {
+	if (!camera->checkObjectInCamera(x, y, _texture->FrameWidth, _texture->FrameHeight))
+		isFinish = true;
+
 	if (isFinish == true)
 		return;
+
 	if (isCollisionBrick) // chạm đất r thì mới update ani
 		_sprite->Update(dt);
 	D3DXVECTOR2 pos = camera->Transform(x, y);

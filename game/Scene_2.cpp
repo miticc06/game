@@ -311,7 +311,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
 		simon->SetPosition(3150, 405);
 		isAllowCreateBat = false;  // không cho tạo Bat
-
+		isAllowCreateFishmen = true;
 
 
 	}
@@ -429,8 +429,6 @@ void Scene_2::OnKeyDown(int KeyCode)
 		listEffect.push_back(new Steam(vtx, vty, 3));
 
 		sound->Play(eSound::soundSplashwater);
-
-
 	}
 
 
@@ -548,8 +546,7 @@ void Scene_2::OnKeyUp(int KeyCode)
 		break;
 	}
 }
-
-
+ 
 void Scene_2::LoadResources()
 {
 	TextureManager * _textureManager = TextureManager::GetInstance(); // Đã gọi load resource
@@ -598,6 +595,14 @@ void Scene_2::LoadResources()
 	isAllowRenewPanther = true;
 	CountEnemyPanther = 0;
 
+	isAllowCreateFishmen = false;
+	TimeCreateFishmen = 0;
+	TimeWaitCreateFishmen = 0;
+	CountEnemyFishmen = 0;
+
+	CountEnemyPanther = 0;
+
+
 
 	TimeCreateBat = 0;
 	TimeWaitCreateBat = 0;
@@ -607,8 +612,7 @@ void Scene_2::LoadResources()
 
 	isStopWatch = 0;
 }
-
-
+ 
 void Scene_2::ResetResource()
 {
 	SAFE_DELETE(gridGame);
@@ -631,6 +635,11 @@ void Scene_2::ResetResource()
 
 	isAllowRenewPanther = true;
 	CountEnemyPanther = 0;
+
+	isAllowCreateFishmen = false;
+	TimeCreateFishmen = 0;
+	TimeWaitCreateFishmen = 0;
+	CountEnemyFishmen = 0;
 
 
 	TimeCreateBat = 0;
@@ -729,6 +738,7 @@ void Scene_2::Update(DWORD dt)
 	//DebugOut(L"[GRID] size = %d\n", listObj.size());
 
 	simon->Update(dt, camera, &listObj);
+
 	if (camera->AllowFollowSimon())
 	{
 		camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
@@ -852,6 +862,86 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 
 
+#pragma region Create Fishmen
+
+
+
+	if (isAllowCreateFishmen && CountEnemyFishmen<=2)
+	{
+		DWORD now = GetTickCount();
+		if (now - TimeCreateFishmen >= TimeWaitCreateFishmen) // đủ thời gian chờ
+		{
+			TimeCreateFishmen = now; // đặt lại thời gian đã tạo
+
+			float vtx = 0;
+
+			if (FISHMEN_ZONE_1_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_1_RIGHT)
+			{
+				//vtx = (rand() % 2) ? (FISHMEN_POS_2) : ((rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4));
+				vtx = (rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4);
+
+			}
+
+			if (FISHMEN_ZONE_2_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_2_RIGHT)
+			{
+				vtx = (rand() % 2) ? (FISHMEN_POS_1) : ((rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4));
+
+			} 
+
+			if (FISHMEN_ZONE_3_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_3_RIGHT)
+			{
+				vtx = (rand() % 2) ?  (FISHMEN_POS_4) : (FISHMEN_POS_5);
+
+			} 
+
+			if (FISHMEN_ZONE_4_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_4_RIGHT)
+			{
+				vtx = (rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_5);
+
+			}
+
+			if (FISHMEN_ZONE_5_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_5_RIGHT)
+			{
+				vtx = (rand() % 2) ? (FISHMEN_POS_4) : (FISHMEN_POS_6);
+
+			} 
+
+			if (FISHMEN_ZONE_6_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_6_RIGHT)
+			{
+				vtx = (rand() % 2) ? (FISHMEN_POS_5) : ((rand() % 2) ? (FISHMEN_POS_7) : (FISHMEN_POS_8));
+
+			} 
+
+			if (FISHMEN_ZONE_7_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_7_RIGHT)
+			{
+				vtx = (rand() % 2) ? (FISHMEN_POS_6) : (FISHMEN_POS_8);
+
+			} 
+			if (FISHMEN_ZONE_8_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_8_RIGHT)
+			{
+				vtx = (rand() % 2) ? (FISHMEN_POS_6) : (FISHMEN_POS_7);
+
+			}
+			int directionFishmen = vtx < simon->GetX() ? 1 : -1;
+
+			
+			float vty = 805;
+			listEnemy.push_back(new Fishmen(vtx, vty, directionFishmen));
+			
+			CountEnemyFishmen++;
+
+			listEffect.push_back(new Steam(vtx, vty, 1));
+			listEffect.push_back(new Steam(vtx, vty, 2));
+			listEffect.push_back(new Steam(vtx, vty, 3)); 
+			sound->Play(eSound::soundSplashwater);
+			 
+			 
+			TimeWaitCreateFishmen = 2000 + (rand() % 2000);
+		}
+	}
+
+#pragma endregion
+
 #pragma region Process_Update_Object
 	for (UINT i = 0; i < listObj.size(); i++)
 		listObj[i]->Update(dt, &listObj);  // đã kiểm tra "Alive" lúc lấy từ lưới ra
@@ -955,6 +1045,9 @@ void Scene_2::Update(DWORD dt)
 					else
 					{
 						enemy->SetHealth(0); // ra khỏi cam coi như chết
+
+						CountEnemyFishmen--; 
+
 					}
 
 					break;
@@ -1031,27 +1124,26 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 			if (simon->_weaponMain->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
 			{
 				bool RunEffectHit = false;
-
-				switch (listObj[i]->GetType())
+				GameObject *gameObj = listObj[i];
+				switch (gameObj->GetType())
 				{
 				case eType::CANDLE:
 				{
-					GameObject *gameObj = listObj[i];
-					gameObj->SubHealth(1);
-					listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+ 					gameObj->SubHealth(1);
+					listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));// hiệu ứng hit
+ 
 					RunEffectHit = true;
 					break;
 				}
 
 				case eType::GHOST:
 				{
-					GameObject *gameObj = listObj[i];
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 100);
 					if (rand() % 2 == 1) // tỉ lệ 50%
 					{
 						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-					}
+ 					}
 
 					RunEffectHit = true;
 					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
@@ -1066,13 +1158,12 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 				case eType::PANTHER:
 				{
-					GameObject *gameObj = listObj[i];
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 200);
 					if (rand() % 2 == 1) // tỉ lệ 50%
 					{
 						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-					}
+ 					}
 					RunEffectHit = true;
 					CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
 					break;
@@ -1080,12 +1171,12 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 				case eType::BAT:
 				{
-					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 200);
 					if (rand() % 2 == 1) // tỉ lệ 50%
 					{
 						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+ 
 					}
 
 					RunEffectHit = true;
@@ -1106,6 +1197,8 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 				if (RunEffectHit)
 				{
 					listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
+					listEffect.push_back(new Fire((int)gameObj->GetX() - 5, (int)gameObj->GetY() + 8)); // hiệu ứng lửa
+
 					sound->Play(eSound::soundHit);
 				}
 
@@ -1435,6 +1528,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						StateCurrent = 2;// set hiển thị đang ở state2
 						camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
 						gameObject->SubHealth(1);
+						DebugOut(L"Xac nhan qua xong cua!\n");
 						break;
 					}
 
@@ -1443,6 +1537,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
 						simon->SetPosition(3150, 405);
 						isAllowCreateBat = false;  // không cho tạo Bat
+						isAllowCreateFishmen = true;
 						break;
 					}
 					case 45: // id 45: object ẩn -> trở lên trước khi xuống hồ nước
@@ -1450,6 +1545,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						camera->SetPosition(camera->GetXCam(), 0);
 						simon->SetPosition(3152, 345);
 						isAllowCreateBat = true;  // không cho tạo Bat
+						isAllowCreateFishmen = false;
 						TimeWaitCreateBat = 3000 + rand() % 1000;
 						break;
 					}
@@ -1458,7 +1554,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 					{
 						sound->Play(eSound::soundDisplayMonney);
 						listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), simon->GetX(), simon->GetY()));
-
+						gameObject->SetHealth(0);
 						break;
 					}
 
@@ -1546,10 +1642,27 @@ void Scene_2::CheckCollisionSimonWithGate()
 						//di chuyển camera đến ViTriCameraDiChuyenTruocKhiQuaCua = 2825.0f
 						camera->SetBoundary(camera->GetBoundaryLeft(), camera->GetBoundaryRight() + 1064+100);// mở biên phải rộng ra thêm để chạy AutoGo
 						camera->SetAutoGoX(abs(ViTriCameraDiChuyenTruocKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
-						simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
+						
+						//simon->Stop();
+#pragma region Stop simon
+						simon->SetSpeed(0, simon->GetVy()); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
+						simon->isWalking = 0;
+						if (simon->isSitting == true) // nếu simon đang ngồi
+						{
+							simon->isSitting = 0; // hủy trạng thái ngồi
+							simon->SetY(simon->GetY() - 18); // kéo simon lên
+						}
+#pragma endregion
+
+						
+
 						isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
 						isDoneSimonGoThroughTheDoor1 = false;
 						objGate->Start();
+
+						DebugOut(L"Simon dung trung cua!\n");
+
+
 						break;
 					}
 

@@ -16,6 +16,8 @@ class Fishmen : public GameObject
 private:
 	float yInit; // vị trí y lúc khởi tạo
 	bool isAllowRunAnimation;
+
+	bool isRunning;
 public:
 	Fishmen(float X = 0, float Y = 0, int Direction = -1);
 	virtual ~Fishmen();

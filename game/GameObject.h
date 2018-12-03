@@ -89,6 +89,10 @@ public:
 	float GetY();
 	float GetVx();
 	float GetVy();
+	void SetX(float X);
+	void SetY(float Y);
+	void SetVx(float VX);
+	void SetVy(float VY);
 	int GetHeight();
 	int GetWidth();
 	eType GetType();

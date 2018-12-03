@@ -396,7 +396,7 @@ void Scene_1::CheckCollisionWeapon()
 					GameObject *gameObjTorch = listObj[i];
 					gameObjTorch->SubHealth(1);
 
-					listEffect.push_back(new Hit((int)gameObjTorch->GetX()+14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng lửa
+					listEffect.push_back(new Hit((int)gameObjTorch->GetX()+14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng Hit
 					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY()+8)); // hiệu ứng lửa
 					listItem.push_back(GetNewItem(gameObjTorch->GetId(), gameObjTorch->GetType(), gameObjTorch->GetX() +5, gameObjTorch->GetY()));
 
