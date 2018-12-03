@@ -288,8 +288,8 @@ void Scene_2::OnKeyDown(int KeyCode)
 		simon->SetPosition(3084.0f, 310.0f);
 
 
-		camera->SetBoundary(3073, camera->GetBoundaryRight() + 1023);// mở biên phải rộng ra thêm để chạy AutoGo
-		//camera->SetAutoGoX(abs(ViTriCameraDiChuyenTruocKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
+		camera->SetBoundary(CAMERA_BOUNDARY_LAKE_LEFT, CAMERA_BOUNDARY_LAKE_RIGHT);
+
 		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
 		isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
 		isDoneSimonGoThroughTheDoor1 = false; 
@@ -704,7 +704,7 @@ void Scene_2::Update(DWORD dt)
 		}
 		else
 		{
-			if (camera->GetXCam() + 1.0f >= ViTriCameraDiChuyenSauKhiQuaCua)
+			if (camera->GetXCam()/* + 1.0f */>= ViTriCameraDiChuyenSauKhiQuaCua)
 			{
 				camera->SetBoundary(ViTriCameraDiChuyenSauKhiQuaCua, camera->GetBoundaryRight());
 				camera->SetAllowFollowSimon(true);
@@ -1190,6 +1190,19 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					break;
 				}
 
+				case eType::FISHMEN:
+				{
+					gameObj->SubHealth(1);
+					simon->SetScore(simon->GetScore() + 200);
+					if (rand() % 2 == 1) // tỉ lệ 50% 
+						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY())); 
+
+					RunEffectHit = true;
+					CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
+
+					break;
+				}
+
 				default:
 					break;
 				}
@@ -1213,12 +1226,12 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 			if (simon->_weaponSub->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
 			{
 				bool RunEffectHit = false;
+				GameObject *gameObj = listObj[i];
 
-				switch (listObj[i]->GetType())
+				switch (gameObj->GetType())
 				{
 				case eType::CANDLE:
-				{
-					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+				{ 
 					gameObj->SubHealth(1);
 					listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
 					RunEffectHit = true;
@@ -1227,8 +1240,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 				}
 
 				case eType::GHOST:
-				{
-					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+				{ 
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 100);
 
@@ -1247,8 +1259,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					break;
 				}
 				case eType::PANTHER:
-				{
-					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+				{ 
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 200);
 					if (rand() % 2 == 1) // tỉ lệ 50%
@@ -1262,8 +1273,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 
 				case eType::BAT:
-				{
-					GameObject *gameObj = dynamic_cast<GameObject*>(listObj[i]);
+				{ 
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 200);
 					if (rand() % 2 == 1) // tỉ lệ 50%
@@ -1282,6 +1292,17 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					break;
 				}
 
+				case eType::FISHMEN:
+				{
+					gameObj->SubHealth(1);
+					simon->SetScore(simon->GetScore() + 200);
+					if (rand() % 2 == 1) // tỉ lệ 50%
+						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+					RunEffectHit = true;
+					CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
+					break;
+				}
+
 				default:
 					break;
 				}
@@ -1292,6 +1313,8 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 				if (RunEffectHit)
 				{
 					listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
+					listEffect.push_back(new Fire((int)gameObj->GetX() - 5, (int)gameObj->GetY() + 8)); // hiệu ứng lửa
+
 					sound->Play(eSound::soundHit);
 					switch (simon->_weaponSub->GetType())
 					{
@@ -1510,18 +1533,22 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 
 			if (gameObject->GetHealth() > 0)
 			{
-				LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]);
-				//DebugOut(L"e->t = %f, nx = %f, ny = %f \n", e->t, e->nx, e->ny); 
-				if (0.0f < e->t && e->t <= 1.0f) // có va chạm xảy ra
+				//LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]); 
+				//if (0.0f < e->t && e->t <= 1.0f) // có va chạm xảy ra
+				if (simon->isCollitionObjectWithObject(gameObject)) // có va chạm xảy ra
 				{
 					switch (gameObject->GetId())
 					{
 					case 67: // đụng trúng box xác nhận simon đã qua cửa
 					{
-						isDoneSimonGoThroughTheDoor1 = true;
-						camera->SetAutoGoX(abs(ViTriCameraDiChuyenSauKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
-						isDoneCameraGoThroughTheDoor1 = false;
-						simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
+						if (isProcessingGoThroughTheDoor1)
+						{
+							isDoneSimonGoThroughTheDoor1 = true;
+							camera->SetAutoGoX(abs(ViTriCameraDiChuyenSauKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
+							isDoneCameraGoThroughTheDoor1 = false;
+							simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
+						}
+						
 						TimeCreateBat = GetTickCount();
 						TimeWaitCreateBat = 3000;
 						isAllowCreateBat = true;
@@ -1535,6 +1562,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 					case 41: // id 41: object ẩn -> xuống hồ nước
 					{
 						camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
+						camera->SetBoundary(CAMERA_BOUNDARY_LAKE_LEFT, CAMERA_BOUNDARY_LAKE_RIGHT);
 						simon->SetPosition(3150, 405);
 						isAllowCreateBat = false;  // không cho tạo Bat
 						isAllowCreateFishmen = true;

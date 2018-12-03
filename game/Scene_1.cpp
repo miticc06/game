@@ -398,6 +398,7 @@ void Scene_1::CheckCollisionWeapon()
 
 					listEffect.push_back(new Hit((int)gameObjTorch->GetX()+14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng Hit
 					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY()+8)); // hiệu ứng lửa
+					
 					listItem.push_back(GetNewItem(gameObjTorch->GetId(), gameObjTorch->GetType(), gameObjTorch->GetX() +5, gameObjTorch->GetY()));
 
 					sound->Play(eSound::soundHit);
@@ -440,13 +441,15 @@ void Scene_1::CheckCollisionSimonWithItem()
 			{
 				switch (listItem[i]->GetType())
 				{
+
 				case eType::LARGEHEART:
 				{
 					simon->SetHeartCollect(simon->GetHeartCollect() + 5);
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
 					break;
-				} 
+				}  
+
 				case eType::UPGRADEMORNINGSTAR:
 				{
 					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->_weaponMain);
@@ -473,15 +476,11 @@ void Scene_1::CheckCollisionSimonWithItem()
 					simon->SetScore(simon->GetScore() + 1000);
 					break;
 				}
-
-
+				 
 				default:
 					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
 					break;
-				}
-				 
-
-
+				} 
 			}
 		}
 
