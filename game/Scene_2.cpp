@@ -75,8 +75,7 @@ void Scene_2::KeyState(BYTE * state)
 
 
 
-							//simon->SetPosition(gameobj->GetX(), simon->GetY()); // đặt lại vị trí X của simon
-						//	DebugOut(L"bat dau len cau thang!\n");
+ 						//	DebugOut(L"bat dau len cau thang!\n");
 
 
 							return;
@@ -132,11 +131,7 @@ void Scene_2::KeyState(BYTE * state)
 								else
 									simon->SetAutoGoX(-1, -gameobj->GetDirection(), simon->GetX() - gameobj->GetX(), SIMON_WALKING_SPEED);
 
-
-
-
-								//	simon->SetPosition(gameobj->GetX(), simon->GetY());
-
+								 
 
 								CountCollisionTop++;
 								return;
@@ -869,7 +864,7 @@ void Scene_2::Update(DWORD dt)
 
 
 
-	if (isAllowCreateFishmen && CountEnemyFishmen<=2)
+	if (isAllowCreateFishmen && CountEnemyFishmen < 2)
 	{
 		DWORD now = GetTickCount();
 		if (now - TimeCreateFishmen >= TimeWaitCreateFishmen) // đủ thời gian chờ
@@ -1044,7 +1039,10 @@ void Scene_2::Update(DWORD dt)
 						enemy->GetWidth(),
 						enemy->GetHeight())) // nếu nằm trong camera thì update
 					{
-						enemy->Update(dt, &listObj);
+						Fishmen *objectFishmen = dynamic_cast<Fishmen*>(enemy);
+						objectFishmen->UpdateCustom(dt, &listObj, simon, &listWeaponOfEnemy);
+
+
 					}
 					else
 					{
@@ -1102,7 +1100,8 @@ void Scene_2::Render()
 	for (UINT i = 0; i < listEnemy.size(); i++)
 		listEnemy[i]->Render(camera);
 
-	 
+	for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
+		listWeaponOfEnemy[i]->Render(camera);
 
 	simon->Render(camera);
 
@@ -1126,6 +1125,7 @@ void Scene_2::CheckCollision()
 
 void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 {
+#pragma region Weapon Simon
 	// main weapon
 	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
 	{
@@ -1138,9 +1138,9 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 				{
 				case eType::CANDLE:
 				{
- 					gameObj->SubHealth(1);
+					gameObj->SubHealth(1);
 					listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));// hiệu ứng hit
- 
+
 					RunEffectHit = true;
 					break;
 				}
@@ -1152,7 +1152,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					if (rand() % 2 == 1) // tỉ lệ 50%
 					{
 						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
- 					}
+					}
 
 					RunEffectHit = true;
 					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
@@ -1172,7 +1172,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					if (rand() % 2 == 1) // tỉ lệ 50%
 					{
 						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
- 					}
+					}
 					RunEffectHit = true;
 					CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
 					break;
@@ -1185,7 +1185,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					if (rand() % 2 == 1) // tỉ lệ 50%
 					{
 						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
- 
+
 					}
 
 					RunEffectHit = true;
@@ -1202,9 +1202,9 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 				case eType::FISHMEN:
 				{
 					gameObj->SubHealth(1);
-					simon->SetScore(simon->GetScore() + 200);
+					simon->SetScore(simon->GetScore() + 300);
 					if (rand() % 2 == 1) // tỉ lệ 50% 
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY())); 
+						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
 
 					RunEffectHit = true;
 					CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
@@ -1240,7 +1240,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 				switch (gameObj->GetType())
 				{
 				case eType::CANDLE:
-				{ 
+				{
 					gameObj->SubHealth(1);
 					listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
 					RunEffectHit = true;
@@ -1249,7 +1249,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 				}
 
 				case eType::GHOST:
-				{ 
+				{
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 100);
 
@@ -1268,7 +1268,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					break;
 				}
 				case eType::PANTHER:
-				{ 
+				{
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 200);
 					if (rand() % 2 == 1) // tỉ lệ 50%
@@ -1282,7 +1282,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 
 				case eType::BAT:
-				{ 
+				{
 					gameObj->SubHealth(1);
 					simon->SetScore(simon->GetScore() + 200);
 					if (rand() % 2 == 1) // tỉ lệ 50%
@@ -1346,8 +1346,9 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 			}
 	}
 
-	// main weapon with brick
-#pragma region Object Brick
+#pragma endregion 
+
+#pragma region main weapon Object Brick
 	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
 		for (UINT i = 0; i < listObj.size(); i++)
 		{
@@ -1433,6 +1434,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 		}
 
 #pragma endregion
+
 
 
 }
@@ -1654,19 +1656,41 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 				{
 					simon->SetHurt(e);
 					return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
-				}
-
+				} 
 				if (simon->checkAABB(gameobj) == true)
 				{
 					LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetDirection(), 0, NULL);
 					simon->SetHurt(e);
+					return;
+				}
+			}
+		}
+#pragma endregion 
+	}
+
+	if (simon->untouchable == false)
+	{
+#pragma region Collision With Weapon of Enemy
+		for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
+		{
+			if (listWeaponOfEnemy[i]->GetFinish() == false)
+			{
+				LPCOLLISIONEVENT e = simon->SweptAABBEx(listWeaponOfEnemy[i]);
+				if (e->t > 0 && e->t <= 1) // có va chạm
+				{
+					simon->SetHurt(e);
 					return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
 				}
 
+				if (simon->checkAABB(listWeaponOfEnemy[i]) == true)
+				{
+					LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetDirection(), 0, NULL);
+					simon->SetHurt(e);
+					return;
+				}
 			}
 		}
 #pragma endregion
-	 
 	}
 
 

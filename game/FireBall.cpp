@@ -7,6 +7,7 @@ FireBall::FireBall()
 	_texture = TextureManager::GetInstance()->GetTexture(eType::FIREBALL);
 	_sprite = new GSprite(_texture, 0);
 	type = eType::FIREBALL;
+	isFinish = true;
 }
 
 
@@ -50,6 +51,8 @@ bool FireBall::isCollision(GameObject * obj)
 
 void FireBall::Render(Camera * camera)
 {
+	if (isFinish)
+		return;
 	if (x - camera->GetXCam() + _sprite->_texture->FrameWidth < 0 || 
 		x - camera->GetXCam() > camera->GetWidth()) // ra khỏi cam thì kết thúc
 	{

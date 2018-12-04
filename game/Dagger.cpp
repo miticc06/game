@@ -57,6 +57,8 @@ bool Dagger::isCollision(GameObject * obj)
 
 void Dagger::Render(Camera * camera)
 {
+	if (isFinish)
+		return;
 	// ra khỏi cam coi như kết thúc
 	// lẽ ra viết trong hàm update, nhưng ko có camera nên viết tạm ở đây
 	if (x - camera->GetXCam() + _sprite->_texture->FrameWidth < 0 || x - camera->GetXCam() > camera->GetWidth())

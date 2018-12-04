@@ -13,11 +13,15 @@ Fishmen::Fishmen(float X, float Y, int Direction)
 	this->Health = 1; 
 	vx = 0;
 	vy = -FISHMEN_SPEED_Y_UP;
+	
 	yInit = y;
-	isAllowRunAnimation = false;
+	xInit = x; 
+	xAccumulationAttack = 0;
+	 
 	_sprite->SelectIndex(FISHMEN_ANI_JUMP);
 
 	isRunning = 0;
+	isAttacking = false;
 }
 
 Fishmen::~Fishmen()
@@ -34,90 +38,136 @@ void Fishmen::GetBoundingBox(float & left, float & top, float & right, float & b
 
 void Fishmen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {
+	
+}
+
+void Fishmen::UpdateCustom(DWORD dt, vector<LPGAMEOBJECT>* listObject, Simon * simon, vector<Weapon*>* listWeaponOfEnemy)
+{
 	if (y <= yInit - FISHMEN_DY_JUMP)
-	{ 
+	{
 		vy = FISHMEN_SPEED_Y_DOWN;
 	}
+
+
+	if (abs(x - xInit) >= FISHMEN_DX_LIMIT) // đi đủ khoảng cố định
+	{ 
+		if ((direction == -1 && !(simon->GetX() < x)) ||
+			(direction == 1 && !(x < simon->GetX()))) // đi về hướng của simon mà đã vượt simon thì mới đổi hướng
+		{
+			direction *= -1; //đổi hướng đi
+			xInit = x;
+		}
+	}
+
+
+	if (xAccumulationAttack >= FISHMEN_DX_ATTACK_LIMIT)
+	{
+		xAccumulationAttack = 0;
+		Attack(listWeaponOfEnemy);
+	}
+
+	xBefore = x;
+	 
+
 	if (isRunning)
 	{
 		vx = direction * FISHMEN_SPEED_X;
 		vy += FISHMEN_GRAVITY;// Gravity
 	}
-	
+
 	GameObject::Update(dt);
+ 
+#pragma region Xu li va cham Brick
+		vector<LPCOLLISIONEVENT> coEvents;
+		vector<LPCOLLISIONEVENT> coEventsResult;
+		coEvents.clear();
+		vector<LPGAMEOBJECT> list_Brick;
+		list_Brick.clear();
 
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult; 
-	coEvents.clear(); 
-	vector<LPGAMEOBJECT> list_Brick;
-	list_Brick.clear();
-	
-	for (UINT i = 0; i < listObject->size(); i++)
-		if (listObject->at(i)->GetType() == eType::BRICK)
-			list_Brick.push_back(listObject->at(i)); 
+		for (UINT i = 0; i < listObject->size(); i++)
+			if (listObject->at(i)->GetType() == eType::BRICK)
+				list_Brick.push_back(listObject->at(i));
 
-	CalcPotentialCollisions(&list_Brick, coEvents);
-	if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
-	}
-	else
-	{
+		CalcPotentialCollisions(&list_Brick, coEvents);
+
 		float min_tx, min_ty, nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-		   
+
 		if (ny == -1)
 		{
 			vy = 0;
-			y += min_ty * dy + ny * 0.4f;
-			isAllowRunAnimation = true;
+			y += min_ty * dy + ny * 0.4f; 
 			isRunning = true;
 		}
 		else
 		{
-			y += dy; 
+			y += dy;
 		}
 
-
-		bool isCollisionDirectionX = false;
-		for (UINT i = 0; i < coEventsResult.size(); i++) // không cho fishmen vượt qua gạch loại nhỏ theo trục x
+		if (!isAttacking) // đang tấn công thì vẫn cho trọng lực kéo xuống
 		{
-			if (coEventsResult[i]->nx != 0)
+			bool isCollisionDirectionX = false;
+			for (UINT i = 0; i < coEventsResult.size(); i++) // không cho fishmen vượt qua gạch loại nhỏ theo trục x
 			{
-				Brick * brick = dynamic_cast<Brick*>(coEventsResult[i]->obj);
-				if (brick->GetModel() == BRICK_MODEL_3)
+				if (coEventsResult[i]->nx != 0)
 				{
-					x += min_tx * dx + nx * 0.4f;
-					direction *= -1; // quay ngược hướng đi 
-					isCollisionDirectionX = true;
+					Brick * brick = dynamic_cast<Brick*>(coEventsResult[i]->obj);
+					if (brick->GetModel() == BRICK_MODEL_3)
+					{
+						x += min_tx * dx + nx * 0.4f;
+						direction *= -1; // quay ngược hướng đi 
+						isCollisionDirectionX = true;
+					}
 				}
 			}
+
+			if (!isCollisionDirectionX) // ko va chạm với trục x 
+				x += dx; 
 		}
-		if (!isCollisionDirectionX) // ko va chạm với trục x
-			x += dx;
+		
+			
+		for (UINT i = 0; i < coEvents.size(); i++)
+			delete coEvents[i];
+#pragma endregion
+		 
 
-
+	if (isAttacking)
+	{
+		DWORD now = GetTickCount();
+		if (now - TimeAttack >= FISHMEN_TIME_LIMIT_WAIT_AFTER_ATTACK)
+		{
+			isAttacking = false;
+		}
 	}
-	for (UINT i = 0; i < coEvents.size(); i++)
-		delete coEvents[i]; 
+	 
+	xAfter = x;
+	xAccumulationAttack += abs(xAfter - xBefore);
+	
+
+#pragma region Update Animation
+	if (isAttacking)
+	{
+		_sprite->SelectIndex(0);
+	}
+	else
+		if (isRunning)
+		{
+			int index = _sprite->GetIndex();
+			if (0 < index && index <= 2)
+				_sprite->Update(dt);
+			else
+				_sprite->SelectIndex(1);
+
+		}
+#pragma endregion
+
 }
+ 
 
 void Fishmen::Render(Camera * camera)
 {
 	if (Health <= 0)
 		return;
-
-	if (isRunning)
-	{
-		int index = _sprite->GetIndex();
-		if (0 < index && index <= 2)
-			_sprite->Update(dt);
-		else
-			_sprite->SelectIndex(1);
-
-	}
-		
 	 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
@@ -127,4 +177,25 @@ void Fishmen::Render(Camera * camera)
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
+}
+
+void Fishmen::Attack(vector<Weapon*> *listWeaponOfEnemy)
+{
+	if (isAttacking)
+		return;
+
+	if (weapon == NULL)
+	{
+		weapon = new FireBall();
+		listWeaponOfEnemy->push_back(weapon);
+	}
+
+	if (weapon->GetFinish() == false)
+		return;
+
+	isAttacking = true;
+	TimeAttack = GetTickCount();
+
+	weapon->Create(x+10, y, direction);
+
 }

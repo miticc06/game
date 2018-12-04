@@ -3,7 +3,7 @@
 
 
 #include "Weapon.h" 
-#define FIREBALL_SPEED 0.35f
+#define FIREBALL_SPEED 0.15f
 
 class FireBall :
 	public Weapon

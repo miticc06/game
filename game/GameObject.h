@@ -35,7 +35,7 @@ struct CollisionEvent
 		return a->t < b->t;
 	}
 };
-
+ 
 class GameObject
 {
 protected:

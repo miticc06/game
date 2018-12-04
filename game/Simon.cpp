@@ -298,18 +298,8 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 			vy += SIMON_GRAVITY * dt;// Simple fall down
-	} 
-	//else // ngược lại đang trên thang
-	//{ 
-	//	dx = vx * dt;
-	//	dy = vy * dt;
-	//} 
-
-
-	//if (isJumping && isWalking)
-	//{
-	////	dx = vx * dt *1.5f; 
-	//}
+	}
+	 
 		
 	if (isOnStair == false)
 	{
