@@ -312,6 +312,13 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
+	if (KeyCode == DIK_7) 
+	{
+		DebugOut(L"[SET POSITION SIMON] x = .... \n");
+		simon->SetPosition(4000.0f, 500.0f);
+		 
+
+	}
 
 	if (KeyCode == DIK_9) // đứng ngay cầu thang gần xuoosg hồ nước
 	{
@@ -1543,9 +1550,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 			GameObject * gameObject = listObj[i];
 
 			if (gameObject->GetHealth() > 0)
-			{
-				//LPCOLLISIONEVENT e = simon->SweptAABBEx(listObj[i]); 
-				//if (0.0f < e->t && e->t <= 1.0f) // có va chạm xảy ra
+			{ 
 				if (simon->isCollitionObjectWithObject(gameObject)) // có va chạm xảy ra
 				{
 					switch (gameObject->GetId())
@@ -1594,8 +1599,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						gameObject->SetHealth(0);
 
 						gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_LEFT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
-						 
-
+						  
 						break;
 					}
 
@@ -1616,6 +1620,41 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 
 						break;
 					}
+
+#pragma region Lên & xuống hồ nước phía Phải
+					case 81: // id 81: object ẩn -> ra khỏi hồ nước phía phải
+					{
+						camera->SetPosition(camera->GetXCam(), 0);
+						simon->SetPosition(3806, 361);
+						isAllowCreateBat = true;
+						isAllowCreateFishmen = false;
+						TimeWaitCreateBat = 3000 + rand() % 1000;
+						gameObject->SetHealth(0);
+						gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_RIGHT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
+
+						break;
+					}
+
+
+					case 86: // id 86: object ẩn -> vào hồ nước phía phải
+					{
+						camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
+						simon->SetPosition(3825, 442);
+						isAllowCreateBat = false;  // không cho tạo Bat
+						isAllowCreateFishmen = true;
+
+						gameObject->SetHealth(0);
+
+						gridGame->Insert(GRID_INSERT_OBJECT__DIRAKHOIHONUOC_RIGHT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
+
+						break;
+					}
+#pragma endregion
+
+ 
+					
+
+
 
 
 					}
