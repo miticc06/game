@@ -123,8 +123,6 @@ private:
 	DWORD TimeCreateBat; // thời điểm đã tạo BAT
 	DWORD TimeWaitCreateBat; // thời gian phải chờ để tạo bot
 	bool isAllowCreateBat; // cho phép tạo Bat
-
-	 
 	int CountEnemyBat;
 
 	Simon * simon;
@@ -138,7 +136,8 @@ private:
 	vector <Item*> listItem;
 	vector <Effect*> listEffect;
 	vector <GameObject*> listEnemy;
-	 
+	
+	vector <Weapon*> listWeaponOfEnemy; // list chứa các viên đạn của enemy
 
 	GameTime * _gameTime;
 	int StateCurrent;

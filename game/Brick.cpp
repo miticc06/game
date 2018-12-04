@@ -1,26 +1,29 @@
 ﻿#include "Brick.h"
  
 
+
+
 Brick::Brick(int X, int Y, int W, int H, int Model)
 {
+	model = Model;
 	switch (Model)
 	{
-	case 1:
+	case BRICK_MODEL_1:
 		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_MODEL_1); // loại màn 1
 		break;
-	case 2:
+	case BRICK_MODEL_2:
 		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_MODEL_2); // loại màn 2
 		break;
-	case 3:
+	case BRICK_MODEL_3:
 		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_MODEL_3); // loại nhỏ 16px
 		break;
-	case 4: 
+	case BRICK_MODEL_TRANSPARENT:
 		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_TRANSPARENT);// loại trong suốt 
 		break;
-	case 5:
+	case BRICK_MODEL_3_3_32:
 		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_MODEL_3_3_32);// loại 3 ô nhỏ - 32px 
 		break;
-	case 6:
+	case BRICK_MODEL_3_4_32:
 		_texture = TextureManager::GetInstance()->GetTexture(eType::TEX_BRICK_MODEL_3_4_32);// loại đủ 4 ô nhỏ - 32px
 		break;
 	default:
@@ -39,8 +42,6 @@ Brick::Brick(int X, int Y, int W, int H, int Model)
 void Brick::Render(Camera * camera)
 {
 	D3DXVECTOR2 pos = camera->Transform(x, y);
-
-	 
 	for (int i = 0; i < (int)ceil(width / _texture->FrameWidth); i++)
 		for (int j = 0; j < (int)ceil(height / _texture->FrameHeight); j++)
 			_sprite->Draw( (int) pos.x + i * _texture->FrameWidth, (int)pos.y + j * _texture->FrameHeight);
@@ -55,4 +56,9 @@ void Brick::GetBoundingBox(float &l, float &t, float &r, float &b)
 	t = y;
 	r = x + (float)ceil(width / _texture->FrameWidth)*_texture->FrameWidth;
 	b = y + (float)ceil(height / _texture->FrameHeight)*_texture->FrameHeight;
+}
+
+int Brick::GetModel()
+{
+	return model;
 }

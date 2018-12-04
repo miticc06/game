@@ -502,23 +502,21 @@ void Simon::SetHurt(LPCOLLISIONEVENT e)
 	{
 		if (e->nx != 0)
 		{
-			vx = SIMON_WALKING_SPEED * e->nx * 2;
-			vy = -SIMON_VJUMP;
+			vx = SIMON_WALKING_SPEED * e->nx * 3;
+			vy = -SIMON_VJUMP * 2.0f;
 			isHurting = 1;
 			//DebugOut(L"[SetHurt] Set vx = %f \n", vx);
 		}
 
 		if (e->ny != 0)
 		{
-			vy = -SIMON_VJUMP;
+			vy = -SIMON_VJUMP*2.0f;
 			isHurting = 1;
 			//DebugOut(L"[SetHurt] Set vy = %f \n", vy);
 		}
 	}
 	else
 	{
-		//vx = 0;
-		//vy = 0;
 		isWalking = 1;
 		//isHurting = 1;
 	}

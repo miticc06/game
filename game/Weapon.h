@@ -16,8 +16,7 @@ class Weapon : public GameObject
 {
 protected: 
 	 
-	//int direction;		// hướng trái = -1, phải = 1;
-
+ 
 	bool isFinish;
 
 	 
@@ -29,14 +28,13 @@ public:
 	int GetDirection();
 	void SetDirection(int Direction);
 
-	virtual void Create(float simonX, float simonY, int simonDirection);
+	virtual void Create(float X, float Y, int Direction);
  
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL); 
  	virtual void Render(Camera *camera); 
 	virtual void UpdatePositionFitSimon(); 
 	virtual bool isCollision(GameObject* obj) = 0; // kiểm tra vũ khí này có va chạm với object kia hay không?
-
 	virtual void RenderIcon(int X, int Y) = 0; 
 	bool GetFinish();
 

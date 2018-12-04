@@ -68,6 +68,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::MORNINGSTAR, new GTexture("Resources/weapon/morningstar.png", 4, 3, 12));
 	AddTexture(eType::HOLYWATER, new GTexture("Resources/weapon/2.png", 4,1, 4));
 	AddTexture(eType::STOPWATCH, new GTexture("Resources/item/5.png"));
+	AddTexture(eType::FIREBALL, new GTexture("Resources/weapon/fireball.png"));
 
 
 	//player

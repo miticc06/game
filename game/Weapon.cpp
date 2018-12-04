@@ -22,11 +22,11 @@ void Weapon::SetDirection(int Direction)
 	this->direction = Direction;
 }
 
-void Weapon::Create(float simonX, float simonY, int simonDirection)
+void Weapon::Create(float X, float Y, int Direction)
 {
-	this->x = simonX;
-	this->y = simonY;
-	this->direction = simonDirection;
+	this->x = X;
+	this->y = Y;
+	this->direction = Direction;
 	isFinish = 0;
 }
 

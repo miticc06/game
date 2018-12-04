@@ -94,7 +94,7 @@ enum eType
 	DAGGER = 62,
 	HOLYWATER = 63,
 	STOPWATCH = 64,
-
+	FIREBALL = 65,
 
 	// item
 	LARGEHEART = 81,

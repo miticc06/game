@@ -40,20 +40,22 @@ void Fishmen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	}
 	if (isRunning)
 	{
-		vx = direction * 0.05f;
-
-		vy += 0.01f;// Gravity
+		vx = direction * FISHMEN_SPEED_X;
+		vy += FISHMEN_GRAVITY;// Gravity
 	}
 	
-	GameObject::Update(dt); // update dt,dx,dy 
+	GameObject::Update(dt);
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult; 
 	coEvents.clear(); 
 	vector<LPGAMEOBJECT> list_Brick;
 	list_Brick.clear();
+	
 	for (UINT i = 0; i < listObject->size(); i++)
 		if (listObject->at(i)->GetType() == eType::BRICK)
 			list_Brick.push_back(listObject->at(i)); 
+
 	CalcPotentialCollisions(&list_Brick, coEvents);
 	if (coEvents.size() == 0)
 	{
@@ -64,12 +66,7 @@ void Fishmen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	{
 		float min_tx, min_ty, nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-		
-	/*	x += min_tx * dx + nx * 0.4f;
-		
-		if (nx != 0)
-			vx = 0;
-*/
+		   
 		if (ny == -1)
 		{
 			vy = 0;
@@ -79,11 +76,29 @@ void Fishmen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 		}
 		else
 		{
-			y += dy;
+			y += dy; 
+		}
+
+
+		bool isCollisionDirectionX = false;
+		for (UINT i = 0; i < coEventsResult.size(); i++) // không cho fishmen vượt qua gạch loại nhỏ theo trục x
+		{
+			if (coEventsResult[i]->nx != 0)
+			{
+				Brick * brick = dynamic_cast<Brick*>(coEventsResult[i]->obj);
+				if (brick->GetModel() == BRICK_MODEL_3)
+				{
+					x += min_tx * dx + nx * 0.4f;
+					direction *= -1; // quay ngược hướng đi 
+					isCollisionDirectionX = true;
+				}
+			}
+		}
+		if (!isCollisionDirectionX) // ko va chạm với trục x
 			x += dx;
 
-		}
-	} 
+
+	}
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i]; 
 }

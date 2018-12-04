@@ -580,6 +580,8 @@ void Scene_2::LoadResources()
 	listEnemy.clear();
 	// chưa thu hồi bộ nhớ?
 
+	listWeaponOfEnemy.clear();
+
 	// bật nhạc game
 	if (sound->isPlaying(eSound::musicState1) == false)
 		sound->Play(eSound::musicState1, true);
@@ -622,6 +624,7 @@ void Scene_2::ResetResource()
 	listItem.clear();
 	listEffect.clear();
 	listEnemy.clear();
+	listWeaponOfEnemy.clear();
 
 	CountEnemyGhost = 0;
 	TimeCreateGhost = 0;
@@ -943,6 +946,7 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 
 #pragma region Process_Update_Object
+
 	for (UINT i = 0; i < listObj.size(); i++)
 		listObj[i]->Update(dt, &listObj);  // đã kiểm tra "Alive" lúc lấy từ lưới ra
 
@@ -1059,7 +1063,14 @@ void Scene_2::Update(DWORD dt)
 			}
 		}
 	}
-	  
+	
+	for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
+	{ 
+		if (listWeaponOfEnemy[i]->GetFinish() == false)
+		{
+			listWeaponOfEnemy[i]->Update(dt, &listObj);
+		}
+	}
 
 #pragma endregion
 
@@ -1070,7 +1081,6 @@ void Scene_2::Update(DWORD dt)
 
 
 }
-
 
 void Scene_2::Render()
 {
@@ -1101,7 +1111,6 @@ void Scene_2::Render()
 
 
 }
-
 
 void Scene_2::CheckCollision()
 {

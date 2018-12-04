@@ -2,6 +2,7 @@
 #define __FISHMEN_H__
  
 #include "GameObject.h" 
+#include "Brick.h"
 
 #define FISHMEN_SPEED_Y_UP 0.4f
 #define FISHMEN_SPEED_Y_DOWN 0.3f
@@ -9,6 +10,10 @@
 #define FISHMEN_DY_JUMP 350 // nhảy lên khoảng 330px thì rớt xuống
 
 #define FISHMEN_ANI_JUMP 2 // nhảy lên khoảng 330px thì rớt xuống
+
+#define FISHMEN_GRAVITY 0.01f
+#define FISHMEN_SPEED_X 0.1f
+
 
 
 class Fishmen : public GameObject

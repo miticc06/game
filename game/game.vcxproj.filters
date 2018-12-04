@@ -163,6 +163,7 @@
     <ClCompile Include="Steam.cpp">
       <Filter>Object\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="FireBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -324,6 +325,7 @@
     <ClInclude Include="Steam.h">
       <Filter>Object\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="FireBall.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
