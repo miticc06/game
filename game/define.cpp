@@ -12,3 +12,4 @@ int MapHeight;
 int ScreenColumn;
 int ScreenRow;
 
+int isDebug_Untouchable = 0;

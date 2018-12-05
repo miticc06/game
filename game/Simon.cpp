@@ -549,6 +549,8 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 	{
 		x += dx;
 		y += dy;
+		isCheckCollisionAxisYWithBrick = false; // đang ko va chạm trục y
+		DebugOut(L"%d : Col y = false (size = 0) - dt = %d - y = %f - dy = %f\n",GetTickCount(),dt,y, dy);
 	}
 	else
 	{
@@ -563,14 +565,33 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 
 		if (ny != 0)
 		{
-			vy = 0;
+
+			vy = 0.1f;
+			dy = vy * dt;
+			//vy = 0;
 			if (isJumping)
 			{
 				isJumping = false; // kết thúc nhảy
 				y = y - PULL_UP_SIMON_AFTER_JUMPING; // kéo simon lên tránh overlaping
 			}
+
+			
+		}
+
+
+		if (ny != 0)
+		{
+			isCheckCollisionAxisYWithBrick = true;
+			DebugOut(L"%d : Col y = true - dt=%d - y = %f - dy = %f\n", GetTickCount(), dt,y, dy);
+		}
+		else
+		{
+			DebugOut(L"%d : Col y = false - dt=%d\n", GetTickCount(), dt);
+			isCheckCollisionAxisYWithBrick = false;// đang ko va chạm trục y
 		}
 		 
+
+
 		if (nx != 0 || ny != 0)
 		{
 			isHurting = 0; 
@@ -581,6 +602,30 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
+}
+
+bool Simon::isCheckCollisionAxisY_WithBrickSweptAABB(vector<LPGAMEOBJECT>* coObjects)
+{ 
+
+	vector<LPGAMEOBJECT> list_Brick; 
+	vector<LPCOLLISIONEVENT> list_EVENT;
+
+	for (UINT i = 0; i < coObjects->size(); i++)
+		if (coObjects->at(i)->GetType() == eType::BRICK)
+			list_Brick.push_back(coObjects->at(i));
+
+	for (UINT i = 0; i < list_Brick.size(); i++)
+	{
+		LPCOLLISIONEVENT e = SweptAABBEx(list_Brick.at(i));
+		list_EVENT.push_back(e);
+		if (e->t > 0 && e->t <= 1.0f && e->ny!=0) // chỉ xét trục y
+		{
+			//SAFE_DELETE(e);
+			return true;
+		}
+		//SAFE_DELETE(e);
+	}
+	return false;
 }
 
 void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
@@ -645,6 +690,7 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 	if (directionY == -1) // đang đi lên
 	{
 		vector<LPGAMEOBJECT> listobj;
+		//float xCenterStairTop; // vị trí x ở giữa của box top
 		int CountCollisionTop = 0;
 		listobj.clear();
 		for (UINT i = 0; i < (*coObjects).size(); i++)
@@ -653,6 +699,7 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 				if (this->isCollitionObjectWithObject((*coObjects)[i])) // có va chạm với top stair
 				{
 					CountCollisionTop++;
+					//xCenterStairTop = (*coObjects)[i]->GetX(); //25 là kích thước 1/2 của box top
 					break;
 				}
 			}
@@ -664,7 +711,6 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 			y = y - 50; // kéo simon lên cao, để tạo va chạm giả xuống mặt đất, tránh overlaping. tính thời gian tiếp đất
 			vy = 9999999999.0f; // vận tốc kéo xuống lớn để chạm đất ngay trong 1 frame
 			dy = vy * dt; // cập nhật lại dy
-
 			 
 			vector<LPCOLLISIONEVENT> coEvents;
 			vector<LPCOLLISIONEVENT> coEventsResult;
@@ -695,6 +741,7 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 					vy = 0;
 					isOnStair = false; // kết thúc việc đang trên cầu thang
 					isWalking = false;
+				//	x = xCenterStairTop;
 					isProcessingOnStair = 0;
 				}
 			}

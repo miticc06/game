@@ -72,12 +72,7 @@ void Scene_2::KeyState(BYTE * state)
 							}
 							else
 								simon->SetAutoGoX(-1, gameobj->GetDirection(), simon->GetX() - gameobj->GetX(), SIMON_WALKING_SPEED);
-
-
-
- 						//	DebugOut(L"bat dau len cau thang!\n");
-
-
+ 						//	DebugOut(L"bat dau len cau thang!\n"); 
 							return;
 						}
 					}
@@ -112,7 +107,11 @@ void Scene_2::KeyState(BYTE * state)
 					for (UINT i = 0; i < listObj.size(); i++)
 						if (listObj[i]->GetType() == eType::STAIR_TOP)
 						{
-							if (simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với STAIR TOP
+							if (simon->isCollitionObjectWithObject(listObj[i]) 
+								//&& simon->isCheckCollisionAxisY_WithBrickSweptAABB(&listObj)
+								&&
+								simon->isCheckCollisionAxisYWithBrick
+								) // nếu va chạm với STAIR TOP
 							{
 								GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
 								simon->directionStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon
@@ -267,7 +266,8 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_4)
 	{
 		DebugOut(L"[SET POSITION SIMON] x = .... \n");
-		simon->SetPosition(2830.0f, 0);
+		simon->SetPosition(2787.0f, 0);
+	//	simon->isOnStair = false;
 	}
 
 	if (KeyCode == DIK_5)
@@ -290,8 +290,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		isDoneSimonGoThroughTheDoor1 = false; 
 
 
-		isDoneSimonGoThroughTheDoor1 = true;
-	//	camera->SetAutoGoX(abs(ViTriCameraDiChuyenSauKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
+		isDoneSimonGoThroughTheDoor1 = true; 
 		isDoneCameraGoThroughTheDoor1 = false;
 		simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
 		TimeCreateBat = GetTickCount();
@@ -345,8 +344,15 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
+	 
 
-
+	if (KeyCode == DIK_U)
+	{
+		if (isDebug_Untouchable == 1)
+			isDebug_Untouchable = 0;
+		else
+			isDebug_Untouchable = 1;
+	}
 
 
 
@@ -514,9 +520,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 	{
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		{
-			simon->Stop();
-			//float vx, vy;
-			//simon->GetSpeed(vx, vy);
+			simon->Stop(); 
 			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetDirection(),  - SIMON_VJUMP);
 			simon->isJumping = 1;
 			simon->isWalking = 1;
@@ -657,6 +661,14 @@ void Scene_2::ResetResource()
 
 void Scene_2::Update(DWORD dt)
 {
+#pragma region process debug
+
+	if (isDebug_Untouchable == 1)
+		simon->StartUntouchable();
+
+#pragma endregion
+
+
 
 #pragma region Process_Freeze
 	if (simon->GetFreeze() == true)
@@ -1631,7 +1643,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						TimeWaitCreateBat = 3000 + rand() % 1000;
 						gameObject->SetHealth(0);
 						gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_RIGHT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
-
+						gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_LEFT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
 						break;
 					}
 

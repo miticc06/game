@@ -4,14 +4,16 @@
 
 StairTop::StairTop(int X, int Y, int Direction)
 { 
-	x = X-25;
-	y = Y;
 	width = 50;
-	height = 50;
+	height = 5;
+
+	x = X- width/2;
+	y = Y;
+	
 	direction = Direction;
 	type = eType::STAIR_TOP;
 
-	y -= width;
+	y -= height;
 
 }
 
@@ -25,7 +27,7 @@ void StairTop::GetBoundingBox(float & left, float & top, float & right, float & 
 	left = x;
 	right = x + width;
 	top = y;
-	bottom = y + width;
+	bottom = y + height;
 
 }
 

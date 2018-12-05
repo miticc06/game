@@ -61,6 +61,9 @@ extern int ScreenColumn;
 extern int ScreenRow;
 
 
+extern int isDebug_Untouchable;
+
+
 // ID của Sprite, object
 enum eType
 {
