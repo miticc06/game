@@ -239,7 +239,26 @@ void Scene_2::OnKeyDown(int KeyCode)
 		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->GetX() + 10, simon->GetY());
 	}
 
+	if (KeyCode == DIK_A) // change trục y file txt
+	{
 
+		ifstream inp;
+		ofstream out;
+
+		inp.open("C:\\Users\\MITICC06\\Desktop\\in.txt", ios::in);
+		out.open("C:\\Users\\MITICC06\\Desktop\\out.txt", ios::out);
+
+		int id, type, direction, x, y, w, h, model;
+
+		while (inp >> id >> type >> direction >> x >> y >> w >> h >> model)
+		{
+			out << id <<" "<< type << " " << direction << " " << x << " " << y +8 << " " << w << " " << h << " " << model << endl;
+		}
+		inp.close(); 
+		out.close();
+
+
+	}
 
 
 	if (KeyCode == DIK_2) // lấy tọa độ world của chuột 
@@ -286,12 +305,9 @@ void Scene_2::OnKeyDown(int KeyCode)
 		camera->SetBoundary(CAMERA_BOUNDARY_LAKE_LEFT, CAMERA_BOUNDARY_LAKE_RIGHT);
 
 		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
-		isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
-		isDoneSimonGoThroughTheDoor1 = false; 
+		isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa 
+		isDoneSimonGoThroughTheDoor1 = true;
 
-
-		isDoneSimonGoThroughTheDoor1 = true; 
-		isDoneCameraGoThroughTheDoor1 = false;
 		simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
 		TimeCreateBat = GetTickCount();
 		TimeWaitCreateBat = 2000;
@@ -319,6 +335,14 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 	}
 
+
+	if (KeyCode == DIK_6)
+	{
+		DebugOut(L"[SET POSITION SIMON] x = .... \n");
+		simon->SetPosition(3940, 100);
+		camera->SetPosition(camera->GetXCam(), 0);
+	}
+
 	if (KeyCode == DIK_9) // đứng ngay cầu thang gần xuoosg hồ nước
 	{
 		DebugOut(L"[SET POSITION SIMON] x = .... \n");
@@ -326,15 +350,15 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 
 		camera->SetBoundary(3073, camera->GetBoundaryRight() + 1023);// mở biên phải rộng ra thêm để chạy AutoGo
-		//camera->SetAutoGoX(abs(ViTriCameraDiChuyenTruocKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
+		//camera->SetAutoGoX(abs(GATE1_POSITION_CAM_BEFORE_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
 		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
 		isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
 		isDoneSimonGoThroughTheDoor1 = false;
 
 
 		isDoneSimonGoThroughTheDoor1 = true;
-		//	camera->SetAutoGoX(abs(ViTriCameraDiChuyenSauKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
-		isDoneCameraGoThroughTheDoor1 = false;
+		//	camera->SetAutoGoX(abs(GATE1_POSITION_CAM_AFTER_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
+		//isDoneCameraGoThroughTheDoor1 = false;
 		simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
 		TimeCreateBat = GetTickCount();
 		TimeWaitCreateBat = 2000;
@@ -600,6 +624,10 @@ void Scene_2::LoadResources()
 	isProcessingGoThroughTheDoor1 = false; // ban đầu chưa cần xử lí qua cửa
 	isDoneSimonGoThroughTheDoor1 = false;
 
+	isProcessingGoThroughTheDoor2 = false; // ban đầu chưa cần xử lí qua cửa
+	isDoneSimonGoThroughTheDoor2 = false;
+
+
 	isAllowRenewPanther = true;
 	CountEnemyPanther = 0;
 
@@ -657,6 +685,13 @@ void Scene_2::ResetResource()
 
 	isStopWatch = 0;
 	camera->SetAllowFollowSimon(true);
+
+	isProcessingGoThroughTheDoor1 = false; // ban đầu chưa cần xử lí qua cửa
+	isDoneSimonGoThroughTheDoor1 = false;
+
+	isProcessingGoThroughTheDoor2 = false; // ban đầu chưa cần xử lí qua cửa
+	isDoneSimonGoThroughTheDoor2 = false;
+
 }
 
 void Scene_2::Update(DWORD dt)
@@ -709,21 +744,20 @@ void Scene_2::Update(DWORD dt)
 
 #pragma region Process Gate 1
 
-	if (isProcessingGoThroughTheDoor1)
+	if (isProcessingGoThroughTheDoor1) // simon chạm cửa thì bắt đầu xử lí
 	{
 		if (isDoneSimonGoThroughTheDoor1 == false) // simon chưa hoàn thành việc qua cửa
 		{
-			if (camera->GetXCam() >= ViTriCameraDiChuyenTruocKhiQuaCua) // camera đã AutoGo xong đến vị trí 2825.0f
+			if (camera->GetXCam() >= GATE1_POSITION_CAM_BEFORE_GO) // camera đã AutoGo xong đến vị trí 2825.0f
 			{
-
-				simon->SetAutoGoX(1, 1, abs(3143.0f - simon->GetX()), SIMON_WALKING_SPEED); // bắt đầu cho simon di chuyển tự động đến vị trí tiếp theo
+				simon->SetAutoGoX(1, 1, abs(GATE1_POSITION_CAM_AFTER_GO + DISTANCE_AUTO_WALK_AFTER_GATE - simon->GetX()), SIMON_WALKING_SPEED); // bắt đầu cho simon di chuyển tự động đến vị trí tiếp theo
 			}
 		}
 		else
 		{
-			if (camera->GetXCam()/* + 1.0f */>= ViTriCameraDiChuyenSauKhiQuaCua)
+			if (camera->GetXCam()>= GATE1_POSITION_CAM_AFTER_GO)
 			{
-				camera->SetBoundary(ViTriCameraDiChuyenSauKhiQuaCua, camera->GetBoundaryRight());
+				camera->SetBoundary(GATE1_POSITION_CAM_AFTER_GO, camera->GetBoundaryRight());
 				camera->SetAllowFollowSimon(true);
 				isProcessingGoThroughTheDoor1 = false; // xong việc xử lí qua cửa 1
 				camera->StopAutoGoX(); // dừng việc tự di chuyển
@@ -733,6 +767,31 @@ void Scene_2::Update(DWORD dt)
 
 #pragma endregion
 
+
+#pragma region Process Gate 2
+
+	if (isProcessingGoThroughTheDoor2) // simon chạm cửa thì bắt đầu xử lí
+	{
+		if (isDoneSimonGoThroughTheDoor2 == false) // simon chưa hoàn thành việc qua cửa
+		{
+			if (camera->GetXCam() >= GATE2_POSITION_CAM_BEFORE_GO) 
+			{
+				simon->SetAutoGoX(1, 1, abs( GATE2_POSITION_CAM_AFTER_GO + DISTANCE_AUTO_WALK_AFTER_GATE - simon->GetX()), SIMON_WALKING_SPEED); // bắt đầu cho simon di chuyển tự động đến vị trí tiếp theo
+			}
+		}
+		else
+		{
+			if (camera->GetXCam() >= GATE2_POSITION_CAM_AFTER_GO)
+			{
+				camera->SetBoundary(GATE2_POSITION_CAM_AFTER_GO, camera->GetBoundaryRight());
+				camera->SetAllowFollowSimon(true);
+				isProcessingGoThroughTheDoor2 = false; // xong việc xử lí qua cửa 2
+				camera->StopAutoGoX(); // dừng việc tự di chuyển
+			}
+		}
+	}
+
+#pragma endregion
 
 #pragma region Process_StopWatch
 	if (simon->_weaponSub != NULL && simon->_weaponSub->GetType() == eType::STOPWATCH)
@@ -1102,8 +1161,9 @@ void Scene_2::Update(DWORD dt)
 void Scene_2::Render()
 {
 
-	TileMap->DrawMap(camera);
+	
 
+	TileMap->DrawMap(camera);
 
 	for (UINT i = 0; i < listObj.size(); i++)
 		listObj[i]->Render(camera);
@@ -1123,6 +1183,8 @@ void Scene_2::Render()
 		listWeaponOfEnemy[i]->Render(camera);
 
 	simon->Render(camera);
+
+
 
 	board->Render(camera, simon, StateCurrent, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime());
 
@@ -1567,13 +1629,12 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 				{
 					switch (gameObject->GetId())
 					{
-					case 67: // đụng trúng box xác nhận simon đã qua cửa
+					case 67: // đụng trúng box xác nhận simon đã qua GATE1
 					{
 						if (isProcessingGoThroughTheDoor1)
 						{
 							isDoneSimonGoThroughTheDoor1 = true;
-							camera->SetAutoGoX(abs(ViTriCameraDiChuyenSauKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
-							isDoneCameraGoThroughTheDoor1 = false;
+							camera->SetAutoGoX(abs(GATE1_POSITION_CAM_AFTER_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
 							simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
 						}
 						
@@ -1586,6 +1647,24 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						DebugOut(L"Xac nhan qua xong cua!\n");
 						break;
 					}
+
+
+					case 94: // đụng trúng box xác nhận simon đã qua GATE2
+					{
+						if (isProcessingGoThroughTheDoor2)
+						{
+							isDoneSimonGoThroughTheDoor2 = true;
+							camera->SetAutoGoX(abs(GATE2_POSITION_CAM_AFTER_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
+							simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
+						}
+						StateCurrent = 3;// set hiển thị đang ở state3
+						camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
+						gameObject->SubHealth(1);
+						DebugOut(L"Xac nhan qua xong cua 2!\n");
+						break;
+					}
+
+
 
 					case 41: // id 41: object ẩn -> bắt đầu xuống hồ nước
 					{
@@ -1664,7 +1743,6 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 #pragma endregion
 
  
-					
 
 
 
@@ -1756,27 +1834,26 @@ void Scene_2::CheckCollisionSimonWithGate()
 		{
 			if (simon->isCollitionObjectWithObject(listObj[i]))
 			{
-				Gate* objGate = dynamic_cast<Gate*>(listObj[i]);
-				if (objGate->GetId() == 64) // id object
+				Gate* objGate = dynamic_cast<Gate*>(listObj[i]); 
+				switch (objGate->GetId())
+				{
+				case 64: // gate 1
 				{
 					if (objGate->GetStart() == 0)
 					{
-						//di chuyển camera đến ViTriCameraDiChuyenTruocKhiQuaCua = 2825.0f
-						camera->SetBoundary(camera->GetBoundaryLeft(), camera->GetBoundaryRight() + 1064+100);// mở biên phải rộng ra thêm để chạy AutoGo
-						camera->SetAutoGoX(abs(ViTriCameraDiChuyenTruocKhiQuaCua - camera->GetXCam()), SIMON_WALKING_SPEED);
-						
-						//simon->Stop();
+						//di chuyển camera đến GATE1_POSITION_CAM_BEFORE_GO = 2825.0f
+						camera->SetBoundary(camera->GetBoundaryLeft(), camera->GetBoundaryRight() + 9999.0f);// mở biên phải rộng ra thêm để chạy AutoGo
+						camera->SetAutoGoX(abs(GATE1_POSITION_CAM_BEFORE_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
+
 #pragma region Stop simon
 						simon->SetSpeed(0, simon->GetVy()); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
 						simon->isWalking = 0;
 						if (simon->isSitting == true) // nếu simon đang ngồi
 						{
 							simon->isSitting = 0; // hủy trạng thái ngồi
-							simon->SetY(simon->GetY() - 18); // kéo simon lên
+							simon->SetY(simon->GetY() - PULL_UP_SIMON_AFTER_SITTING); // kéo simon lên
 						}
 #pragma endregion
-
-						
 
 						isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
 						isDoneSimonGoThroughTheDoor1 = false;
@@ -1787,8 +1864,44 @@ void Scene_2::CheckCollisionSimonWithGate()
 
 						break;
 					}
-
+					break;
 				}
+
+				case 93: // gate 2
+				{
+					if (objGate->GetStart() == 0)
+					{
+						camera->SetBoundary(camera->GetBoundaryLeft(), CAMERA_BOUNDARY_BOSS_RIGHT);// mở biên phải rộng ra thêm để chạy AutoGo
+						camera->SetAutoGoX(abs(GATE2_POSITION_CAM_BEFORE_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
+
+#pragma region Stop simon
+						simon->SetSpeed(0, simon->GetVy()); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
+						simon->isWalking = 0;
+						if (simon->isSitting == true) // nếu simon đang ngồi
+						{
+							simon->isSitting = 0; // hủy trạng thái ngồi
+							simon->SetY(simon->GetY() - PULL_UP_SIMON_AFTER_SITTING); // kéo simon lên
+						}
+#pragma endregion
+
+						isProcessingGoThroughTheDoor2 = true; // bật trạng thái xử lí qua cửa
+						isDoneSimonGoThroughTheDoor2 = false;
+						objGate->Start();
+						DebugOut(L"Simon dung trung cua 2!\n");
+
+
+						break;
+					}
+					break;
+				}
+
+
+
+
+				default:
+					break;
+				}
+
 
 			}
 		}

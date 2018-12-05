@@ -550,7 +550,7 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 		isCheckCollisionAxisYWithBrick = false; // đang ko va chạm trục y
-		DebugOut(L"%d : Col y = false (size = 0) - dt = %d - y = %f - dy = %f\n",GetTickCount(),dt,y, dy);
+	//	DebugOut(L"%d : Col y = false (size = 0) - dt = %d - y = %f - dy = %f\n",GetTickCount(),dt,y, dy);
 	}
 	else
 	{
@@ -582,11 +582,11 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 		if (ny != 0)
 		{
 			isCheckCollisionAxisYWithBrick = true;
-			DebugOut(L"%d : Col y = true - dt=%d - y = %f - dy = %f\n", GetTickCount(), dt,y, dy);
+	//		DebugOut(L"%d : Col y = true - dt=%d - y = %f - dy = %f\n", GetTickCount(), dt,y, dy);
 		}
 		else
 		{
-			DebugOut(L"%d : Col y = false - dt=%d\n", GetTickCount(), dt);
+		//	DebugOut(L"%d : Col y = false - dt=%d\n", GetTickCount(), dt);
 			isCheckCollisionAxisYWithBrick = false;// đang ko va chạm trục y
 		}
 		 
@@ -604,29 +604,30 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 		delete coEvents[i];
 }
 
-bool Simon::isCheckCollisionAxisY_WithBrickSweptAABB(vector<LPGAMEOBJECT>* coObjects)
-{ 
-
-	vector<LPGAMEOBJECT> list_Brick; 
-	vector<LPCOLLISIONEVENT> list_EVENT;
-
-	for (UINT i = 0; i < coObjects->size(); i++)
-		if (coObjects->at(i)->GetType() == eType::BRICK)
-			list_Brick.push_back(coObjects->at(i));
-
-	for (UINT i = 0; i < list_Brick.size(); i++)
-	{
-		LPCOLLISIONEVENT e = SweptAABBEx(list_Brick.at(i));
-		list_EVENT.push_back(e);
-		if (e->t > 0 && e->t <= 1.0f && e->ny!=0) // chỉ xét trục y
-		{
-			//SAFE_DELETE(e);
-			return true;
-		}
-		//SAFE_DELETE(e);
-	}
-	return false;
-}
+//
+//bool Simon::isCheckCollisionAxisY_WithBrickSweptAABB(vector<LPGAMEOBJECT>* coObjects)
+//{ 
+//
+//	vector<LPGAMEOBJECT> list_Brick; 
+//	vector<LPCOLLISIONEVENT> list_EVENT;
+//
+//	for (UINT i = 0; i < coObjects->size(); i++)
+//		if (coObjects->at(i)->GetType() == eType::BRICK)
+//			list_Brick.push_back(coObjects->at(i));
+//
+//	for (UINT i = 0; i < list_Brick.size(); i++)
+//	{
+//		LPCOLLISIONEVENT e = SweptAABBEx(list_Brick.at(i));
+//		list_EVENT.push_back(e);
+//		if (e->t > 0 && e->t <= 1.0f && e->ny!=0) // chỉ xét trục y
+//		{
+//			//SAFE_DELETE(e);
+//			return true;
+//		}
+//		//SAFE_DELETE(e);
+//	}
+//	return false;
+//}
 
 void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 {

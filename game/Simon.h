@@ -153,7 +153,7 @@ public:
 	int GetHeartCollect();
 
 	void CollisionWithBrick(vector<LPGAMEOBJECT> *coObjects = NULL);
-	bool isCheckCollisionAxisY_WithBrickSweptAABB(vector<LPGAMEOBJECT> *coObjects = NULL); // chỉ trả về có va chạm với đất trên trục y bằng swept hay không?
+//	bool isCheckCollisionAxisY_WithBrickSweptAABB(vector<LPGAMEOBJECT> *coObjects = NULL); // chỉ trả về có va chạm với đất trên trục y bằng swept hay không?
 
 	void CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects = NULL);
 	bool isCollisionWithItem(Item * objItem);

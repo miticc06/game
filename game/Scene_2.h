@@ -39,10 +39,20 @@
 
 #define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo
 #define ThoiGianChoDeXuLiTaoGhost 2500 // 2.5 giây
-#define ViTriCameraDiChuyenTruocKhiQuaCua 2809.0f
-#define ViTriCameraDiChuyenSauKhiQuaCua 3073.0f
+
+
+#define GATE1_POSITION_CAM_BEFORE_GO 2809.0f
+#define GATE1_POSITION_CAM_AFTER_GO 3073.0f
+
+#define GATE2_POSITION_CAM_BEFORE_GO 3840.0f
+#define GATE2_POSITION_CAM_AFTER_GO 4095.0f
+
+#define DISTANCE_AUTO_WALK_AFTER_GATE 80.0f // simon phải tự đi 80px sau khi chạm vào cửa
+
 
 #define BienPhaiCameraKhiChuaQuaCua1 2576.0f
+
+
 
 #define REGION_CREATE_PANTHER_LEFT 1090.0f
 #define REGION_CREATE_PANTHER_RIGHT 2305.0f
@@ -51,6 +61,10 @@
   
 #define CAMERA_BOUNDARY_LAKE_LEFT 3075.0f
 #define CAMERA_BOUNDARY_LAKE_RIGHT 4111.0f-Window_Width
+
+
+#define CAMERA_BOUNDARY_BOSS_RIGHT 5648.0f - Window_Width
+
 
 #pragma region define FISHMEN
 
@@ -103,10 +117,14 @@ private:
 	bool isWaitProcessCreateGhost; // chờ xử lí việc tạo ghost
 	bool isAllowCheckTimeWaitProcessCreateGhost = false; // cho phép kt thời gian chờ xử lí tạo ghost
 
-	/*Xử lí liên quan đi qua cửa*/
+	/*Xử lí liên quan đi qua cửa 1*/
 	bool isProcessingGoThroughTheDoor1;
 	bool isDoneSimonGoThroughTheDoor1; 
-	bool isDoneCameraGoThroughTheDoor1;
+ 
+	/*Xử lí liên quan đi qua cửa 2*/
+	bool isProcessingGoThroughTheDoor2;
+	bool isDoneSimonGoThroughTheDoor2;
+ 
 
 	/*Xử lí liên quan tạo Panther*/
 	bool isAllowRenewPanther;
