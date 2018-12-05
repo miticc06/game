@@ -1660,11 +1660,30 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 						StateCurrent = 3;// set hiển thị đang ở state3
 						camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
 						gameObject->SubHealth(1);
+						  
 						DebugOut(L"Xac nhan qua xong cua 2!\n");
 						break;
 					}
 
 
+					case 65: //id 65 : object ẩn->bonus
+					{
+						sound->Play(eSound::soundDisplayMonney);
+						listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), simon->GetX(), simon->GetY()));
+						gameObject->SetHealth(0);
+						break;
+					}
+
+
+					case 66: //id 66: object ẩn -> chạm nước -> chết
+					{
+						simon->SetHealth(0);
+						sound->Play(eSound::soundFallingDownWaterSurface);
+
+
+						break;
+					}
+#pragma region Lên & xuống hồ nước phía Phải
 
 					case 41: // id 41: object ẩn -> bắt đầu xuống hồ nước
 					{
@@ -1684,33 +1703,16 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 					{
 						camera->SetPosition(camera->GetXCam(), 0);
 						simon->SetPosition(3152, 345);
-						isAllowCreateBat = true;  // không cho tạo Bat
+						isAllowCreateBat = true;  // cho tạo Bat
 						isAllowCreateFishmen = false;
 						TimeWaitCreateBat = 3000 + rand() % 1000;
 						gameObject->SetHealth(0);
 
 						gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_LEFT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
-						  
-						break;
-					}
-
-					case 65: //id 65 : object ẩn->bonus
-					{
-						sound->Play(eSound::soundDisplayMonney);
-						listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), simon->GetX(), simon->GetY()));
-						gameObject->SetHealth(0);
-						break;
-					}
-
-
-					case 66: //id 66: object ẩn -> chạm nước -> chết
-					{
-						simon->SetHealth(0);
-						sound->Play(eSound::soundFallingDownWaterSurface);
-
 
 						break;
 					}
+#pragma endregion
 
 #pragma region Lên & xuống hồ nước phía Phải
 					case 81: // id 81: object ẩn -> ra khỏi hồ nước phía phải
@@ -1886,6 +1888,9 @@ void Scene_2::CheckCollisionSimonWithGate()
 
 						isProcessingGoThroughTheDoor2 = true; // bật trạng thái xử lí qua cửa
 						isDoneSimonGoThroughTheDoor2 = false;
+
+						isAllowCreateBat = false; // tắt tạo Bat
+
 						objGate->Start();
 						DebugOut(L"Simon dung trung cua 2!\n");
 
