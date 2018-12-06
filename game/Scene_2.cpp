@@ -878,6 +878,102 @@ void Scene_2::Update(DWORD dt)
 			}
 		}
 #pragma endregion
+
+#pragma region Vùng 3
+		if ((simon->GetX() >= GHOST_ZONE3_LEFT && simon->GetX() <= GHOST_ZONE3_RIGHT))
+		{
+			if (now - TimeCreateGhost >= ThoiGianChoGiua2GhostDuocTao)
+			{
+				if (CountEnemyGhost < 3)
+				{
+					
+						int random = rand() % 2; // tỉ lệ 50%
+						switch (random)
+						{
+						case 0: // ở trên
+						{
+							if (simon->GetX() <= GHOST_ZONE3_COLUMN1)
+							{
+								listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 185, -1));// bên phải chạy qua trái
+								break;
+							}
+							else
+								if (GHOST_ZONE3_COLUMN2 <= simon->GetX())
+								{
+									listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 185, 1));// bên trái qua phải
+									break;
+								}
+								else
+								{
+									// không break, để tự chạy tiếp tục vào case 1
+								}
+						}
+						case 1: // ở dưới
+						{
+							if (simon->GetVx()>0) // đang chạy về bên phải
+								listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 330, -1));// bên phải chạy qua trái
+							else
+								if (simon->GetVx() < 0) // đang chạy bên trái 
+									listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 330, 1)); // đi từ trái qua phải
+								else
+								{
+									if (rand() % 2 == 0)
+										listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 330, -1));// bên phải chạy qua trái
+									else 
+										listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 330, 1)); // đi từ trái qua phải 
+								} 
+							break;
+						}
+							
+						}
+
+						CountEnemyGhost++;
+						if (CountEnemyGhost == 3)
+						{
+							isWaitProcessCreateGhost = true; // phải chờ đến khi cả 3 ghost bị giết
+							isAllowCheckTimeWaitProcessCreateGhost = false;
+						}
+						TimeCreateGhost = now; // set lại thời điểm đã tạo ghost
+						 
+					
+
+					/*
+					if (simon->GetVx() > 0) // vx>0 đang chạy về bên phải
+					{
+						// cho ghost chạy từ bên phải qua
+						listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326 - 10, -1));// 34 framewidth của ghost
+					}
+					else
+						if (simon->GetVx() < 0) // vx>0 đang chạy về bên trái
+						{
+							// cho ghost chạy từ bên trái qua 
+							listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326 - 10, 1));
+						}
+						else // đứng yên thì cứ random
+						{
+							int random = rand() % 2;
+							if (random == 0) // đi từ bên trái
+							{
+								listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326 - 10, 1));
+							}
+							else // đi từ bên phải
+							{
+								listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326 - 10, -1));
+							}
+						}
+					CountEnemyGhost++;
+					if (CountEnemyGhost == 3)
+					{
+						isWaitProcessCreateGhost = true; // phải chờ đến khi cả 3 ghost bị giết
+						isAllowCheckTimeWaitProcessCreateGhost = false;
+					}
+					TimeCreateGhost = now; // set lại thời điểm đã tạo ghost
+					*/
+				}
+			}
+		}
+#pragma endregion
+
 	}
 	else
 	{

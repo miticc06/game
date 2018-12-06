@@ -103,7 +103,10 @@
 
 #pragma endregion
 
-
+#define GHOST_ZONE3_LEFT 4233.0f // biên trái vùng hoạt động
+#define GHOST_ZONE3_RIGHT 4993.0f// biên phải vùng hoạt động
+#define GHOST_ZONE3_COLUMN1 4412.0f 
+#define GHOST_ZONE3_COLUMN2 4590.0f
 
 
 class Scene_2 : public Scene
