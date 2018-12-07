@@ -343,6 +343,36 @@ void Scene_2::OnKeyDown(int KeyCode)
 		camera->SetPosition(camera->GetXCam(), 0);
 	}
 
+	if (KeyCode == DIK_Y) // run boss
+	{
+		boss->Start();
+	}
+	if (KeyCode == DIK_0) // boss
+	{ 
+		simon->SetPosition(5328.0f, 240.0f);
+
+
+		camera->SetBoundary(5140, CAMERA_BOUNDARY_BOSS_RIGHT);
+
+		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
+		   
+		camera->SetPosition(camera->GetXCam(), 0); 
+
+
+		boss = new PhantomBat(5295, 90, simon, camera, &listWeaponOfEnemy);
+		
+
+	}
+
+	if (KeyCode == DIK_T) // test boss 
+	{
+		boss->StartCurves();
+	}
+
+
+
+
+
 	if (KeyCode == DIK_9) // đứng ngay cầu thang gần xuoosg hồ nước
 	{
 		DebugOut(L"[SET POSITION SIMON] x = .... \n");
@@ -1247,6 +1277,8 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 
 
+	if (boss != NULL)
+		boss->Update(dt, &listObj);
 
 	CheckCollision();
 
@@ -1275,12 +1307,17 @@ void Scene_2::Render()
 	for (UINT i = 0; i < listEnemy.size(); i++)
 		listEnemy[i]->Render(camera);
 
-	for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
-		listWeaponOfEnemy[i]->Render(camera);
+	
+	 
 
 	simon->Render(camera);
 
+	if (boss != NULL)
+		boss->Render(camera);
 
+
+	for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
+		listWeaponOfEnemy[i]->Render(camera);
 
 	board->Render(camera, simon, StateCurrent, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime());
 
@@ -1297,6 +1334,8 @@ void Scene_2::CheckCollision()
 	CheckCollisionSimonWithGate(); //va chạm với cửa
 
 	CheckCollisionWithEnemy(); // kt vũ khí với enemy và simon với enemy
+
+	CheckCollisionWithBoss(); // kt vũ khí với enemy và simon với enemy
 
 }
 
@@ -1388,10 +1427,19 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 					break;
 				}
+				 
+				case eType::PHANTOMBAT:
+				{
+				//	gameObj->SubHealth(1);
+					gameObj->SetHealth(0);
+					//	simon->SetScore(simon->GetScore() + 300);
 
-				default:
+					RunEffectHit = true;
 					break;
 				}
+				default:
+					break;
+			}
 
 				if (RunEffectHit)
 				{
@@ -2006,6 +2054,45 @@ void Scene_2::CheckCollisionSimonWithGate()
 
 			}
 		}
+	}
+}
+
+void Scene_2::CheckCollisionWithBoss()
+{
+	if (boss == NULL)
+		return;
+
+	vector<GameObject*> listObj{ boss };
+	CheckCollisionWeapon(listObj); // enemy bt
+
+
+
+
+	if (GetTickCount() - simon->untouchable_start > SIMON_UNTOUCHABLE_TIME)
+	{
+		simon->untouchable_start = 0;
+		simon->untouchable = false;
+	}
+
+	if (simon->untouchable == false) // đã tắt chế độ ko cho chạm
+	{ 
+
+		if (boss->GetHealth() > 0) // còn sống
+		{
+			LPCOLLISIONEVENT e = simon->SweptAABBEx(boss);
+			if (e->t > 0 && e->t <= 1) // có va chạm
+			{
+				simon->SetHurt(e);
+				return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
+			}
+			if (simon->checkAABB(boss) == true)
+			{
+				LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetDirection(), 0, NULL);
+				simon->SetHurt(e);
+				return;
+			}
+		}
+		 
 	}
 }
 

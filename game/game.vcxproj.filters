@@ -164,6 +164,7 @@
       <Filter>Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="PhantomBat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -326,6 +327,7 @@
       <Filter>Object\Effect</Filter>
     </ClInclude>
     <ClInclude Include="FireBall.h" />
+    <ClInclude Include="PhantomBat.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -384,6 +386,9 @@
     </Filter>
     <Filter Include="Object\Effect">
       <UniqueIdentifier>{56fc4ff3-9a31-4d61-8eb7-2830a90becca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss">
+      <UniqueIdentifier>{dfe3c41a-302e-4a99-9851-445c5a51b853}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

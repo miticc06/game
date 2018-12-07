@@ -34,6 +34,7 @@
 #include "ItemStopWatch.h"
 #include "Fishmen.h"
 #include "Steam.h"
+#include "PhantomBat.h"
 
 #define GAME_TIME_SCENE2 300
 
@@ -166,6 +167,9 @@ private:
 	/*Xử lí stopWatch*/
 	bool isStopWatch;
 
+
+	PhantomBat * boss;
+
 public:
 	Scene_2(Simon * _si = NULL, GameTime* _ga = NULL);
 	~Scene_2();
@@ -188,6 +192,7 @@ public:
 	void CheckCollisionWithEnemy();
 	void CheckCollisionSimonWithEnemy();
 	void CheckCollisionSimonWithGate();
+	void CheckCollisionWithBoss();
 	Item * GetNewItem(int Id, eType Type, float X, float Y);
 };
 

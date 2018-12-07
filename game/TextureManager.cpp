@@ -89,7 +89,10 @@ void TextureManager::LoadResource()
 	
 	AddTexture(eType::BAT, new GTexture("Resources/enemy/0.png", 4, 1, 4));
 	AddTexture(eType::FISHMEN, new GTexture("Resources/enemy/3.png", 3, 1, 3));
-
+	
+	
+	//boss
+	AddTexture(eType::PHANTOMBAT, new GTexture("Resources/boss/0.png", 3, 1, 3));
 
 
 

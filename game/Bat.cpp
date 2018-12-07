@@ -49,16 +49,16 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	y += dy;
 	x += dx;
 
+	_sprite->Update(dt);
+	if (_sprite->GetIndex() == 0)
+		_sprite->Update(dt);
 }
 
 void Bat::Render(Camera * camera)
 {
 	if (Health <= 0)
 		return;
-
-	_sprite->Update(dt);
-	if (_sprite->GetIndex()==0)
-		_sprite->Update(dt);
+	 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
 		_sprite->Draw((int)pos.x, (int)pos.y);

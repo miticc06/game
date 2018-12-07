@@ -127,7 +127,10 @@ enum eType
 	GHOST = 141,
 	PANTHER = 142,
 	BAT = 143,
-	FISHMEN = 144
+	FISHMEN = 144,
+
+	//BOSS
+	PHANTOMBAT = 161
 };
 
 
