@@ -63,8 +63,7 @@
   
 #define CAMERA_BOUNDARY_LAKE_LEFT 3075.0f
 #define CAMERA_BOUNDARY_LAKE_RIGHT 4111.0f-Window_Width
-
-
+ 
 #define CAMERA_BOUNDARY_BOSS_RIGHT 5648.0f - Window_Width
 
 
@@ -105,15 +104,25 @@
 
 #pragma endregion
 
+#pragma region define GHOST
+
 #define GHOST_ZONE3_LEFT 4233.0f // biên trái vùng hoạt động
 #define GHOST_ZONE3_RIGHT 4993.0f// biên phải vùng hoạt động
 #define GHOST_ZONE3_COLUMN1 4412.0f 
 #define GHOST_ZONE3_COLUMN2 4590.0f
+#pragma endregion
 
 #pragma region define ClearState3
 
 #define CLEARSTATE3_PROCESS_HEALTH 0 // xử lí làm đầy máu
-#define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_HEALTH 1000 // thời gian chờ tăng mỗi đơn vị máu
+#define CLEARSTATE3_PROCESS_GETSCORE_TIME 1 // xử lí quy đổi thời gian dư ra điểm
+#define CLEARSTATE3_PROCESS_GETSCORE_HEART 2 // xử lí quy đổi thời gian dư ra điểm
+#define CLEARSTATE3_PROCESS_DONE 3 // xử lí xong
+
+#define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_HEALTH 200 // thời gian chờ tăng mỗi đơn vị máu
+#define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_GETSCORE_TIME 10 // thời gian chờ tăng mỗi đơn vị máu
+#define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_GETSCORE_HEART 200 // thời gian chờ tăng mỗi đơn vị máu
+
 #pragma endregion
 
 
@@ -178,8 +187,7 @@ private:
 	GameTime * _gameTime;
 	int StateCurrent;
 
-	/*Xử lí stopWatch*/
-	bool isStopWatch;
+	bool isStopWatch; /*Xử lí stopWatch*/
 
 
 	PhantomBat * boss;
@@ -208,6 +216,9 @@ public:
 	void CheckCollisionSimonWithGate();
 	void CheckCollisionWithBoss();
 	Item * GetNewItem(int Id, eType Type, float X, float Y);
+
+
+	void ProcessClearState3(DWORD dt);
 };
 
 

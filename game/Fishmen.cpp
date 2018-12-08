@@ -197,6 +197,6 @@ void Fishmen::Attack(vector<Weapon*> *listWeaponOfEnemy)
 	TimeAttack = GetTickCount();
 	 
 	weapon->SetSpeed(FIREBALL_SPEED * direction, 0);
-	weapon->Create(x+10, y +5, direction);
+	weapon->Create(x+10, y +3, direction);
 
 }

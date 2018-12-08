@@ -28,6 +28,8 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::soundBrokenBrick, L"Resources/sound/broken_brick.wav");
 	AddSound(eSound::soundSplashwater, L"Resources/sound/splashwater.wav");
 	AddSound(eSound::soundFallingDownWaterSurface, L"Resources/sound/fallingdownwatersurface.wav");
+	AddSound(eSound::SoundGetScoreTimer, L"Resources/sound/getscoretime.wav");
+	AddSound(eSound::SoundGetScoreHeart, L"Resources/sound/getscoreheart-[AudioTrimmer.com].wav");
 
 
 
@@ -59,7 +61,7 @@ void Sound::AddSound(eSound type, LPTSTR filename)
 
 void Sound::Play(eSound type, bool isLoop)
 {
-	_ArrSound[type]->Play(0, isLoop);
+	_ArrSound[type]->Play(0, isLoop); 
 	//DSBPLAY_LOOPING             0x00000001 -> int = 1
 
 }

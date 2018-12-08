@@ -293,7 +293,7 @@ void Scene_1::Update(DWORD dt)
 		return;
 	}
 	else
-		_gameTime->Update();
+		_gameTime->Update(dt);
 
 
 

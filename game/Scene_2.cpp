@@ -760,73 +760,49 @@ void Scene_2::Update(DWORD dt)
 	}
 #pragma endregion
 
-#pragma region Process ClearState3
+	ProcessClearState3(dt);
 
-	if (isAllowProcessClearState3)
+	if (!isAllowProcessClearState3)
 	{
-
-		switch (StatusProcessClearState3)
-		{ 
-		case CLEARSTATE3_PROCESS_HEALTH:
-		{ 
-			TimeWaited_ClearState3 += dt;
-			if (TimeWaited_ClearState3 >= CLEARSTATE3_LIMITTIMEWAIT_PROCESS_HEALTH)
-			{
-				TimeWaited_ClearState3 = 0;
-
-				if (simon->GetHealth() < 16)
-				{
-					simon->SetHealth(simon->GetHealth() + 1);
-				} 
-				else
-				{
-					StatusProcessClearState3 = 1;
-				}
-			}
-			break;
-		}
-
-		default:
-			break;
-		}
-
-
-	}
-
-#pragma endregion
-
-
 
 
 #pragma region Process_Gametime_OR_Health
-	if (_gameTime->GetTime() >= GAME_TIME_SCENE2 || simon->GetHealth() <= 0) // hết thời gian hoặc hết máu
-	{
-		sound->Play(eSound::musicLifeLost);
-		if (simon->GetLives() == 0)
+		if (_gameTime->GetTime() >= GAME_TIME_SCENE2 || simon->GetHealth() <= 0) // hết thời gian hoặc hết máu
+		{
+			sound->Play(eSound::musicLifeLost);
+			if (simon->GetLives() == 0)
+				return;
+			bool result = simon->LoseLife(); // đã khôi phục x,y
+
+			camera->RestorePosition(); // khôi phục vị trí camera;
+			camera->RestoreBoundary();
+			if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
+			{
+				ResetResource(); // reset lại game
+			}
 			return;
-		bool result = simon->LoseLife(); // đã khôi phục x,y
-
-		camera->RestorePosition(); // khôi phục vị trí camera;
-		camera->RestoreBoundary();
-		if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
-		{
-			ResetResource(); // reset lại game
 		}
-		return;
-	}
-	else
-		_gameTime->Update();
-
-
-
-	if (GAME_TIME_SCENE2 - _gameTime->GetTime() <= 30) // đúng còn lại 30 giây thì bật sound loop
-	{
-		if (_gameTime->CheckIsJustChanged() == true) // Kiểm tra _time vừa thay đổi thì mới play nhạc. Nếu chỉ kt <=30s thì cứ mỗi deltatime nó sẽ Play nhạc -> thừa, ko đều
+		else
 		{
-			sound->Play(eSound::soundStopTimer);
+			if (isAllowProcessClearState3 == false) // đang xử lí ClearState thì không đếm time
+			{
+				_gameTime->Update(dt);
+			}
 		}
-	}
+
+
+
+
+		if (GAME_TIME_SCENE2 - _gameTime->GetTime() <= 30) // đúng còn lại 30 giây thì bật sound loop
+		{
+			if (_gameTime->CheckIsJustChanged() == true) // Kiểm tra _time vừa thay đổi thì mới play nhạc. Nếu chỉ kt <=30s thì cứ mỗi deltatime nó sẽ Play nhạc -> thừa, ko đều
+			{
+				sound->Play(eSound::soundStopTimer);
+			}
+		}
 #pragma endregion
+
+	}
 
 #pragma region Process Gate 1
 
@@ -910,12 +886,15 @@ void Scene_2::Update(DWORD dt)
 	{
 		camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
 	}
+
 	camera->Update(dt);
 
 
 
 	//	Cần tạo khoảng chờ khi tạo bot
 	 
+
+
 #pragma region Process_Region_Create_Enemy_Ghost
 
 //	DebugOut(L"now = %d - listenemy = %d\n", CountEnemyGhost, listEnemy.size());
@@ -1319,6 +1298,9 @@ void Scene_2::Update(DWORD dt)
 				}
 			}
 		}
+
+		if (boss != NULL)
+			boss->Update(dt, &listObj);
 	}
 	
 	for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
@@ -1332,8 +1314,7 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 
 
-	if (boss != NULL)
-		boss->Update(dt, &listObj);
+	
 
 	CheckCollision();
 
@@ -1639,8 +1620,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 							RunEffectHit = false;
 							sound->Play(eSound::soundHit);
 							listItem.push_back(new CrystalBall(CRYSTALBALL_DEFAULT_POSITION_X, CRYSTALBALL_DEFAULT_POSITION_y));
-							
-							isAllowProcessClearState3 = true;
+							 
 							
 						}
 						else
@@ -2344,4 +2324,90 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 	}
 
 	return new LargeHeart(X, Y);
+}
+
+void Scene_2::ProcessClearState3(DWORD dt)
+{ 
+	if (isAllowProcessClearState3)
+	{ 
+		switch (StatusProcessClearState3)
+		{
+		case CLEARSTATE3_PROCESS_HEALTH:
+		{
+			TimeWaited_ClearState3 += dt;
+			if (TimeWaited_ClearState3 >= CLEARSTATE3_LIMITTIMEWAIT_PROCESS_HEALTH)
+			{
+				TimeWaited_ClearState3 = 0;
+
+				if (simon->GetHealth() < 16)
+				{
+					simon->SetHealth(simon->GetHealth() + 1);
+				}
+				else
+				{
+					StatusProcessClearState3 = CLEARSTATE3_PROCESS_GETSCORE_TIME;
+				}
+			}
+			break;
+		}
+
+		case CLEARSTATE3_PROCESS_GETSCORE_TIME:
+		{
+			TimeWaited_ClearState3 += dt;
+			if (TimeWaited_ClearState3 >= CLEARSTATE3_LIMITTIMEWAIT_PROCESS_GETSCORE_TIME)
+			{
+				TimeWaited_ClearState3 = 0;
+
+				if (GAME_TIME_SCENE2 - _gameTime->GetTime() > 0) // thời gian còn lại lớn hơn 0
+				{
+					simon->SetScore(simon->GetScore() + 10); // mỗi giây +10 điểm
+					_gameTime->SetTime(_gameTime->GetTime() + 1);// giảm giây còn lại
+					sound->Play(eSound::SoundGetScoreTimer, true);
+				}
+				else
+				{
+					StatusProcessClearState3 = CLEARSTATE3_PROCESS_GETSCORE_HEART;
+					TimeWaited_ClearState3 = 0;
+					sound->Stop(eSound::SoundGetScoreTimer);
+				}
+			}
+
+			break;
+		}
+
+		case CLEARSTATE3_PROCESS_GETSCORE_HEART:
+		{
+			TimeWaited_ClearState3 += dt;
+			if (TimeWaited_ClearState3 >= CLEARSTATE3_LIMITTIMEWAIT_PROCESS_GETSCORE_HEART)
+			{
+				TimeWaited_ClearState3 = 0;
+
+				if (simon->GetHeartCollect() > 0) // thời gian còn lại lớn hơn 0
+				{
+					simon->SetScore(simon->GetScore() + 100); // mỗi giây +10 điểm
+					simon->SetHeartCollect(simon->GetHeartCollect() - 1); // giảm 1 heart
+					sound->Play(eSound::SoundGetScoreHeart, true);
+				}
+				else
+				{ 
+					sound->Stop(eSound::SoundGetScoreHeart);
+					StatusProcessClearState3 = CLEARSTATE3_PROCESS_DONE;
+
+				}
+			}
+
+			break;
+		}
+
+		case CLEARSTATE3_PROCESS_DONE:
+		{
+		 
+
+			break;
+		}
+
+		default:
+			break;
+		}
+	} 
 }

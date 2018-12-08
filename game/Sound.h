@@ -22,8 +22,8 @@ enum eSound
 	soundHolyWater = 11,
 	soundSplashwater = 12,
 	soundFallingDownWaterSurface = 13,
-
-
+	SoundGetScoreTimer = 14,
+	SoundGetScoreHeart = 15,
 
 	musicState1 = 51,
 	musicLifeLost = 52,
