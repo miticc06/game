@@ -4,7 +4,7 @@ PhantomBat::PhantomBat(float X, float Y, Simon * simon, Camera *camera, vector <
 {
 	x = X;
 	y = Y;
-	Health = 100;
+	Health = 24; // BCNN(8,12) = 24
 	type = eType::PHANTOMBAT;
 
 	_texture = TextureManager::GetInstance()->GetTexture(eType::PHANTOMBAT);
@@ -314,6 +314,11 @@ float PhantomBat::getPt(float n1, float n2, float perc)
 	float diff = n2 - n1;
 
 	return n1 + (diff * perc);
+}
+
+void PhantomBat::Stop()
+{
+	vx = vy = 0;
 }
 
 void PhantomBat::Start() 

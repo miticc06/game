@@ -37,8 +37,10 @@ struct CollisionEvent
 };
  
 class GameObject
-{
+{ 
+
 protected:
+	DWORD LastTimeAttacked; // thời điểm bị tấn công cuối cùng
 	int Health;
 	int id; // ID của object
 
@@ -115,6 +117,8 @@ public:
 	bool isCollitionObjectWithObject(GameObject *obj); 	// kiểm tra bằng AABB và Sweept AABB
 	bool checkAABB(GameObject *obj);
 
+	DWORD GetLastTimeAttacked();
+	void SetLastTimeAttacked(DWORD t);
 };
 
 

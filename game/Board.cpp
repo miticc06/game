@@ -40,7 +40,9 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 	int BloodBoss = 16; 
 	if (boss != NULL)
 	{
-		BloodBoss = (int)(boss->GetHealth()*0.16);// 100 % máu -> 16 vạch
+		BloodBoss = (int)(boss->GetHealth()* 16 / 24);// HEALTH =24 -> 16 vạch
+		if (BloodBoss == 0 && boss->GetHealth() > 0)
+			BloodBoss = 1;
 	}
 	_boardHealth.Draw(x + 100, y + 30, simon->GetHealth(), BloodBoss); 
 	 

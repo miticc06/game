@@ -1,4 +1,4 @@
-#include "Weapon.h"
+﻿#include "Weapon.h"
 
 
 
@@ -28,6 +28,8 @@ void Weapon::Create(float X, float Y, int Direction)
 	this->y = Y;
 	this->direction = Direction;
 	isFinish = 0;
+	
+	LastTimeAttack = GetTickCount(); // lưu lại thời điểm lúc vừa tấn công, làm đánh dấu tránh 1 hit đánh nhiều lần cho các object, có health >1.
 }
 
 void Weapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -67,5 +69,10 @@ bool Weapon::GetFinish()
 void Weapon::SetFinish(bool b)
 {
 	isFinish = b;
+}
+
+DWORD Weapon::GetLastTimeAttack()
+{
+	return LastTimeAttack;
 }
  

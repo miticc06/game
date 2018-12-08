@@ -368,7 +368,10 @@ void Scene_2::OnKeyDown(int KeyCode)
 	{
 		boss->StartCurves();
 	}
-
+	if (KeyCode == DIK_U) // stop boss
+	{
+		boss->Stop();
+	}
 
 
 
@@ -1346,110 +1349,118 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
 	{
 		for (UINT i = 0; i < listObj.size(); i++) // đã kt object còn sống hay k trong hàm va chạm của vũ khí
-			if (simon->_weaponMain->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
+			if (listObj[i]->GetLastTimeAttacked() != simon->_weaponMain->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
 			{
-				bool RunEffectHit = false;
-				GameObject *gameObj = listObj[i];
-				switch (gameObj->GetType())
+				if (simon->_weaponMain->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
 				{
-				case eType::CANDLE:
-				{
-					gameObj->SubHealth(1);
-					listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));// hiệu ứng hit
-
-					RunEffectHit = true;
-					break;
-				}
-
-				case eType::GHOST:
-				{
-					gameObj->SubHealth(1);
-					simon->SetScore(simon->GetScore() + 100);
-					if (rand() % 2 == 1) // tỉ lệ 50%
+					bool RunEffectHit = false;
+					GameObject *gameObj = listObj[i];
+					switch (gameObj->GetType())
 					{
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+					case eType::CANDLE:
+					{
+						gameObj->SubHealth(1);
+						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));// hiệu ứng hit
+
+						RunEffectHit = true;
+						break;
 					}
 
-					RunEffectHit = true;
-					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-					if (CountEnemyGhost == 0)
+					case eType::GHOST:
 					{
-						TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-						isWaitProcessCreateGhost = true;
-						isAllowCheckTimeWaitProcessCreateGhost = true;
-					}
-					break;
-				}
+						gameObj->SubHealth(1);
+						simon->SetScore(simon->GetScore() + 100);
+						if (rand() % 2 == 1) // tỉ lệ 50%
+						{
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+						}
 
-				case eType::PANTHER:
-				{
-					gameObj->SubHealth(1);
-					simon->SetScore(simon->GetScore() + 200);
-					if (rand() % 2 == 1) // tỉ lệ 50%
-					{
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-					}
-					RunEffectHit = true;
-					CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
-					break;
-				}
-
-				case eType::BAT:
-				{
-					gameObj->SubHealth(1);
-					simon->SetScore(simon->GetScore() + 200);
-					if (rand() % 2 == 1) // tỉ lệ 50%
-					{
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-
+						RunEffectHit = true;
+						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+						if (CountEnemyGhost == 0)
+						{
+							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+							isWaitProcessCreateGhost = true;
+							isAllowCheckTimeWaitProcessCreateGhost = true;
+						}
+						break;
 					}
 
-					RunEffectHit = true;
-					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-					if (CountEnemyGhost == 0)
+					case eType::PANTHER:
 					{
-						TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-						isWaitProcessCreateGhost = true;
-						isAllowCheckTimeWaitProcessCreateGhost = true;
+						gameObj->SubHealth(1);
+						simon->SetScore(simon->GetScore() + 200);
+						if (rand() % 2 == 1) // tỉ lệ 50%
+						{
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+						}
+						RunEffectHit = true;
+						CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
+						break;
 					}
-					break;
+
+					case eType::BAT:
+					{
+						gameObj->SubHealth(1);
+						simon->SetScore(simon->GetScore() + 200);
+						if (rand() % 2 == 1) // tỉ lệ 50%
+						{
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+
+						}
+
+						RunEffectHit = true;
+						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+						if (CountEnemyGhost == 0)
+						{
+							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+							isWaitProcessCreateGhost = true;
+							isAllowCheckTimeWaitProcessCreateGhost = true;
+						}
+						break;
+					}
+
+					case eType::FISHMEN:
+					{
+						gameObj->SubHealth(1);
+						simon->SetScore(simon->GetScore() + 300);
+						if (rand() % 2 == 1) // tỉ lệ 50% 
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+
+						RunEffectHit = true;
+						CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
+
+						break;
+					}
+
+					case eType::PHANTOMBAT:
+					{
+						if (simon->_weaponMain->GetLevel()==0)
+							gameObj->SubHealth(24/12); // 12 hit chết
+						else
+							gameObj->SubHealth(24/8); // 8 hit chết
+
+						DebugOut(L"Giam 1 mau!\n"); 
+
+						RunEffectHit = true;
+						break;
+					}
+					default:
+						break;
+					}
+
+					if (RunEffectHit)
+					{
+						listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
+						listEffect.push_back(new Fire((int)gameObj->GetX() - 5, (int)gameObj->GetY() + 8)); // hiệu ứng lửa
+
+						sound->Play(eSound::soundHit);
+					}
+
+					gameObj->SetLastTimeAttacked(simon->_weaponMain->GetLastTimeAttack()); // bị đánh trúng->udate thời gian bị đánh lần cuối
 				}
-
-				case eType::FISHMEN:
-				{
-					gameObj->SubHealth(1);
-					simon->SetScore(simon->GetScore() + 300);
-					if (rand() % 2 == 1) // tỉ lệ 50% 
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-
-					RunEffectHit = true;
-					CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
-
-					break;
-				}
-				 
-				case eType::PHANTOMBAT:
-				{ 
-					gameObj->SubHealth(1);
-					DebugOut(L"Giam 1 mau!\n");
-					//	simon->SetScore(simon->GetScore() + 300);
-
-					RunEffectHit = true;
-					break;
-				}
-				default:
-					break;
 			}
-
-				if (RunEffectHit)
-				{
-					listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
-					listEffect.push_back(new Fire((int)gameObj->GetX() - 5, (int)gameObj->GetY() + 8)); // hiệu ứng lửa
-
-					sound->Play(eSound::soundHit);
-				}
-
-			}
+	
 	}
 
 
@@ -1457,118 +1468,126 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 	if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == false)
 	{
 		for (UINT i = 0; i < listObj.size(); i++)// đã kt object còn sống hay k trong hàm va chạm của vũ khí
-			if (simon->_weaponSub->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
+			if (listObj[i]->GetLastTimeAttacked() != simon->_weaponMain->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
 			{
-				bool RunEffectHit = false;
-				GameObject *gameObj = listObj[i];
-
-				switch (gameObj->GetType())
+				if (simon->_weaponSub->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
 				{
-				case eType::CANDLE:
-				{
-					gameObj->SubHealth(1);
-					listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-					RunEffectHit = true;
+					bool RunEffectHit = false;
+					GameObject *gameObj = listObj[i];
 
-					break;
-				}
-
-				case eType::GHOST:
-				{
-					gameObj->SubHealth(1);
-					simon->SetScore(simon->GetScore() + 100);
-
-					if (rand() % 2 == 1) // tỉ lệ 50%
+					switch (gameObj->GetType())
 					{
+					case eType::CANDLE:
+					{
+						gameObj->SubHealth(1);
 						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-					}
-					RunEffectHit = true;
-					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-					if (CountEnemyGhost == 0)
-					{
-						TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-						isWaitProcessCreateGhost = true;
-						isAllowCheckTimeWaitProcessCreateGhost = true;
-					}
-					break;
-				}
-				case eType::PANTHER:
-				{
-					gameObj->SubHealth(1);
-					simon->SetScore(simon->GetScore() + 200);
-					if (rand() % 2 == 1) // tỉ lệ 50%
-					{
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-					}
-					RunEffectHit = true;
-					CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
-					break;
-				}
+						RunEffectHit = true;
 
-
-				case eType::BAT:
-				{
-					gameObj->SubHealth(1);
-					simon->SetScore(simon->GetScore() + 200);
-					if (rand() % 2 == 1) // tỉ lệ 50%
-					{
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-					}
-
-					RunEffectHit = true;
-					CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-					if (CountEnemyGhost == 0)
-					{
-						TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-						isWaitProcessCreateGhost = true;
-						isAllowCheckTimeWaitProcessCreateGhost = true;
-					}
-					break;
-				}
-
-				case eType::FISHMEN:
-				{
-					gameObj->SubHealth(1);
-					simon->SetScore(simon->GetScore() + 200);
-					if (rand() % 2 == 1) // tỉ lệ 50%
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-					RunEffectHit = true;
-					CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
-					break;
-				}
-
-				default:
-					break;
-				}
-
-
-
-
-				if (RunEffectHit)
-				{
-					listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
-					listEffect.push_back(new Fire((int)gameObj->GetX() - 5, (int)gameObj->GetY() + 8)); // hiệu ứng lửa
-
-					sound->Play(eSound::soundHit);
-					switch (simon->_weaponSub->GetType())
-					{
-					case eType::HOLYWATER:
-					{
-						//HolyWater * objHolyWater = dynamic_cast<HolyWater *>(simon->_weaponSub);
-						//if (objHolyWater->is==true)
 						break;
 					}
 
-					case eType::DAGGER:
+					case eType::GHOST:
 					{
+						gameObj->SubHealth(1);
+						simon->SetScore(simon->GetScore() + 100);
 
-						simon->_weaponSub->SetFinish(true); // hủy cây kiếm 
+						if (rand() % 2 == 1) // tỉ lệ 50%
+						{
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+						}
+						RunEffectHit = true;
+						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+						if (CountEnemyGhost == 0)
+						{
+							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+							isWaitProcessCreateGhost = true;
+							isAllowCheckTimeWaitProcessCreateGhost = true;
+						}
+						break;
+					}
+					case eType::PANTHER:
+					{
+						gameObj->SubHealth(1);
+						simon->SetScore(simon->GetScore() + 200);
+						if (rand() % 2 == 1) // tỉ lệ 50%
+						{
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+						}
+						RunEffectHit = true;
+						CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
 						break;
 					}
 
+
+					case eType::BAT:
+					{
+						gameObj->SubHealth(1);
+						simon->SetScore(simon->GetScore() + 200);
+						if (rand() % 2 == 1) // tỉ lệ 50%
+						{
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+						}
+
+						RunEffectHit = true;
+						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+						if (CountEnemyGhost == 0)
+						{
+							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+							isWaitProcessCreateGhost = true;
+							isAllowCheckTimeWaitProcessCreateGhost = true;
+						}
+						break;
 					}
+
+					case eType::FISHMEN:
+					{
+						gameObj->SubHealth(1);
+						simon->SetScore(simon->GetScore() + 200);
+						if (rand() % 2 == 1) // tỉ lệ 50%
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+						RunEffectHit = true;
+						CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
+						break;
+					}
+
+					default:
+						break;
+					}
+
+
+
+
+					if (RunEffectHit)
+					{
+						listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
+						listEffect.push_back(new Fire((int)gameObj->GetX() - 5, (int)gameObj->GetY() + 8)); // hiệu ứng lửa
+
+						sound->Play(eSound::soundHit);
+						switch (simon->_weaponSub->GetType())
+						{
+						case eType::HOLYWATER:
+						{
+							//HolyWater * objHolyWater = dynamic_cast<HolyWater *>(simon->_weaponSub);
+							//if (objHolyWater->is==true)
+							break;
+						}
+
+						case eType::DAGGER:
+						{
+
+							simon->_weaponSub->SetFinish(true); // hủy cây kiếm 
+							break;
+						}
+
+						}
+					}
+
+					gameObj->SetLastTimeAttacked(simon->_weaponMain->GetLastTimeAttack()); // bị đánh trúng->udate thời gian bị đánh lần cuối
+
+
 				}
 			}
+			
 	}
 
 #pragma endregion 

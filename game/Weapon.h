@@ -16,7 +16,7 @@ class Weapon : public GameObject
 {
 protected:  
 	bool isFinish;
-
+	DWORD LastTimeAttack; // Thời điểm tấn công cuối cùng
 	 
 
 public:
@@ -38,7 +38,7 @@ public:
 
 	void SetFinish(bool b);
 	  
-	
+	DWORD GetLastTimeAttack();
  
 };
 

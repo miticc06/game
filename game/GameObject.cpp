@@ -10,6 +10,8 @@ GameObject::GameObject()
 	vx = vy = 0;
 	direction = 1;	
 	Health = 1;  // Alive
+
+	LastTimeAttacked = 0;
 }
 
 void GameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -282,6 +284,16 @@ bool GameObject::checkAABB(GameObject * obj)
 		return true;
 
 	return false;
+}
+
+DWORD GameObject::GetLastTimeAttacked()
+{
+	return LastTimeAttacked;
+}
+
+void GameObject::SetLastTimeAttacked(DWORD t)
+{
+	LastTimeAttacked = t;
 }
 
 GameObject::~GameObject()

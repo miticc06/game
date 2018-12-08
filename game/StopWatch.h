@@ -6,7 +6,7 @@ class StopWatch :
 	public Weapon
 {
 private:
-	DWORD TimeSpent;
+	DWORD TimeSpent; // thời gian đã chờ
 	
 public:
 	StopWatch();

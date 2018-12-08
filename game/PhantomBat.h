@@ -75,6 +75,7 @@ public:
 	void StartAttack();
 
 	float getPt(float n1, float n2, float perc);
+	void Stop(); // Debug
 };
 
 #endif
