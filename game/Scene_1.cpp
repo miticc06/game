@@ -463,7 +463,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 				case eType::ITEMDAGGER:
 				{
 					SAFE_DELETE(simon->_weaponSub);
-					simon->_weaponSub = new Dagger();
+					simon->_weaponSub = new Dagger(camera);
  					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectWeapon);
 					break;

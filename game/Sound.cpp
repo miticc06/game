@@ -22,6 +22,9 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::soundStopTimer, L"Resources/sound/stoptimer.wav");
 	AddSound(eSound::soundDagger, L"Resources/sound/usingdagger.wav");
 	AddSound(eSound::soundDisplayMonney, L"Resources/sound/display_monney.wav");
+	AddSound(eSound::soundAxe, L"Resources/sound/Axe.wav");
+
+
 
 	AddSound(eSound::soundHurting, L"Resources/sound/hurting.wav");
 	AddSound(eSound::soundOpenDoor, L"Resources/sound/opendoor.wav");

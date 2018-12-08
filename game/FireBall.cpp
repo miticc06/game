@@ -32,29 +32,11 @@ void FireBall::Create(float X, float Y, int Direction)
 	Weapon::Create(X, Y, Direction);
 	//vx = FIREBALL_SPEED * direction;
 }
-
-void FireBall::GetBoundingBox(float & left, float & top, float & right, float & bottom)
-{
-	left = x;
-	top = y;
-	right = x + _texture->FrameWidth;
-	bottom = y + _texture->FrameHeight;
-}
-
+ 
 void FireBall::RenderIcon(int X, int Y)
 {
 }
-
-bool FireBall::isCollision(GameObject * obj)
-{
-	if (isFinish)
-		return false;
-	// dt, dx, dy đã update
-	GameObject *gameObj = dynamic_cast<GameObject*>(obj);
-	if (gameObj->GetHealth() <= 0) // vật này die rồi thì ko va chạm
-		return false;
-	return isCollitionObjectWithObject(obj);
-}
+ 
 
 void FireBall::Render(Camera * camera)
 {

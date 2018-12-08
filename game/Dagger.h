@@ -8,20 +8,19 @@
 
 class Dagger : 	public Weapon
 {
+private:
+	Camera * camera;
+
 public:
-	Dagger();
+	Dagger(Camera * camera);
 	~Dagger();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 
 	void Create(float simonX, float simonY, int simonDirection);
 	 
-	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void RenderIcon(int X, int Y);
-
-
-	bool isCollision(GameObject* obj);
-
+ 	void RenderIcon(int X, int Y);
+	 
 	void Render(Camera *camera);
 
 

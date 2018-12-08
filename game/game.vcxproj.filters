@@ -172,6 +172,10 @@
     <ClCompile Include="CrystalBall.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="ThrowingAxe.cpp">
+      <Filter>Object\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemThrowingAxe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -342,6 +346,10 @@
     <ClInclude Include="CrystalBall.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="ThrowingAxe.h">
+      <Filter>Object\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemThrowingAxe.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

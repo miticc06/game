@@ -27,8 +27,7 @@ public:
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void UpdatePositionFitSimon();
 
-	void RenderIcon(int X, int Y);
-	bool isCollision(GameObject* obj);
+	void RenderIcon(int X, int Y); 
 	void Render(Camera *camera);
  
 };

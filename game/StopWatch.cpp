@@ -43,14 +43,11 @@ void StopWatch::Render(Camera * camera)
 
 bool StopWatch::isCollision(GameObject * obj)
 {
-	return false;
+	return false; // StopWatch ko xét va chạm
 }
 
 void StopWatch::RenderIcon(int X, int Y)
 {
 	_sprite->Draw(X, Y);
 }
-
-void StopWatch::GetBoundingBox(float & left, float & top, float & right, float & bottom)
-{
-}
+ 

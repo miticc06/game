@@ -6,6 +6,7 @@
 #include "Weapon.h"
 #include "MorningStar.h"
 #include "Sound.h"
+#include "ThrowingAxe.h"
 
 #define SIMON_POSITION_DEFAULT  50.0f, 0
 

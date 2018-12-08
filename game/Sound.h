@@ -24,6 +24,7 @@ enum eSound
 	soundFallingDownWaterSurface = 13,
 	SoundGetScoreTimer = 14,
 	SoundGetScoreHeart = 15,
+	soundAxe = 16,
 
 	musicState1 = 51,
 	musicLifeLost = 52,

@@ -60,7 +60,9 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 		case eType::STOPWATCH:
 			weaponSub->RenderIcon(332, 31);
 			break;
-
+		case eType::THROWINGAXE:
+			weaponSub->RenderIcon(330, 35);
+			break;
 		default:
 			break;
 		} 

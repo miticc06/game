@@ -36,6 +36,8 @@
 #include "Steam.h"
 #include "PhantomBat.h"
 #include "CrystalBall.h"
+#include "ItemThrowingAxe.h"
+
 
 #define GAME_TIME_SCENE2 300
 

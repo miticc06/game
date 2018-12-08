@@ -188,11 +188,6 @@ bool MorningStar::isCollision(GameObject * obj)
 
 	if (level == 2 && _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL2_START || _sprite->GetIndex() == MORNINGSTAR_ANI_LEVEL2_START + 1)
 		return false; // frame đầu và frame chuẩn bị đánh thì ko xét va chạm
-
-
-	GameObject *gameObj = dynamic_cast<GameObject*>(obj);
-	if (gameObj->GetHealth() <= 0) // vật này die rồi thì ko va chạm
-		return false;
-
-	return isCollitionObjectWithObject(gameObj);
+	 
+	return Weapon::isCollision(obj);
 }

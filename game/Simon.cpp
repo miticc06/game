@@ -39,7 +39,7 @@ Simon::Simon()
 
 
 	_weaponMain =  new MorningStar();
-	_weaponSub = NULL;
+	_weaponSub = NULL; 
 }
 
 

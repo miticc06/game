@@ -246,6 +246,10 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_A) // change trục y file txt
 	{
 
+		listItem.push_back(new ItemThrowingAxe(simon->GetX(), simon->GetY()));
+
+
+/*
 		ifstream inp;
 		ofstream out;
 
@@ -260,7 +264,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		}
 		inp.close(); 
 		out.close();
-
+*/
 
 	}
 
@@ -1800,7 +1804,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 				case eType::ITEMDAGGER:
 				{
 					SAFE_DELETE(simon->_weaponSub);
-					simon->_weaponSub = new Dagger();
+					simon->_weaponSub = new Dagger(camera);
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectWeapon);
 					break;
@@ -1856,6 +1860,15 @@ void Scene_2::CheckCollisionSimonWithItem()
 					break;
 				}
 
+
+				case eType::ITEMTHROWINGAXE:
+				{
+					SAFE_DELETE(simon->_weaponSub);
+					simon->_weaponSub = new ThrowingAxe(camera);
+					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectWeapon);
+					break;
+				}
 
 
 				default:

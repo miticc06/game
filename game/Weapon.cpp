@@ -58,6 +58,16 @@ void Weapon::Render(Camera * camera)
 void Weapon::UpdatePositionFitSimon()
 {
 }
+
+bool Weapon::isCollision(GameObject * obj)
+{
+	if (isFinish == true)
+		return false;
+	// dt, dx, dy đã update 
+	if (obj->GetHealth() <= 0) // vật này die rồi thì ko va chạm
+		return false;
+	return isCollitionObjectWithObject(obj);
+}
  
  
 

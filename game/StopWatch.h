@@ -17,8 +17,6 @@ public:
 	virtual void Render(Camera *camera);
  	virtual bool isCollision(GameObject* obj); 
 	virtual void RenderIcon(int X, int Y);
-	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-
 };
 
 #endif

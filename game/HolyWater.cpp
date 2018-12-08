@@ -105,17 +105,7 @@ void HolyWater::RenderIcon(int X, int Y)
 {
 	_spriteIcon->Draw(X,Y);
 }
-
-bool HolyWater::isCollision(GameObject * obj)
-{
-	if (isFinish == true)
-		return false;
-	// dt, dx, dy đã update
-	GameObject *gameObj = dynamic_cast<GameObject*>(obj);
-	if (gameObj->GetHealth() <= 0) // vật này die rồi thì ko va chạm
-		return false; 
-	return isCollitionObjectWithObject(obj);
-}
+ 
 
 void HolyWater::Render(Camera * camera)
 {

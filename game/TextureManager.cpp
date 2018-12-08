@@ -60,6 +60,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::ITEMHOLYWATER, new GTexture("Resources/item/9.png"));
 	AddTexture(eType::POTROAST, new GTexture("Resources/item/10.png"));
 	AddTexture(eType::CRYSTALBALL, new GTexture("Resources/item/13.png",2,1,2));
+	AddTexture(eType::ITEMTHROWINGAXE, new GTexture("Resources/item/7.png"));
 
 
 
@@ -70,6 +71,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::HOLYWATER, new GTexture("Resources/weapon/2.png", 4,1, 4));
 	AddTexture(eType::STOPWATCH, new GTexture("Resources/item/5.png"));
 	AddTexture(eType::FIREBALL, new GTexture("Resources/weapon/fireball.png"));
+	AddTexture(eType::THROWINGAXE, new GTexture("Resources/weapon/3.png",4,1,4));
 
 
 	//player

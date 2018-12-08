@@ -98,6 +98,7 @@ enum eType
 	HOLYWATER = 63,
 	STOPWATCH = 64,
 	FIREBALL = 65,
+	THROWINGAXE = 66,
 
 	// item
 	LARGEHEART = 81,
@@ -108,6 +109,7 @@ enum eType
 	ITEMHOLYWATER =86,
 	POTROAST = 87,
 	CRYSTALBALL = 88,
+	ITEMTHROWINGAXE = 89,
 
 	// other
 	FONT = 101,

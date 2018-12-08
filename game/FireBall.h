@@ -14,9 +14,7 @@ public:
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	void Create(float X, float Y, int Direction);
-	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void RenderIcon(int X, int Y);
-	bool isCollision(GameObject* obj);
+ 	void RenderIcon(int X, int Y); 
 
 	void Render(Camera *camera);
 

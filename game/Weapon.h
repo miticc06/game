@@ -32,7 +32,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL); 
  	virtual void Render(Camera *camera); 
 	virtual void UpdatePositionFitSimon(); 
-	virtual bool isCollision(GameObject* obj) = 0; // kiểm tra vũ khí này có va chạm với object kia hay không?
+	virtual bool isCollision(GameObject* obj); // kiểm tra vũ khí này có va chạm với object kia hay không?
 	virtual void RenderIcon(int X, int Y) = 0; 
 	bool GetFinish();
 
