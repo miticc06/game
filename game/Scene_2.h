@@ -35,6 +35,7 @@
 #include "Fishmen.h"
 #include "Steam.h"
 #include "PhantomBat.h"
+#include <thread>
 
 #define GAME_TIME_SCENE2 300
 

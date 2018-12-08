@@ -15,7 +15,7 @@ Board::Board(int X, int Y)
 	y = Y;
 }
  
-#include "Dagger.h"
+
 void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSub, int RemainingTime, GameObject * boss)
 { 
 	_sprite->Draw(x,y);

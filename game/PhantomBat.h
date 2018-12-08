@@ -24,6 +24,10 @@ https://www.desmos.com/calculator/lvdgnyhkvy
 
 #define PHANTOMBAT_PROCESS_ATTACK 6 // xử lí tấn công
 
+#define PHANTOMBAT_DEFAULT_X 5295
+#define PHANTOMBAT_DEFAULT_Y 90
+
+#define PHANTOMBAT_DEFAULT_HEALTH 24 // BCNN(8,12) = 24
 
 class PhantomBat : public GameObject
 {
@@ -40,7 +44,7 @@ private:
 	Simon * simon;
 
 	/*BezierCurves*/
-	bool isUseBezierCurves = false;
+	bool isUseBezierCurves;
 	float x1;
 	float y1;
 
@@ -62,7 +66,7 @@ private:
 	FireBall * weapon;
 
 public:
-	PhantomBat(float X, float Y, Simon * simon, Camera *camera, vector <Weapon*> * listWeaponOfEnemy);
+	PhantomBat(Simon * simon, Camera *camera, vector <Weapon*> * listWeaponOfEnemy);
 	~PhantomBat();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
@@ -76,6 +80,8 @@ public:
 
 	float getPt(float n1, float n2, float perc);
 	void Stop(); // Debug
+
+	void ResetResource();
 };
 
 #endif

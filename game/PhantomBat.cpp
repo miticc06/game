@@ -1,30 +1,42 @@
 ﻿#include "PhantomBat.h"
  
-PhantomBat::PhantomBat(float X, float Y, Simon * simon, Camera *camera, vector <Weapon*> * listWeaponOfEnemy)
-{
-	x = X;
-	y = Y;
-	Health = 24; // BCNN(8,12) = 24
-	type = eType::PHANTOMBAT;
-
+PhantomBat::PhantomBat(Simon * simon, Camera *camera, vector <Weapon*> * listWeaponOfEnemy)
+{ 
+	type = eType::PHANTOMBAT; 
 	_texture = TextureManager::GetInstance()->GetTexture(eType::PHANTOMBAT);
 	_sprite = new GSprite(_texture, 70);
-	StatusProcessing = PHANTOMBAT_PROCESS_SLEEP;
 
-	xBefore = x;
-	yBefore = y;
 	this->simon = simon;
 	this->camera = camera;
-	isWaiting = false;
 
 	this->listWeaponOfEnemy = listWeaponOfEnemy;
 	weapon = new FireBall();
 	listWeaponOfEnemy->push_back(weapon);
+
+	ResetResource();
+}
+
+void PhantomBat::ResetResource()
+{
+	x = PHANTOMBAT_DEFAULT_X;
+	y = PHANTOMBAT_DEFAULT_Y;
+
+	Health = PHANTOMBAT_DEFAULT_HEALTH;
+	StatusProcessing = PHANTOMBAT_PROCESS_SLEEP;
+
+	xBefore = x;
+	yBefore = y;
+
+	isWaiting = false;
+	yLastFrame = y;
+	vx = vy = 0;
+	isUseBezierCurves = false;
 }
 
 PhantomBat::~PhantomBat()
 {
 }
+
 
 void PhantomBat::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
@@ -198,7 +210,6 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	case PHANTOMBAT_PROCESS_ATTACK:
 	{
-		
 		if (isWaiting)
 		{
 			TimeWaited += dt;
@@ -208,7 +219,6 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				StartStaight(); // qua trạng thái đi thẳng
 			}
 		}
-		
 		break;
 	}
 
@@ -243,69 +253,67 @@ void PhantomBat::Render(Camera * camera)
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
 	  
-	  
-	if (IS_DEBUG_RENDER_BBOX && isUseBezierCurves) // sử dụng BezierCurves thì mới vẽ 
-	{
-		for (float i = 0; i < 1; i += 0.01)
+	if (IS_DEBUG_RENDER_BBOX)
+	{ 
+		if (isUseBezierCurves) // sử dụng BezierCurves thì mới vẽ 
 		{
-			// The Green Line
-			float xa = getPt(x1, x2, i);
-			float ya = getPt(y1, y2, i);
-			float xb = getPt(x2, x3, i);
-			float yb = getPt(y2, y3, i);
+			for (float i = 0; i < 1; i += 0.01)
+			{
+				// The Green Line
+				float xa = getPt(x1, x2, i);
+				float ya = getPt(y1, y2, i);
+				float xb = getPt(x2, x3, i);
+				float yb = getPt(y2, y3, i);
 
-			// The Black Dot
-			float xx = getPt(xa, xb, i);
-			float yy = getPt(ya, yb, i);
-
-
-			RECT rect;
-			float l, t, r, b;
-			rect.left = 0;
-			rect.top = 0;
-			rect.right = 5;
-			rect.bottom = 5;
-			D3DXVECTOR2 pos = camera->Transform(xx, yy);
-			Game::GetInstance()->Draw(
-				pos.x,
-				pos.y,
-				TextureManager::GetInstance()->GetTexture(
-					eType::RENDERBBOX)->Texture,
-				rect.left,
-				rect.top,
-				rect.right,
-				rect.bottom,
-				100);
+				// The Black Dot
+				float xx = getPt(xa, xb, i);
+				float yy = getPt(ya, yb, i);
 
 
+				RECT rect;
+				float l, t, r, b;
+				rect.left = 0;
+				rect.top = 0;
+				rect.right = 5;
+				rect.bottom = 5;
+				D3DXVECTOR2 pos = camera->Transform(xx, yy);
+				Game::GetInstance()->Draw(
+					pos.x,
+					pos.y,
+					TextureManager::GetInstance()->GetTexture(
+						eType::RENDERBBOX)->Texture,
+					rect.left,
+					rect.top,
+					rect.right,
+					rect.bottom,
+					100);
 
-
-
-
+			}
 		}
+
+
+
+
+		RECT rect;
+		float l, t, r, b;
+		rect.left = 0;
+		rect.top = 0;
+		rect.right = 15;
+		rect.bottom = 15;
+		D3DXVECTOR2 pos1 = camera->Transform(xTarget, yTarget);
+		Game::GetInstance()->Draw(
+			pos1.x,
+			pos1.y,
+			TextureManager::GetInstance()->GetTexture(
+				eType::RENDERBBOX)->Texture,
+			rect.left,
+			rect.top,
+			rect.right,
+			rect.bottom,
+			100);
+
 	}
-
-
-
-
-	RECT rect;
-	float l, t, r, b;
-	rect.left = 0;
-	rect.top = 0;
-	rect.right = 15;
-	rect.bottom = 15;
-	D3DXVECTOR2 pos1 = camera->Transform(xTarget, yTarget);
-	Game::GetInstance()->Draw(
-		pos1.x,
-		pos1.y,
-		TextureManager::GetInstance()->GetTexture(
-			eType::RENDERBBOX)->Texture,
-		rect.left,
-		rect.top,
-		rect.right,
-		rect.bottom,
-		100);
-
+	
 
 }
  

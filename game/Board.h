@@ -9,7 +9,7 @@
 #include "Simon.h"
 #include "BoardHealth.h"
 #include "TextureManager.h"
-
+#include "Dagger.h"
 class Board
 {
 private:

@@ -359,7 +359,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		camera->SetPosition(camera->GetXCam(), 0); 
 
 
-		boss = new PhantomBat(5295, 90, simon, camera, &listWeaponOfEnemy);
+		boss = new PhantomBat(simon, camera, &listWeaponOfEnemy);
 		
 
 	}
@@ -725,6 +725,10 @@ void Scene_2::ResetResource()
 	isProcessingGoThroughTheDoor2 = false; // ban đầu chưa cần xử lí qua cửa
 	isDoneSimonGoThroughTheDoor2 = false;
 
+	if (boss != NULL)
+	{
+		boss->ResetResource();
+	}
 }
 
 void Scene_2::Update(DWORD dt)
@@ -1442,7 +1446,24 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 						DebugOut(L"1 hit!\n"); 
 
-						RunEffectHit = true;
+						if (gameObj->GetHealth() == 0) // chết
+						{
+							for (int u = 0; u < 2; u++)
+							{
+								for (int v = 0; v < 3; v++)
+								{
+									listEffect.push_back(new Fire((int)gameObj->GetX() + v * FIRE_WIDTH , (int)gameObj->GetY() + u * FIRE_HEIGHT -10, 3)); // hiệu ứng lửa
+									RunEffectHit = false;
+								}
+							}
+							RunEffectHit = false;
+							sound->Play(eSound::soundHit);
+
+						}
+						else
+						{
+							RunEffectHit = true;
+						} 
 						break;
 					}
 					default:
