@@ -169,7 +169,9 @@
     <ClCompile Include="FireBall.cpp">
       <Filter>Object\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="CrystalBall.cpp" />
+    <ClCompile Include="CrystalBall.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -337,7 +339,9 @@
     <ClInclude Include="FireBall.h">
       <Filter>Object\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="CrystalBall.h" />
+    <ClInclude Include="CrystalBall.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

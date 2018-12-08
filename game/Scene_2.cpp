@@ -233,6 +233,10 @@ void Scene_2::OnKeyDown(int KeyCode)
 		simon->SetPosition(SIMON_POSITION_DEFAULT);
 
 
+	if (KeyCode == DIK_N && boss != NULL)
+		boss->SetHealth(1);
+
+
 
 	if (KeyCode == DIK_1) // vị trí simon
 	{
@@ -746,9 +750,7 @@ void Scene_2::Update(DWORD dt)
 		simon->StartUntouchable();
 
 #pragma endregion
-
-
-
+	 
 #pragma region Process_Freeze
 	if (simon->GetFreeze() == true)
 	{
@@ -757,6 +759,44 @@ void Scene_2::Update(DWORD dt)
 			return;
 	}
 #pragma endregion
+
+#pragma region Process ClearState3
+
+	if (isAllowProcessClearState3)
+	{
+
+		switch (StatusProcessClearState3)
+		{ 
+		case CLEARSTATE3_PROCESS_HEALTH:
+		{ 
+			TimeWaited_ClearState3 += dt;
+			if (TimeWaited_ClearState3 >= CLEARSTATE3_LIMITTIMEWAIT_PROCESS_HEALTH)
+			{
+				TimeWaited_ClearState3 = 0;
+
+				if (simon->GetHealth() < 16)
+				{
+					simon->SetHealth(simon->GetHealth() + 1);
+				} 
+				else
+				{
+					StatusProcessClearState3 = 1;
+				}
+			}
+			break;
+		}
+
+		default:
+			break;
+		}
+
+
+	}
+
+#pragma endregion
+
+
+
 
 #pragma region Process_Gametime_OR_Health
 	if (_gameTime->GetTime() >= GAME_TIME_SCENE2 || simon->GetHealth() <= 0) // hết thời gian hoặc hết máu
@@ -815,8 +855,7 @@ void Scene_2::Update(DWORD dt)
 	}
 
 #pragma endregion
-
-
+	 
 #pragma region Process Gate 2
 
 	if (isProcessingGoThroughTheDoor2) // simon chạm cửa thì bắt đầu xử lí
@@ -876,10 +915,7 @@ void Scene_2::Update(DWORD dt)
 
 
 	//	Cần tạo khoảng chờ khi tạo bot
-
-
-
-
+	 
 #pragma region Process_Region_Create_Enemy_Ghost
 
 //	DebugOut(L"now = %d - listenemy = %d\n", CountEnemyGhost, listEnemy.size());
@@ -1042,8 +1078,7 @@ void Scene_2::Update(DWORD dt)
 
 
 #pragma endregion
-
-
+	 
 #pragma region Process_Region_Create_Panther
 	if (REGION_CREATE_PANTHER_LEFT < simon->GetX() && simon->GetX() < REGION_CREATE_PANTHER_RIGHT)
 	{
@@ -1065,8 +1100,7 @@ void Scene_2::Update(DWORD dt)
 		isAllowRenewPanther = true;
 	}
 #pragma endregion
-
-
+	 
 #pragma region Create_Bat
 
 
@@ -1084,8 +1118,7 @@ void Scene_2::Update(DWORD dt)
 	}
 
 #pragma endregion
-
-
+	 
 #pragma region Create Fishmen
 
 
@@ -1473,7 +1506,8 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 							}
 							RunEffectHit = false;
 							sound->Play(eSound::soundHit);
-							listItem.push_back(new CrystalBall(5368,216));
+							listItem.push_back(new CrystalBall(CRYSTALBALL_DEFAULT_POSITION_X, CRYSTALBALL_DEFAULT_POSITION_y));
+							
 						}
 						else
 						{
@@ -1587,14 +1621,34 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					}
 
 					case eType::PHANTOMBAT:
-					{
-						gameObj->SubHealth(24 / 12);
+					{ 
+						gameObj->SubHealth(24 / 12); // 12 hit chết 
+
 						DebugOut(L"1 hit!\n");
 
-						RunEffectHit = true;
+						if (gameObj->GetHealth() == 0) // chết
+						{
+							for (int u = 0; u < 2; u++)
+							{
+								for (int v = 0; v < 3; v++)
+								{
+									listEffect.push_back(new Fire((int)gameObj->GetX() + v * FIRE_WIDTH, (int)gameObj->GetY() + u * FIRE_HEIGHT - 10, 3)); // hiệu ứng lửa
+									RunEffectHit = false;
+								}
+							}
+							RunEffectHit = false;
+							sound->Play(eSound::soundHit);
+							listItem.push_back(new CrystalBall(CRYSTALBALL_DEFAULT_POSITION_X, CRYSTALBALL_DEFAULT_POSITION_y));
+							
+							isAllowProcessClearState3 = true;
+							
+						}
+						else
+						{
+							RunEffectHit = true;
+						}
 						break;
 					}
-
 					default:
 						break;
 					}
@@ -1816,6 +1870,8 @@ void Scene_2::CheckCollisionSimonWithItem()
 						sound->Stop(eSound::music_PhantomBat);
 					}
 					sound->Play(eSound::musicStateClear);
+
+					isAllowProcessClearState3 = true;
 
 					break;
 				}

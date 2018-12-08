@@ -110,6 +110,13 @@
 #define GHOST_ZONE3_COLUMN1 4412.0f 
 #define GHOST_ZONE3_COLUMN2 4590.0f
 
+#pragma region define ClearState3
+
+#define CLEARSTATE3_PROCESS_HEALTH 0 // xử lí làm đầy máu
+#define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_HEALTH 1000 // thời gian chờ tăng mỗi đơn vị máu
+#pragma endregion
+
+
 
 class Scene_2 : public Scene
 {
@@ -141,6 +148,12 @@ private:
 	int CountEnemyFishmen;
 	DWORD TimeCreateFishmen;
 	DWORD TimeWaitCreateFishmen;
+
+	/* Xử lí liên quan Clear State 3 */
+	bool isAllowProcessClearState3;
+	int StatusProcessClearState3;
+	DWORD TimeWaited_ClearState3;
+	DWORD LimitTimeWait_ClearState3;
 
 	/*Xử lí liên quan tạo Bat*/
 	DWORD TimeCreateBat; // thời điểm đã tạo BAT

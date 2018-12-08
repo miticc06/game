@@ -1,4 +1,6 @@
 ﻿#include "CrystalBall.h"
+
+
   
 CrystalBall::CrystalBall(int X, int Y)
 {
