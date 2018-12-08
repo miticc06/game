@@ -163,8 +163,12 @@
     <ClCompile Include="Steam.cpp">
       <Filter>Object\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="FireBall.cpp" />
-    <ClCompile Include="PhantomBat.cpp" />
+    <ClCompile Include="PhantomBat.cpp">
+      <Filter>Object\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>Object\Weapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -326,8 +330,12 @@
     <ClInclude Include="Steam.h">
       <Filter>Object\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="FireBall.h" />
-    <ClInclude Include="PhantomBat.h" />
+    <ClInclude Include="PhantomBat.h">
+      <Filter>Object\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>Object\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

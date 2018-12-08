@@ -16,7 +16,7 @@ Board::Board(int X, int Y)
 }
  
 #include "Dagger.h"
-void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSub, int RemainingTime)
+void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSub, int RemainingTime, GameObject * boss)
 { 
 	_sprite->Draw(x,y);
 	_font.Draw(x, y+15, "SCORE-");
@@ -37,7 +37,12 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 	_font.Draw(x + 400 + 15, y + 15 + 18+18, FillNumber(std::to_string(simon->GetLives()),2)); // số mạng sông
 
 
-	_boardHealth.Draw(x + 100, y + 30, simon->GetHealth(), 5);
+	int BloodBoss = 16; 
+	if (boss != NULL)
+	{
+		BloodBoss = (int)(boss->GetHealth()*0.16);// 100 % máu -> 16 vạch
+	}
+	_boardHealth.Draw(x + 100, y + 30, simon->GetHealth(), BloodBoss); 
 	 
 	if (weaponSub != NULL)
 	{

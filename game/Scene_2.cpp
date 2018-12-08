@@ -1319,7 +1319,7 @@ void Scene_2::Render()
 	for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
 		listWeaponOfEnemy[i]->Render(camera);
 
-	board->Render(camera, simon, StateCurrent, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime());
+	board->Render(camera, simon, StateCurrent, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime(), boss);
 
 
 
@@ -1429,9 +1429,9 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 				}
 				 
 				case eType::PHANTOMBAT:
-				{
-				//	gameObj->SubHealth(1);
-					gameObj->SetHealth(0);
+				{ 
+					gameObj->SubHealth(1);
+					DebugOut(L"Giam 1 mau!\n");
 					//	simon->SetScore(simon->GetScore() + 300);
 
 					RunEffectHit = true;
@@ -2062,10 +2062,11 @@ void Scene_2::CheckCollisionWithBoss()
 	if (boss == NULL)
 		return;
 
+	if (boss->GetHealth() <= 0)
+		return;
+
 	vector<GameObject*> listObj{ boss };
 	CheckCollisionWeapon(listObj); // enemy bt
-
-
 
 
 	if (GetTickCount() - simon->untouchable_start > SIMON_UNTOUCHABLE_TIME)

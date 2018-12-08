@@ -4,7 +4,7 @@ PhantomBat::PhantomBat(float X, float Y, Simon * simon, Camera *camera, vector <
 {
 	x = X;
 	y = Y;
-	Health = 16;
+	Health = 100;
 	type = eType::PHANTOMBAT;
 
 	_texture = TextureManager::GetInstance()->GetTexture(eType::PHANTOMBAT);
@@ -36,6 +36,9 @@ void PhantomBat::GetBoundingBox(float & left, float & top, float & right, float 
 
 void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (GetHealth() <= 0)
+		return;
+
 	switch (StatusProcessing)
 	{
 	case PHANTOMBAT_PROCESS_SLEEP:
@@ -223,6 +226,9 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void PhantomBat::Render(Camera * camera)
 {
+	if (GetHealth() <= 0)
+		return;
+
 	if (StatusProcessing == PHANTOMBAT_PROCESS_SLEEP)
 		_sprite->SelectIndex(0);
 	else

@@ -14,9 +14,7 @@
 
 class Weapon : public GameObject
 {
-protected: 
-	 
- 
+protected:  
 	bool isFinish;
 
 	 
