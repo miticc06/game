@@ -1440,7 +1440,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 						else
 							gameObj->SubHealth(24/8); // 8 hit chết
 
-						DebugOut(L"Giam 1 mau!\n"); 
+						DebugOut(L"1 hit!\n"); 
 
 						RunEffectHit = true;
 						break;
@@ -1468,7 +1468,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 	if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == false)
 	{
 		for (UINT i = 0; i < listObj.size(); i++)// đã kt object còn sống hay k trong hàm va chạm của vũ khí
-			if (listObj[i]->GetLastTimeAttacked() != simon->_weaponMain->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
+			if (listObj[i]->GetLastTimeAttacked() != simon->_weaponSub->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
 			{
 				if (simon->_weaponSub->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
 				{
@@ -1550,12 +1550,21 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 						break;
 					}
 
+					case eType::PHANTOMBAT:
+					{
+						gameObj->SubHealth(24 / 12);
+						DebugOut(L"1 hit!\n");
+
+						RunEffectHit = true;
+						break;
+					}
+
 					default:
 						break;
 					}
 
 
-
+					
 
 					if (RunEffectHit)
 					{
@@ -1582,7 +1591,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 						}
 					}
 
-					gameObj->SetLastTimeAttacked(simon->_weaponMain->GetLastTimeAttack()); // bị đánh trúng->udate thời gian bị đánh lần cuối
+					gameObj->SetLastTimeAttacked(simon->_weaponSub->GetLastTimeAttack()); // bị đánh trúng->udate thời gian bị đánh lần cuối
 
 
 				}
