@@ -23,14 +23,7 @@ SmallHeart::SmallHeart(float X, float Y)
 	vy = SMALLHEART_GRAVITY;
 	vx = SMALLHEART_SPEED_X;
 }
-
-void SmallHeart::GetBoundingBox(float & left, float & top, float & right, float & bottom)
-{
-	left = x;
-	top = y;
-	right = x + _texture->FrameWidth;
-	bottom = y + _texture->FrameHeight;
-}
+ 
 
 void SmallHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {
@@ -59,7 +52,7 @@ void SmallHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 		}
 
 
-	Item::Update(dt); // Update dt, dx, dy
+	GameObject::Update(dt, listObject); // Update dt, dx, dy
 
 
 	vector<LPGAMEOBJECT> listObject_Brick;

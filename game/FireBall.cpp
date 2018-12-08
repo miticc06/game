@@ -28,9 +28,7 @@ void FireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 void FireBall::Create(float X, float Y, int Direction)
-{
-	if (!isFinish)
-		return;
+{ 
 	Weapon::Create(X, Y, Direction);
 	//vx = FIREBALL_SPEED * direction;
 }

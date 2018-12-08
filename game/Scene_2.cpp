@@ -351,8 +351,8 @@ void Scene_2::OnKeyDown(int KeyCode)
 	{ 
 		simon->SetPosition(5328.0f, 240.0f);
 
-
-		camera->SetBoundary(5140, CAMERA_BOUNDARY_BOSS_RIGHT);
+//5122
+		camera->SetBoundary(CAMERA_BOUNDARY_BOSS_RIGHT, CAMERA_BOUNDARY_BOSS_RIGHT);
 
 		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
 		   
@@ -364,16 +364,19 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 	}
 
-	if (KeyCode == DIK_T) // test boss 
+	if (KeyCode == DIK_K) // test boss 
 	{
 		boss->StartCurves();
 	}
-	if (KeyCode == DIK_U) // stop boss
+	//if (KeyCode == DIK_U) // stop boss
+	//{
+	//	boss->Stop();
+	//}
+
+	if (KeyCode == DIK_E) // set healsimon 2;
 	{
-		boss->Stop();
+		simon->SetHealth(2);
 	}
-
-
 
 
 	if (KeyCode == DIK_9) // đứng ngay cầu thang gần xuoosg hồ nước
@@ -626,7 +629,7 @@ void Scene_2::LoadResources()
 
 	camera = new Camera(Window_Width, Window_Height);
 	camera->SetPosition(0, 0);
-	camera->SetBoundary(0, BienPhaiCameraKhiChuaQuaCua1); // biên camera khi chưa qua cửa
+	camera->SetBoundary(0, CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT); // biên camera khi chưa qua cửa
 
 	board = new Board(0, 0);
 
@@ -702,6 +705,10 @@ void Scene_2::ResetResource()
 	sound->Stop(eSound::musicState1); // tắt nhạc nền
 	sound->Play(eSound::musicState1, true); // mở lại nhạc nền
 
+	if (sound->isPlaying(eSound::music_PhantomBat))
+	{
+		sound->Stop(eSound::music_PhantomBat);
+	} 
 
 	isAllowRenewPanther = true;
 	CountEnemyPanther = 0;
@@ -758,7 +765,9 @@ void Scene_2::Update(DWORD dt)
 		if (simon->GetLives() == 0)
 			return;
 		bool result = simon->LoseLife(); // đã khôi phục x,y
+
 		camera->RestorePosition(); // khôi phục vị trí camera;
+		camera->RestoreBoundary();
 		if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
 		{
 			ResetResource(); // reset lại game
@@ -795,6 +804,9 @@ void Scene_2::Update(DWORD dt)
 			if (camera->GetXCam()>= GATE1_POSITION_CAM_AFTER_GO)
 			{
 				camera->SetBoundary(GATE1_POSITION_CAM_AFTER_GO, camera->GetBoundaryRight());
+
+				camera->SetBoundaryBackup(camera->GetBoundaryLeft(), camera->GetBoundaryRight());
+
 				camera->SetAllowFollowSimon(true);
 				isProcessingGoThroughTheDoor1 = false; // xong việc xử lí qua cửa 1
 				camera->StopAutoGoX(); // dừng việc tự di chuyển
@@ -821,6 +833,9 @@ void Scene_2::Update(DWORD dt)
 			if (camera->GetXCam() >= GATE2_POSITION_CAM_AFTER_GO)
 			{
 				camera->SetBoundary(GATE2_POSITION_CAM_AFTER_GO, camera->GetBoundaryRight());
+
+				camera->SetBoundaryBackup(camera->GetBoundaryLeft(), camera->GetBoundaryRight());
+
 				camera->SetAllowFollowSimon(true);
 				isProcessingGoThroughTheDoor2 = false; // xong việc xử lí qua cửa 2
 				camera->StopAutoGoX(); // dừng việc tự di chuyển
@@ -1458,7 +1473,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 							}
 							RunEffectHit = false;
 							sound->Play(eSound::soundHit);
-
+							listItem.push_back(new CrystalBall(5368,216));
 						}
 						else
 						{
@@ -1791,6 +1806,22 @@ void Scene_2::CheckCollisionSimonWithItem()
 					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
+
+
+				case eType::CRYSTALBALL:
+				{
+					listItem[i]->SetFinish(true);
+					if (sound->isPlaying(eSound::music_PhantomBat))
+					{
+						sound->Stop(eSound::music_PhantomBat);
+					}
+					sound->Play(eSound::musicStateClear);
+
+					break;
+				}
+
+
+
 				default:
 					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
 					break;
@@ -1876,6 +1907,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 
 						break;
 					}
+
 #pragma region Lên & xuống hồ nước phía Phải
 
 					case 41: // id 41: object ẩn -> bắt đầu xuống hồ nước
@@ -1940,7 +1972,26 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
  
 
 
+					case 124: //id 124 : kích hoạt boss
+					{
+						boss->Start(); 
 
+					//	simon->SetPositionBackup(simon->GetX(), 0);
+					//	camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
+
+						camera->SetBoundary(camera->GetBoundaryRight(), camera->GetBoundaryRight());
+						camera->SetAllowFollowSimon(false);
+
+
+						if (sound->isPlaying(eSound::musicState1))
+						{
+							sound->Stop(eSound::musicState1);
+						}
+						sound->Play(eSound::music_PhantomBat, true);
+
+						gameObject->SetHealth(0);
+						break;
+					}
 
 					}
 					
@@ -2087,6 +2138,8 @@ void Scene_2::CheckCollisionSimonWithGate()
 						objGate->Start();
 						DebugOut(L"Simon dung trung cua 2!\n");
 
+						if (boss == NULL)
+							boss = new PhantomBat(simon, camera, &listWeaponOfEnemy);
 
 						break;
 					}

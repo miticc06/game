@@ -14,6 +14,14 @@ GameObject::GameObject()
 	LastTimeAttacked = 0;
 }
 
+void GameObject::GetBoundingBox(float & left, float & top, float & right, float & bottom)
+{
+	left = x;
+	top = y;
+	right = x + _texture->FrameWidth;
+	bottom = y + _texture->FrameHeight;
+}
+
 void GameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	this->dt = dt;

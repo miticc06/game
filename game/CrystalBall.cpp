@@ -1,38 +1,28 @@
-﻿#include "Item.h"
-
-
-
-Item::Item()
-{ 
-	TimeDisplayed = 0;
-	TimeWaitMax = 0;
-	TimeDisplayMax = 0;
-	TimeWaited = 0;
-	isFinish = 0;
-}
-
-
-Item::~Item()
+﻿#include "CrystalBall.h"
+  
+CrystalBall::CrystalBall(int X, int Y)
 {
-	 
+	_texture = TextureManager::GetInstance()->GetTexture(eType::CRYSTALBALL);
+	_sprite = new GSprite(_texture, 100);
+
+	x = X;
+	y = Y;
+	Health = 1;
+	type = eType::CRYSTALBALL;
+
+	vy = CRYSTALBALL_GRAVITY;
+ 	TimeWaited = 0;
+	TimeWaitMax = CRYSTALBALL_TIMEWAITMAX;
+
 }
 
-void Item::Update(DWORD dt, vector<LPGAMEOBJECT> *listObject)
+void CrystalBall::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 { 
-	
-
 	if (isWaitingDisplay())
 	{
 		TimeWaited += dt;
 		return;
-	}
-
-	TimeDisplayed += dt;
-	if (TimeDisplayed >= TimeDisplayMax)
-	{
-		isFinish = true;
-		return;
-	}
+	} 
 
 	GameObject::Update(dt, listObject);
 
@@ -63,12 +53,13 @@ void Item::Update(DWORD dt, vector<LPGAMEOBJECT> *listObject)
 	}
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
+
 }
 
-void Item::Render(Camera * camera)
+void CrystalBall::Render(Camera * camera)
 {
 	if (isWaitingDisplay())
-	{ 
+	{
 		return;
 	}
 
@@ -80,20 +71,6 @@ void Item::Render(Camera * camera)
 		RenderBoundingBox(camera);
 }
 
-bool Item::isWaitingDisplay()
+CrystalBall::~CrystalBall()
 {
-	return TimeWaited < TimeWaitMax;
-}
- 
-
-
-
-bool Item::GetFinish()
-{
-	return isFinish;
-}
-
-void Item::SetFinish(bool b)
-{
-	isFinish = b;
 }

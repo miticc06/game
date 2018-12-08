@@ -59,6 +59,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::SMALLHEART, new GTexture("Resources/item/0.png"));
 	AddTexture(eType::ITEMHOLYWATER, new GTexture("Resources/item/9.png"));
 	AddTexture(eType::POTROAST, new GTexture("Resources/item/10.png"));
+	AddTexture(eType::CRYSTALBALL, new GTexture("Resources/item/13.png",2,1,2));
 
 
 

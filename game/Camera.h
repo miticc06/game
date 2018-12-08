@@ -12,6 +12,8 @@ protected:
 	
 	float _xCamBackup;
 	float _yCamBackup;
+	float _boundaryLeftBackup;
+	float _boundaryRightBackup;
 
 	int _width;
 	int _height;
@@ -63,6 +65,8 @@ public:
 	void SetPositionBackup(float X, float Y); 
 	void RestorePosition();
 
+	void SetBoundaryBackup(float l, float r);
+	void RestoreBoundary();
 };
 
 #endif

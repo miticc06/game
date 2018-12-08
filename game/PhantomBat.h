@@ -29,6 +29,11 @@ https://www.desmos.com/calculator/lvdgnyhkvy
 
 #define PHANTOMBAT_DEFAULT_HEALTH 24 // BCNN(8,12) = 24
 
+#define PHANTOMBAT_BOUNDARY_START_STAIGHT_LEFT 5178
+#define PHANTOMBAT_BOUNDARY_START_STAIGHT_RIGHT 5492
+
+
+
 class PhantomBat : public GameObject
 {
 public:

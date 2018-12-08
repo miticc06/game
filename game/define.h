@@ -40,11 +40,11 @@ using namespace std;
 
 
 
-#define SCREEN_WIDTH 512
-#define SCREEN_HEIGHT 480 //512//448
+#define SCREEN_WIDTH 512+15
+#define SCREEN_HEIGHT 480 
 
 
-#define IS_DEBUG_RENDER_BBOX 1
+#define IS_DEBUG_RENDER_BBOX 0
 
 #define MAX_FRAME_RATE 90
 //#define DT_DEFAULT dt//1000/MAX_FRAME_RATE
@@ -107,6 +107,7 @@ enum eType
 	SMALLHEART = 85,
 	ITEMHOLYWATER =86,
 	POTROAST = 87,
+	CRYSTALBALL = 88,
 
 	// other
 	FONT = 101,

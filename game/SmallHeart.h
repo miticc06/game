@@ -21,8 +21,7 @@ private:
 public:
 	SmallHeart(float X = 0, float Y = 0);
 
-	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void Update(DWORD dt, vector<LPGAMEOBJECT> *listObject = NULL); // Update và xét va chạm đất
+ 	void Update(DWORD dt, vector<LPGAMEOBJECT> *listObject = NULL); // Update và xét va chạm đất
 
 
 	virtual ~SmallHeart();

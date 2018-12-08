@@ -16,6 +16,9 @@ BoardHealth::~BoardHealth()
 
 void BoardHealth::Draw(int x, int y, int HealthPlayer, int HealthEnemy)
 {
+	HealthPlayer = min(HealthPlayer, 16);
+	HealthEnemy = min(HealthEnemy, 16);
+
 	int i, j;
 	_sprite->SelectIndex(BOARDHEALTH_FRAME_PLAYER);
 	for (i = 0; i < HealthPlayer; i++) 

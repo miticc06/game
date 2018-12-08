@@ -34,6 +34,8 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::musicState1, L"Resources/music/Stage_01_Vampire_Killer.wav");
 	AddSound(eSound::musicLifeLost, L"Resources/music/Life_Lost.wav");
 
+	AddSound(eSound::music_PhantomBat, L"Resources/music/Boss_Battle_Poison_Mind.wav");
+	AddSound(eSound::musicStateClear, L"Resources/music/Stage_Clear.wav");
 
 }
 

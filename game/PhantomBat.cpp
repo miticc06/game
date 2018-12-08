@@ -383,7 +383,7 @@ void PhantomBat::StartStaight()
 	}
 	xBefore = x;
 	yBefore = y;
-	xTarget = 5178 + rand() % (5492-5178);
+	xTarget = PHANTOMBAT_BOUNDARY_START_STAIGHT_LEFT + rand() % (PHANTOMBAT_BOUNDARY_START_STAIGHT_RIGHT- PHANTOMBAT_BOUNDARY_START_STAIGHT_LEFT);
 	yTarget = 80 + rand() % (190 - 80);
 
 	DebugOut(L"StatusProcessing = %d, Target (%f, %f) \n", StatusProcessing, xTarget, yTarget);

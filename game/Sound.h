@@ -26,7 +26,9 @@ enum eSound
 
 
 	musicState1 = 51,
-	musicLifeLost = 52
+	musicLifeLost = 52,
+	music_PhantomBat = 53,
+	musicStateClear = 54
 };
 
 

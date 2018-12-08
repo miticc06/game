@@ -21,9 +21,7 @@ protected:
 
 public:
 	Item();
-	virtual ~Item();
-
-	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
+	virtual ~Item(); 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *listObject = NULL);
 	virtual void Render(Camera * camera);
 	virtual bool isWaitingDisplay(); // đang chờ object hiển thi? - simon chưa được ăn

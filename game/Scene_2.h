@@ -35,7 +35,7 @@
 #include "Fishmen.h"
 #include "Steam.h"
 #include "PhantomBat.h"
-#include <thread>
+#include "CrystalBall.h"
 
 #define GAME_TIME_SCENE2 300
 
@@ -50,10 +50,10 @@
 #define GATE2_POSITION_CAM_AFTER_GO 4095.0f
 
 #define DISTANCE_AUTO_WALK_AFTER_GATE 80.0f // simon phải tự đi 80px sau khi chạm vào cửa
+ 
 
-
-#define BienPhaiCameraKhiChuaQuaCua1 2576.0f
-
+#define CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT 2576.0f-15.0f // Biên phải camera trước khi qua cửa 1
+ 
 
 
 #define REGION_CREATE_PANTHER_LEFT 1090.0f

@@ -11,11 +11,7 @@ class PotRoast : public Item
 public:
 	PotRoast(int X, int Y);
 	virtual ~PotRoast();
-
-	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void Update(DWORD dt, vector<LPGAMEOBJECT> *listObject = NULL); // Update và xét va chạm đất
-
-
+	 
 
 
 }; 
