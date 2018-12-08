@@ -37,7 +37,7 @@
 #include "PhantomBat.h"
 #include "CrystalBall.h"
 #include "ItemThrowingAxe.h"
-
+#include "InvisibilityPotion.h"
 
 #define GAME_TIME_SCENE2 300
 
@@ -122,8 +122,14 @@
 #define CLEARSTATE3_PROCESS_DONE 3 // xử lí xong
 
 #define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_HEALTH 200 // thời gian chờ tăng mỗi đơn vị máu
-#define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_GETSCORE_TIME 10 // thời gian chờ tăng mỗi đơn vị máu
-#define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_GETSCORE_HEART 200 // thời gian chờ tăng mỗi đơn vị máu
+#define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_GETSCORE_TIME 10 // thời gian chờ mỗi lượt update time
+#define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_GETSCORE_HEART 50 // thời gian chờ mỗi lượt update tim
+
+#pragma endregion
+
+#pragma region define InvisibilityPotion
+
+#define INVISIBILITYPOTION_LIMITTIMEWAIT 4000 // thời gian chờ sử dụng InvisibilityPotion
 
 #pragma endregion
 
@@ -171,6 +177,10 @@ private:
 	DWORD TimeWaitCreateBat; // thời gian phải chờ để tạo bot
 	bool isAllowCreateBat; // cho phép tạo Bat
 	int CountEnemyBat;
+
+	/*Xử lí liên quan InvisibilityPotion*/
+	bool isUseInvisibilityPotion;
+	DWORD TimeWaited_InvisibilityPotion;
 
 	Simon * simon;
 	Map * TileMap;
@@ -221,6 +231,7 @@ public:
 
 
 	void ProcessClearState3(DWORD dt);
+	void ProcessInvisibilityPotion(DWORD dt);
 };
 
 

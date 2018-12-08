@@ -149,6 +149,7 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="HolyWater.h" />
+    <ClInclude Include="InvisibilityPotion.h" />
     <ClInclude Include="ItemHolyWater.h" />
     <ClInclude Include="Bonus.h" />
     <ClInclude Include="ItemStopWatch.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="HolyWater.cpp" />
+    <ClCompile Include="InvisibilityPotion.cpp" />
     <ClCompile Include="ItemHolyWater.cpp" />
     <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="ItemStopWatch.cpp" />

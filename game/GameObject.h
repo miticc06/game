@@ -119,6 +119,8 @@ public:
 
 	DWORD GetLastTimeAttacked();
 	void SetLastTimeAttacked(DWORD t);
+
+	void SetTexture(GTexture * tex);
 };
 
 

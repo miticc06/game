@@ -61,6 +61,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::POTROAST, new GTexture("Resources/item/10.png"));
 	AddTexture(eType::CRYSTALBALL, new GTexture("Resources/item/13.png",2,1,2));
 	AddTexture(eType::ITEMTHROWINGAXE, new GTexture("Resources/item/7.png"));
+	AddTexture(eType::INVISIBILITYPOTION, new GTexture("Resources/item/14.png"));
 
 
 
@@ -76,6 +77,7 @@ void TextureManager::LoadResource()
 
 	//player
 	AddTexture(eType::SIMON, new GTexture("Resources/simon.png", 8, 3, 24));
+	AddTexture(eType::SIMON_TRANS, new GTexture("Resources/simon_trans.png", 8, 3, 24));
 
 	//effect
 	AddTexture(eType::FIRE, new GTexture("Resources/other/1.png", 4, 1, 4));

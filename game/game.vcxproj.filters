@@ -175,7 +175,12 @@
     <ClCompile Include="ThrowingAxe.cpp">
       <Filter>Object\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="ItemThrowingAxe.cpp" />
+    <ClCompile Include="InvisibilityPotion.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemThrowingAxe.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -349,7 +354,12 @@
     <ClInclude Include="ThrowingAxe.h">
       <Filter>Object\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="ItemThrowingAxe.h" />
+    <ClInclude Include="InvisibilityPotion.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemThrowingAxe.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

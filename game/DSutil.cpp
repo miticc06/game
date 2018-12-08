@@ -768,8 +768,7 @@ HRESULT CSound::Play( DWORD dwPriority, DWORD dwFlags, LONG lVolume, LONG lFrequ
     if( m_dwCreationFlags & DSBCAPS_CTRLPAN )
     {
         pDSB->SetPan( lPan );
-    }
-    
+    } 
     return pDSB->Play( 0, dwPriority, dwFlags );
 }
 

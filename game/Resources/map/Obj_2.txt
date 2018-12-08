@@ -135,7 +135,7 @@
  
 124 42 -1 5404 318 100 100 0
 
- 
+// id 124 - kích hoạt boss
  
 cầu thang 47 bottom, 48 top
 id 45: object ẩn -> trở lên trước khi xuống hồ nước -> tự sinh ra

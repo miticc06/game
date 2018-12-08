@@ -68,7 +68,7 @@ extern int isDebug_Untouchable;
 enum eType
 {
 	SIMON = 01,
-
+	SIMON_TRANS = 02,
 
 	// object nền
 	BRICK = 21,
@@ -110,6 +110,7 @@ enum eType
 	POTROAST = 87,
 	CRYSTALBALL = 88,
 	ITEMTHROWINGAXE = 89,
+	INVISIBILITYPOTION = 90,
 
 	// other
 	FONT = 101,

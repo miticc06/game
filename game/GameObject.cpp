@@ -304,6 +304,12 @@ void GameObject::SetLastTimeAttacked(DWORD t)
 	LastTimeAttacked = t;
 }
 
+void GameObject::SetTexture(GTexture * tex)
+{
+	_texture = tex;
+	_sprite->_texture = tex;
+}
+
 GameObject::~GameObject()
 {
 	/*SAFE_DELETE(_texture);*/

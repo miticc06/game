@@ -248,7 +248,6 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 		listItem.push_back(new ItemThrowingAxe(simon->GetX(), simon->GetY()));
 
-
 /*
 		ifstream inp;
 		ofstream out;
@@ -349,6 +348,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		DebugOut(L"[SET POSITION SIMON] x = .... \n");
 		simon->SetPosition(3940, 100);
 		camera->SetPosition(camera->GetXCam(), 0);
+		isAllowCreateFishmen = false;
 	}
 
 	if (KeyCode == DIK_Y) // run boss
@@ -691,6 +691,8 @@ void Scene_2::LoadResources()
 	StateCurrent = 1;
 
 	isStopWatch = 0;
+
+	isUseInvisibilityPotion = false;
 }
  
 void Scene_2::ResetResource()
@@ -710,13 +712,18 @@ void Scene_2::ResetResource()
 	CountEnemyGhost = 0;
 
 	_gameTime->SetTime(0); // đếm lại từ 0
-	sound->Stop(eSound::musicState1); // tắt nhạc nền
+
+
+	sound->StopAll();// tắt hết nhạc
+
+	//sound->Stop(eSound::musicState1); // tắt nhạc nền
+
 	sound->Play(eSound::musicState1, true); // mở lại nhạc nền
 
-	if (sound->isPlaying(eSound::music_PhantomBat))
+	/*if (sound->isPlaying(eSound::music_PhantomBat))
 	{
 		sound->Stop(eSound::music_PhantomBat);
-	} 
+	} */
 
 	isAllowRenewPanther = true;
 	CountEnemyPanther = 0;
@@ -744,6 +751,9 @@ void Scene_2::ResetResource()
 	{
 		boss->ResetResource();
 	}
+
+	isUseInvisibilityPotion = false;
+
 }
 
 void Scene_2::Update(DWORD dt)
@@ -765,6 +775,7 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 
 	ProcessClearState3(dt);
+	ProcessInvisibilityPotion(dt);
 
 	if (!isAllowProcessClearState3)
 	{
@@ -1373,9 +1384,11 @@ void Scene_2::CheckCollision()
 	CheckCollisionSimonWithObjectHidden();
 	CheckCollisionSimonWithGate(); //va chạm với cửa
 
-	CheckCollisionWithEnemy(); // kt vũ khí với enemy và simon với enemy
-
-	CheckCollisionWithBoss(); // kt vũ khí với enemy và simon với enemy
+	if (!isUseInvisibilityPotion) // ko sử dụng thuốc tàng hình mới xét va chạm
+	{
+		CheckCollisionWithEnemy(); // kt vũ khí với enemy và simon với enemy
+		CheckCollisionWithBoss(); // kt vũ khí với enemy và simon với enemy
+	}
 
 }
 
@@ -1869,7 +1882,15 @@ void Scene_2::CheckCollisionSimonWithItem()
 					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
-
+				 
+				case eType::INVISIBILITYPOTION:
+				{
+					sound->Play(eSound::soundInvisibilityPotion_Begin);
+					isUseInvisibilityPotion = true;
+					simon->SetTexture(TextureManager::GetInstance()->GetTexture(eType::SIMON_TRANS));
+					listItem[i]->SetFinish(true); 
+					break;
+				}
 
 				default:
 					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
@@ -2247,9 +2268,7 @@ void Scene_2::CheckCollisionWithBoss()
 		 
 	}
 }
-
-
-
+ 
 Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 {
 	if (Type == eType::CANDLE)
@@ -2263,7 +2282,17 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 		case 71:
 			return new ItemHolyWater(X, Y);
 			break;
+		case 76:
+			return new ItemStopWatch(X, Y);
+			break;
 
+		case 109:
+			return new InvisibilityPotion(X, Y);
+			break;
+
+		case 111:
+			return new ItemThrowingAxe(X, Y);
+			break;
 		default:
 			return new SmallHeart(X, Y);
 			break;
@@ -2274,11 +2303,11 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 
 	if (Type == eType::GHOST || Type == eType::PANTHER || Type == eType::BAT || Type==eType::FISHMEN)
 	{
-		int random = rand() % 10;
+		int random = rand() % 15;
 
 		while (simon->_weaponMain->GetLevel() == 2 && random == 4)
 		{
-			random = rand() % 10;
+			random = rand() % 15;
 		}
 
 		switch (random)
@@ -2304,6 +2333,10 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 		case 6:
 			return new ItemStopWatch(X, Y);
 			break;
+		case 7: 
+			return new ItemThrowingAxe(X, Y);
+			break;
+
 		default: // còn lại là SmallHeart
 			return new SmallHeart(X, Y);
 			break;
@@ -2320,6 +2353,9 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 		case 72:
 			return new Bonus(X, Y);
 			break;
+
+
+
 
 		default:
 			return new SmallHeart(X, Y);
@@ -2423,4 +2459,20 @@ void Scene_2::ProcessClearState3(DWORD dt)
 			break;
 		}
 	} 
+}
+
+void Scene_2::ProcessInvisibilityPotion(DWORD dt)
+{
+	if (isUseInvisibilityPotion)
+	{
+		TimeWaited_InvisibilityPotion += dt; 
+		if (TimeWaited_InvisibilityPotion >= INVISIBILITYPOTION_LIMITTIMEWAIT)
+		{
+			isUseInvisibilityPotion = false; // kết thúc
+			TimeWaited_InvisibilityPotion = 0;
+			sound->Play(eSound::soundInvisibilityPotion_End); 
+
+			simon->SetTexture(TextureManager::GetInstance()->GetTexture(eType::SIMON));
+		}
+	}
 }

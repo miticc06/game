@@ -23,8 +23,10 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::soundDagger, L"Resources/sound/usingdagger.wav");
 	AddSound(eSound::soundDisplayMonney, L"Resources/sound/display_monney.wav");
 	AddSound(eSound::soundAxe, L"Resources/sound/Axe.wav");
-
-
+	AddSound(eSound::soundStopWatch, L"Resources/sound/StopWatch.wav");
+	AddSound(eSound::soundInvisibilityPotion_Begin, L"Resources/sound/InvisibilityPotion_Begin.wav");
+	AddSound(eSound::soundInvisibilityPotion_End, L"Resources/sound/InvisibilityPotion_End.wav");
+	 
 
 	AddSound(eSound::soundHurting, L"Resources/sound/hurting.wav");
 	AddSound(eSound::soundOpenDoor, L"Resources/sound/opendoor.wav");
@@ -49,6 +51,13 @@ bool Sound::isPlaying(eSound type)
 	return _ArrSound[type]->IsSoundPlaying();
 }
 
+void Sound::StopAll()
+{ 
+	for (auto& x : _ArrSound) { 
+		x.second->Stop(); 
+	} 
+}
+
 
 void Sound::AddSound(eSound type, LPTSTR filename)
 {
@@ -62,9 +71,9 @@ void Sound::AddSound(eSound type, LPTSTR filename)
 	_ArrSound[type] = wave;
 }
 
-void Sound::Play(eSound type, bool isLoop)
+void Sound::Play(eSound type, bool isLoop, LONG lVolume)
 {
-	_ArrSound[type]->Play(0, isLoop); 
+	_ArrSound[type]->Play(0, isLoop, lVolume);
 	//DSBPLAY_LOOPING             0x00000001 -> int = 1
 
 }

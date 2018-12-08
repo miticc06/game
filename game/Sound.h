@@ -25,6 +25,12 @@ enum eSound
 	SoundGetScoreTimer = 14,
 	SoundGetScoreHeart = 15,
 	soundAxe = 16,
+	soundStopWatch = 17,
+	soundInvisibilityPotion_Begin = 18,
+	soundInvisibilityPotion_End = 19,
+
+
+
 
 	musicState1 = 51,
 	musicLifeLost = 52,
@@ -49,11 +55,13 @@ public:
 	Sound();
 
 	void AddSound(eSound type, LPTSTR filename);
-	void Play(eSound type, bool isLoop = false); 
+	void Play(eSound type, bool isLoop = false, LONG lVolume = 0L);
 	void Stop(eSound type);
 	void LoadResourceSound();
 
 	bool isPlaying(eSound type);
+
+	void StopAll();
 
 };
 

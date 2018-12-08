@@ -2,6 +2,9 @@
 #define __STOPWATCH_H__
 
 #include "Weapon.h"
+#include "Sound.h"
+
+
 class StopWatch :
 	public Weapon
 {
