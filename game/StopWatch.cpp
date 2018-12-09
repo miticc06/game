@@ -16,6 +16,8 @@ StopWatch::StopWatch()
 
 StopWatch::~StopWatch()
 {
+	if (Sound::GetInstance()->isPlaying(eSound::soundStopWatch))
+		Sound::GetInstance()->Stop(eSound::soundStopWatch);
 }
 
 void StopWatch::Create(float simonX, float simonY, int simonDirection)

@@ -5,7 +5,7 @@
 ThrowingAxe::ThrowingAxe(Camera * camera)
 {
 	type = eType::THROWINGAXE;
-	_texture = TextureManager::GetInstance()->GetTexture(eType::THROWINGAXE);
+	_texture = TextureManager::GetInstance()->GetTexture(type);
 	_sprite = new GSprite(_texture, 70);
 
 
@@ -18,6 +18,8 @@ ThrowingAxe::ThrowingAxe(Camera * camera)
 
 ThrowingAxe::~ThrowingAxe()
 {
+	if (Sound::GetInstance()->isPlaying(eSound::soundAxe))
+		Sound::GetInstance()->Stop(eSound::soundAxe);
 }
 
 void ThrowingAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
