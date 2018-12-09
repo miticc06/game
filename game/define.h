@@ -141,7 +141,15 @@ enum eType
 	FISHMEN = 144,
 
 	//BOSS
-	PHANTOMBAT = 161
+	PHANTOMBAT = 161,
+
+	// Intro
+	MAINMENU = 181,
+	INTRO_GO_SCENE1 = 182,
+	INTRO_BAT_MENU = 183, // bat ở menu
+	HELICOPTER = 184,
+	INTRO_BAT = 185 // ở intro
+
 };
 
 

@@ -160,6 +160,7 @@
     <ClInclude Include="PhantomBat.h" />
     <ClInclude Include="PotRoast.h" />
     <ClInclude Include="Scene_2.h" />
+    <ClInclude Include="Scene_Intro.h" />
     <ClInclude Include="SmallHeart.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Grid.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="PhantomBat.cpp" />
     <ClCompile Include="PotRoast.cpp" />
     <ClCompile Include="Scene_2.cpp" />
+    <ClCompile Include="Scene_Intro.cpp" />
     <ClCompile Include="SmallHeart.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Grid.cpp" />

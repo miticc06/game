@@ -4,8 +4,6 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "GSprite.h"
-
-
 #include "Brick.h"
 #include "Simon.h" 
 #include "Map.h"

@@ -184,6 +184,7 @@
     <ClCompile Include="Cross.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Intro.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -366,6 +367,7 @@
     <ClInclude Include="Cross.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Scene_Intro.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

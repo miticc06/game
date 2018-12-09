@@ -21,6 +21,13 @@ GTexture * TextureManager::GetTexture(eType type)
 
 void TextureManager::LoadResource()
 {
+	// Intro
+	AddTexture(eType::MAINMENU, new GTexture("Resources/mainmenu.png"));
+	AddTexture(eType::INTRO_BAT, new GTexture("Resources/bat.png"));
+	AddTexture(eType::INTRO_BAT_MENU, new GTexture("Resources/IntroBatMenu.png",5,3,15));
+	AddTexture(eType::INTRO_GO_SCENE1, new GTexture("Resources/intro_go_scene_1.png"));
+	AddTexture(eType::HELICOPTER, new GTexture("Resources/helicopter.png"));
+
 	//board
 	AddTexture(eType::FONT, new GTexture("Resources/font/1.png", 13, 3, 37));
 
