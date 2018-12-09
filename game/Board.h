@@ -11,7 +11,7 @@
 #include "TextureManager.h"
 #include "Dagger.h"
 
-#define BOARD_DEFAULT_POSITION_X 10
+#define BOARD_DEFAULT_POSITION_X 0
 #define BOARD_DEFAULT_POSITION_Y 0
 
 class Board
@@ -28,7 +28,7 @@ private:
 
  public:
 	Board(int X, int Y);
-	void Render(Camera * camera, Simon * simon, int state, Weapon * weaponSub, int RemainingTime, GameObject * boss);
+	void Render(Simon * simon, int state, Weapon * weaponSub, int RemainingTime, GameObject * boss);
 	~Board();
 
 	void SetTexture(GTexture * tex);

@@ -16,14 +16,14 @@ Board::Board(int X, int Y)
 }
  
 
-void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSub, int RemainingTime, GameObject * boss)
+void Board::Render(Simon * simon , int state, Weapon * weaponSub, int RemainingTime, GameObject * boss)
 { 
 	_sprite->Draw(x,y);
-	_font.Draw(x, y+15, "SCORE-");
-	_font.Draw(x, y + 15, "SCORE-" + FillNumber(std::to_string(simon->GetScore()), (UINT) 6)  );
+	_font.Draw(x + 10, y+15, "SCORE-");
+	_font.Draw(x + 10, y + 15, "SCORE-" + FillNumber(std::to_string(simon->GetScore()), (UINT) 6)  );
 
-	_font.Draw(x, y+33, "PLAYER");
-	_font.Draw(x, y+51, "ENEMY");
+	_font.Draw(x + 10, y+33, "PLAYER");
+	_font.Draw(x + 10, y+51, "ENEMY");
 
 
 	_font.Draw(x+220 , y + 15, "TIME " + FillNumber(std::to_string(RemainingTime), (UINT)4) );
@@ -33,8 +33,8 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 	_font.Draw(x + 400 + 60, y + 15, FillNumber(std::to_string(state),2));
 
 
-	_font.Draw(x + 400 + 15, y + 15+18, FillNumber(std::to_string(simon->GetHeartCollect()),2)); // Số lượng tim nhặt dc
-	_font.Draw(x + 400 + 15, y + 15 + 18+18, FillNumber(std::to_string(simon->GetLives()),2)); // số mạng sông
+	_font.Draw(x + 400 + 25, y + 15+18, FillNumber(std::to_string(simon->GetHeartCollect()),2)); // Số lượng tim nhặt dc
+	_font.Draw(x + 400 + 25, y + 15 + 18+18, FillNumber(std::to_string(simon->GetLives()),2)); // số mạng sông
 
 
 	int BloodBoss = 16; 
@@ -44,7 +44,7 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 		if (BloodBoss == 0 && boss->GetHealth() > 0)
 			BloodBoss = 1;
 	}
-	_boardHealth.Draw(x + 100, y + 30, simon->GetHealth(), BloodBoss); 
+	_boardHealth.Draw(x + 110, y + 30, simon->GetHealth(), BloodBoss); 
 	 
 	if (weaponSub != NULL)
 	{

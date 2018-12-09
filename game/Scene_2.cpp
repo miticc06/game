@@ -1362,7 +1362,7 @@ void Scene_2::Render()
 	for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
 		listWeaponOfEnemy[i]->Render(camera);
 
-	board->Render(camera, simon, StateCurrent, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime(), boss);
+	board->Render(simon, StateCurrent, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime(), boss);
 
 
 

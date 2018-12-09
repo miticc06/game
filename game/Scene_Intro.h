@@ -6,6 +6,8 @@
 #include "Sound.h"
 #include "GSprite.h"
 #include "Font.h"
+#include "Simon.h"
+#include "Board.h"
 
 #define INTRO_STATUS_PROCESS_MENU 0 
 #define INTRO_STATUS_PROCESS_GO_SCENE1 1 
@@ -28,6 +30,10 @@ private:
 	DWORD TimeWaitedToChangeDisplayTextPressStart;
 	 
 	int StatusProcess;
+	
+	Simon * simon;
+	Board * board;
+	GSprite* Sprite_IntroGoScene1;
 
 public:
 	Scene_Intro();

@@ -12,6 +12,8 @@ Scene_Intro::Scene_Intro()
 
 Scene_Intro::~Scene_Intro()
 {
+	SAFE_DELETE(simon);
+	SAFE_DELETE(board);
 }
 
 void Scene_Intro::KeyState(BYTE * state)
@@ -40,6 +42,10 @@ void Scene_Intro::LoadResources()
 	isPressStart = 0;
 
 	isDrawTextPressStart = true; 
+
+	simon = new Simon();
+	board = new Board(BOARD_DEFAULT_POSITION_X, BOARD_DEFAULT_POSITION_Y);
+	Sprite_IntroGoScene1 = new GSprite(_textureManager->GetTexture(eType::INTRO_GO_SCENE1), 0);
 }
 
 void Scene_Intro::Update(DWORD dt)
@@ -97,7 +103,9 @@ void Scene_Intro::Render()
 
 	case INTRO_STATUS_PROCESS_GO_SCENE1:
 	{
-
+		Sprite_IntroGoScene1->Draw(0, 0);
+		board->Render(simon, 1, NULL, 300, NULL);
+		
 		break;
 	} 
 	}

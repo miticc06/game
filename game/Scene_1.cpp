@@ -343,7 +343,7 @@ void Scene_1::Render()
 
 	simon->Render(camera);
  
-	board->Render(camera, simon, 1, simon->_weaponSub, GAME_TIME_SCENE1 - _gameTime->GetTime(), NULL);
+	board->Render(simon, 1, simon->_weaponSub, GAME_TIME_SCENE1 - _gameTime->GetTime(), NULL);
 
 
 
