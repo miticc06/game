@@ -38,7 +38,7 @@
 #include "CrystalBall.h"
 #include "ItemThrowingAxe.h"
 #include "InvisibilityPotion.h"
-
+#include "Cross.h"
 #define GAME_TIME_SCENE2 300
 
 #define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo
@@ -133,6 +133,7 @@
 
 #pragma endregion
 
+#define CROSS_LIMITTIME 1000 // thời gian tối đa khi dùng Cross
 
 
 class Scene_2 : public Scene
@@ -178,6 +179,14 @@ private:
 	bool isAllowCreateBat; // cho phép tạo Bat
 	int CountEnemyBat;
 
+	/*Xử lí Cross*/
+	bool isUseCross;
+	DWORD TimeWaited_UseCross;// thời gian đã chờ xử lí Cross
+	DWORD TimeWaited_UseCross_ChangeColorBackground; // thời gian đã chờ của việc thay đổi màu nền
+	DWORD LimitTimeWait_UseCross_ChangeColorBackground; // thời gian cần chờ để đỏi màu nền
+
+
+
 	/*Xử lí liên quan InvisibilityPotion*/
 	bool isUseInvisibilityPotion;
 	DWORD TimeWaited_InvisibilityPotion;
@@ -193,6 +202,7 @@ private:
 	vector <Item*> listItem;
 	vector <Effect*> listEffect;
 	vector <GameObject*> listEnemy;
+	PhantomBat * boss;
 	
 	vector <Weapon*> listWeaponOfEnemy; // list chứa các viên đạn của enemy
 
@@ -202,7 +212,7 @@ private:
 	bool isStopWatch; /*Xử lí stopWatch*/
 
 
-	PhantomBat * boss;
+	
 
 public:
 	Scene_2(Simon * _si = NULL, GameTime* _ga = NULL);
@@ -232,6 +242,8 @@ public:
 
 	void ProcessClearState3(DWORD dt);
 	void ProcessInvisibilityPotion(DWORD dt);
+	void ProcessCross(DWORD dt);
+
 };
 
 

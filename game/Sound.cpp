@@ -18,6 +18,9 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::soundHit, L"Resources/sound/hit.wav");
 	AddSound(eSound::soundCollectItem, L"Resources/sound/collectitem.wav");
 	AddSound(eSound::soundCollectWeapon, L"Resources/sound/collectweapon.wav");
+	AddSound(eSound::soundHolyCross, L"Resources/sound/holycross.wav");
+
+
 
 	AddSound(eSound::soundStopTimer, L"Resources/sound/stoptimer.wav");
 	AddSound(eSound::soundDagger, L"Resources/sound/usingdagger.wav");

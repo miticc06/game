@@ -5,11 +5,7 @@
 
 #define WINDOW_CLASS_NAME L"Game"
 #define MAIN_WINDOW_TITLE L"Game"
-
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
-
-
-
+ 
 
 #include "Scene_1.h"
 
@@ -158,7 +154,7 @@ void Render()
 	if (d3ddv->BeginScene())
 	{
 		// Clear back buffer with a color
-		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		d3ddv->ColorFill(bb, NULL, D3DCOLOR_BACKGROUND); // D3DCOLOR_BACKGROUND biến toàn cục quản lí màu nền
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 		 
 

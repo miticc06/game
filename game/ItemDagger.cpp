@@ -4,9 +4,9 @@
  
 ItemDagger::ItemDagger(float X, float Y)
 {
- 	_texture = TextureManager::GetInstance()->GetTexture(eType::ITEMDAGGER);
-	_sprite = new GSprite(_texture, 0);
 	type = eType::ITEMDAGGER;
+ 	_texture = TextureManager::GetInstance()->GetTexture(type);
+	_sprite = new GSprite(_texture, 0);
 
 	this->x = X;
 	this->y = Y;

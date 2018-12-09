@@ -22,8 +22,11 @@ GTexture * TextureManager::GetTexture(eType type)
 void TextureManager::LoadResource()
 {
 	//board
-	AddTexture(eType::FONT, new GTexture("Resources/font/1.png", 13, 3, 37, 0));
-	AddTexture(eType::BOARD, new GTexture("Resources/blackboard.png"));
+	AddTexture(eType::FONT, new GTexture("Resources/font/1.png", 13, 3, 37));
+
+	AddTexture(eType::BOARD, new GTexture("Resources/blackboard.png", 1, 1, 1));
+	AddTexture(eType::BOARD_TRANS, new GTexture("Resources/blackboard.png",1,1,1,0,0,0));
+	
 	AddTexture(eType::BOARDHEALTH, new GTexture("Resources/heal.png", 3, 1, 3));
 	AddTexture(eType::RENDERBBOX, new GTexture("textures/bbox.png")); // dùng để vẽ BBOX
 
@@ -62,6 +65,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::CRYSTALBALL, new GTexture("Resources/item/13.png",2,1,2));
 	AddTexture(eType::ITEMTHROWINGAXE, new GTexture("Resources/item/7.png"));
 	AddTexture(eType::INVISIBILITYPOTION, new GTexture("Resources/item/14.png"));
+	AddTexture(eType::CROSS, new GTexture("Resources/item/6.png"));
 
 
 

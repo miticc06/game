@@ -47,12 +47,20 @@ using namespace std;
 #define IS_DEBUG_RENDER_BBOX 0
 
 #define MAX_FRAME_RATE 90
-//#define DT_DEFAULT dt//1000/MAX_FRAME_RATE
+
+#define COLOR_BACKGROUND_DEFAULT D3DCOLOR_XRGB(0, 0, 0) // Màu đen 0, 0, 0
  
+ 
+
+extern D3DCOLOR D3DCOLOR_BACKGROUND;
+
+
 extern int Window_Width; 
 extern int Window_Height;
 // kích thước màn hình
  
+
+
 
 
 extern int ScreenColumn;
@@ -109,6 +117,7 @@ enum eType
 	CRYSTALBALL = 88,
 	ITEMTHROWINGAXE = 89,
 	INVISIBILITYPOTION = 90,
+	CROSS = 91,
 
 	// other
 	FONT = 101,
@@ -117,7 +126,7 @@ enum eType
 	MAP1 = 104,
 	RENDERBBOX =105,
 	MAP2 = 106,
-
+	BOARD_TRANS = 107,
 
 	// Effect
 	FIRE = 121,

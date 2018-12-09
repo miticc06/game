@@ -686,6 +686,7 @@ void Scene_2::LoadResources()
 	isStopWatch = 0;
 
 	isUseInvisibilityPotion = false;
+	isUseCross = false;
 }
  
 void Scene_2::ResetResource()
@@ -746,6 +747,7 @@ void Scene_2::ResetResource()
 	}
 
 	isUseInvisibilityPotion = false;
+	isUseCross = false;
 
 }
 
@@ -769,6 +771,7 @@ void Scene_2::Update(DWORD dt)
 
 	ProcessClearState3(dt);
 	ProcessInvisibilityPotion(dt);
+	ProcessCross(dt);
 
 	if (!isAllowProcessClearState3)
 	{
@@ -1878,7 +1881,45 @@ void Scene_2::CheckCollisionSimonWithItem()
 					listItem[i]->SetFinish(true); 
 					break;
 				}
+				 
+				case eType::CROSS:
+				{ 
+					isUseCross = true;
+					TimeWaited_UseCross = 0;
+					TimeWaited_UseCross_ChangeColorBackground = 0;
 
+					board->SetTexture(TextureManager::GetInstance()->GetTexture(eType::BOARD_TRANS)); // đổi thành Board màu nền trong suốt
+
+					/*Xóa hết enemy*/
+					for (UINT k = 0; k < listEnemy.size(); k++)
+					{
+						GameObject * enemy = listEnemy[k];
+						if (enemy->GetHealth() > 0) // còn máu
+						{
+							enemy->SetHealth(0);
+							listEffect.push_back(new Fire((int)enemy->GetX() - 5, (int)enemy->GetY() + 8)); // hiệu ứng lửa
+						}
+					}
+					CountEnemyBat = 0;
+					TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+					isWaitProcessCreateGhost = true;
+					isAllowCheckTimeWaitProcessCreateGhost = true;
+
+					CountEnemyFishmen = 0;
+
+					CountEnemyPanther = 0;
+
+					CountEnemyGhost = 0;
+					TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+					isWaitProcessCreateGhost = true;
+					isAllowCheckTimeWaitProcessCreateGhost = true;
+					/*Xóa hết enemy*/
+
+					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundHolyCross);
+					break;
+				}
+				 
 				default:
 					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
 					break;
@@ -2269,13 +2310,9 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 	{
 		switch (Id)
 		{
-		case 40:
+		case 40: case 71:
 			return new ItemHolyWater(X, Y);
-			break;
-
-		case 71:
-			return new ItemHolyWater(X, Y);
-			break;
+			break; 
 		case 76:
 			return new ItemStopWatch(X, Y);
 			break;
@@ -2287,6 +2324,11 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 		case 111:
 			return new ItemThrowingAxe(X, Y);
 			break;
+
+		case 23: case 98:
+			return new Cross(X, Y);
+			break;  
+
 		default:
 			return new SmallHeart(X, Y);
 			break;
@@ -2470,5 +2512,39 @@ void Scene_2::ProcessInvisibilityPotion(DWORD dt)
 
 			simon->SetTexture(TextureManager::GetInstance()->GetTexture(eType::SIMON));
 		}
+	}
+}
+
+void Scene_2::ProcessCross(DWORD dt)
+{
+	if (isUseCross)
+	{
+		/* xử lí thời gian hoạt động*/
+		TimeWaited_UseCross += dt;
+		if (TimeWaited_UseCross >= CROSS_LIMITTIME)
+		{
+			isUseCross = false;
+			D3DCOLOR_BACKGROUND = COLOR_BACKGROUND_DEFAULT; // trả về màu nền mặc định
+			board->SetTexture(TextureManager::GetInstance()->GetTexture(eType::BOARD)); // đổi thành Board màu bt
+		}
+		else
+		{
+			/*Xử lí đổi màu nền*/
+			TimeWaited_UseCross_ChangeColorBackground += dt;
+			if (TimeWaited_UseCross_ChangeColorBackground >= LimitTimeWait_UseCross_ChangeColorBackground)
+			{
+				TimeWaited_UseCross_ChangeColorBackground = 0;
+				LimitTimeWait_UseCross_ChangeColorBackground = rand() % 100;
+				/*Đổi màu nền*/
+				if (D3DCOLOR_BACKGROUND == COLOR_BACKGROUND_DEFAULT)
+				{
+					D3DCOLOR_BACKGROUND = CROSS_COLOR_BACKGROUND;
+				}
+				else
+				{
+					D3DCOLOR_BACKGROUND = COLOR_BACKGROUND_DEFAULT;
+				}
+			}
+		} 
 	}
 }

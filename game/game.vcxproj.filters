@@ -181,6 +181,9 @@
     <ClCompile Include="ItemThrowingAxe.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Cross.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -358,6 +361,9 @@
       <Filter>Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="ItemThrowingAxe.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Cross.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
   </ItemGroup>

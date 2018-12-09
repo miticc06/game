@@ -152,6 +152,7 @@ id 65: object ẩn -> bonus
 id 66: object ẩn -> chạm nước -> chết
 id 67: object ẩn -> box xác nhận simon đã qua cửa
 
+id 23, 98: cross
 
 // id 81: object ẩn -> ra khỏi hồ nước phía phải
 id 86: object ẩn -> vào hồ nước phía phải

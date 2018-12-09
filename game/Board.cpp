@@ -76,3 +76,9 @@ Board::~Board()
 {
 	SAFE_DELETE(_sprite);
 }
+
+void Board::SetTexture(GTexture * tex)
+{
+	_texture = tex;
+	_sprite->_texture = tex; 
+}

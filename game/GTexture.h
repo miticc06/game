@@ -16,13 +16,11 @@ public:
 	int FrameWidth;	
 	int FrameHeight;
 
-	GTexture(char* _fileName, int cols = 1, int rows = 1, int count = 1, int Showbox = 0);
-	GTexture(char* _fileName, int cols, int rows, int count, int R, int G, int B);
-	~GTexture();
+	GTexture(char* _fileName, int cols = 1, int rows = 1, int count = 1, int R = 255, int G = 0, int B = 255);
+ 	~GTexture();
 	void Draw(int x, int y);
 
-protected:
-	void Load(int ShowBox);
+protected: 
 	void Load(int R, int G, int B);
 };
 

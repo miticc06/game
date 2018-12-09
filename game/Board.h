@@ -30,6 +30,8 @@ private:
 	Board(int X, int Y);
 	void Render(Camera * camera, Simon * simon, int state, Weapon * weaponSub, int RemainingTime, GameObject * boss);
 	~Board();
+
+	void SetTexture(GTexture * tex);
 };
 
 

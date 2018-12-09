@@ -28,7 +28,7 @@ enum eSound
 	soundStopWatch = 17,
 	soundInvisibilityPotion_Begin = 18,
 	soundInvisibilityPotion_End = 19,
-
+	soundHolyCross = 20,
 
 
 
