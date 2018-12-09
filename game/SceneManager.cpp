@@ -5,7 +5,7 @@ SceneManager * SceneManager::_Instance = NULL;
 
 SceneManager::SceneManager()
 {
-	//isNotLoadResource = true;
+	camera = new Camera(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 
@@ -64,6 +64,11 @@ void SceneManager::Update(DWORD dt)
 void SceneManager::Render()
 { 
 	_scene->Render();
+}
+
+Camera * SceneManager::GetCamera()
+{
+	return camera;
 }
  
 

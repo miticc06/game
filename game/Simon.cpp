@@ -603,31 +603,7 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
 }
-
-//
-//bool Simon::isCheckCollisionAxisY_WithBrickSweptAABB(vector<LPGAMEOBJECT>* coObjects)
-//{ 
-//
-//	vector<LPGAMEOBJECT> list_Brick; 
-//	vector<LPCOLLISIONEVENT> list_EVENT;
-//
-//	for (UINT i = 0; i < coObjects->size(); i++)
-//		if (coObjects->at(i)->GetType() == eType::BRICK)
-//			list_Brick.push_back(coObjects->at(i));
-//
-//	for (UINT i = 0; i < list_Brick.size(); i++)
-//	{
-//		LPCOLLISIONEVENT e = SweptAABBEx(list_Brick.at(i));
-//		list_EVENT.push_back(e);
-//		if (e->t > 0 && e->t <= 1.0f && e->ny!=0) // chỉ xét trục y
-//		{
-//			//SAFE_DELETE(e);
-//			return true;
-//		}
-//		//SAFE_DELETE(e);
-//	}
-//	return false;
-//}
+ 
 
 void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 {
@@ -840,7 +816,6 @@ void Simon::StartUntouchable()
 	untouchable_start = GetTickCount();
 }
  
-
 void Simon::SetAutoGoX(int DirectionGo, int directionAfterGo, float Dx, float Speed)
 {
 	if (isAutoGoX == true)
@@ -897,7 +872,6 @@ void Simon::RestoreBackupAutoGoX()
 	// đi xong thì cho simon đứng yên
 }
  
-
 bool Simon::LoseLife()
 {
 	if (Lives - 1 < 0)

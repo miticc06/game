@@ -30,10 +30,10 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 
 
 	_font.Draw(x + 400 -20, y + 15, "STAGE");
-	_font.Draw(x + 400+60, y + 15, FillNumber(std::to_string(state),2));
+	_font.Draw(x + 400 + 60, y + 15, FillNumber(std::to_string(state),2));
 
 
-	_font.Draw(x + 400+15, y + 15+18, FillNumber(std::to_string(simon->GetHeartCollect()),2)); // Số lượng tim nhặt dc
+	_font.Draw(x + 400 + 15, y + 15+18, FillNumber(std::to_string(simon->GetHeartCollect()),2)); // Số lượng tim nhặt dc
 	_font.Draw(x + 400 + 15, y + 15 + 18+18, FillNumber(std::to_string(simon->GetLives()),2)); // số mạng sông
 
 
@@ -51,17 +51,17 @@ void Board::Render(Camera * camera, Simon * simon , int state, Weapon * weaponSu
 		switch (weaponSub->GetType())
 		{
 		case eType::DAGGER:
-			weaponSub->RenderIcon(330, 40);
+			weaponSub->RenderIcon(x + 330,y + 40);
 			break;
 
 		case eType::HOLYWATER:
-			weaponSub->RenderIcon(332, 33);
+			weaponSub->RenderIcon(x + 332, y + 33);
 			break;
 		case eType::STOPWATCH:
-			weaponSub->RenderIcon(332, 31);
+			weaponSub->RenderIcon(x + 332, y + 31);
 			break;
 		case eType::THROWINGAXE:
-			weaponSub->RenderIcon(330, 35);
+			weaponSub->RenderIcon(x + 330, y + 35);
 			break;
 		default:
 			break;

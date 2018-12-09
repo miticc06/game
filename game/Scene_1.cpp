@@ -3,10 +3,8 @@
 
 
 Scene_1::Scene_1()
-{
-
+{  
 	LoadResources();
-
 }
 
 
@@ -14,8 +12,7 @@ Scene_1::~Scene_1()
 {
 	SAFE_DELETE(TileMap);
 	SAFE_DELETE(board);
-	SAFE_DELETE(gridGame);
-	SAFE_DELETE(camera);
+	SAFE_DELETE(gridGame); 
 
 }
 
@@ -187,30 +184,19 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 
  
-	if (KeyCode == DIK_SPACE)
+	if (KeyCode == DIK_SPACE && simon->isOnStair == false)
 	{
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		{
 			simon->Stop();
-			float vx, vy;
-			simon->GetSpeed(vx, vy);
-			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetDirection()/**vx - 0.0001f*/,vy - SIMON_VJUMP);
+			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetDirection(), -SIMON_VJUMP);
 			simon->isJumping = 1;
 			simon->isWalking = 1;
 		}
 		else
 		{
-			//simon->Stop();
-			//float vx, vy;
-			//simon->GetSpeed(vx, vy);
-			//simon->SetSpeed(0,/* vy - SIMON_VJUMP*/ -1.4f);
-			//simon->isJumping = 1;
-
 			simon->Jump();
 		}
-
-
-		
 	}
 
 }
@@ -241,11 +227,16 @@ void Scene_1::LoadResources()
 	simon = new Simon();
 	TileMap = new Map();
 	TileMap->LoadMap(eType::MAP1);
-	camera = new Camera(Window_Width, Window_Height);
+
+	camera = SceneManager::GetInstance()->GetCamera();
+
+	camera->SetBoundary(0, TileMap->GetMapWidth() - camera->GetWidth()); // set biên camera dựa vào kích thước map
+	camera->SetBoundaryBackup(camera->GetBoundaryLeft(), camera->GetBoundaryRight()); // backup lại biên
+
 	camera->SetPosition(0, 0);
 
 
-	board = new Board(0, 0);
+	board = new Board(BOARD_DEFAULT_POSITION_X, BOARD_DEFAULT_POSITION_Y);
 
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
 	simon->SetPositionBackup(SIMON_POSITION_DEFAULT);
@@ -261,13 +252,10 @@ void Scene_1::LoadResources()
 	_gameTime = new GameTime();
 	_gameTime->SetTime(0); // đếm lại từ 0
 
-
-
-
+	 
 	// bật nhạc game
 	sound->Play(eSound::musicState1, true);
-
-	//SceneManager::GetInstance()->SetIsNotLoadResource(false);
+	 
 }
 
 void Scene_1::Update(DWORD dt)

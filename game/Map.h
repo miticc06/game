@@ -45,6 +45,8 @@ public:
 	void ReadMapTXT(char * filename);
 	void DrawMap(Camera * camera);
 
+	int GetMapWidth();
+	int GetMapHeight();
 };
 
 

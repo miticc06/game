@@ -16,8 +16,7 @@ Scene_2::~Scene_2()
 {
 	SAFE_DELETE(TileMap);
 	SAFE_DELETE(board);
-	SAFE_DELETE(gridGame);
-	SAFE_DELETE(camera);
+	SAFE_DELETE(gridGame); 
 }
 
 void Scene_2::KeyState(BYTE * state)
@@ -579,10 +578,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 	{
 		return;
 	}
-
-
-
-
+	 
 
 	if (KeyCode == DIK_SPACE && simon->isOnStair == false)
 	{
@@ -596,10 +592,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		else
 		{
 			simon->Jump();
-		}
-
-
-
+		} 
 	}
 
 }
@@ -635,20 +628,20 @@ void Scene_2::LoadResources()
 	TileMap = new Map();
 	TileMap->LoadMap(eType::MAP2);
 
-	camera = new Camera(Window_Width, Window_Height);
+	camera = SceneManager::GetInstance()->GetCamera();
+	
 	camera->SetPosition(0, 0);
+
 	camera->SetBoundary(0, CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT); // biên camera khi chưa qua cửa
 
-	board = new Board(0, 0);
+	board = new Board(BOARD_DEFAULT_POSITION_X, BOARD_DEFAULT_POSITION_Y);
 
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
 	simon->SetPositionBackup(SIMON_POSITION_DEFAULT);
 
 	gridGame = new Grid();
 	gridGame->ReadFileToGrid("Resources/map/Obj_2.txt"); // đọc các object từ file vào Grid
-
-
-
+	 
 	listItem.clear();
 	listEffect.clear();
 	listEnemy.clear();
@@ -904,11 +897,7 @@ void Scene_2::Update(DWORD dt)
 
 	camera->Update(dt);
 
-
-
-	//	Cần tạo khoảng chờ khi tạo bot
 	 
-
 
 #pragma region Process_Region_Create_Enemy_Ghost
 
@@ -1384,11 +1373,9 @@ void Scene_2::CheckCollision()
 	CheckCollisionSimonWithObjectHidden();
 	CheckCollisionSimonWithGate(); //va chạm với cửa
 
-	if (!isUseInvisibilityPotion) // ko sử dụng thuốc tàng hình mới xét va chạm
-	{
-		CheckCollisionWithEnemy(); // kt vũ khí với enemy và simon với enemy
-		CheckCollisionWithBoss(); // kt vũ khí với enemy và simon với enemy
-	}
+	
+	CheckCollisionWithEnemy(); // kt vũ khí với enemy và simon với enemy
+	CheckCollisionWithBoss(); // kt vũ khí với enemy và simon với enemy
 
 }
 
@@ -2088,6 +2075,11 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 		simon->untouchable = false;
 	}
 
+	if (isUseInvisibilityPotion) // ko sử dụng thuốc tàng hình mới xét va chạm
+	{
+		return;
+	}
+
 	if (simon->untouchable == false) // đã tắt chế độ ko cho chạm
 	{
 #pragma region Va chạm với Enemy bình thường
@@ -2137,9 +2129,7 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 		}
 #pragma endregion
 	}
-
-
-
+	 
 }
 
 void Scene_2::CheckCollisionSimonWithGate()
@@ -2240,6 +2230,10 @@ void Scene_2::CheckCollisionWithBoss()
 	vector<GameObject*> listObj{ boss };
 	CheckCollisionWeapon(listObj); // enemy bt
 
+	if (isUseInvisibilityPotion) // ko sử dụng thuốc tàng hình mới xét va chạm
+	{
+		return;
+	}
 
 	if (GetTickCount() - simon->untouchable_start > SIMON_UNTOUCHABLE_TIME)
 	{
@@ -2336,7 +2330,9 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 		case 7: 
 			return new ItemThrowingAxe(X, Y);
 			break;
-
+		case 8: 
+			return new InvisibilityPotion(X, Y);
+			break;
 		default: // còn lại là SmallHeart
 			return new SmallHeart(X, Y);
 			break;

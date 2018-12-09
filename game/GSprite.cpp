@@ -192,17 +192,7 @@ void GSprite::DrawRandomColorFlipX(int x, int y, int alpha)
 
 	spriteHandler->SetTransform(&oldMt);
 }
-
-
-
-
-
-
-
-
-
-
-
+  
 void GSprite::DrawRect(int X, int Y, RECT SrcRect, int alpha)
 {
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();

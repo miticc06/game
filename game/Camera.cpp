@@ -13,9 +13,10 @@ Camera::Camera(int w, int h/*, int b_left, int b_right*/)
 	 
 	// Biên mặc định ban đầu là kích thước MAP
 	_boundaryLeft = 0;
-	_boundaryRight = (float)(MapWidth - Window_Width);
+	_boundaryRight = 0;// (float)(MapWidth - Window_Width);
 	_xCamBackup = _yCamBackup = 0;
 	SetBoundaryBackup(_boundaryLeft, _boundaryRight);
+	vx = 0;
 }
 
 Camera::~Camera()
@@ -60,7 +61,7 @@ D3DXVECTOR2 Camera::Transform(float xWorld, float yWorld)
 void Camera::SetPosition(float x, float y)
 {
 	_xCam = x;
-	_yCam =y;
+	_yCam = y;
 }
 
 float Camera::GetXCam()

@@ -2,18 +2,17 @@
 #define __SCENEMANAGER_H__
 
 #include "Scene.h" 
-
+#include "Camera.h"
 #include "define.h" 
 
 class SceneManager
 {
 private:
 	static SceneManager * _Instance;
-
 	Scene * _scene;
+	Camera * camera;
 
-//	bool isNotLoadResource; // kt chưa load resource. dùng cho thay đổi scene
-
+ 
 public:
 	SceneManager();
 	~SceneManager();
@@ -31,8 +30,8 @@ public:
 	void Update(DWORD dt);
 	void Render();
 
-	//void SetIsNotLoadResource(bool b);
-
+	Camera * GetCamera();
+ 
 	Scene * GetScene();
 
 };

@@ -32,11 +32,8 @@ void Map::LoadMap(eType type)
 
 	_texture = TextureManager::GetInstance()->GetTexture(type);
 	_sprite = new GSprite(_texture, 100);
-
-
-	MapWidth = (_texture->FrameHeight)*(ColumnMatrix);  // Chiều dài của MAP
-	MapHeight = (_texture->FrameHeight)*(RowMatrix); //  chiều cao của MAP
-	
+	 
+ 	
 	
 	ScreenColumn = Window_Width / _texture->FrameWidth;
 	ScreenRow = Window_Height / _texture->FrameHeight;
@@ -99,5 +96,15 @@ void Map::DrawMap(Camera *camera)
 		}
  	}
  
+}
+
+int Map::GetMapWidth()
+{
+	return (_texture->FrameHeight)*(ColumnMatrix);  // Chiều dài của MAP
+}
+
+int Map::GetMapHeight()
+{
+	return (_texture->FrameHeight)*(RowMatrix); //  chiều cao của MAP
 }
  

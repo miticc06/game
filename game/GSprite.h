@@ -32,6 +32,7 @@ public:
 
 	void DrawRandomColor(int X, int Y, int alpha = 255);
 	void DrawRandomColorFlipX(int x, int y, int alpha = 255);
+	 
 
 	//Render with scale (-1, 1)
 	void DrawFlipX(int x, int y, int alpha = 255);

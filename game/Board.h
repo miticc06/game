@@ -10,6 +10,10 @@
 #include "BoardHealth.h"
 #include "TextureManager.h"
 #include "Dagger.h"
+
+#define BOARD_DEFAULT_POSITION_X 10
+#define BOARD_DEFAULT_POSITION_Y 0
+
 class Board
 {
 private:

@@ -52,9 +52,7 @@ using namespace std;
 extern int Window_Width; 
 extern int Window_Height;
 // kích thước màn hình
-
-extern int MapWidth;
-extern int MapHeight;
+ 
 
 
 extern int ScreenColumn;
