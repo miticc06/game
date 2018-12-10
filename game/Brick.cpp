@@ -41,10 +41,14 @@ Brick::Brick(int X, int Y, int W, int H, int Model)
 
 void Brick::Render(Camera * camera)
 {
+	
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	for (int i = 0; i < (int)ceil(width / _texture->FrameWidth); i++)
 		for (int j = 0; j < (int)ceil(height / _texture->FrameHeight); j++)
 			_sprite->Draw( (int) pos.x + i * _texture->FrameWidth, (int)pos.y + j * _texture->FrameHeight);
+
+
+
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

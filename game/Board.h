@@ -24,7 +24,18 @@ private:
 	GSprite * _sprite;
 	int x, y;
 
-	string FillNumber(string s, UINT MaxNumber);
+	string FillNumber(const string & s, int MaxNumber);
+	 
+	string zero[7]
+	{
+	"", 
+	"0",
+	"00",
+	"000",
+	"0000",
+	"00000",
+	"000000"
+	};
 
  public:
 	Board(int X, int Y);

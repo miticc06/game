@@ -16,7 +16,7 @@ private:
 public:
 	Font();
 	~Font();
-	void Draw(int x, int y, string s);
+	void Draw(int x, int y, const string & s);
 };
 
 

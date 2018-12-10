@@ -18,7 +18,6 @@ using namespace std;
 
 #define GRID_CELL_WIDTH 256
 #define GRID_CELL_HEIGHT 224
-#define GRID_BASE 100
 
 #define GRID_INSERT_OBJECT__DIXUONGHONUOC_LEFT 41, eType::OBJECT_HIDDEN, -1, 3190 ,423, 40, 10, 0 // object ẩn đụng vào sẽ đi xuống hồ nước, phía trái
 #define GRID_INSERT_OBJECT__DIRAKHOIHONUOC_LEFT 45, eType::OBJECT_HIDDEN, -1, 3135, 435, 20, 20, 0 // object ẩn đụng vào sẽ đi ra khỏi hồ nước, phía trái
@@ -26,8 +25,9 @@ using namespace std;
 #define GRID_INSERT_OBJECT__DIXUONGHONUOC_RIGHT 86, eType::OBJECT_HIDDEN, -1, 3835, 423, 25, 10, 0 // object ẩn đụng vào sẽ đi ra khỏi hồ nước, phía trái
 #define GRID_INSERT_OBJECT__DIRAKHOIHONUOC_RIGHT 81, eType::OBJECT_HIDDEN, -1, 3807, 460, 30, 20, 0 // object ẩn đụng vào sẽ đi ra khỏi hồ nước, phía trái
 
-
-
+#define GRID_CELL_MAX_ROW 50 // số dòng tối đa;
+#define GRID_CELL_MAX_COLUMN 10 // số cột tối đa
+#define GRID_BASE 5
 
 
 class Grid
@@ -35,9 +35,8 @@ class Grid
 
 private:
 	vector<GameObject*> listObjectGame;
-	vector<GameObject*> cells[500][500];
-
-	void ResetTake();
+	vector<GameObject*> cells[GRID_CELL_MAX_ROW][GRID_CELL_MAX_COLUMN];
+	 
  
 public:
 	void ReadFileToGrid(char * filename); // Đọc các object từ file

@@ -1,10 +1,20 @@
 ﻿#include "Board.h"
+// 
+//string Board::FillNumber(string s, UINT MaxNumber)
+//{ 
+//	while (s.size() < MaxNumber)
+//		s = "0" + s;
+//	return s;
+//}
  
-string Board::FillNumber(string s, UINT MaxNumber)
+
+string Board::FillNumber(const string & s, int MaxNumber)
 {
-	while (s.size() < MaxNumber)
-		s = "0" + s;
-	return s;
+	string res = s;
+	int k = MaxNumber - res.size();
+	if (k > 0)
+		res = zero[k] + res;
+	return res;
 }
 
 Board::Board(int X, int Y)
@@ -17,16 +27,16 @@ Board::Board(int X, int Y)
  
 
 void Board::Render(Simon * simon , int state, Weapon * weaponSub, int RemainingTime, GameObject * boss)
-{ 
-	_sprite->Draw(x,y);
-	_font.Draw(x + 10, y+15, "SCORE-");
-	_font.Draw(x + 10, y + 15, "SCORE-" + FillNumber(std::to_string(simon->GetScore()), (UINT) 6)  );
+{  
+	_sprite->Draw(x,y); 
 
+	_font.Draw(x + 10, y + 15, "SCORE-" + FillNumber(std::to_string(simon->GetScore()), 6)  );
+	            
 	_font.Draw(x + 10, y+33, "PLAYER");
 	_font.Draw(x + 10, y+51, "ENEMY");
 
 
-	_font.Draw(x+220 , y + 15, "TIME " + FillNumber(std::to_string(RemainingTime), (UINT)4) );
+	_font.Draw(x+220 , y + 15, "TIME " + FillNumber(std::to_string(RemainingTime), 4) );
 
 
 	_font.Draw(x + 400 -20, y + 15, "STAGE");
@@ -53,7 +63,6 @@ void Board::Render(Simon * simon , int state, Weapon * weaponSub, int RemainingT
 		case eType::DAGGER:
 			weaponSub->RenderIcon(x + 330 +10,y + 40);
 			break;
-
 		case eType::HOLYWATER:
 			weaponSub->RenderIcon(x + 332 + 10, y + 33);
 			break;

@@ -62,7 +62,7 @@ protected:
 	GSprite * _sprite;
 
 
-	bool isTake;
+	DWORD IdTake;
 
 public:
 	 
@@ -99,8 +99,8 @@ public:
 	eType GetType();
 
 
-	bool GetIsTake();
-	void SetIsTake(int b);
+	bool GetIdTake();
+	void SetIdTake(int b);
 
 	void RenderBoundingBox(Camera * camera);
 	LPCOLLISIONEVENT SweptAABBEx(GameObject * coO);

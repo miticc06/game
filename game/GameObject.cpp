@@ -12,6 +12,8 @@ GameObject::GameObject()
 	Health = 1;  // Alive
 
 	LastTimeAttacked = 0;
+
+	IdTake = 0;
 }
 
 void GameObject::GetBoundingBox(float & left, float & top, float & right, float & bottom)
@@ -150,14 +152,14 @@ eType GameObject::GetType()
 	return type;
 }
 
-bool GameObject::GetIsTake()
+bool GameObject::GetIdTake()
 {
-	return isTake;
+	return IdTake;
 }
 
-void GameObject::SetIsTake(int b)
+void GameObject::SetIdTake(int b)
 {
-	isTake = b;
+	IdTake = b;
 }
 
 void GameObject::RenderBoundingBox(Camera * camera)
