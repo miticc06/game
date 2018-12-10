@@ -22,8 +22,8 @@ enum eSound
 	soundHolyWater = 11,
 	soundSplashwater = 12,
 	soundFallingDownWaterSurface = 13,
-	SoundGetScoreTimer = 14,
-	SoundGetScoreHeart = 15,
+	soundGetScoreTimer = 14,
+	soundGetScoreHeart = 15,
 	soundAxe = 16,
 	soundStopWatch = 17,
 	soundInvisibilityPotion_Begin = 18,
@@ -35,7 +35,8 @@ enum eSound
 	musicState1 = 51,
 	musicLifeLost = 52,
 	music_PhantomBat = 53,
-	musicStateClear = 54
+	musicStateClear = 54,
+	musicGame_Start_Prologue = 55
 };
 
 

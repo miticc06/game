@@ -25,7 +25,7 @@ void Scene_1::KeyState(BYTE * state)
 
 
 
-	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
+	if (simon->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
 		return;
 
 
@@ -146,7 +146,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 
 
-	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
+	if (simon->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
 		return;
 
 

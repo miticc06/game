@@ -851,6 +851,11 @@ void Simon::SetAutoGoX(int DirectionGo, int directionAfterGo, float Dx, float Sp
 	isProcessingOnStair = 0;
 }
 
+bool Simon::GetIsAutoGoX()
+{
+	return isAutoGoX;
+}
+
 void Simon::RestoreBackupAutoGoX()
 {
 	isWalking = isWalking_Backup;

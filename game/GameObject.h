@@ -65,8 +65,7 @@ protected:
 	bool isTake;
 
 public:
-
-
+	 
 	GameObject();
 	virtual ~GameObject();
 
@@ -121,6 +120,7 @@ public:
 	void SetLastTimeAttacked(DWORD t);
 
 	void SetTexture(GTexture * tex);
+	GSprite * GetSprite();
 };
 
 

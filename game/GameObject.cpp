@@ -310,6 +310,11 @@ void GameObject::SetTexture(GTexture * tex)
 	_sprite->_texture = tex;
 }
 
+GSprite * GameObject::GetSprite()
+{
+	return _sprite;
+}
+
 GameObject::~GameObject()
 {
 	/*SAFE_DELETE(_texture);*/

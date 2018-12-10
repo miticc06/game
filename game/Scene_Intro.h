@@ -8,7 +8,11 @@
 #include "Font.h"
 #include "Simon.h"
 #include "Board.h"
+#include "Brick.h"
+#include "HeliCopter.h"
+#include "IntroBat.h"
 
+#include "Scene_1.h"
 #define INTRO_STATUS_PROCESS_MENU 0 
 #define INTRO_STATUS_PROCESS_GO_SCENE1 1 
 
@@ -34,7 +38,13 @@ private:
 	Simon * simon;
 	Board * board;
 	GSprite* Sprite_IntroGoScene1;
+	Camera * camera;
 
+	vector<LPGAMEOBJECT> listBrick; 
+
+	HeliCopter * heliCopter;
+	IntroBat * introBat1;
+	IntroBat * introBat2;
 public:
 	Scene_Intro();
 	virtual ~Scene_Intro();

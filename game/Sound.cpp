@@ -36,8 +36,8 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::soundBrokenBrick, L"Resources/sound/broken_brick.wav");
 	AddSound(eSound::soundSplashwater, L"Resources/sound/splashwater.wav");
 	AddSound(eSound::soundFallingDownWaterSurface, L"Resources/sound/fallingdownwatersurface.wav");
-	AddSound(eSound::SoundGetScoreTimer, L"Resources/sound/getscoretime.wav");
-	AddSound(eSound::SoundGetScoreHeart, L"Resources/sound/getscoreheart-[AudioTrimmer.com].wav");
+	AddSound(eSound::soundGetScoreTimer, L"Resources/sound/getscoretime.wav");
+	AddSound(eSound::soundGetScoreHeart, L"Resources/sound/getscoreheart-[AudioTrimmer.com].wav");
 
 
 
@@ -46,6 +46,7 @@ void Sound::LoadResourceSound()
 
 	AddSound(eSound::music_PhantomBat, L"Resources/music/Boss_Battle_Poison_Mind.wav");
 	AddSound(eSound::musicStateClear, L"Resources/music/Stage_Clear.wav");
+	AddSound(eSound::musicGame_Start_Prologue, L"Resources/music/Game_Start_Prologue.wav");
 
 }
 

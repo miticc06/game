@@ -106,7 +106,8 @@ private:
 	float AutoGoX_DirectionGo;
 	float AutoGoX_Backup_X;
 
-	
+	bool isAutoGoX = 0; // đang ở chế độ auto go?
+
 
 public:
 	bool isWalking;
@@ -120,7 +121,6 @@ public:
 	int directionStair; // hướng của cầu thang đang đi, -1 đi qua trái, 1 đi qua phải
 	int directionY; // hướng đi theo trục y của simon
 
-	bool isAutoGoX = 0; // đang ở chế độ auto go?
 
 	float DoCaoDiDuoc = 0;//
 
@@ -175,8 +175,9 @@ public:
 
 
 	void SetAutoGoX(int DirectionGo, int DirectionBackup, float Dx, float Speed); // set các thông số auto và backup các trạng thái hiện tại
-	void RestoreBackupAutoGoX(); // khôi phục trạng thái 
+	bool GetIsAutoGoX(); // kiểm tra có đang ở chế độ auto go?
 
+	void RestoreBackupAutoGoX(); // khôi phục trạng thái 
 
 	bool LoseLife(); // thiết lập lại 1 số thứ sau khi simon mất mạng
 	void SetPositionBackup(float X, float Y);  // lưu vị trí cần backup để simon die thì bắt đầu lại từ đây

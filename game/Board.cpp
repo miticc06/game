@@ -51,17 +51,17 @@ void Board::Render(Simon * simon , int state, Weapon * weaponSub, int RemainingT
 		switch (weaponSub->GetType())
 		{
 		case eType::DAGGER:
-			weaponSub->RenderIcon(x + 330,y + 40);
+			weaponSub->RenderIcon(x + 330 +10,y + 40);
 			break;
 
 		case eType::HOLYWATER:
-			weaponSub->RenderIcon(x + 332, y + 33);
+			weaponSub->RenderIcon(x + 332 + 10, y + 33);
 			break;
 		case eType::STOPWATCH:
-			weaponSub->RenderIcon(x + 332, y + 31);
+			weaponSub->RenderIcon(x + 332 + 10, y + 31);
 			break;
 		case eType::THROWINGAXE:
-			weaponSub->RenderIcon(x + 330, y + 35);
+			weaponSub->RenderIcon(x + 330 + 10, y + 35);
 			break;
 		default:
 			break;

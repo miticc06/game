@@ -26,7 +26,7 @@ void Scene_2::KeyState(BYTE * state)
 		return;
 	}
 
-	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
+	if (simon->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
 		return;
 
 	if (camera->GetIsAutoGoX()) // camera đang chế độ tự đi thì ko xét phím
@@ -507,7 +507,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
-	if (simon->isAutoGoX == true) // đang chế độ tự đi thì ko xét phím
+	if (simon->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
 		return;
 
 	if (camera->GetIsAutoGoX()) // camera đang chế độ tự đi thì ko xét phím
@@ -2449,13 +2449,13 @@ void Scene_2::ProcessClearState3(DWORD dt)
 				{
 					simon->SetScore(simon->GetScore() + 10); // mỗi giây +10 điểm
 					_gameTime->SetTime(_gameTime->GetTime() + 1);// giảm giây còn lại
-					sound->Play(eSound::SoundGetScoreTimer, true);
+					sound->Play(eSound::soundGetScoreTimer, true);
 				}
 				else
 				{
 					StatusProcessClearState3 = CLEARSTATE3_PROCESS_GETSCORE_HEART;
 					TimeWaited_ClearState3 = 0;
-					sound->Stop(eSound::SoundGetScoreTimer);
+					sound->Stop(eSound::soundGetScoreTimer);
 				}
 			}
 
@@ -2473,11 +2473,11 @@ void Scene_2::ProcessClearState3(DWORD dt)
 				{
 					simon->SetScore(simon->GetScore() + 100); // mỗi giây +10 điểm
 					simon->SetHeartCollect(simon->GetHeartCollect() - 1); // giảm 1 heart
-					sound->Play(eSound::SoundGetScoreHeart, true);
+					sound->Play(eSound::soundGetScoreHeart, true);
 				}
 				else
 				{ 
-					sound->Stop(eSound::SoundGetScoreHeart);
+					sound->Stop(eSound::soundGetScoreHeart);
 					StatusProcessClearState3 = CLEARSTATE3_PROCESS_DONE;
 
 				}
