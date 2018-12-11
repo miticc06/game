@@ -152,12 +152,12 @@ eType GameObject::GetType()
 	return type;
 }
 
-bool GameObject::GetIdTake()
+DWORD GameObject::GetIdTake()
 {
 	return IdTake;
 }
 
-void GameObject::SetIdTake(int b)
+void GameObject::SetIdTake(DWORD b)
 {
 	IdTake = b;
 }

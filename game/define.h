@@ -40,11 +40,11 @@ using namespace std;
 
 
 
-#define SCREEN_WIDTH 512+15
+#define SCREEN_WIDTH (512+15)
 #define SCREEN_HEIGHT 480 
 
 
-#define IS_DEBUG_RENDER_BBOX 0
+#define IS_DEBUG_RENDER_BBOX 1
 
 #define MAX_FRAME_RATE 90
 

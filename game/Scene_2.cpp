@@ -889,7 +889,17 @@ void Scene_2::Update(DWORD dt)
 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 
-	//DebugOut(L"[GRID] size = %d\n", listObj.size());
+	DebugOut(L"[GRID] size = %d\n", listObj.size());
+
+	for (UINT i = 0; i < listObj.size(); i++)
+	{
+		if (listObj[i]->GetId() == 31)
+		{
+
+			int xxxx = 0;
+			//544
+		}
+	}
 
 	simon->Update(dt, camera, &listObj);
 
@@ -1330,10 +1340,7 @@ void Scene_2::Update(DWORD dt)
 }
 
 void Scene_2::Render()
-{
-
-	
-
+{ 
 	TileMap->DrawMap(camera);
 
 	for (UINT i = 0; i < listObj.size(); i++)

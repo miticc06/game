@@ -99,8 +99,8 @@ public:
 	eType GetType();
 
 
-	bool GetIdTake();
-	void SetIdTake(int b);
+	DWORD GetIdTake();
+	void SetIdTake(DWORD b);
 
 	void RenderBoundingBox(Camera * camera);
 	LPCOLLISIONEVENT SweptAABBEx(GameObject * coO);

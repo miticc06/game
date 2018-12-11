@@ -40,7 +40,7 @@ void TextureManager::LoadResource()
 	//MAP
 	AddTexture(eType::MAP1, new GTexture("Resources/map/1.png", 10, 4, 40));
 	//AddTexture(eType::MAP2, new GTexture("Resources/map/2.png", 18, 4, 72));
-	AddTexture(eType::MAP2, new GTexture("Resources/map/2.png", 18, 5, 90));
+	AddTexture(eType::MAP2, new GTexture("Resources/map/2.png", 22, 4, 88));
 
 
 	//gameobject ground

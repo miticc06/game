@@ -39,8 +39,7 @@ void Grid::ReadFileToGrid(char * filename)
 void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 {
 	ListObj.clear(); // clear list
-	 
-
+	  
 	DWORD IdTakeNow = GetTickCount(); 
 
 	int rowBottom = (int) floor((camera->GetYCam() + camera->GetHeight() - 1) / (float)GRID_CELL_HEIGHT);
@@ -59,8 +58,10 @@ void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 				{
 					if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetIdTake() != IdTakeNow) // đánh dấu trước khác hiện tại
 					{
-						ListObj.push_back(cells[row + GRID_BASE][col + GRID_BASE].at(i)); 
 						cells[row + GRID_BASE][col + GRID_BASE].at(i)->SetIdTake(IdTakeNow); // lấy và đánh dấu lại
+
+						ListObj.push_back(cells[row + GRID_BASE][col + GRID_BASE].at(i)); 
+						
 					}
 				}
 			}
@@ -100,7 +101,7 @@ void Grid::GetListObject(vector<GameObject*> &ListObj, GameObject * obj)
 }
  
 void Grid::Insert(int id, int type, int direction, int x, int y, int w, int h, int Model)
-{ 
+{  
 	int Top = (int) floor( y / (float)GRID_CELL_HEIGHT);
 	int Bottom = (int)floor((y + h) / (float)GRID_CELL_HEIGHT);
 
