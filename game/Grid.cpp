@@ -2,7 +2,7 @@
  
 Grid::Grid()
 {
-
+	Count = 0;
 }
  
 Grid::~Grid()
@@ -12,12 +12,12 @@ Grid::~Grid()
 	//	delete (*it);
 	//} 
 	//listObjectGame.clear();
+	
 }
 
 void Grid::ReadFileToGrid(char * filename)
 {
-	listObjectGame.clear();
-	ifstream inp;
+ 	ifstream inp;
 	inp.open(filename, ios::in);
 	 
 	int id, type, direction, x, y, w, h, model;
@@ -40,13 +40,25 @@ void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 {
 	ListObj.clear(); // clear list
 	  
-	DWORD IdTakeNow = GetTickCount(); 
+	//DWORD IdTakeNow = GetTickCount(); 
+	if (Count >= MAXDWORD)
+	{
+		Count = 0;
+		for (UINT i = 0; i < listGameObject.size(); i++) // reset IdTake
+		{
+			listGameObject[i]->SetIdTake(0);
+		}
+	}
+		
+	Count++;
+	DWORD IdTakeNow = Count;
 
-	int rowBottom = (int) floor((camera->GetYCam() + camera->GetHeight() - 1) / (float)GRID_CELL_HEIGHT);
-	int rowTop = (int)floor((camera->GetYCam() + 1) / (float)GRID_CELL_HEIGHT);
 
-	int colLeft = (int)floor((camera->GetXCam() + 1) / (float)GRID_CELL_WIDTH);
-	int colRight = (int)floor((camera->GetXCam() + camera->GetWidth() -1) / (float)GRID_CELL_WIDTH);
+	int rowBottom = (int) floor((camera->GetYCam() + camera->GetHeight() - 1) / (float)(GRID_CELL_HEIGHT));
+	int rowTop = (int)floor((camera->GetYCam() + 1) / (float)(GRID_CELL_HEIGHT));
+
+	int colLeft = (int)floor((camera->GetXCam() + 1) / (float)(GRID_CELL_WIDTH));
+	int colRight = (int)floor((camera->GetXCam() + camera->GetWidth() -1) / (float)(GRID_CELL_WIDTH));
 
 
 	for (int row = rowTop; row <= rowBottom; row++)
@@ -68,58 +80,25 @@ void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 		}
 }
 
-void Grid::GetListObject(vector<GameObject*> &ListObj, GameObject * obj)
-{
-	ListObj.clear(); // clear list
-	//ResetTake();
-
-	DWORD IdTakeNow = GetTickCount();
-
-	int rowBottom = (int)floor((obj->GetY() + obj->GetHeight() -1 ) / (float)GRID_CELL_HEIGHT);
-	int rowTop = (int)floor((obj->GetY()) / (float)GRID_CELL_HEIGHT);
-
-	int colLeft = (int)floor((obj->GetX()) / (float)GRID_CELL_WIDTH);
-	int colRight = (int)floor((obj->GetX() + obj->GetWidth() -1) / (float)GRID_CELL_WIDTH);
-
-
-	for (int row = rowTop; row <= rowBottom; row++)
-		for (int col = colLeft; col <= colRight; col++)
-		{
-			for (UINT i = 0; i < cells[row + GRID_BASE][col + GRID_BASE].size(); i++)
-			{
-				if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetHealth() > 0) // còn tồn tại
-				{
-					if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetIdTake() != IdTakeNow)
-					{
-						ListObj.push_back(cells[row + GRID_BASE][col + GRID_BASE].at(i));
-
-						cells[row + GRID_BASE][col + GRID_BASE].at(i)->SetIdTake(IdTakeNow);
-					}
-				}
-			}
-		}
-}
- 
 void Grid::Insert(int id, int type, int direction, int x, int y, int w, int h, int Model)
-{  
-	int Top = (int) floor( y / (float)GRID_CELL_HEIGHT);
-	int Bottom = (int)floor((y + h) / (float)GRID_CELL_HEIGHT);
+{
+	int Top = (int)floor(y / (float)(GRID_CELL_HEIGHT));
+	int Bottom = (int)floor((y + h) / (float)(GRID_CELL_HEIGHT));
 
-	int Left = (int)floor(x / (float)GRID_CELL_WIDTH);
-	int Right = (int)floor((x+w) / (float)GRID_CELL_WIDTH);
+	int Left = (int)floor(x / (float)(GRID_CELL_WIDTH));
+	int Right = (int)floor((x + w) / (float)(GRID_CELL_WIDTH));
 
-	GameObject * dataObject = GetNewObject(type, x, y, w, h, Model); 
+	GameObject * dataObject = GetNewObject(type, x, y, w, h, Model);
 	if (dataObject == NULL)
 	{
 		DebugOut(L"[Insert Object GRID Fail] :  Khong tao duoc object!\n");
 		return;
-	} 
+	}
 	dataObject->SetId(id);
-	dataObject->SetDirection(direction); 
+	dataObject->SetDirection(direction);
 	dataObject->SetIdTake(0);
 
-	listObjectGame.push_back(dataObject);
-
+ 
 	for (int row = Top; row <= Bottom; row++)
 	{
 		for (int col = Left; col <= Right; col++)
@@ -129,6 +108,7 @@ void Grid::Insert(int id, int type, int direction, int x, int y, int w, int h, i
 	}
 
 }
+
 
 GameObject * Grid::GetNewObject(int type, int x, int y,int w, int h, int Model)
 {

@@ -131,6 +131,8 @@ void Game::InitKeyboard(/*LPKEYEVENTHANDLER handler*/)
 	hr = didv->SetDataFormat(&c_dfDIKeyboard);
 
 	hr = didv->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
+	//hr = didv->SetCooperativeLevel(hWnd, DISCL_EXCLUSIVE | DISCL_NONEXCLUSIVE | DISCL_FOREGROUND | DISCL_BACKGROUND | DISCL_NOWINKEY);
+	 
 
 
 	// IMPORTANT STEP TO USE BUFFERED DEVICE DATA!
@@ -180,7 +182,8 @@ void Game::ProcessKeyboard()
 			{ 
 				DebugOut(L"[INFO] Keyboard re-acquired!\n");
 			}
-			else return;
+			else
+				return;
 		}
 		else
 		{

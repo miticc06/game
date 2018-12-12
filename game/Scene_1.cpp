@@ -296,6 +296,7 @@ void Scene_1::Update(DWORD dt)
 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 	//DebugOut(L"[Grid] ListObject by Camera = %d\n", listObj.size());
+	DebugOut(L"[GRID] size = %d\n", listObj.size());
 
 
 	simon->Update(dt, camera, &listObj);

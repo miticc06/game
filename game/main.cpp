@@ -241,8 +241,7 @@ int Run()
 		DWORD dt = now - frameStart;
 
 		if (dt >= tickPerFrame)
-		{
-		//	DebugOut(L"dt = %d \n ", dt);
+		{ 
 			frameStart = now;
 
 			game->ProcessKeyboard();
@@ -281,7 +280,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 
 	SetWindowPos(hWnd, 0, 0, 0, Window_Width, Window_Height, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-
+ 
 	Run();
 
 	return 0;

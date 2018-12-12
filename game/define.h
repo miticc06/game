@@ -40,7 +40,7 @@ using namespace std;
 
 
 
-#define SCREEN_WIDTH (512+15)
+#define SCREEN_WIDTH 528
 #define SCREEN_HEIGHT 480 
 
 
