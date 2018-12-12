@@ -57,8 +57,10 @@ bool Sound::isPlaying(eSound type)
 
 void Sound::StopAll()
 { 
-	for (auto& x : _ArrSound) { 
-		x.second->Stop(); 
+	for (auto& x : _ArrSound)
+	{   
+		if (x.second->IsSoundPlaying())
+			x.second->Stop(); 
 	} 
 }
 

@@ -61,6 +61,9 @@
 
 #define SIMON_ANI_HURTING 8
 
+#define SIMON_ANI_HIDE_FACE 9
+
+
 #define SIMON_SPEED_ONSTAIR 0.09f//0.08f//0.05f
 
 

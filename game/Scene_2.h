@@ -38,6 +38,7 @@
 #include "ItemThrowingAxe.h"
 #include "InvisibilityPotion.h"
 #include "Cross.h"
+#include "Scene_1.h"
 
 #define GAME_TIME_SCENE2 300
 
@@ -132,11 +133,7 @@
 #pragma endregion
 
 #define CROSS_LIMITTIME 1000 // thời gian tối đa khi dùng Cross
-
-#define STATUS_PROCESS_WAIT_INIT 0 // xử lí chờ vẽ màn đen trước khi bắt đầu
-#define STATUS_PROCESS_WAIT 2 // xử lí chờ vẽ màn đen trước khi bắt đầu
-
-
+ 
 
 class Scene_2 : public Scene
 {
@@ -215,9 +212,13 @@ private:
 	/* xử lí chờ vẽ màn đen khi bắt đầu lại game*/
 	bool isWaitResetGame;
 	DWORD TimeWaitedResetGame;
-
-
-	int StatusProcessState;
+	
+	/* Xử lí gameover*/
+	bool isGameOver;
+	Font Text;
+ 
+	GSprite * _spriteLagerHeart;
+	int GameOverSelect;
 
 public:
 	Scene_2(Simon * _si = NULL, GameTime* _ga = NULL);

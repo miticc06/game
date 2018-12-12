@@ -3,7 +3,7 @@
 
 
 Scene_1::Scene_1()
-{  
+{
 	LoadResources();
 }
 
@@ -12,7 +12,7 @@ Scene_1::~Scene_1()
 {
 	SAFE_DELETE(TileMap);
 	SAFE_DELETE(board);
-	SAFE_DELETE(gridGame); 
+	SAFE_DELETE(gridGame);
 
 }
 
@@ -23,6 +23,11 @@ void Scene_1::KeyState(BYTE * state)
 		return;
 	}
 
+
+	if (simon->isDeadth || isWaitResetGame || isGameOver)
+	{
+		return;
+	}
 
 
 	if (simon->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
@@ -50,7 +55,7 @@ void Scene_1::KeyState(BYTE * state)
 	}
 	else
 		simon->Stop();
-	
+
 	if (simon->isJumping)
 		return;
 
@@ -63,7 +68,7 @@ void Scene_1::KeyState(BYTE * state)
 			simon->SetSpeed(0, vy);
 			return;
 		}
-			
+
 		simon->Right();
 		simon->Go();
 	}
@@ -84,7 +89,7 @@ void Scene_1::KeyState(BYTE * state)
 		{
 			simon->Stop();
 		}
-  
+
 
 }
 
@@ -95,12 +100,47 @@ void Scene_1::OnKeyDown(int KeyCode)
 		return;
 	}
 
-	// chưa xét khi hết time hoặc die thì sao?
+	if (isGameOver)
+	{
+		switch (KeyCode)
+		{
+		case DIK_UP:
+		{
+			GameOverSelect = GAMEOVER_SELECT_CONTINUE;
+			break;
+		}
+		case DIK_DOWN:
+		{
+			GameOverSelect = GAMEOVER_SELECT_END;
+			break;
+		}
+		case DIK_RETURN:
+		{
+			if (GameOverSelect == GAMEOVER_SELECT_CONTINUE)
+			{
+				SceneManager::GetInstance()->SetScene(new Scene_1());
+			}
+			else
+				if (GameOverSelect == GAMEOVER_SELECT_END)
+				{
+					DestroyWindow(Game::GetInstance()->GetWindowHandle()); // thoát
+				}
+			break;
+		}
+		}
 
 
+		return;
+	}
 
 
-//	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	if (simon->isDeadth || isWaitResetGame)
+	{
+		return;
+	}
+
+
+	//	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
 	if (KeyCode == DIK_ESCAPE)
 		DestroyWindow(/*hWnd*/ Game::GetInstance()->GetWindowHandle()); // thoát
@@ -122,14 +162,14 @@ void Scene_1::OnKeyDown(int KeyCode)
 	{
 		POINT p;
 		GetCursorPos(&p);
-  		ScreenToClient(Game::GetInstance()->GetWindowHandle(), &p);
-		DebugOut(L"[MOUSE POSITION] x: %d , y = %d\n", p.x + (int)camera->GetXCam(), p.y+ (int)camera->GetYCam());
+		ScreenToClient(Game::GetInstance()->GetWindowHandle(), &p);
+		DebugOut(L"[MOUSE POSITION] x: %d , y = %d\n", p.x + (int)camera->GetXCam(), p.y + (int)camera->GetYCam());
 
 	}
 
 
 	if (KeyCode == DIK_3) // set vi tri simon 1275 
-	{ 
+	{
 		DebugOut(L"[SET POSITION SIMON] x = 1275 \n");
 		simon->SetPosition(1275.0f, 0);
 	}
@@ -167,7 +207,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 	if (KeyCode == DIK_Z)
 	{
-		if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == true && simon->GetHeartCollect()>0)
+		if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == true && simon->GetHeartCollect() > 0)
 		{
 			simon->SetHeartCollect(simon->GetHeartCollect() - 1); // giảm 1 heart
 			simon->Attack(simon->_weaponSub);
@@ -179,11 +219,11 @@ void Scene_1::OnKeyDown(int KeyCode)
 	{
 		return;
 	}
-	
-	
 
 
- 
+
+
+
 	if (KeyCode == DIK_SPACE && simon->isOnStair == false)
 	{
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_RIGHT))
@@ -208,6 +248,11 @@ void Scene_1::OnKeyUp(int KeyCode)
 		return;
 	}
 
+	if (simon->isDeadth || isWaitResetGame)
+	{
+		return;
+	}
+
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 
 	switch (KeyCode)
@@ -217,10 +262,10 @@ void Scene_1::OnKeyUp(int KeyCode)
 		break;
 	}
 }
-  
+
 
 void Scene_1::LoadResources()
-{   
+{
 	TextureManager * _textureManager = TextureManager::GetInstance(); // Đã gọi load resource
 	sound = Sound::GetInstance();
 
@@ -241,25 +286,63 @@ void Scene_1::LoadResources()
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
 	simon->SetPositionBackup(SIMON_POSITION_DEFAULT);
 
+
+	_gameTime = new GameTime();
+
+	_spriteLagerHeart = new GSprite(TextureManager::GetInstance()->GetTexture(eType::LARGEHEART), 100);
+
+
+	ResetResource();
+}
+
+
+void Scene_1::ResetResource()
+{
+	SAFE_DELETE(gridGame);
 	gridGame = new Grid();
-	gridGame->ReadFileToGrid("Resources\\map\\Obj_1.txt"); // đọc các object từ file vào Grid
-
-
+	gridGame->ReadFileToGrid("Resources/map/Obj_1.txt"); // đọc lại các object từ list
 
 	listItem.clear();
 	listEffect.clear();
 
-	_gameTime = new GameTime();
 	_gameTime->SetTime(0); // đếm lại từ 0
 
-	 
-	// bật nhạc game
-	sound->Play(eSound::musicState1, true);
-	 
+	sound->StopAll();
+
+
+	sound->Play(eSound::musicState1, true); // mở lại nhạc nền
+
+											/* Set Chờ hiển thị màn đen */
+	isWaitResetGame = true;
+	TimeWaitedResetGame = 0;
+
+	/*init gameover*/
+	isGameOver = false;
+	GameOverSelect = GAMEOVER_SELECT_CONTINUE;
 }
+
 
 void Scene_1::Update(DWORD dt)
 {
+	if (isGameOver)
+		return;
+
+
+#pragma region xử lí vẽ màn đen trước khi bắt đầu game
+	if (isWaitResetGame)
+	{
+		TimeWaitedResetGame += dt;
+		if (TimeWaitedResetGame >= 400)
+		{
+			isWaitResetGame = false;
+
+		}
+		else
+			return;
+	}
+#pragma endregion
+
+
 	if (simon->GetFreeze() == true)
 	{
 		simon->UpdateFreeze(dt);
@@ -270,22 +353,52 @@ void Scene_1::Update(DWORD dt)
 
 	if (_gameTime->GetTime() >= GAME_TIME_SCENE1) // hết thời gian
 	{
-		sound->Play(eSound::musicLifeLost);
-		if (simon->GetLives() == 0)
-			return;
-		bool result = simon->LoseLife();
-		if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
+		if (simon->isDeadth)
 		{
-			ResetResource(); // reset lại game
+			simon->TimeWaitedAfterDeath += dt;
+			if (simon->TimeWaitedAfterDeath >= 1500)
+			{
+				if (simon->GetLives() == 0)
+				{
+					isGameOver = true;
+				}
+				else
+				{
+					bool result = simon->LoseLife(); // đã khôi phục x,y
+					simon->isDeadth = false;
+					camera->RestorePosition(); // khôi phục vị trí camera;
+					camera->RestoreBoundary(); // khôi phục biên camera
+
+					if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
+					{
+						ResetResource(); // reset lại game
+					}
+				}
+				return;
+			}
 		}
-		return;
+		else // chưa chết mà hết máu hoặc time thì set trạng thái isDeadth
+		{
+
+			simon->SetDeadth();
+		}
+
+		//sound->Play(eSound::musicLifeLost);
+		//if (simon->GetLives() == 0)
+		//	return;
+		//bool result = simon->LoseLife();
+		//if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
+		//{
+		//	ResetResource(); // reset lại game
+		//}
+		//return;
 	}
 	else
 		_gameTime->Update(dt);
 
 
 
-	if (GAME_TIME_SCENE1 - _gameTime->GetTime() <= 30 ) // đúng còn lại 30 giây thì bật sound loop
+	if (GAME_TIME_SCENE1 - _gameTime->GetTime() <= 30) // đúng còn lại 30 giây thì bật sound loop
 	{
 		if (_gameTime->CheckIsJustChanged() == true) // Kiểm tra _time vừa thay đổi thì mới play nhạc. Nếu chỉ kt <=30s thì cứ mỗi deltatime nó sẽ Play nhạc -> thừa, ko đều
 		{
@@ -304,14 +417,14 @@ void Scene_1::Update(DWORD dt)
 	if (camera->AllowFollowSimon())
 	{
 		camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
-	} 
+	}
 	camera->Update(dt);
 
 	for (UINT i = 0; i < listObj.size(); i++)
 		listObj[i]->Update(dt, &listObj);  // đã kiểm tra "Alive" lúc lấy từ lưới ra
 
 	for (UINT i = 0; i < listItem.size(); i++)
-		if (listItem[i]->GetFinish()== false)
+		if (listItem[i]->GetFinish() == false)
 			listItem[i]->Update(dt, &listObj); // trong các hàm update chỉ kiểm tra va chạm với đất
 
 	for (UINT i = 0; i < listEffect.size(); i++)
@@ -322,47 +435,57 @@ void Scene_1::Update(DWORD dt)
 }
 
 
-
-
-
 void Scene_1::Render()
 {
 
-	TileMap->DrawMap(camera);
+	if (isWaitResetGame) // vẽ màn đen trước khi bắt đầu game
+		return; // thoát và ko vẽ gì
 
 
-	for (UINT i = 0; i < listObj.size(); i++)
-		listObj[i]->Render(camera);
+	if (!isGameOver)
+	{
+		TileMap->DrawMap(camera);
 
-	for (UINT i = 0; i < listItem.size(); i++)
-		if (listItem[i]->GetFinish()==false)
-			listItem[i]->Render(camera);
-	 
-	for (UINT i = 0; i < listEffect.size(); i++)
-		if (listEffect[i]->GetFinish() == false)
-			listEffect[i]->Render(camera);
 
-	simon->Render(camera);
- 
+		for (UINT i = 0; i < listObj.size(); i++)
+			listObj[i]->Render(camera);
+
+		for (UINT i = 0; i < listItem.size(); i++)
+			if (listItem[i]->GetFinish() == false)
+				listItem[i]->Render(camera);
+
+		for (UINT i = 0; i < listEffect.size(); i++)
+			if (listEffect[i]->GetFinish() == false)
+				listEffect[i]->Render(camera);
+
+		simon->Render(camera);
+	}
+	else
+	{
+		Text.Draw(200, 200, "GAME OVER");
+		Text.Draw(215, 250, "CONTINUE");
+		Text.Draw(215, 280, "END");
+		switch (GameOverSelect)
+		{
+		case GAMEOVER_SELECT_CONTINUE:
+		{
+			_spriteLagerHeart->Draw(175, 245);
+			break;
+		}
+		case GAMEOVER_SELECT_END:
+		{
+			_spriteLagerHeart->Draw(175, 275);
+			break;
+		}
+		}
+	}
+
 	board->Render(simon, 1, simon->_weaponSub, GAME_TIME_SCENE1 - _gameTime->GetTime(), NULL);
 
 
 
 }
 
-void Scene_1::ResetResource()
-{
-	SAFE_DELETE(gridGame);
-	gridGame = new Grid();
-	gridGame->ReadFileToGrid("Resources/map/Obj_1.txt"); // đọc lại các object từ list
-
-	listItem.clear();
-	listEffect.clear();
-
-	_gameTime->SetTime(0); // đếm lại từ 0
-	sound->Stop(eSound::musicState1); // tắt nhạc nền
-	sound->Play(eSound::musicState1, true); // mở lại nhạc nền
-}
 
 void Scene_1::CheckCollision()
 {
@@ -385,10 +508,10 @@ void Scene_1::CheckCollisionWeapon()
 					GameObject *gameObjTorch = listObj[i];
 					gameObjTorch->SubHealth(1);
 
-					listEffect.push_back(new Hit((int)gameObjTorch->GetX()+14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng Hit
-					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY()+8)); // hiệu ứng lửa
-					
-					listItem.push_back(GetNewItem(gameObjTorch->GetId(), gameObjTorch->GetType(), gameObjTorch->GetX() +5, gameObjTorch->GetY()));
+					listEffect.push_back(new Hit((int)gameObjTorch->GetX() + 14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng Hit
+					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY() + 8)); // hiệu ứng lửa
+
+					listItem.push_back(GetNewItem(gameObjTorch->GetId(), gameObjTorch->GetType(), gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
 
 					sound->Play(eSound::soundHit);
 				}
@@ -402,7 +525,7 @@ void Scene_1::CheckCollisionWeapon()
 			if (listObj[i]->GetType() == eType::TORCH)
 				if (simon->_weaponSub->isCollision(listObj[i]) == true)
 				{
-					GameObject *gameObjTorch = listObj[i] ;
+					GameObject *gameObjTorch = listObj[i];
 
 					gameObjTorch->SubHealth(1);
 
@@ -437,7 +560,7 @@ void Scene_1::CheckCollisionSimonWithItem()
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
 					break;
-				}  
+				}
 
 				case eType::UPGRADEMORNINGSTAR:
 				{
@@ -448,12 +571,12 @@ void Scene_1::CheckCollisionSimonWithItem()
 					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
- 
+
 				case eType::ITEMDAGGER:
 				{
 					SAFE_DELETE(simon->_weaponSub);
 					simon->_weaponSub = new Dagger(camera);
- 					listItem[i]->SetFinish(true);
+					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
@@ -465,11 +588,11 @@ void Scene_1::CheckCollisionSimonWithItem()
 					simon->SetScore(simon->GetScore() + 1000);
 					break;
 				}
-				 
+
 				default:
 					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
 					break;
-				} 
+				}
 			}
 		}
 
@@ -487,14 +610,14 @@ void Scene_1::CheckCollisionSimonWithObjectHidden()
 		{
 			GameObject * gameObject = listObj[i];
 			if (gameObject->GetHealth() > 0)
-			{ 
+			{
 				if (simon->isCollitionObjectWithObject(gameObject))
 				{
 					switch (gameObject->GetId())
 					{
 					case 7: // đụng trúng cửa
 					{
-						 
+
 						SceneManager::GetInstance()->SetScene(new Scene_2(simon, _gameTime));
 
 						return;
@@ -506,14 +629,14 @@ void Scene_1::CheckCollisionSimonWithObjectHidden()
 						sound->Play(eSound::soundDisplayMonney);
 						listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), simon->GetX(), simon->GetY()));
 						// chưa hiện effect 1000d
-						
+
 
 						break;
 					}
 					}
 
 
-					gameObject->SubHealth(1); 
+					gameObject->SubHealth(1);
 
 				}
 			}

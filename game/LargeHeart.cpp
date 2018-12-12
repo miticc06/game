@@ -4,10 +4,11 @@
  
 LargeHeart::LargeHeart(float X, float Y)
 {
- 	_texture = TextureManager::GetInstance()->GetTexture(eType::LARGEHEART);
+	type = eType::LARGEHEART;
+
+ 	_texture = TextureManager::GetInstance()->GetTexture(type);
 
 	_sprite = new GSprite(_texture, 100);
-	type = eType::LARGEHEART;
 
 	this->x = X;
 	this->y = Y;

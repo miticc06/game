@@ -41,6 +41,18 @@ private:
 	vector <Effect*> listEffect;
 	GameTime * _gameTime;
 
+
+	/* xử lí chờ vẽ màn đen khi bắt đầu lại game*/
+	bool isWaitResetGame;
+	DWORD TimeWaitedResetGame;
+
+	/* Xử lí gameover*/
+	bool isGameOver;
+	Font Text;
+
+	GSprite * _spriteLagerHeart;
+	int GameOverSelect;
+
 public:
 	Scene_1();
 	~Scene_1();

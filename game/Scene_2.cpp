@@ -25,7 +25,7 @@ void Scene_2::KeyState(BYTE * state)
 		return;
 	}
 
-	if (simon->isDeadth == true)
+	if (simon->isDeadth || isWaitResetGame || isGameOver)
 	{
 		return;
 	}
@@ -220,15 +220,45 @@ void Scene_2::OnKeyDown(int KeyCode)
 		return;
 	}
 
-	if (simon->isDeadth == true)
+	if (isGameOver)
 	{
+		switch (KeyCode)
+		{
+		case DIK_UP:
+		{
+			GameOverSelect = GAMEOVER_SELECT_CONTINUE;
+			break;
+		}
+		case DIK_DOWN:
+		{
+			GameOverSelect = GAMEOVER_SELECT_END;
+			break;
+		}
+		case DIK_RETURN:
+		{
+			if (GameOverSelect == GAMEOVER_SELECT_CONTINUE)
+			{
+				SceneManager::GetInstance()->SetScene(new Scene_1());
+			}
+			else
+				if (GameOverSelect == GAMEOVER_SELECT_END)
+				{
+					DestroyWindow(Game::GetInstance()->GetWindowHandle()); // thoát
+				}
+			break;
+		}
+		}  
+		 
+
 		return;
 	}
 
-	// chưa xét khi hết time hoặc die thì sao?
 
-
-
+	if (simon->isDeadth || isWaitResetGame)
+	{
+		return;
+	} 
+	
 
 //	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
@@ -480,7 +510,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 	if (KeyCode == DIK_F) // create hollywater
 	{
-		simon->SetHealth(16);
+		simon->SetHealth(SIMON_DEFAULT_HEALTH);
 		simon->SetLives(9999);
 		simon->SetHeartCollect(9999);
 		_gameTime->SetTime(0);
@@ -611,7 +641,7 @@ void Scene_2::OnKeyUp(int KeyCode)
 		return;
 	}
 
-	if (simon->isDeadth == true)
+	if (simon->isDeadth || isWaitResetGame || isGameOver)
 	{
 		return;
 	}
@@ -651,8 +681,13 @@ void Scene_2::LoadResources()
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
 	simon->SetPositionBackup(SIMON_POSITION_DEFAULT);
  
+	
+	_spriteLagerHeart = new GSprite(TextureManager::GetInstance()->GetTexture(eType::LARGEHEART), 100);
+	
+	
 	StateCurrent = 1;
 
+	 
 
 	ResetResource();
 
@@ -753,26 +788,19 @@ void Scene_2::ResetResource()
 	isUseInvisibilityPotion = false;
 	isUseCross = false;
 
+	/* Set Chờ hiển thị màn đen */
+	isWaitResetGame = true;
+	TimeWaitedResetGame = 0;
 
-
-	StatusProcessState = STATUS_PROCESS_WAIT_INIT; // vẽ màn đen
-
+	/*init gameover*/
+	isGameOver = false;
+	GameOverSelect = GAMEOVER_SELECT_CONTINUE;
 }
 
 void Scene_2::Update(DWORD dt)
-{
-	switch (StatusProcessState)
-	{
-	case STATUS_PROCESS_WAIT_INIT:
-	{
-
-		break;
-	}
-
-	default:
-		break;
-	}
-
+{ 
+	if (isGameOver)
+		return;
 
 	#pragma region process debug
 
@@ -781,6 +809,7 @@ void Scene_2::Update(DWORD dt)
 
 	#pragma endregion
 
+#pragma region xử lí vẽ màn đen trước khi bắt đầu game
 	if (isWaitResetGame)
 	{
 		TimeWaitedResetGame += dt;
@@ -789,8 +818,9 @@ void Scene_2::Update(DWORD dt)
 			isWaitResetGame = false;
 		}
 		else
-			return;		
+			return;
 	}
+#pragma endregion
 
 #pragma region Process_Freeze
 	if (simon->GetFreeze() == true)
@@ -801,7 +831,7 @@ void Scene_2::Update(DWORD dt)
 	}
 #pragma endregion
 
-	ProcessClearState3(dt);
+	ProcessClearState3(dt); // xử lí sau khi diệt xong boss
 	ProcessInvisibilityPotion(dt);
 	ProcessCross(dt); 
 
@@ -819,29 +849,27 @@ void Scene_2::Update(DWORD dt)
 				if (simon->TimeWaitedAfterDeath >= 1500)
 				{
 					if (simon->GetLives() == 0)
-						return;
-
-					bool result = simon->LoseLife(); // đã khôi phục x,y
-					simon->isDeadth = false;
-					camera->RestorePosition(); // khôi phục vị trí camera;
-					camera->RestoreBoundary(); // khôi phục biên camera
-
-					if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
 					{
-						ResetResource(); // reset lại game
+						isGameOver = true;
 					}
+					else
+					{
+						bool result = simon->LoseLife(); // đã khôi phục x,y
+						simon->isDeadth = false;
+						camera->RestorePosition(); // khôi phục vị trí camera;
+						camera->RestoreBoundary(); // khôi phục biên camera
 
-					/* Set Chờ hiển thị màn đen */
-					TimeWaitedResetGame = 0;
-					isWaitResetGame = true;
-
-					return;
+						if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
+						{
+							ResetResource(); // reset lại game
+						} 
+					}
+					return;					
 				}
 			}
 			else // chưa chết mà hết máu hoặc time thì set trạng thái isDeadth
 			{ 
-				sound->Play(eSound::musicLifeLost); 
-				simon->SetDeadth(); 
+ 				simon->SetDeadth(); 
 			}
 			 
 		}
@@ -1260,7 +1288,7 @@ void Scene_2::Update(DWORD dt)
 		if (listEffect[i]->GetFinish() == false)
 			listEffect[i]->Update(dt);
 
-	if (!isStopWatch)
+	if (!isStopWatch) // đang dùng stopwatch thì không update enemy
 	{
 		for (UINT i = 0; i < listEnemy.size(); i++)
 		{
@@ -1388,48 +1416,67 @@ void Scene_2::Update(DWORD dt)
 		CheckCollision();
 	}
 
-	
-
-
-
+	 
 }
 
 void Scene_2::Render()
 { 
 
-	if (isWaitResetGame)
+	if (isWaitResetGame) // vẽ màn đen trước khi bắt đầu game
 		return; // thoát và ko vẽ gì
 
 
-	TileMap->DrawMap(camera);
+	if (!isGameOver)
+	{ 
 
-	for (UINT i = 0; i < listObj.size(); i++)
-		listObj[i]->Render(camera);
+		TileMap->DrawMap(camera);
 
-	for (UINT i = 0; i < listItem.size(); i++)
-		if (listItem[i]->GetFinish() == false)
-			listItem[i]->Render(camera);
+		for (UINT i = 0; i < listObj.size(); i++)
+			listObj[i]->Render(camera);
 
-	for (UINT i = 0; i < listEffect.size(); i++)
-		if (listEffect[i]->GetFinish() == false)
-			listEffect[i]->Render(camera);
+		for (UINT i = 0; i < listItem.size(); i++)
+			if (listItem[i]->GetFinish() == false)
+				listItem[i]->Render(camera);
 
-	for (UINT i = 0; i < listEnemy.size(); i++)
-		listEnemy[i]->Render(camera);
+		for (UINT i = 0; i < listEffect.size(); i++)
+			if (listEffect[i]->GetFinish() == false)
+				listEffect[i]->Render(camera);
 
-	
-	 
-
-	simon->Render(camera);
-
-	if (boss != NULL)
-		boss->Render(camera);
+		for (UINT i = 0; i < listEnemy.size(); i++)
+			listEnemy[i]->Render(camera);
 
 
-	for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
-		listWeaponOfEnemy[i]->Render(camera);
+		simon->Render(camera);
+
+		if (boss != NULL)
+			boss->Render(camera);
+
+
+		for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
+			listWeaponOfEnemy[i]->Render(camera);
+	}
+	else
+	{
+		Text.Draw(200, 200, "GAME OVER");
+		Text.Draw(215, 250, "CONTINUE");
+		Text.Draw(215, 280, "END");
+		switch (GameOverSelect)
+		{
+		case GAMEOVER_SELECT_CONTINUE:
+		{
+			_spriteLagerHeart->Draw(175, 245);
+			break;
+		}
+		case GAMEOVER_SELECT_END:
+		{
+			_spriteLagerHeart->Draw(175, 275);
+			break;
+		}
+		} 
+	}
 
 	board->Render(simon, StateCurrent, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime(), boss);
+
 
 }
 
@@ -1830,8 +1877,6 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 #pragma endregion
 
-
-
 }
 
 void Scene_2::CheckCollisionSimonWithItem()
@@ -1900,7 +1945,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 				{
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
-					simon->SetHealth(min(simon->GetHealth() + 6, 16)); // tăng 6 đơn vị máu
+					simon->SetHealth(min(simon->GetHealth() + 6, SIMON_DEFAULT_HEALTH)); // tăng 6 đơn vị máu
 					break;
 				}
 
@@ -2495,14 +2540,14 @@ void Scene_2::ProcessClearState3(DWORD dt)
 	{ 
 		switch (StatusProcessClearState3)
 		{
-		case CLEARSTATE3_PROCESS_HEALTH:
+		case CLEARSTATE3_PROCESS_HEALTH: 
 		{
 			TimeWaited_ClearState3 += dt;
 			if (TimeWaited_ClearState3 >= CLEARSTATE3_LIMITTIMEWAIT_PROCESS_HEALTH)
 			{
 				TimeWaited_ClearState3 = 0;
 
-				if (simon->GetHealth() < 16)
+				if (simon->GetHealth() < SIMON_DEFAULT_HEALTH)
 				{
 					simon->SetHealth(simon->GetHealth() + 1);
 				}

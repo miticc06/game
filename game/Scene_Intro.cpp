@@ -109,7 +109,7 @@ void Scene_Intro::Update(DWORD dt)
 		}
 		else
 		{
-			simon->GetSprite()->SelectIndex(9);
+			simon->GetSprite()->SelectIndex(SIMON_ANI_HIDE_FACE);
 		}
 
 		heliCopter->Update(dt);

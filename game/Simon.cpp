@@ -82,20 +82,8 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 		x = (float)(camera->GetBoundaryRight() + Window_Width - SIMON_BBOX_WIDTH);
 	/* Không cho lọt khỏi camera */
 
-	if (Health <= 0)
-		isDeadth = true;
-
-	if (isDeadth)
-	{
-		if (isCollisionAxisYWithBrick)
-		{
-
-
-
-
-		}
-	}
-
+//	if (Health <= 0)
+//		isDeadth = true; 
 
 #pragma region Update về sprite
 	 
@@ -454,7 +442,7 @@ void Simon::Sit()
 	isWalking = 0;
 
 	if (isSitting == false) // nếu trước đó simon chưa ngồi
-		y = y + 16; // kéo simon xuống
+		y = y + PULL_UP_SIMON_AFTER_SITTING; // kéo simon xuống
 
 	isSitting = 1;
 }
@@ -968,5 +956,8 @@ void Simon::SetDeadth()
 	vx = 0;
 	isWalking = 0;
 	isOnStair = 0;
+
+	Sound::GetInstance()->Play(eSound::musicLifeLost);
+
 	Stop();
 }

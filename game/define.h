@@ -46,7 +46,7 @@ using namespace std;
 
 #define IS_DEBUG_RENDER_BBOX 1
 
-#define MAX_FRAME_RATE 60
+#define MAX_FRAME_RATE 90
 
 #define COLOR_BACKGROUND_DEFAULT D3DCOLOR_XRGB(0, 0, 0) // Màu đen 0, 0, 0
  
@@ -154,9 +154,6 @@ enum eType
 };
 
 
-
- 
-
  
  
 
@@ -168,6 +165,8 @@ typedef D3DXVECTOR2 GVector2;
 
 
 
+#define GAMEOVER_SELECT_CONTINUE 0
+#define GAMEOVER_SELECT_END 1
 
 
 
