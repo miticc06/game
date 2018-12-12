@@ -11,7 +11,6 @@ Scene_2::Scene_2(Simon * _si, GameTime* _ga)
 
 }
 
-
 Scene_2::~Scene_2()
 {
 	SAFE_DELETE(TileMap);
@@ -22,6 +21,11 @@ Scene_2::~Scene_2()
 void Scene_2::KeyState(BYTE * state)
 {
 	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
+	{
+		return;
+	}
+
+	if (simon->isDeadth == true)
 	{
 		return;
 	}
@@ -109,7 +113,7 @@ void Scene_2::KeyState(BYTE * state)
 							if (simon->isCollitionObjectWithObject(listObj[i]) 
 								//&& simon->isCheckCollisionAxisY_WithBrickSweptAABB(&listObj)
 								&&
-								simon->isCheckCollisionAxisYWithBrick
+								simon->isCollisionAxisYWithBrick
 								) // nếu va chạm với STAIR TOP
 							{
 								GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
@@ -216,7 +220,10 @@ void Scene_2::OnKeyDown(int KeyCode)
 		return;
 	}
 
-
+	if (simon->isDeadth == true)
+	{
+		return;
+	}
 
 	// chưa xét khi hết time hoặc die thì sao?
 
@@ -604,6 +611,11 @@ void Scene_2::OnKeyUp(int KeyCode)
 		return;
 	}
 
+	if (simon->isDeadth == true)
+	{
+		return;
+	}
+
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 
 	switch (KeyCode)
@@ -629,26 +641,23 @@ void Scene_2::LoadResources()
 	TileMap->LoadMap(eType::MAP2);
 
 	camera = SceneManager::GetInstance()->GetCamera();
-	
 	camera->SetPosition(0, 0);
 
 	camera->SetBoundary(0, CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT); // biên camera khi chưa qua cửa
+	camera->SetBoundaryBackup(0, CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT); // biên camera khi chưa qua cửa
 
 	board = new Board(BOARD_DEFAULT_POSITION_X, BOARD_DEFAULT_POSITION_Y);
 
 	simon->SetPosition(SIMON_POSITION_DEFAULT);
 	simon->SetPositionBackup(SIMON_POSITION_DEFAULT);
+ 
+	StateCurrent = 1;
 
-	gridGame = new Grid();
-	gridGame->ReadFileToGrid("Resources/map/Obj_2.txt"); // đọc các object từ file vào Grid
-	 
-	listItem.clear();
-	listEffect.clear();
-	listEnemy.clear();
-	// chưa thu hồi bộ nhớ?
 
-	listWeaponOfEnemy.clear();
+	ResetResource();
 
+
+	/*
 	// bật nhạc game
 	if (sound->isPlaying(eSound::musicState1) == false)
 		sound->Play(eSound::musicState1, true);
@@ -687,6 +696,8 @@ void Scene_2::LoadResources()
 
 	isUseInvisibilityPotion = false;
 	isUseCross = false;
+
+	*/
 }
  
 void Scene_2::ResetResource()
@@ -709,16 +720,9 @@ void Scene_2::ResetResource()
 
 
 	sound->StopAll();// tắt hết nhạc
-
-	//sound->Stop(eSound::musicState1); // tắt nhạc nền
-
+	 
 	sound->Play(eSound::musicState1, true); // mở lại nhạc nền
-
-	/*if (sound->isPlaying(eSound::music_PhantomBat))
-	{
-		sound->Stop(eSound::music_PhantomBat);
-	} */
-
+	 
 	isAllowRenewPanther = true;
 	CountEnemyPanther = 0;
 
@@ -749,17 +753,45 @@ void Scene_2::ResetResource()
 	isUseInvisibilityPotion = false;
 	isUseCross = false;
 
+
+
+	StatusProcessState = STATUS_PROCESS_WAIT_INIT; // vẽ màn đen
+
 }
 
 void Scene_2::Update(DWORD dt)
 {
-#pragma region process debug
+	switch (StatusProcessState)
+	{
+	case STATUS_PROCESS_WAIT_INIT:
+	{
+
+		break;
+	}
+
+	default:
+		break;
+	}
+
+
+	#pragma region process debug
 
 	if (isDebug_Untouchable == 1)
 		simon->StartUntouchable();
 
-#pragma endregion
-	 
+	#pragma endregion
+
+	if (isWaitResetGame)
+	{
+		TimeWaitedResetGame += dt;
+		if (TimeWaitedResetGame >= 400)
+		{
+			isWaitResetGame = false;
+		}
+		else
+			return;		
+	}
+
 #pragma region Process_Freeze
 	if (simon->GetFreeze() == true)
 	{
@@ -771,7 +803,8 @@ void Scene_2::Update(DWORD dt)
 
 	ProcessClearState3(dt);
 	ProcessInvisibilityPotion(dt);
-	ProcessCross(dt);
+	ProcessCross(dt); 
+
 
 	if (!isAllowProcessClearState3)
 	{
@@ -780,18 +813,37 @@ void Scene_2::Update(DWORD dt)
 #pragma region Process_Gametime_OR_Health
 		if (_gameTime->GetTime() >= GAME_TIME_SCENE2 || simon->GetHealth() <= 0) // hết thời gian hoặc hết máu
 		{
-			sound->Play(eSound::musicLifeLost);
-			if (simon->GetLives() == 0)
-				return;
-			bool result = simon->LoseLife(); // đã khôi phục x,y
+			if (simon->isDeadth) 
+			{ 
+				simon->TimeWaitedAfterDeath += dt;
+				if (simon->TimeWaitedAfterDeath >= 1500)
+				{
+					if (simon->GetLives() == 0)
+						return;
 
-			camera->RestorePosition(); // khôi phục vị trí camera;
-			camera->RestoreBoundary();
-			if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
-			{
-				ResetResource(); // reset lại game
+					bool result = simon->LoseLife(); // đã khôi phục x,y
+					simon->isDeadth = false;
+					camera->RestorePosition(); // khôi phục vị trí camera;
+					camera->RestoreBoundary(); // khôi phục biên camera
+
+					if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
+					{
+						ResetResource(); // reset lại game
+					}
+
+					/* Set Chờ hiển thị màn đen */
+					TimeWaitedResetGame = 0;
+					isWaitResetGame = true;
+
+					return;
+				}
 			}
-			return;
+			else // chưa chết mà hết máu hoặc time thì set trạng thái isDeadth
+			{ 
+				sound->Play(eSound::musicLifeLost); 
+				simon->SetDeadth(); 
+			}
+			 
 		}
 		else
 		{
@@ -889,7 +941,7 @@ void Scene_2::Update(DWORD dt)
 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 
-	DebugOut(L"[GRID] size = %d\n", listObj.size());
+	//DebugOut(L"[GRID] size = %d\n", listObj.size());
 
 	for (UINT i = 0; i < listObj.size(); i++)
 	{
@@ -910,7 +962,7 @@ void Scene_2::Update(DWORD dt)
 
 	camera->Update(dt);
 
-	 
+	
 
 #pragma region Process_Region_Create_Enemy_Ghost
 
@@ -1331,9 +1383,12 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 
 
-	
+	if (!simon->isDeadth)
+	{
+		CheckCollision();
+	}
 
-	CheckCollision();
+	
 
 
 
@@ -1341,6 +1396,11 @@ void Scene_2::Update(DWORD dt)
 
 void Scene_2::Render()
 { 
+
+	if (isWaitResetGame)
+		return; // thoát và ko vẽ gì
+
+
 	TileMap->DrawMap(camera);
 
 	for (UINT i = 0; i < listObj.size(); i++)
@@ -1370,8 +1430,6 @@ void Scene_2::Render()
 		listWeaponOfEnemy[i]->Render(camera);
 
 	board->Render(simon, StateCurrent, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime(), boss);
-
-
 
 }
 
@@ -2137,16 +2195,27 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 			if (gameobj->GetHealth() > 0) // còn sống
 			{
 				LPCOLLISIONEVENT e = simon->SweptAABBEx(gameobj);
+				bool isCollision = false;
 				if (e->t > 0 && e->t <= 1) // có va chạm
 				{
 					simon->SetHurt(e);
-					return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
+					isCollision = true;
 				} 
-				if (simon->checkAABB(gameobj) == true)
+				if (isCollision == false && simon->checkAABB(gameobj) == true)
 				{
 					LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetDirection(), 0, NULL);
-					simon->SetHurt(e);
-					return;
+					simon->SetHurt(e); 
+					isCollision = true;
+				}
+
+				if (isCollision)
+				{
+					if (gameobj->GetType() == eType::BAT)
+					{
+						listEffect.push_back(new Fire((int)gameobj->GetX() - 5, (int)gameobj->GetY() + 8)); // hiệu ứng lửa
+						gameobj->SetHealth(0);
+					}
+					return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
 				}
 			}
 		}

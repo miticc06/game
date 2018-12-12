@@ -81,6 +81,9 @@
 class Simon : public GameObject
 {
 private:
+	GSprite * _sprite_deadth;
+
+
 	int HeartCollect; // số lượng item heart người chơi nhặt được
 	int Lives;
 	int score;
@@ -109,6 +112,7 @@ private:
 	bool isAutoGoX = 0; // đang ở chế độ auto go?
 
 
+
 public:
 	bool isWalking;
 	bool isJumping;
@@ -128,7 +132,11 @@ public:
 	DWORD untouchable_start;
 
 
-	bool isCheckCollisionAxisYWithBrick = false; // Đang va chạm với đất theo tr
+	bool isCollisionAxisYWithBrick = false; // Đang va chạm với đất theo trục y
+
+
+	bool isDeadth;
+	DWORD TimeWaitedAfterDeath;
 
 public:
 	Simon();
@@ -144,7 +152,10 @@ public:
 	void Left();  // set lại hướng của simon
 	void Right(); // set lại hướng của simon
 	void Go();
+	
 	void Sit();
+	void ResetSit();
+
 	void Jump();
 	void Stop();
 
@@ -182,6 +193,8 @@ public:
 	bool LoseLife(); // thiết lập lại 1 số thứ sau khi simon mất mạng
 	void SetPositionBackup(float X, float Y);  // lưu vị trí cần backup để simon die thì bắt đầu lại từ đây
 
+
+	void SetDeadth();
 };
 
 

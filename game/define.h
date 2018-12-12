@@ -46,7 +46,7 @@ using namespace std;
 
 #define IS_DEBUG_RENDER_BBOX 1
 
-#define MAX_FRAME_RATE 90
+#define MAX_FRAME_RATE 60
 
 #define COLOR_BACKGROUND_DEFAULT D3DCOLOR_XRGB(0, 0, 0) // Màu đen 0, 0, 0
  
@@ -75,6 +75,7 @@ enum eType
 {
 	SIMON = 01,
 	SIMON_TRANS = 02,
+	SIMON_DEADTH = 03,
 
 	// object nền
 	BRICK = 21,
@@ -155,15 +156,7 @@ enum eType
 
 
  
- 
-enum eDirection
-{
-	NONE = 0,
-	TOP = (1 << 0),
-	LEFT = (1 << 1),
-	RIGHT = (1 << 2),
-	BOTTOM = (1 << 3)
-};
+
  
  
 

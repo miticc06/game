@@ -1,7 +1,6 @@
 ﻿#ifndef __SCENE_2_H__
 #define __SCENE_2_H__
-
-
+ 
 #include "Scene.h"
 #include "Camera.h"
 #include "GSprite.h"
@@ -39,11 +38,11 @@
 #include "ItemThrowingAxe.h"
 #include "InvisibilityPotion.h"
 #include "Cross.h"
+
 #define GAME_TIME_SCENE2 300
 
 #define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo
 #define ThoiGianChoDeXuLiTaoGhost 2500 // 2.5 giây
-
 
 #define GATE1_POSITION_CAM_BEFORE_GO 2809.0f
 #define GATE1_POSITION_CAM_AFTER_GO 3073.0f
@@ -53,8 +52,7 @@
 
 #define DISTANCE_AUTO_WALK_AFTER_GATE 80.0f // simon phải tự đi 80px sau khi chạm vào cửa
  
-
-#define CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT 2576.0f-15.0f // Biên phải camera trước khi qua cửa 1
+#define CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT (2576.0f-15.0f) // Biên phải camera trước khi qua cửa 1
  
 
 
@@ -64,9 +62,9 @@
 #define CAMERA_POSITION_Y_LAKE 374.0f
   
 #define CAMERA_BOUNDARY_LAKE_LEFT 3075.0f
-#define CAMERA_BOUNDARY_LAKE_RIGHT 4111.0f-Window_Width
+#define CAMERA_BOUNDARY_LAKE_RIGHT (4111.0f-Window_Width)
  
-#define CAMERA_BOUNDARY_BOSS_RIGHT 5648.0f - Window_Width
+#define CAMERA_BOUNDARY_BOSS_RIGHT (5648.0f - Window_Width)
 
 
 #pragma region define FISHMEN
@@ -135,6 +133,10 @@
 
 #define CROSS_LIMITTIME 1000 // thời gian tối đa khi dùng Cross
 
+#define STATUS_PROCESS_WAIT_INIT 0 // xử lí chờ vẽ màn đen trước khi bắt đầu
+#define STATUS_PROCESS_WAIT 2 // xử lí chờ vẽ màn đen trước khi bắt đầu
+
+
 
 class Scene_2 : public Scene
 {
@@ -185,8 +187,6 @@ private:
 	DWORD TimeWaited_UseCross_ChangeColorBackground; // thời gian đã chờ của việc thay đổi màu nền
 	DWORD LimitTimeWait_UseCross_ChangeColorBackground; // thời gian cần chờ để đỏi màu nền
 
-
-
 	/*Xử lí liên quan InvisibilityPotion*/
 	bool isUseInvisibilityPotion;
 	DWORD TimeWaited_InvisibilityPotion;
@@ -212,7 +212,12 @@ private:
 	bool isStopWatch; /*Xử lí stopWatch*/
 
 
-	
+	/* xử lí chờ vẽ màn đen khi bắt đầu lại game*/
+	bool isWaitResetGame;
+	DWORD TimeWaitedResetGame;
+
+
+	int StatusProcessState;
 
 public:
 	Scene_2(Simon * _si = NULL, GameTime* _ga = NULL);

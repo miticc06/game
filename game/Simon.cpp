@@ -5,7 +5,9 @@ Simon::Simon()
 {
  	_texture = TextureManager::GetInstance()->GetTexture(eType::SIMON);
 	_sprite = new GSprite(_texture, 250);
+	_sprite_deadth = new GSprite(TextureManager::GetInstance()->GetTexture(eType::SIMON_DEADTH), 250);
 	type = eType::SIMON;
+
 
 	isWalking = 0;
 	isJumping = 0;
@@ -40,6 +42,8 @@ Simon::Simon()
 
 	_weaponMain =  new MorningStar();
 	_weaponSub = NULL; 
+
+	isDeadth = false;
 }
 
 
@@ -72,12 +76,25 @@ void Simon::GetBoundingBox(float & left, float & top, float & right, float & bot
 
 void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 { 
-	 
 	if (x < camera->GetBoundaryLeft()-16)
 		x = camera->GetBoundaryLeft()-16;
 	if (x + SIMON_BBOX_WIDTH > camera->GetBoundaryRight() + Window_Width)
 		x = (float)(camera->GetBoundaryRight() + Window_Width - SIMON_BBOX_WIDTH);
 	/* Không cho lọt khỏi camera */
+
+	if (Health <= 0)
+		isDeadth = true;
+
+	if (isDeadth)
+	{
+		if (isCollisionAxisYWithBrick)
+		{
+
+
+
+
+		}
+	}
 
 
 #pragma region Update về sprite
@@ -103,11 +120,7 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	if (_weaponSub != NULL && _weaponSub->GetFinish() == false)
-	{
-		_weaponSub->Update(dt, coObjects);
-	}
-
+	 
 
 	if (isOnStair)
 	{  
@@ -287,6 +300,7 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 
 	/* Update về sprite */
 
+
 	GameObject::Update(dt);
 	if (isOnStair == false) // ko trên cầu thang thì mới có trọng lực
 	{
@@ -300,6 +314,9 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 			vy += SIMON_GRAVITY * dt;// Simple fall down
 	}
 	 
+
+
+
 		
 	if (isOnStair == false)
 	{
@@ -315,6 +332,12 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 	if (isOnStair == true)
 		CollisionIsOnStair(coObjects);
 		  
+
+	if (_weaponSub != NULL && _weaponSub->GetFinish() == false)
+	{
+		_weaponSub->Update(dt, coObjects);
+	}
+
 	_weaponMain->SetPosition(this->x, this->y);
 	_weaponMain->SetSpeed(vx, vy); // set vận tốc để kt va chạm
 	_weaponMain->UpdatePositionFitSimon();
@@ -353,22 +376,31 @@ void Simon::Render(Camera* camera)
 	if (untouchable) 
 		alpha = 128;
 
-	if (this->GetFreeze() == true)
+	if (isDeadth && isCollisionAxisYWithBrick)
 	{
 		if (direction == -1)
-			_sprite->DrawRandomColor((int)pos.x, (int)pos.y, alpha);
+			_sprite_deadth->Draw((int)pos.x, (int)pos.y, 255);
 		else
-			_sprite->DrawRandomColorFlipX((int)pos.x, (int)pos.y, alpha);
+			_sprite_deadth->DrawFlipX((int)pos.x, (int)pos.y, 255);
 	}
 	else
 	{
-		if (direction == -1)
-			_sprite->Draw((int)pos.x, (int)pos.y, alpha);
+		if (this->GetFreeze() == true)
+		{
+			if (direction == -1)
+				_sprite->DrawRandomColor((int)pos.x, (int)pos.y, alpha);
+			else
+				_sprite->DrawRandomColorFlipX((int)pos.x, (int)pos.y, alpha);
+		}
 		else
-			_sprite->DrawFlipX((int)pos.x, (int)pos.y, alpha);
+		{
+			if (direction == -1)
+				_sprite->Draw((int)pos.x, (int)pos.y, alpha);
+			else
+				_sprite->DrawFlipX((int)pos.x, (int)pos.y, alpha);
+		}
 	}
-
-
+	 
 
 	if (_weaponMain->GetFinish()==false)
 		_weaponMain->Render(camera); // không cần xét hướng, vì Draw của lớp Weapon đã xét khi vẽ
@@ -414,8 +446,7 @@ void Simon::Go()
 }
 
 void Simon::Sit()
-{
-
+{ 
 	if (isOnStair == true)
 		return;
 
@@ -426,6 +457,15 @@ void Simon::Sit()
 		y = y + 16; // kéo simon xuống
 
 	isSitting = 1;
+}
+
+void Simon::ResetSit()
+{
+	if (isSitting == true) // nếu simon đang ngồi
+	{
+		isSitting = 0; // hủy trạng thái ngồi
+		y = y - PULL_UP_SIMON_AFTER_SITTING; // kéo simon lên
+	}
 }
 
 void Simon::Jump()
@@ -549,7 +589,7 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 	{
 		x += dx;
 		y += dy;
-		isCheckCollisionAxisYWithBrick = false; // đang ko va chạm trục y
+		isCollisionAxisYWithBrick = false; // đang ko va chạm trục y
 	//	DebugOut(L"%d : Col y = false (size = 0) - dt = %d - y = %f - dy = %f\n",GetTickCount(),dt,y, dy);
 	}
 	else
@@ -581,13 +621,13 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 
 		if (ny != 0)
 		{
-			isCheckCollisionAxisYWithBrick = true;
+			isCollisionAxisYWithBrick = true;
 	//		DebugOut(L"%d : Col y = true - dt=%d - y = %f - dy = %f\n", GetTickCount(), dt,y, dy);
 		}
 		else
 		{
 		//	DebugOut(L"%d : Col y = false - dt=%d\n", GetTickCount(), dt);
-			isCheckCollisionAxisYWithBrick = false;// đang ko va chạm trục y
+			isCollisionAxisYWithBrick = false;// đang ko va chạm trục y
 		}
 		 
 
@@ -917,4 +957,16 @@ bool Simon::LoseLife()
 void Simon::SetPositionBackup(float X, float Y)
 {
 	PositionBackup = D3DXVECTOR2(X, Y);
+}
+
+void Simon::SetDeadth()
+{
+	isDeadth = true;
+	TimeWaitedAfterDeath = 0;
+	
+	ResetSit();
+	vx = 0;
+	isWalking = 0;
+	isOnStair = 0;
+	Stop();
 }

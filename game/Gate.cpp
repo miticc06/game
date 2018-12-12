@@ -22,7 +22,7 @@ void Gate::GetBoundingBox(float & left, float & top, float & right, float & bott
 {
 	left = x;
 	top = y;
-	right = x + _texture->FrameWidth;
+	right = x + _texture->FrameWidth -40;
 	bottom = y + _texture->FrameHeight;
 
 }
