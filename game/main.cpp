@@ -268,7 +268,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	_sceneManager = SceneManager::GetInstance();
 
 
-	_sceneManager->SetScene(new Scene_1()); // vào màn 1
+	_sceneManager->SetScene(new Scene_Intro()); // vào màn 1
 	 
 
 

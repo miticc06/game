@@ -190,7 +190,9 @@
     <ClCompile Include="HeliCopter.cpp">
       <Filter>Framework\Scene\Scene_Intro</Filter>
     </ClCompile>
-    <ClCompile Include="IntroBat.cpp" />
+    <ClCompile Include="IntroBat.cpp">
+      <Filter>Framework\Scene\Scene_Intro</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -379,7 +381,9 @@
     <ClInclude Include="HeliCopter.h">
       <Filter>Framework\Scene\Scene_Intro</Filter>
     </ClInclude>
-    <ClInclude Include="IntroBat.h" />
+    <ClInclude Include="IntroBat.h">
+      <Filter>Framework\Scene\Scene_Intro</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

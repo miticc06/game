@@ -148,6 +148,7 @@ public:
 	MorningStar* _weaponMain;
 	Weapon* _weaponSub;
 
+	
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT> *coObjects = NULL);

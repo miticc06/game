@@ -2,7 +2,6 @@
  
 Grid::Grid()
 {
-	Count = 0;
 }
  
 Grid::~Grid()
@@ -39,19 +38,8 @@ void Grid::ReadFileToGrid(char * filename)
 void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 {
 	ListObj.clear(); // clear list
-	  
-	//DWORD IdTakeNow = GetTickCount(); 
-	if (Count >= MAXDWORD)
-	{
-		Count = 0;
-		for (UINT i = 0; i < listGameObject.size(); i++) // reset IdTake
-		{
-			listGameObject[i]->SetIdTake(0);
-		}
-	}
-		
-	Count++;
-	DWORD IdTakeNow = Count;
+	   
+	mapObject.clear();
 
 
 	int rowBottom = (int) floor((camera->GetYCam() + camera->GetHeight() - 1) / (float)(GRID_CELL_HEIGHT));
@@ -67,21 +55,28 @@ void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 			for (UINT i = 0; i < cells[row + GRID_BASE][col + GRID_BASE].size(); i++)
 			{
 				if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetHealth() > 0) // còn tồn tại
-				{
-					if (cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetIdTake() != IdTakeNow) // đánh dấu trước khác hiện tại
-					{
-						cells[row + GRID_BASE][col + GRID_BASE].at(i)->SetIdTake(IdTakeNow); // lấy và đánh dấu lại
-
-						ListObj.push_back(cells[row + GRID_BASE][col + GRID_BASE].at(i)); 
-						
-					}
+				{ 
+						if (mapObject.find(cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetId()) == mapObject.end()) // ko tìm thấy
+							mapObject[cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetId()] = cells[row + GRID_BASE][col + GRID_BASE].at(i);
+				
 				}
 			}
 		}
+
+	for (auto& x : mapObject)
+	{
+		ListObj.push_back(x.second);
+	}
+
 }
 
 void Grid::Insert(int id, int type, int direction, int x, int y, int w, int h, int Model)
 {
+	if (id == 93)
+	{
+
+		int xxxxx = 0;
+	}
 	int Top = (int)floor(y / (float)(GRID_CELL_HEIGHT));
 	int Bottom = (int)floor((y + h) / (float)(GRID_CELL_HEIGHT));
 
@@ -96,8 +91,7 @@ void Grid::Insert(int id, int type, int direction, int x, int y, int w, int h, i
 	}
 	dataObject->SetId(id);
 	dataObject->SetDirection(direction);
-	dataObject->SetIdTake(0);
-
+ 
  
 	for (int row = Top; row <= Bottom; row++)
 	{

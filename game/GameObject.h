@@ -61,8 +61,7 @@ protected:
 	GTexture * _texture;
 	GSprite * _sprite;
 
-
-	DWORD IdTake;
+	 
 
 public:
 	 
@@ -97,11 +96,7 @@ public:
 	int GetHeight();
 	int GetWidth();
 	eType GetType();
-
-
-	DWORD GetIdTake();
-	void SetIdTake(DWORD b);
-
+	 
 	void RenderBoundingBox(Camera * camera);
 	LPCOLLISIONEVENT SweptAABBEx(GameObject * coO);
 	void CalcPotentialCollisions(vector<GameObject*> *coObjects, vector<LPCOLLISIONEVENT> &coEvents);

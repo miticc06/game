@@ -102,7 +102,7 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else
 		{
 			TimeWaited += dt;
-			if (TimeWaited >= 4000)
+			if (TimeWaited >= 2000+rand()%1500)
 			{
 				isWaiting = false; // ngừng chờ
 
