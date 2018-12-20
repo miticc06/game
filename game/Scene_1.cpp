@@ -332,7 +332,7 @@ void Scene_1::Update(DWORD dt)
 	if (isWaitResetGame)
 	{
 		TimeWaitedResetGame += dt;
-		if (TimeWaitedResetGame >= 400)
+		if (TimeWaitedResetGame >= TIME_LIMIT_WAIT_RESET_GAME)
 		{
 			isWaitResetGame = false;
 

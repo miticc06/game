@@ -118,9 +118,6 @@
     <ClCompile Include="Ghost.cpp">
       <Filter>Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="SmallHeart.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
@@ -310,9 +307,6 @@
       <Filter>Object\Ground</Filter>
     </ClInclude>
     <ClInclude Include="Ghost.h">
-      <Filter>Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
       <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="SmallHeart.h">

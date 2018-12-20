@@ -50,7 +50,7 @@ using namespace std;
 
 #define COLOR_BACKGROUND_DEFAULT D3DCOLOR_XRGB(0, 0, 0) // Màu đen 0, 0, 0
  
- 
+#define TIME_LIMIT_WAIT_RESET_GAME 300 // Thời gian chờ vẽ màn màu đen khi reset game
 
 extern D3DCOLOR D3DCOLOR_BACKGROUND;
 

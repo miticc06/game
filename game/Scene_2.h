@@ -21,7 +21,6 @@
 #include "Sound.h"
 #include "Bonus.h"
 #include "SmallHeart.h"
-#include "Enemy.h"
 #include "Ghost.h"
 #include "Panther.h"
 #include "Bat.h"

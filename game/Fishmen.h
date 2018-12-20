@@ -10,7 +10,10 @@
 
 #define FISHMEN_DY_JUMP 350 // nhảy lên khoảng 330px thì rớt xuống
 
-#define FISHMEN_ANI_JUMP 2 // nhảy lên khoảng 330px thì rớt xuống
+#define FISHMEN_ANI_JUMP 2 // ani lúc nhảy
+#define FISHMEN_ANI_WALK_BEGIN 1 // ani bắt đầu đi
+#define FISHMEN_ANI_WALK_END 2 
+#define FISHMEN_ANI_ATTACK 0 // ani lúc fishmen attack
 
 #define FISHMEN_GRAVITY 0.01f
 #define FISHMEN_SPEED_X 0.07f
@@ -28,7 +31,7 @@ private:
  
 	float xBefore;
 	float xAfter;
-	float xAccumulationAttack;
+	float xAccumulationAttack; // quảng đường đã đi tích lũy, để khi đi đủ giới hạn sẽ attack
 	DWORD TimeAttack; // thời điểm attack
 	 
 	bool isRunning;

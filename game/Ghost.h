@@ -6,7 +6,7 @@
 #define GHOST_GRAVITY 0.005f
 
 
-#include "Enemy.h"
+#include "GameObject.h"
 class Ghost : public GameObject
 {
 public:

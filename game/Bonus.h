@@ -18,7 +18,7 @@ class Bonus : public Item
 public:
 	Bonus(float X = 0, float Y = 0);
 	~Bonus();
-	 
+	void Render(Camera * camera);
 
 	// tong quan ve mo hinh hoa huong dịch vụ, các tp của nó và framewwork thực hiện
 

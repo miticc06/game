@@ -142,7 +142,6 @@
     <ClInclude Include="DSutil.h" />
     <ClInclude Include="dxutil.h" />
     <ClInclude Include="Effect.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fire.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Game.h" />
@@ -207,7 +206,6 @@
     <ClCompile Include="DSutil.cpp" />
     <ClCompile Include="dxutil.cpp" />
     <ClCompile Include="Effect.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fire.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Game.cpp" />

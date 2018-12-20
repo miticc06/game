@@ -4,7 +4,7 @@
 Fishmen::Fishmen(float X, float Y, int Direction)
 {
 	_texture = TextureManager::GetInstance()->GetTexture(eType::FISHMEN);
-	_sprite = new GSprite(_texture, 70);
+	_sprite = new GSprite(_texture, 200);
 	type = eType::FISHMEN;
 
 	this->x = X;
@@ -72,7 +72,7 @@ void Fishmen::UpdateCustom(DWORD dt, vector<LPGAMEOBJECT>* listObject, Simon * s
 	if (isRunning)
 	{
 		vx = direction * FISHMEN_SPEED_X;
-		vy += FISHMEN_GRAVITY;// Gravity
+		vy += FISHMEN_GRAVITY;
 	}
 
 	GameObject::Update(dt);
@@ -147,16 +147,18 @@ void Fishmen::UpdateCustom(DWORD dt, vector<LPGAMEOBJECT>* listObject, Simon * s
 #pragma region Update Animation
 	if (isAttacking)
 	{
-		_sprite->SelectIndex(0);
+		_sprite->SelectIndex(FISHMEN_ANI_ATTACK);
 	}
 	else
 		if (isRunning)
 		{
 			int index = _sprite->GetIndex();
-			if (0 < index && index <= 2)
+			
+			if (FISHMEN_ANI_WALK_BEGIN <= index && index <= FISHMEN_ANI_WALK_END)
 				_sprite->Update(dt);
-			else
-				_sprite->SelectIndex(1);
+
+			if (_sprite->GetIndex() == FISHMEN_ANI_ATTACK) // đang trong trạng thái đi mà quay về frame attack thì set thành frame đi
+				_sprite->SelectIndex(FISHMEN_ANI_WALK_BEGIN);
 
 		}
 #pragma endregion

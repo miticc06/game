@@ -6,7 +6,7 @@
 Bonus::Bonus(float X, float Y)
 {
 	_texture = TextureManager::GetInstance()->GetTexture(eType::BONUS);
-	_sprite = new GSprite(_texture, 60);
+	_sprite = new GSprite(_texture, 20);
 
 	this->x = X;
 	this->y = Y;
@@ -29,5 +29,12 @@ Bonus::Bonus(float X, float Y)
 
 Bonus::~Bonus()
 {
+}
+
+void Bonus::Render(Camera * camera)
+{
+
+	Item::Render(camera);
+	_sprite->Update(dt);
 }
  
