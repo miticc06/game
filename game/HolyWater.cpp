@@ -5,12 +5,13 @@
 HolyWater::HolyWater()
 {
 	_texture = TextureManager::GetInstance()->GetTexture(eType::HOLYWATER);
-	_sprite = new GSprite(_texture, 70);
+	_sprite = new GSprite(_texture, 100);
 	type = eType::HOLYWATER;
 	_spriteIcon = new GSprite(TextureManager::GetInstance()->GetTexture(eType::ITEMHOLYWATER), 200);
 
 	isCollisionBrick = false;
 	isFinish = true;
+	
 }
 
 HolyWater::~HolyWater()
@@ -27,45 +28,41 @@ void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (!isCollisionBrick)
 		vy += HOLYWATER_GRAVITY * dt;
 
-	vector<LPGAMEOBJECT> listObject_Brick;
-	listObject_Brick.clear();
-	for (UINT i = 0; i < coObjects->size(); i++)
-		if (coObjects->at(i)->GetType() == eType::BRICK)
-			listObject_Brick.push_back(coObjects->at(i));
+	if (!isCollisionBrick) // chưa chạm đất mới xét va chạm
+	{
+		vector<LPGAMEOBJECT> listObject_Brick;
+		listObject_Brick.clear();
+		for (UINT i = 0; i < coObjects->size(); i++)
+			if (coObjects->at(i)->GetType() == eType::BRICK)
+				listObject_Brick.push_back(coObjects->at(i));
 
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult; 
-	coEvents.clear(); 
-	CalcPotentialCollisions(&listObject_Brick, coEvents); // Lấy danh sách các va chạm 
-	if (coEvents.size() == 0)
-	{
-		y += dy; 
-		x += dx;
-	}
-	else
-	{
-		float min_tx, min_ty, nx = 0, ny; 
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-		x += min_tx * dx + nx * 0.4f;	
-		y += min_ty * dy + ny * 0.4f;
-		if (nx != 0)
+		vector<LPCOLLISIONEVENT> coEvents;
+		vector<LPCOLLISIONEVENT> coEventsResult;
+		coEvents.clear();
+		CalcPotentialCollisions(&listObject_Brick, coEvents); // Lấy danh sách các va chạm 
+		if (coEvents.size() == 0)
 		{
-			vy = 0;
-			vx = 0;
-			isCollisionBrick = true;
-
+			y += dy;
+			x += dx;
 		}
-
-		if (ny != 0)
+		else
 		{
-			vy = 0;
-			vx = 0;
-			isCollisionBrick = true;
- 		}
-
+			float min_tx, min_ty, nx = 0, ny;
+			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
+			x += min_tx * dx + nx * 0.4f;
+			y += min_ty * dy + ny * 0.4f;
+			if (nx != 0 || ny != 0)
+			{
+				vy = 0;
+				vx = 0;
+				isCollisionBrick = true;
+				Sound::GetInstance()->Play(eSound::soundHolyWater); // chạm đất thì mới playsound
+			}
+		}
+		for (UINT i = 0; i < coEvents.size(); i++)
+			delete coEvents[i];
 	}
-	for (UINT i = 0; i < coEvents.size(); i++)
-		delete coEvents[i]; 
+	 
 }
 
 void HolyWater::Create(float simonX, float simonY, int simonDirection)
@@ -78,7 +75,7 @@ void HolyWater::Create(float simonX, float simonY, int simonDirection)
 	vy = - HOLLYWATER_SPEED_Y;
 	isCollisionBrick = false;
 	_sprite->SelectIndex(0);
-	Sound::GetInstance()->Play(eSound::soundHolyWater);
+	CountLoop = 0;
 }
 
 void HolyWater::GetBoundingBox(float & left, float & top, float & right, float & bottom)
@@ -98,7 +95,10 @@ void HolyWater::GetBoundingBox(float & left, float & top, float & right, float &
 
 void HolyWater::UpdatePositionFitSimon()
 {
-	y += 20;
+	y += 15;
+	if (this->direction == -1)
+		x += 30;
+		
 }
 
 void HolyWater::RenderIcon(int X, int Y)
@@ -117,6 +117,7 @@ void HolyWater::Render(Camera * camera)
 
 	if (isCollisionBrick) // chạm đất r thì mới update ani
 		_sprite->Update(dt);
+
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
 		_sprite->Draw((int)pos.x, (int)pos.y);
@@ -127,9 +128,14 @@ void HolyWater::Render(Camera * camera)
 	{
  		RenderBoundingBox(camera);
 	}
+
 	if (_sprite->GetIndex() == 3) // là frame cuối cùng thì kết thúc
-	{
-		isFinish = true;
+	{ 
+		CountLoop++;
+		if (CountLoop >= 2) // lặp đúng 2 lần thì dừng
+			isFinish = true;
+		else
+			_sprite->SelectIndex(1);
 	}
 }
  

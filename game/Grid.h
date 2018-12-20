@@ -27,7 +27,7 @@ using namespace std;
 
 #define GRID_CELL_MAX_ROW 30 // số dòng tối đa;
 #define GRID_CELL_MAX_COLUMN 100 // số cột tối đa
-#define GRID_BASE 0
+#define GRID_BASE 10
  
 
 class Grid

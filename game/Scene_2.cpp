@@ -276,7 +276,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 	if (KeyCode == DIK_1) // vị trí simon
 	{
-		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->GetX() + 10, simon->GetY());
+		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->GetX(), simon->GetY());
 	}
 
 	if (KeyCode == DIK_A) // change trục y file txt
@@ -969,7 +969,7 @@ void Scene_2::Update(DWORD dt)
 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 
-	DebugOut(L"[GRID] size = %d\n", listObj.size());
+//	DebugOut(L"[GRID] size = %d\n", listObj.size());
 
 	for (UINT i = 0; i < listObj.size(); i++)
 	{
