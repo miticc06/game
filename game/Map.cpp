@@ -76,11 +76,11 @@ void Map::ReadMapTXT(char * filename)
 
 void Map::DrawMap(Camera *camera)
 { 
-	row = int(camera->GetYCam()) / _texture->FrameHeight;
-	column = int(camera->GetXCam()) / _texture->FrameHeight;
+	row = (int)(camera->GetYCam()) / _texture->FrameHeight;
+	column = (int)(camera->GetXCam()) / _texture->FrameHeight;
 
-	x = -(int(camera->GetXCam()) % _texture->FrameHeight);
-	y = -(int(camera->GetYCam()) % _texture->FrameHeight);
+	float x = -((int)(camera->GetXCam()) % _texture->FrameHeight);
+	float y = -((int)(camera->GetYCam()) % _texture->FrameHeight);
 
 	for (int i = 0; i < ScreenRow+1; i++)
 	{ 

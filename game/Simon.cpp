@@ -299,7 +299,14 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 			vy += SIMON_GRAVITY_JUMPING * dt;
 		}
 		else
-			vy += SIMON_GRAVITY * dt;// Simple fall down
+		{
+			if (isHurting)
+			{
+				vy += SIMON_GRAVITY_HURTING * dt;
+			}
+			else
+				vy += SIMON_GRAVITY * dt;// Simple fall down
+		}
 	}
 	 
 
@@ -504,31 +511,29 @@ void Simon::SetHurt(LPCOLLISIONEVENT e)
 {
 	if (isHurting == true)
 		return;
+
 	if (e->nx == 0 && e->ny == 0) // ko có va chạm
 		return;
 
 	isWalking = 0;
 	isAttacking = 0;
 	isJumping = 0;
-	if (isSitting == true) // nếu simon đang ngồi
-	{
-		isSitting = 0; // hủy trạng thái ngồi
-		y = y - PULL_UP_SIMON_AFTER_SITTING; // kéo simon lên
-	}
+ 
+	ResetSit();
 	
 	if (!isOnStair && !isAutoGoX) // ko "đang tự đi" và ko "đang trên thang" thì bật ra
 	{
 		if (e->nx != 0)
 		{
-			vx = SIMON_WALKING_SPEED * e->nx * 3;
-			vy = -SIMON_VJUMP * 2.0f;
+			vx = SIMON_WALKING_SPEED * e->nx;
+			vy = -SIMON_VJUMP_HURTING;
 			isHurting = 1;
 			//DebugOut(L"[SetHurt] Set vx = %f \n", vx);
 		}
 
 		if (e->ny != 0)
 		{
-			vy = -SIMON_VJUMP*2.0f;
+			vy = -SIMON_VJUMP_HURTING;
 			isHurting = 1;
 			//DebugOut(L"[SetHurt] Set vy = %f \n", vy);
 		}
@@ -589,25 +594,27 @@ void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
 
 		// block 
 		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.4f;
+		
+		if (ny == -1)
+			y += min_ty * dy + ny * 0.4f;
+		else
+			y += dy;
 
-		if (ny != 0)
+		if (ny == -1)
 		{
-
 			vy = 0.1f;
 			dy = vy * dt;
+
 			//vy = 0;
 			if (isJumping)
 			{
 				isJumping = false; // kết thúc nhảy
 				y = y - PULL_UP_SIMON_AFTER_JUMPING; // kéo simon lên tránh overlaping
 			}
-
-			
 		}
 
 
-		if (ny != 0)
+		if (ny !=0 )
 		{
 			isCollisionAxisYWithBrick = true;
 	//		DebugOut(L"%d : Col y = true - dt=%d - y = %f - dy = %f\n", GetTickCount(), dt,y, dy);

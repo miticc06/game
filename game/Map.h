@@ -35,7 +35,7 @@ private:
 
 	int row; // dòng hiện tại camera đang đứng
 	int column; //cột hiện tại camera đang đứng
-	int x, y;
+	//int x, y;
 
 
 public:

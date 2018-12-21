@@ -38,8 +38,9 @@ void Grid::ReadFileToGrid(char * filename)
 void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 {
 	ListObj.clear(); // clear list
-	   
-	mapObject.clear();
+
+	unordered_map<int, GameObject*> mapObject;
+	//mapObject.clear();
 
 
 	int rowBottom = (int) floor((camera->GetYCam() + camera->GetHeight() - 1) / (float)(GRID_CELL_HEIGHT));
@@ -71,12 +72,7 @@ void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 }
 
 void Grid::Insert(int id, int type, int direction, int x, int y, int w, int h, int Model)
-{
-	if (id == 93)
-	{
-
-		int xxxxx = 0;
-	}
+{ 
 	int Top = (int)floor(y / (float)(GRID_CELL_HEIGHT));
 	int Bottom = (int)floor((y + h) / (float)(GRID_CELL_HEIGHT));
 

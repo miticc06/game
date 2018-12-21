@@ -29,6 +29,7 @@ public:
  	void Update(int ellapseTime);
 
  	void Draw(int x, int y, int alpha = 255);
+	void Draw(float X, float Y, int alpha = 255);
 
 	void DrawRandomColor(int X, int Y, int alpha = 255);
 	void DrawRandomColorFlipX(int x, int y, int alpha = 255);

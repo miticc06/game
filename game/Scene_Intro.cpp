@@ -58,8 +58,8 @@ void Scene_Intro::LoadResources()
 	Sprite_IntroGoScene1 = new GSprite(_textureManager->GetTexture(eType::INTRO_GO_SCENE1), 0);
 
 	heliCopter = new HeliCopter(432, 146);
-	introBat1 = new IntroBat(297, 129, -0.01, 0.0f); // Đi ngang qua trái
-	introBat2 = new IntroBat(47,224, 0.02, -0.01f); // Đi góc dưới trái lên phải trên
+	introBat1 = new IntroBat(297, 129, -0.01f, 0.0f); // Đi ngang qua trái
+	introBat2 = new IntroBat(47,224, 0.02f, -0.01f); // Đi góc dưới trái lên phải trên
 
 	//297 129
 } 

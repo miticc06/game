@@ -257,7 +257,7 @@ void PhantomBat::Render(Camera * camera)
 	{ 
 		if (isUseBezierCurves) // sử dụng BezierCurves thì mới vẽ 
 		{
-			for (float i = 0; i < 1; i += 0.01)
+			for (float i = 0; i < 1; i += 0.01f)
 			{
 				// The Green Line
 				float xa = getPt(x1, x2, i);
@@ -295,7 +295,7 @@ void PhantomBat::Render(Camera * camera)
 
 
 		RECT rect;
-		float l, t, r, b;
+		//float l, t, r, b;
 		rect.left = 0;
 		rect.top = 0;
 		rect.right = 15;

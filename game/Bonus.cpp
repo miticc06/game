@@ -5,12 +5,13 @@
 
 Bonus::Bonus(float X, float Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::BONUS);
+	type = eType::BONUS;
+	_texture = TextureManager::GetInstance()->GetTexture(type);
 	_sprite = new GSprite(_texture, 20);
 
 	this->x = X;
 	this->y = Y;
-	type = eType::BONUS;
+	
 	  
 	vx = 0;
 	vy = 0;

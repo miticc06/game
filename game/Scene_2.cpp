@@ -58,7 +58,7 @@ void Scene_2::KeyState(BYTE * state)
 				for (UINT i = 0; i < listObj.size(); i++)
 					if (listObj[i]->GetType() == eType::STAIR_BOTTOM)
 					{
-						if (simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với STAIR BOTOM
+						if (simon->isCollisionAxisYWithBrick && simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với trục y brick và STAIR BOTOM
 						{
 							GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
 							simon->directionStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon

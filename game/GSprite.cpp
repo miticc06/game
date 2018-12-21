@@ -107,6 +107,28 @@ void GSprite::Draw(int X, int Y, int alpha)
 	);
 }
 
+
+void GSprite::Draw(float X, float Y, int alpha)
+{
+	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
+	RECT srect;
+	srect.left = (_index % _texture->Cols)*_texture->FrameWidth;
+	srect.top = (_index / _texture->Cols)*_texture->FrameHeight;
+	srect.right = srect.left + _texture->FrameWidth;
+	srect.bottom = srect.top + _texture->FrameHeight;
+
+	D3DXVECTOR3 p(X, Y, 0);
+	spriteHandler->Draw(
+		_texture->Texture,
+		&srect,
+		NULL,
+		&p,
+		D3DCOLOR_ARGB(alpha, R, G, B)
+	);
+}
+
+
+
 void GSprite::DrawRandomColor(int X, int Y, int alpha)
 {
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();

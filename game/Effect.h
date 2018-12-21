@@ -14,8 +14,8 @@ protected:
 	GTexture * _texture;
 	GSprite * _sprite;
 
-	int x;
-	int y;
+	float x;
+	float y;
 	bool isFinish;
 
 public:

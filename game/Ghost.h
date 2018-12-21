@@ -2,7 +2,7 @@
 #define __GHOST_H__
 
 
-#define GHOST_SPEED_X 0.08f
+#define GHOST_SPEED_X 0.09f
 #define GHOST_GRAVITY 0.005f
 
 

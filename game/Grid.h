@@ -35,10 +35,7 @@ class Grid
 
 private:
 	vector<GameObject*> cells[GRID_CELL_MAX_ROW][GRID_CELL_MAX_COLUMN];
- 
-	unordered_map<int, GameObject* > mapObject; 
-
-	 
+  
  
 public:
 	void ReadFileToGrid(char * filename); // Đọc các object từ file

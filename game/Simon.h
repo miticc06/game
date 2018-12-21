@@ -20,9 +20,11 @@
  
 #define SIMON_GRAVITY 0.005f//0.005f
 #define SIMON_GRAVITY_JUMPING 0.001f//0.005f
+#define SIMON_GRAVITY_HURTING 0.001f
 
 
 #define SIMON_VJUMP 0.33f//0.9f
+#define SIMON_VJUMP_HURTING 0.2f // nhảy lúc bị đau
 #define PULL_UP_SIMON_AFTER_JUMPING 18.0f // Kéo simon lên 18px sau khi nhảy, tránh overlaping do BBOX bottom thu lại khi nhảy
 
 
@@ -169,8 +171,7 @@ public:
 	int GetHeartCollect();
 
 	void CollisionWithBrick(vector<LPGAMEOBJECT> *coObjects = NULL);
-//	bool isCheckCollisionAxisY_WithBrickSweptAABB(vector<LPGAMEOBJECT> *coObjects = NULL); // chỉ trả về có va chạm với đất trên trục y bằng swept hay không?
-
+ 
 	void CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects = NULL);
 	bool isCollisionWithItem(Item * objItem);
 
