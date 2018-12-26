@@ -7,6 +7,9 @@
 #include "MorningStar.h"
 #include "Sound.h"
 #include "ThrowingAxe.h"
+#include "Dagger.h"
+#include "HolyWater.h"
+#include "StopWatch.h"
 
 #define SIMON_POSITION_DEFAULT  50.0f, 0
 
@@ -36,17 +39,32 @@
 #define SIMON_ANI_WALKING_BEGIN 1
 #define SIMON_ANI_WALKING_END 3
 
-#define SiMON_ANI_IDLE 0
+#define SIMON_ANI_IDLE 0
 
 #define SIMON_ANI_JUMPING 4
 
 #define SIMON_ANI_SITTING 4
 
+
+
+/*Ani đang ngồi đánh*/
 #define SIMON_ANI_SITTING_ATTACKING_BEGIN 15
 #define SIMON_ANI_SITTING_ATTACKING_END 17
 
+/*Ani đang đứng đánh*/
 #define SIMON_ANI_STANDING_ATTACKING_BEGIN 5
 #define SIMON_ANI_STANDING_ATTACKING_END 7
+
+/*Ani đang đi lên cầu thang đánh*/
+#define SIMON_ANI_STAIR_UP_ATTACKING_BEGIN 21
+#define SIMON_ANI_STAIR_UP_ATTACKING_END 23
+
+/*Ani đang đi xuống cầu thang đánh*/
+#define SIMON_ANI_STAIR_DOWN_ATTACKING_BEGIN 18
+#define SIMON_ANI_STAIR_DOWN_ATTACKING_END 20
+
+/* Time Ani attack */ 
+#define SIMON_TIME_WAIT_ANI_ATTACKING 120// thời gian thời của mỗi frame khi tấn công
 
 
 #define SIMON_ANI_STAIR_GO_UP_BEGIN 12
@@ -55,11 +73,7 @@
 #define SIMON_ANI_STAIR_GO_DOWN_BEGIN 10
 #define SIMON_ANI_STAIR_GO_DOWN_END 11
 
-#define SIMON_ANI_STAIR_UP_ATTACKING_BEGIN 21
-#define SIMON_ANI_STAIR_UP_ATTACKING_END 23
 
-#define SIMON_ANI_STAIR_DOWN_ATTACKING_BEGIN 18
-#define SIMON_ANI_STAIR_DOWN_ATTACKING_END 20
 
 #define SIMON_ANI_HURTING 8
 
@@ -119,6 +133,10 @@ private:
 	bool isDeadth;
 
 
+	eType TypeWeaponCollect; // loại vũ khí phụ đang giữ
+	
+	Camera * camera;
+	Sound * sound;
 public:
 	bool isWalking;
 	bool isJumping;
@@ -132,7 +150,7 @@ public:
 	int directionY; // hướng đi theo trục y của simon
 
 
-	float DoCaoDiDuoc = 0;//
+	float DoCaoDiDuoc = 0;
 
 	bool untouchable;
 	DWORD untouchable_start;
@@ -145,16 +163,18 @@ public:
 	DWORD TimeWaitedAfterDeath;
 
 public:
-	Simon();
+	Simon(Camera* camera);
 	~Simon();
+	 
 
-	MorningStar* _weaponMain;
-	Weapon* _weaponSub;
 
-	
+	unordered_map<eType, Weapon*> mapWeapon;
 
+
+
+ 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	virtual void Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT> *coObjects = NULL);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera);
 	void Left();  // set lại hướng của simon
 	void Right(); // set lại hướng của simon
@@ -176,7 +196,8 @@ public:
 	void CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects = NULL);
 	bool isCollisionWithItem(Item * objItem);
 
-	void Attack(Weapon *w);
+
+	void Attack(eType typeWeapon);
 
 	int GetLives();
 	void SetLives(int l);
@@ -203,6 +224,11 @@ public:
 	void SetDeadth();
 	bool GetIsDeadth();
 	void SetIsDeadth(bool b);
+
+
+	eType GetTypeWeaponCollect();
+	void SetTypeWeaponCollect(eType t);
+	void ProcessWeaponCollect(eType t);
 };
 
 

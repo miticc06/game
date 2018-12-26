@@ -5,7 +5,7 @@ InvisibilityPotion::InvisibilityPotion(float X, float Y)
 {
 	type = eType::INVISIBILITYPOTION; 
 	_texture = TextureManager::GetInstance()->GetTexture(type);
-	_sprite = new GSprite(_texture, 0); 
+	_sprite = new GSprite(_texture, 0);
 
 	this->x = X;
 	this->y = Y;

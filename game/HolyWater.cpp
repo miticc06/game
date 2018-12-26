@@ -2,7 +2,7 @@
 
 
 
-HolyWater::HolyWater()
+HolyWater::HolyWater(Camera * camera)
 {
 	_texture = TextureManager::GetInstance()->GetTexture(eType::HOLYWATER);
 	_sprite = new GSprite(_texture, 100);
@@ -11,7 +11,7 @@ HolyWater::HolyWater()
 
 	isCollisionBrick = false;
 	isFinish = true;
-	
+	this->camera = camera;
 }
 
 HolyWater::~HolyWater()
@@ -21,10 +21,13 @@ HolyWater::~HolyWater()
 
 void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (!camera->checkObjectInCamera(x, y, _texture->FrameWidth, _texture->FrameHeight))
+		isFinish = true;
+
 	if (isFinish)
 		return;
 
-	Weapon::Update(dt); //update dt dx d
+	GameObject::Update(dt); //update dt dx d
 	if (!isCollisionBrick)
 		vy += HOLYWATER_GRAVITY * dt;
 
@@ -108,10 +111,7 @@ void HolyWater::RenderIcon(int X, int Y)
  
 
 void HolyWater::Render(Camera * camera)
-{
-	if (!camera->checkObjectInCamera(x, y, _texture->FrameWidth, _texture->FrameHeight))
-		isFinish = true;
-
+{ 
 	if (isFinish == true)
 		return;
 

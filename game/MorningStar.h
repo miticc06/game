@@ -1,6 +1,7 @@
-#ifndef __MORNINGSTAR_H__
+﻿#ifndef __MORNINGSTAR_H__
 #define __MORNINGSTAR_H__
 
+#define MORNINGSTAR_TIME_WAIT_ANI 120 // thời gian chờ chuyển frame của MorningStar
 
 #define MORNINGSTAR_ANI_LEVEL0_START 0
 #define MORNINGSTAR_ANI_LEVEL0_END 3
@@ -15,6 +16,7 @@
 #include "GameObject.h" 
 #include "LargeHeart.h"
 #include "TextureManager.h"
+#include "Sound.h"
 
 
 class MorningStar : public Weapon

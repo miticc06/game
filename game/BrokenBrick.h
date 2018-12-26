@@ -19,7 +19,7 @@ private:
 
 
 public:
-	BrokenBrick(int X, int Y, int Model);
+	BrokenBrick(float X, float Y, int Model);
 	virtual ~BrokenBrick();
 	void Update(DWORD dt);
 };

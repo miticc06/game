@@ -53,7 +53,10 @@ void Scene_Intro::LoadResources()
 
 	isDrawTextPressStart = true; 
 
-	simon = new Simon();
+	camera = SceneManager::GetInstance()->GetCamera();
+	camera->SetPosition(0, 0);
+
+	simon = new Simon(camera);
 	board = new Board(BOARD_DEFAULT_POSITION_X, BOARD_DEFAULT_POSITION_Y);
 	Sprite_IntroGoScene1 = new GSprite(_textureManager->GetTexture(eType::INTRO_GO_SCENE1), 0);
 
@@ -79,8 +82,7 @@ void Scene_Intro::Update(DWORD dt)
 			{ // qua trạng thái 2
 				StatusProcess = INTRO_STATUS_PROCESS_GO_SCENE1;
 				sound->Play(eSound::musicGame_Start_Prologue);
-				camera = SceneManager::GetInstance()->GetCamera();
-				camera->SetPosition(0, 0);
+				
 				listBrick.push_back(new Brick(0, 400, 600, 32, BRICK_MODEL_TRANSPARENT));
 				simon->SetPosition(500, 336);
 				simon->SetDirection(-1);
@@ -105,7 +107,7 @@ void Scene_Intro::Update(DWORD dt)
 	{ 
 		if (simon->GetIsAutoGoX())
 		{
-			simon->Update(dt, camera, &listBrick);
+			simon->Update(dt, &listBrick);
 		}
 		else
 		{
@@ -151,7 +153,7 @@ void Scene_Intro::Render()
 		introBat1->Render(camera);
 		introBat2->Render(camera);
 
- 		board->Render(simon, 1, NULL, 300, NULL);
+ 		board->Render(simon, 1, 300, NULL);
 		simon->Render(camera);
 
 		

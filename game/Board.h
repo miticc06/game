@@ -24,22 +24,12 @@ private:
 	GSprite * _sprite;
 	int x, y;
 
-	string FillNumber(const string & s, int MaxNumber);
+	string FillNumber(string s, UINT MaxNumber);
 	 
-	string zero[7]
-	{
-	"", 
-	"0",
-	"00",
-	"000",
-	"0000",
-	"00000",
-	"000000"
-	};
 
  public:
 	Board(int X, int Y);
-	void Render(Simon * simon, int state, Weapon * weaponSub, int RemainingTime, GameObject * boss);
+	void Render(Simon * simon, int state, int RemainingTime, GameObject * boss);
 	~Board();
 
 	void SetTexture(GTexture * tex);

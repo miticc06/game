@@ -34,7 +34,7 @@ void ThrowingAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 
-	Weapon::Update(dt); //update dt dx d 
+	GameObject::Update(dt); //update dt dx d 
 	vy += THROWINGAXE_GRAVITY * dt;
 	 
 	y += dy;

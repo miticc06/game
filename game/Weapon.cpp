@@ -4,7 +4,7 @@
 
 Weapon::Weapon()
 {
-	isFinish = 1;
+	isFinish = 1; 
 }
 
 
@@ -27,22 +27,17 @@ void Weapon::Create(float X, float Y, int Direction)
 	this->x = X;
 	this->y = Y;
 	this->direction = Direction;
-	isFinish = 0;
+	isFinish = false; // chưa kết thúc
+	 
 	
 	LastTimeAttack = GetTickCount(); // lưu lại thời điểm lúc vừa tấn công, làm đánh dấu tránh 1 hit đánh nhiều lần cho các object, có health >1.
-}
-
-void Weapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
-	this->dt = dt;
-	dx = vx * dt;
-	dy = vy * dt;
-	
-}
- 
+} 
 
 void Weapon::Render(Camera * camera)
 {
+	if (isFinish)
+		return; 
+	 
 	//DebugOut(L"WEAPON: index = %d \n", _sprite->GetIndex());
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
@@ -53,16 +48,17 @@ void Weapon::Render(Camera * camera)
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
 }
- 
 
 void Weapon::UpdatePositionFitSimon()
 {
 }
+  
 
 bool Weapon::isCollision(GameObject * obj)
 {
 	if (isFinish == true)
 		return false;
+
 	// dt, dx, dy đã update 
 	if (obj->GetHealth() <= 0) // vật này die rồi thì ko va chạm
 		return false;
@@ -84,5 +80,4 @@ void Weapon::SetFinish(bool b)
 DWORD Weapon::GetLastTimeAttack()
 {
 	return LastTimeAttack;
-}
- 
+} 

@@ -14,10 +14,10 @@ private:
 	GSprite * _spriteIcon;
 	bool isCollisionBrick;
 	int CountLoop; // Số lần lặp lại việc vẽ lúc nổ Holywater.
-
+	Camera * camera;
 
 public:
-	HolyWater();
+	HolyWater(Camera * camera);
 	virtual ~HolyWater();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);

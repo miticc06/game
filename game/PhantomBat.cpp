@@ -271,7 +271,6 @@ void PhantomBat::Render(Camera * camera)
 
 
 				RECT rect;
-				float l, t, r, b;
 				rect.left = 0;
 				rect.top = 0;
 				rect.right = 5;

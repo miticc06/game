@@ -191,28 +191,14 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 
 
-
-
-	if (KeyCode == DIK_X)
+	if (KeyCode == DIK_X && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
 	{
-		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
-
-		if (simon->isAttacking == false)
-			sound->Play(eSound::soundWhip);
-
-		simon->Attack(simon->_weaponMain);
-
+		simon->Attack(eType::MORNINGSTAR);
 	}
 
-
-	if (KeyCode == DIK_Z)
+	if (KeyCode == DIK_Z && simon->isProcessingOnStair == 0)
 	{
-		if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == true && simon->GetHeartCollect() > 0)
-		{
-			simon->SetHeartCollect(simon->GetHeartCollect() - 1); // giảm 1 heart
-			simon->Attack(simon->_weaponSub);
-			sound->Play(eSound::soundDagger);
-		}
+		simon->Attack(simon->GetTypeWeaponCollect()); // attack với vũ khí phụ đang nhặt
 	}
 
 	if (simon->isJumping && simon->isWalking)
@@ -269,7 +255,7 @@ void Scene_1::LoadResources()
 	TextureManager * _textureManager = TextureManager::GetInstance(); // Đã gọi load resource
 	sound = Sound::GetInstance();
 
-	simon = new Simon();
+	
 	TileMap = new Map();
 	TileMap->LoadMap(eType::MAP1);
 
@@ -280,6 +266,8 @@ void Scene_1::LoadResources()
 
 	camera->SetPosition(0, 0);
 
+
+	simon = new Simon(camera);
 
 	board = new Board(BOARD_DEFAULT_POSITION_X, BOARD_DEFAULT_POSITION_Y);
 
@@ -411,7 +399,7 @@ void Scene_1::Update(DWORD dt)
 	DebugOut(L"[GRID] size = %d\n", listObj.size());
 
 
-	simon->Update(dt, camera, &listObj);
+	simon->Update(dt, &listObj);
 
 	if (camera->AllowFollowSimon())
 	{
@@ -479,7 +467,7 @@ void Scene_1::Render()
 		}
 	}
 
-	board->Render(simon, 1, simon->_weaponSub, GAME_TIME_SCENE1 - _gameTime->GetTime(), NULL);
+	board->Render(simon, 1, GAME_TIME_SCENE1 - _gameTime->GetTime(), NULL);
 
 
 
@@ -497,6 +485,66 @@ void Scene_1::CheckCollision()
 
 void Scene_1::CheckCollisionWeapon()
 {
+	
+	
+
+	for (auto& objWeapon : simon->mapWeapon)
+	{
+		if (objWeapon.second->GetFinish() == false) // Vũ khí đang hoạt động
+		{
+			for (UINT i = 0; i < listObj.size(); i++)
+				if (listObj[i]->GetLastTimeAttacked() != objWeapon.second->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
+				{
+					if (objWeapon.second->isCollision(listObj[i]) == true) // nếu có va chạm
+					{
+						bool RunEffectHit = false;
+						GameObject *gameObj = listObj[i];
+						switch (gameObj->GetType())
+						{
+		
+						case eType::TORCH:
+						{ 
+							gameObj->SubHealth(1);
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));// hiệu ứng hit
+							RunEffectHit = true;
+							break; 
+						}
+					
+
+
+
+						default:
+							break;
+						}
+
+						if (RunEffectHit)
+						{
+							listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
+							listEffect.push_back(new Fire((int)gameObj->GetX() - 5, (int)gameObj->GetY() + 8)); // hiệu ứng lửa
+
+							sound->Play(eSound::soundHit);
+
+							if (objWeapon.second->GetType() == eType::DAGGER)
+							{
+								objWeapon.second->SetFinish(true);
+							}
+
+						}
+
+						gameObj->SetLastTimeAttacked(objWeapon.second->GetLastTimeAttack()); // bị đánh trúng->update thời gian bị đánh lần cuối
+					}
+				}
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	/*
 	// main weapon
 	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
 	{
@@ -538,7 +586,7 @@ void Scene_1::CheckCollisionWeapon()
 
 				}
 	}
-
+	*/
 
 
 }
@@ -563,8 +611,9 @@ void Scene_1::CheckCollisionSimonWithItem()
 
 				case eType::UPGRADEMORNINGSTAR:
 				{
-					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->_weaponMain);
+					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->mapWeapon[eType::MORNINGSTAR]);
 					objMorningStar->UpgradeLevel(); // Nâng cấp vũ khí roi
+
 					listItem[i]->SetFinish(true);
 					simon->SetFreeze(true); // bật trạng thái đóng băng
 					sound->Play(eSound::soundCollectWeapon);
@@ -573,10 +622,8 @@ void Scene_1::CheckCollisionSimonWithItem()
 
 				case eType::ITEMDAGGER:
 				{
-					SAFE_DELETE(simon->_weaponSub);
-					simon->_weaponSub = new Dagger(camera);
+					simon->ProcessWeaponCollect(eType::DAGGER);
 					listItem[i]->SetFinish(true);
-					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
 

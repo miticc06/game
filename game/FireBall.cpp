@@ -20,7 +20,7 @@ void FireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (isFinish)
 		return;
 
-	Weapon::Update(dt); // update dt,dx,dy 
+	GameObject::Update(dt); // update dt,dx,dy 
 	x += dx; 
 	y += dy;
 	// xử lí ra khỏi cam thì xóa

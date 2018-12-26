@@ -4,9 +4,9 @@
 
 Dagger::Dagger(Camera *camera)
 {
- 	_texture = TextureManager::GetInstance()->GetTexture(eType::DAGGER);
-	_sprite = new GSprite(_texture, 0);
 	type = eType::DAGGER;
+ 	_texture = TextureManager::GetInstance()->GetTexture(type);
+	_sprite = new GSprite(_texture, 0);
 	this->camera = camera;
 }
 
@@ -17,16 +17,21 @@ Dagger::~Dagger()
 
 void Dagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {  
+	//if (!isStart) // vũ khí chưa bắt đầu thì tiếp tục update và thoát
+	//{
+	//	Weapon::UpdateIsStart(dt);
+	//	return;
+	//}
+
 	if (!camera->checkObjectInCamera(x, y, GetWidth(), GetHeight())) // xử lí ra khỏi cam thì kết thúc 
 	{
 		isFinish = true;
 		return;
 	}
-
-	Weapon::Update(dt); // update dt,dx,dy 
+	 
+	GameObject::Update(dt); // update dt,dx,dy 
 	x += dx;
-
-	
+	 
 }
 
 void Dagger::Create(float simonX, float simonY, int simonDirection)
@@ -40,13 +45,5 @@ void Dagger::Create(float simonX, float simonY, int simonDirection)
 void Dagger::RenderIcon(int X, int Y)
 {
 	_sprite->DrawFlipXIndex(0, X, Y); 
-
 }
- 
-
-void Dagger::Render(Camera * camera)
-{
-	if (isFinish)
-		return; 
-	Weapon::Render(camera);
-}
+  

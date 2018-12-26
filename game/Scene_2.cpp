@@ -44,7 +44,7 @@ void Scene_2::KeyState(BYTE * state)
 
 	if (!simon->isJumping)
 	{ 
-		if (Game::GetInstance()->IsKeyDown(DIK_UP))
+		if (Game::GetInstance()->IsKeyDown(DIK_UP) && simon->isAttacking == false)
 		{
 			if (!simon->isOnStair) // chưa trên thang
 			{
@@ -95,7 +95,7 @@ void Scene_2::KeyState(BYTE * state)
 		}
 		else
 		{
-			if (Game::GetInstance()->IsKeyDown(DIK_DOWN)) // ngược lại nếu nhấn nút xuống
+			if (Game::GetInstance()->IsKeyDown(DIK_DOWN) && simon->isAttacking == false) // ngược lại nếu nhấn nút xuống
 			{
 				if (!simon->isOnStair) // chưa trên cầu thang
 				{
@@ -176,11 +176,7 @@ void Scene_2::KeyState(BYTE * state)
 		{
 			float vx, vy;
 			simon->GetSpeed(vx, vy);
-
-			//if (simon->isOnStair) // trên thang
-			//	simon->SetSpeed(0, 0);
-		//	else // bình thường
-				simon->SetSpeed(0, vy);
+			simon->SetSpeed(0, vy);
 			return;
 		}
 
@@ -194,11 +190,7 @@ void Scene_2::KeyState(BYTE * state)
 			{
 				float vx, vy;
 				simon->GetSpeed(vx, vy);
-
-			//	if (simon->isOnStair) // trên thang
-			//		simon->SetSpeed(0, 0);
-			//	else // bình thường
-					simon->SetSpeed(0, vy);
+				simon->SetSpeed(0, vy);
 				return;
 			}
 
@@ -503,11 +495,11 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
-	if (KeyCode == DIK_H) // create hollywater
-	{
-		simon->_weaponSub = new HolyWater();
+	//if (KeyCode == DIK_H) // create hollywater
+	//{
+	//	simon->_weaponSub = new HolyWater();
 
-	}
+	//}
 
 	if (KeyCode == DIK_F) // create hollywater
 	{
@@ -515,7 +507,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		simon->SetLives(9999);
 		simon->SetHeartCollect(9999);
 		_gameTime->SetTime(0);
-		simon->_weaponSub = new HolyWater();
+	//	simon->_weaponSub = new HolyWater();
 
 	}
 
@@ -526,7 +518,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		simon->SetLives(9999);
 		simon->SetHeartCollect(9999);
 		_gameTime->SetTime(0);
-		simon->_weaponSub = new HolyWater();
+	//simon->_weaponSub = new HolyWater();
 	}
 
 
@@ -555,9 +547,20 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (simon->isHurting)
 		return;
 
+	if (KeyCode == DIK_X && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
+	{ 
+		simon->Attack(eType::MORNINGSTAR);
+	}
+	 
+	if (KeyCode == DIK_Z && simon->isProcessingOnStair == 0)
+	{
+		simon->Attack(simon->GetTypeWeaponCollect()); // attack với vũ khí phụ đang nhặt
+	}
 
 
 
+
+	/*
 	if (KeyCode == DIK_X && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
 	{
 		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
@@ -598,6 +601,9 @@ void Scene_2::OnKeyDown(int KeyCode)
 				simon->Attack(simon->_weaponSub); 
 		}
 	}
+
+
+	*/
 
 	if (KeyCode == DIK_D)
 	{
@@ -661,10 +667,7 @@ void Scene_2::LoadResources()
 {
 	TextureManager * _textureManager = TextureManager::GetInstance(); // Đã gọi load resource
 	sound = Sound::GetInstance();
-
-	if (simon == NULL)
-		simon = new Simon();
-
+	 
 	if (_gameTime == NULL)
 		_gameTime = new GameTime();
 
@@ -676,6 +679,10 @@ void Scene_2::LoadResources()
 
 	camera->SetBoundary(0, CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT); // biên camera khi chưa qua cửa
 	camera->SetBoundaryBackup(0, CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT); // biên camera khi chưa qua cửa
+
+	if (simon == NULL)
+		simon = new Simon(camera);
+
 
 	board = new Board(BOARD_DEFAULT_POSITION_X, BOARD_DEFAULT_POSITION_Y);
 
@@ -953,9 +960,10 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 
 #pragma region Process_StopWatch
-	if (simon->_weaponSub != NULL && simon->_weaponSub->GetType() == eType::STOPWATCH)
+	 
+	if (simon->mapWeapon.find(eType::STOPWATCH) != simon->mapWeapon.end()) // có tồn tại
 	{
-		if (simon->_weaponSub->GetFinish() == false) //stopwatch chưa kt
+		if (simon->mapWeapon[eType::STOPWATCH]->GetFinish() == false) //stopwatch chưa kt
 		{
 			isStopWatch = true;
 		}
@@ -972,7 +980,7 @@ void Scene_2::Update(DWORD dt)
 
 //	DebugOut(L"[GRID] size = %d\n", listObj.size());
   
-	simon->Update(dt, camera, &listObj);
+	simon->Update(dt, &listObj);
 
 	if (camera->AllowFollowSimon())
 	{
@@ -1440,7 +1448,7 @@ void Scene_2::Render()
 		} 
 	}
 
-	board->Render(simon, StateCurrent, simon->_weaponSub, GAME_TIME_SCENE2 - _gameTime->GetTime(), boss);
+	board->Render(simon, StateCurrent, GAME_TIME_SCENE2 - _gameTime->GetTime(), boss);
 
 
 }
@@ -1460,145 +1468,226 @@ void Scene_2::CheckCollision()
 }
 
 void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
-{
+{ 
 
-
-#pragma region Weapon Simon
-	// main weapon
-	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
+	for (auto& objWeapon : simon->mapWeapon)
 	{
-		for (UINT i = 0; i < listObj.size(); i++) // đã kt object còn sống hay k trong hàm va chạm của vũ khí
-			if (listObj[i]->GetLastTimeAttacked() != simon->_weaponMain->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
-			{
-				if (simon->_weaponMain->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
+		if (objWeapon.second->GetFinish() == false) // Vũ khí đang hoạt động
+		{
+			for (UINT i = 0; i < listObj.size(); i++)
+				if (listObj[i]->GetLastTimeAttacked() != objWeapon.second->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
 				{
-					bool RunEffectHit = false;
-					GameObject *gameObj = listObj[i];
-					switch (gameObj->GetType())
+					if (objWeapon.second->isCollision(listObj[i]) == true) // nếu có va chạm
 					{
-					case eType::CANDLE:
-					{
-						gameObj->SubHealth(1);
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));// hiệu ứng hit
-
-						RunEffectHit = true;
-						break;
-					}
-
-					case eType::GHOST:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 100);
-						if (rand() % 2 == 1) // tỉ lệ 50%
+						bool RunEffectHit = false;
+						GameObject *gameObj = listObj[i];
+						switch (gameObj->GetType())
 						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+						case eType::CANDLE:
+						{
+							gameObj->SubHealth(1);
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));// hiệu ứng hit
+							RunEffectHit = true;
+							break;
 						}
 
-						RunEffectHit = true;
-						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-						if (CountEnemyGhost == 0)
+						case eType::GHOST:
 						{
-							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-							isWaitProcessCreateGhost = true;
-							isAllowCheckTimeWaitProcessCreateGhost = true;
-						}
-						break;
-					}
-
-					case eType::PANTHER:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 200);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						}
-						RunEffectHit = true;
-						CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
-						break;
-					}
-
-					case eType::BAT:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 200);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-
-						}
-
-						RunEffectHit = true;
-						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-						if (CountEnemyGhost == 0)
-						{
-							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-							isWaitProcessCreateGhost = true;
-							isAllowCheckTimeWaitProcessCreateGhost = true;
-						}
-						break;
-					}
-
-					case eType::FISHMEN:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 300);
-						if (rand() % 2 == 1) // tỉ lệ 50% 
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-
-						RunEffectHit = true;
-						CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
-
-						break;
-					}
-
-					case eType::PHANTOMBAT:
-					{
-						if (simon->_weaponMain->GetLevel() == 0)
-							gameObj->SubHealth(24 / 12); // 12 hit chết
-						else
-							gameObj->SubHealth(24 / 8); // 8 hit chết
-
-						DebugOut(L"1 hit!\n");
-
-						if (gameObj->GetHealth() == 0) // chết
-						{
-							for (int u = 0; u < 2; u++)
+							gameObj->SubHealth(1);
+							simon->SetScore(simon->GetScore() + 100);
+							if (rand() % 2 == 1) // tỉ lệ 50%
 							{
-								for (int v = 0; v < 3; v++)
+								listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+							}
+
+							RunEffectHit = true;
+							CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+							if (CountEnemyGhost == 0)
+							{
+								TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+								isWaitProcessCreateGhost = true;
+								isAllowCheckTimeWaitProcessCreateGhost = true;
+							}
+							break;
+						}
+
+						case eType::PANTHER:
+						{
+							gameObj->SubHealth(1);
+							simon->SetScore(simon->GetScore() + 200);
+							if (rand() % 2 == 1) // tỉ lệ 50%
+							{
+								listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+							}
+							RunEffectHit = true;
+							CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
+							break;
+						}
+
+						case eType::BAT:
+						{
+							gameObj->SubHealth(1);
+							simon->SetScore(simon->GetScore() + 200);
+							if (rand() % 2 == 1) // tỉ lệ 50%
+							{
+								listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+
+							}
+
+							RunEffectHit = true;
+							CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
+							if (CountEnemyGhost == 0)
+							{
+								TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+								isWaitProcessCreateGhost = true;
+								isAllowCheckTimeWaitProcessCreateGhost = true;
+							}
+							break;
+						}
+
+						case eType::FISHMEN:
+						{
+							gameObj->SubHealth(1);
+							simon->SetScore(simon->GetScore() + 300);
+							if (rand() % 2 == 1) // tỉ lệ 50% 
+								listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
+
+							RunEffectHit = true;
+							CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
+
+							break;
+						}
+
+						case eType::PHANTOMBAT:
+						{
+							if (objWeapon.second->GetType() == eType::MORNINGSTAR)
+							{
+								MorningStar * morningstar = dynamic_cast<MorningStar *>(objWeapon.second);
+								if (morningstar->GetLevel() > 0) // level 1 hoặc 2
+									gameObj->SubHealth(24 / 8); // 8 hit chết
+							}
+							else
+								gameObj->SubHealth(24 / 12); // 12 hit chết
+
+							if (gameObj->GetHealth() == 0) // chết
+							{
+								for (int u = 0; u < 2; u++)
 								{
-									listEffect.push_back(new Fire((int)gameObj->GetX() + v * FIRE_WIDTH, (int)gameObj->GetY() + u * FIRE_HEIGHT - 10, 3)); // hiệu ứng lửa
-									RunEffectHit = false;
+									for (int v = 0; v < 3; v++)
+									{
+										listEffect.push_back(new Fire((int)gameObj->GetX() + v * FIRE_WIDTH, (int)gameObj->GetY() + u * FIRE_HEIGHT - 10, 3)); // hiệu ứng lửa
+										RunEffectHit = false;
+									}
+								}
+								RunEffectHit = false;
+								sound->Play(eSound::soundHit);
+								listItem.push_back(new CrystalBall(CRYSTALBALL_DEFAULT_POSITION_X, CRYSTALBALL_DEFAULT_POSITION_y));
+
+							}
+							else
+							{
+								RunEffectHit = true;
+							}
+							break;
+						}
+
+
+						case eType::BRICK:
+						{
+							if (objWeapon.second->GetType() != eType::MORNINGSTAR) // nếu ko là MORNINGSTAR thì bỏ qua
+								break;
+
+							GameObject * gameObject = listObj[i];
+							if (gameObject->GetHealth() > 0)
+							{
+								switch (gameObject->GetId())
+								{
+								case 39: // id 39 : brick 4 ô-> chỉ hiện effect
+								{
+									gameObject->SubHealth(1);
+									listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									sound->Play(eSound::soundBrokenBrick);
+									break;
+								}
+
+								case 40: // id 40: brick 3 ô-> effect
+								{
+									gameObject->SubHealth(1);
+									listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
+									listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									sound->Play(eSound::soundBrokenBrick);
+									break;
+								}
+
+								case 72: // id 72: brick -> a bonus
+								{
+									gameObject->SubHealth(1);
+									sound->Play(eSound::soundDisplayMonney);
+									listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
+									listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									sound->Play(eSound::soundBrokenBrick);
+									break;
+								}
+
+								case 51: // id 51: brick 2 -> effect
+								{
+									gameObject->SubHealth(1);
+									listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									sound->Play(eSound::soundBrokenBrick); 
+									break;
+								}
+
 								}
 							}
-							RunEffectHit = false;
-							sound->Play(eSound::soundHit);
-							listItem.push_back(new CrystalBall(CRYSTALBALL_DEFAULT_POSITION_X, CRYSTALBALL_DEFAULT_POSITION_y));
-
+							break;
 						}
-						else
+						default:
+							break;
+						}
+
+						if (RunEffectHit)
 						{
-							RunEffectHit = true;
+							listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
+							listEffect.push_back(new Fire((int)gameObj->GetX() - 5, (int)gameObj->GetY() + 8)); // hiệu ứng lửa
+
+							sound->Play(eSound::soundHit);
+
+							if (objWeapon.second->GetType() == eType::DAGGER)
+							{
+								objWeapon.second->SetFinish(true);
+							}
+
 						}
-						break;
+
+						gameObj->SetLastTimeAttacked(objWeapon.second->GetLastTimeAttack()); // bị đánh trúng->update thời gian bị đánh lần cuối
 					}
-					default:
-						break;
-					}
-
-					if (RunEffectHit)
-					{
-						listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
-						listEffect.push_back(new Fire((int)gameObj->GetX() - 5, (int)gameObj->GetY() + 8)); // hiệu ứng lửa
-
-						sound->Play(eSound::soundHit);
-					}
-
-					gameObj->SetLastTimeAttacked(simon->_weaponMain->GetLastTimeAttack()); // bị đánh trúng->udate thời gian bị đánh lần cuối
-				}
-			}
-
+				} 
+		}
 	}
+	  
+
+
+	/*
+
+
+	// main weapon
+	
 
 
 	// subweapon
@@ -1754,6 +1843,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 			}
 
 	}
+	
 
 #pragma endregion 
 
@@ -1847,12 +1937,10 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 #pragma endregion
 
-
-
+ 
 
 #pragma region cmt
-	/*
-	
+	 
 #pragma region Weapon Simon
 	// main weapon
 	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
@@ -2237,11 +2325,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 #pragma endregion
 
-	*/
-#pragma endregion
-
-
-
+	*/  
 
 
 }
@@ -2274,30 +2358,15 @@ void Scene_2::CheckCollisionSimonWithItem()
 
 				case eType::UPGRADEMORNINGSTAR:
 				{
-					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->_weaponMain);
+					MorningStar * objMorningStar = dynamic_cast<MorningStar*>(simon->mapWeapon[eType::MORNINGSTAR]);
 					objMorningStar->UpgradeLevel(); // Nâng cấp vũ khí roi
+
 					listItem[i]->SetFinish(true);
 					simon->SetFreeze(true); // bật trạng thái đóng băng
 					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
-				case eType::ITEMDAGGER:
-				{
-					SAFE_DELETE(simon->_weaponSub);
-					simon->_weaponSub = new Dagger(camera);
-					listItem[i]->SetFinish(true);
-					sound->Play(eSound::soundCollectWeapon);
-					break;
-				}
 
-				case eType::ITEMHOLYWATER:
-				{
-					SAFE_DELETE(simon->_weaponSub);
-					simon->_weaponSub = new HolyWater();
-					listItem[i]->SetFinish(true);
-					sound->Play(eSound::soundCollectWeapon);
-					break;
-				}
 
 				case eType::BONUS:
 				{
@@ -2316,14 +2385,40 @@ void Scene_2::CheckCollisionSimonWithItem()
 					break;
 				}
 
-				case eType::STOPWATCH:
-				{
-					SAFE_DELETE(simon->_weaponSub);
-					simon->_weaponSub = new StopWatch();
+
+				/* Vũ khí phụ của simon */
+				case eType::ITEMDAGGER:
+				{  
+					simon->ProcessWeaponCollect(eType::DAGGER);
 					listItem[i]->SetFinish(true);
-					sound->Play(eSound::soundCollectWeapon);
 					break;
 				}
+
+				case eType::ITEMHOLYWATER:
+				{
+					simon->ProcessWeaponCollect(eType::HOLYWATER);
+ 					listItem[i]->SetFinish(true);
+
+					break;
+				}
+
+				case eType::STOPWATCH:
+				{  
+					simon->ProcessWeaponCollect(eType::STOPWATCH);
+
+					listItem[i]->SetFinish(true);  
+					break;
+				}
+
+				case eType::ITEMTHROWINGAXE:
+				{
+					simon->ProcessWeaponCollect(eType::THROWINGAXE);
+
+					listItem[i]->SetFinish(true);
+					break;
+				}
+				/* Vũ khí phụ của simon */
+
 
 
 				case eType::CRYSTALBALL:
@@ -2341,14 +2436,6 @@ void Scene_2::CheckCollisionSimonWithItem()
 				}
 
 
-				case eType::ITEMTHROWINGAXE:
-				{
-					SAFE_DELETE(simon->_weaponSub);
-					simon->_weaponSub = new ThrowingAxe(camera);
-					listItem[i]->SetFinish(true);
-					sound->Play(eSound::soundCollectWeapon);
-					break;
-				}
 				 
 				case eType::INVISIBILITYPOTION:
 				{
@@ -2829,10 +2916,15 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 	{
 		int random = rand() % 15;
 
-		while (simon->_weaponMain->GetLevel() == 2 && random == 4)
+		if (random == 4)
 		{
-			random = rand() % 15;
+			MorningStar * morningstar = dynamic_cast<MorningStar*>(simon->mapWeapon[eType::MORNINGSTAR]);
+			while (morningstar->GetLevel() == 2 && random == 4)
+			{
+				random = rand() % 15;
+			}
 		}
+		
 
 		switch (random)
 		{

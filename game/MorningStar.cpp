@@ -4,10 +4,10 @@
 
 MorningStar::MorningStar()
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::MORNINGSTAR);
-	_sprite = new GSprite(_texture, 90);
-	this->level = 0;
 	type = eType::MORNINGSTAR;
+	_texture = TextureManager::GetInstance()->GetTexture(type);
+	_sprite = new GSprite(_texture, MORNINGSTAR_TIME_WAIT_ANI);
+	this->level = 0;
 }
 
 
@@ -17,7 +17,7 @@ MorningStar::~MorningStar()
 
 void MorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 { 
-	Weapon::Update(dt);
+	GameObject::Update(dt);
 
 	// update for check collision
 
@@ -29,8 +29,9 @@ void MorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (StartFrame <= _sprite->GetIndex() && _sprite->GetIndex() < EndFrame)
 		_sprite->Update(dt);
-	else
-		_sprite->SelectIndex(StartFrame);
+
+	//DebugOut(L"update ani Morningstar dt = %d, tich luy = %d\n", dt, _sprite->_timeLocal);
+
 }
 
 void MorningStar::Render(Camera * camera)
@@ -70,28 +71,35 @@ void MorningStar::Create(float simonX, float simonY, int simonDirection)
 	switch (level)
 	{
 	case 0:
-		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL0_START - 1); // đặt sai index cho hàm update cập nhật ngay frame đầu
+		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL0_START); 
+		_sprite->ResetTime();
 		break;
 	case 1:
-		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL1_START - 1); // đặt sai index cho hàm update cập nhật ngay frame đầu
+		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL1_START); 
+		_sprite->ResetTime();
+
 		break;
 	case 2:
-		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL2_START - 1); // đặt sai index cho hàm update cập nhật ngay frame đầu
+		_sprite->SelectIndex(MORNINGSTAR_ANI_LEVEL2_START);
+		_sprite->ResetTime();
+
 		break; 
-	} 
-	
-	//PlaySound(L"Resources\\sound\\hit.wav", NULL, SND_FILENAME);
+	}
+ 	Sound::GetInstance()->Play(eSound::soundWhip); 
 }
 
 void MorningStar::UpdatePositionFitSimon()
-{
+{ 
 	if (direction == -1)
 	{
-		this->x = x - 65;
+		this->x = x - 75;
+		this->y -= 2;
+
 	}
 	else
 	{
-		this->x = x - 30;
+		this->x = x - 25;
+		this->y-=2;
 	}
 }
 

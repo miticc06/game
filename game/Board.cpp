@@ -1,21 +1,11 @@
 ﻿#include "Board.h"
-// 
-//string Board::FillNumber(string s, UINT MaxNumber)
-//{ 
-//	while (s.size() < MaxNumber)
-//		s = "0" + s;
-//	return s;
-//}
  
-
-string Board::FillNumber(const string & s, int MaxNumber)
-{
-	string res = s;
-	int k = MaxNumber - res.size();
-	if (k > 0)
-		res = zero[k] + res;
-	return res;
-}
+string Board::FillNumber(string s, UINT MaxNumber)
+{ 
+	while (s.size() < MaxNumber)
+		s = "0" + s;
+	return s;
+} 
 
 Board::Board(int X, int Y)
 {
@@ -26,7 +16,7 @@ Board::Board(int X, int Y)
 }
  
 
-void Board::Render(Simon * simon , int state, Weapon * weaponSub, int RemainingTime, GameObject * boss)
+void Board::Render(Simon * simon , int state, int RemainingTime, GameObject * boss)
 {  
 	_sprite->Draw(x,y); 
 
@@ -54,28 +44,27 @@ void Board::Render(Simon * simon , int state, Weapon * weaponSub, int RemainingT
 		if (BloodBoss == 0 && boss->GetHealth() > 0)
 			BloodBoss = 1;
 	}
-	_boardHealth.Draw(x + 110, y + 30, simon->GetHealth(), BloodBoss); 
-	 
-	if (weaponSub != NULL)
-	{
-		switch (weaponSub->GetType())
-		{
-		case eType::DAGGER:
-			weaponSub->RenderIcon(x + 330 +10,y + 40);
-			break;
-		case eType::HOLYWATER:
-			weaponSub->RenderIcon(x + 332 + 10, y + 33);
-			break;
-		case eType::STOPWATCH:
-			weaponSub->RenderIcon(x + 332 + 10, y + 31);
-			break;
-		case eType::THROWINGAXE:
-			weaponSub->RenderIcon(x + 330 + 10, y + 35);
-			break;
-		default:
-			break;
-		} 
+	_boardHealth.Draw(x + 110, y + 30, simon->GetHealth(), BloodBoss);
 
+
+	eType TypeWeaponCollect = simon->GetTypeWeaponCollect();
+	switch (TypeWeaponCollect)
+	{
+	case eType::DAGGER:
+		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 330 + 10, y + 40);
+		break;
+	case eType::HOLYWATER:
+		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 332 + 10, y + 33);
+		break;
+	case eType::STOPWATCH:
+		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 332 + 10, y + 31);
+		break;
+	case eType::THROWINGAXE:
+		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 330 + 10, y + 35);
+		break;
+
+	default:
+		break;
 	}
 
 }

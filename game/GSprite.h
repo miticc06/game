@@ -13,20 +13,21 @@ public:
 	int _end;
 	int _index;
 	int _timeAni;	//thời gian chuyển frame
-	int _timeLocal;	
+	DWORD _timeLocal;
 
 	GSprite();
 	GSprite(const GSprite &sprite);
-	GSprite(GTexture* texture, int timeAnimation);
-	GSprite(GTexture* texture, int start, int end, int timeAnimation);
+	GSprite(GTexture* texture, DWORD timeAnimation);
+	GSprite(GTexture* texture, int start, int end, DWORD timeAnimation);
 
  	void Next();
 
  	void Reset();
+	void ResetTime();
 
  	void SelectIndex(int index);
 
- 	void Update(int ellapseTime);
+ 	void Update(DWORD dt);
 
  	void Draw(int x, int y, int alpha = 255);
 	void Draw(float X, float Y, int alpha = 255);

@@ -11,14 +11,12 @@
 #include "UpgradeMorningStar.h"
 
 
-
 class Weapon : public GameObject
 {
 protected:  
 	bool isFinish;
 	DWORD LastTimeAttack; // Thời điểm tấn công cuối cùng
-	 
-
+	  
 public:
 	Weapon();
 	~Weapon();			 
@@ -27,10 +25,9 @@ public:
 	void SetDirection(int Direction);
 
 	virtual void Create(float X, float Y, int Direction);
- 
-
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL); 
- 	virtual void Render(Camera *camera); 
+  
+  	
+	virtual void Render(Camera *camera); 
 	virtual void UpdatePositionFitSimon(); 
 	virtual bool isCollision(GameObject* obj); // kiểm tra vũ khí này có va chạm với object kia hay không?
 	virtual void RenderIcon(int X, int Y) = 0; 
@@ -38,8 +35,7 @@ public:
 
 	void SetFinish(bool b);
 	  
-	DWORD GetLastTimeAttack();
- 
+	DWORD GetLastTimeAttack(); 
 };
 
 

@@ -1,6 +1,6 @@
 ﻿#include "BrokenBrick.h"
   
-BrokenBrick::BrokenBrick(int X, int Y, int Model)
+BrokenBrick::BrokenBrick(float X, float Y, int Model)
 {
 	this->x = X;
 	this->y = Y;

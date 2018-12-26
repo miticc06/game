@@ -22,7 +22,7 @@ GSprite::GSprite(const GSprite &sprite)
 	SetARGB();
 }
 
-GSprite::GSprite(GTexture* texture, int start, int end, int timeAnimation)
+GSprite::GSprite(GTexture* texture, int start, int end, DWORD timeAnimation)
 : _texture(texture)
 {
 	_start = start;
@@ -33,7 +33,7 @@ GSprite::GSprite(GTexture* texture, int start, int end, int timeAnimation)
 	SetARGB();
 }
 
-GSprite::GSprite(GTexture* texture, int timeAnimation)
+GSprite::GSprite(GTexture* texture, DWORD timeAnimation)
 : _texture(texture)
 {
 	_start = 0;
@@ -72,18 +72,24 @@ void GSprite::Reset()
 	_timeLocal = 0;
 }
 
+void GSprite::ResetTime()
+{ 
+	_timeLocal = 0; 
+}
+
 void GSprite::SelectIndex(int index)
 {
 	_index = index;
+	//_timeLocal = 0;
 }
 
-void GSprite::Update(int ellapseTime)
+void GSprite::Update(DWORD dt)
 {
-	_timeLocal += ellapseTime;
-
+	_timeLocal += dt;
 	if (_timeLocal >= _timeAni)
 	{
-		_timeLocal = 0;
+		_timeLocal -= _timeAni;
+		//_timeLocal = 0;
 		this->Next();
 	}
 }

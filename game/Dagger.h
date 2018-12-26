@@ -4,7 +4,7 @@
 #include "Weapon.h"
 #include "TextureManager.h"
 #include "Sound.h"
-#define DAGGER_SPEED 0.35f
+#define DAGGER_SPEED 0.45f
 
 class Dagger : 	public Weapon
 {
@@ -20,10 +20,7 @@ public:
 	void Create(float simonX, float simonY, int simonDirection);
 	 
  	void RenderIcon(int X, int Y);
-	 
-	void Render(Camera *camera);
-
-
+	  
 
 };
 

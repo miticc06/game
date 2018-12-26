@@ -106,6 +106,8 @@ enum eType
 	STOPWATCH = 64,
 	FIREBALL = 65,
 	THROWINGAXE = 66,
+	NON_WEAPON_COLLECT = 67,
+
 
 	// item
 	LARGEHEART = 81,
