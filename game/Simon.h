@@ -23,7 +23,7 @@
 #define SIMON_GRAVITY_HURTING 0.001f
 
 
-#define SIMON_VJUMP 0.33f//0.9f
+#define SIMON_VJUMP 0.34f//0.9f
 #define SIMON_VJUMP_HURTING 0.2f // nhảy lúc bị đau
 #define PULL_UP_SIMON_AFTER_JUMPING 18.0f // Kéo simon lên 18px sau khi nhảy, tránh overlaping do BBOX bottom thu lại khi nhảy
 
@@ -116,6 +116,7 @@ private:
 
 	bool isAutoGoX = 0; // đang ở chế độ auto go?
 
+	bool isDeadth;
 
 
 public:
@@ -140,7 +141,7 @@ public:
 	bool isCollisionAxisYWithBrick = false; // Đang va chạm với đất theo trục y
 
 
-	bool isDeadth;
+	
 	DWORD TimeWaitedAfterDeath;
 
 public:
@@ -200,6 +201,8 @@ public:
 
 
 	void SetDeadth();
+	bool GetIsDeadth();
+	void SetIsDeadth(bool b);
 };
 
 

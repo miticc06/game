@@ -2,7 +2,7 @@
 
 
   
-CrystalBall::CrystalBall(int X, int Y)
+CrystalBall::CrystalBall(float X, float Y)
 {
 	_texture = TextureManager::GetInstance()->GetTexture(eType::CRYSTALBALL);
 	_sprite = new GSprite(_texture, 100);

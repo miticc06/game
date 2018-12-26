@@ -1,54 +1,29 @@
 #include "GTexture.h"
   
-GTexture::GTexture(char* _fileName, int cols, int rows, int count, int R, int G, int B)
+GTexture::GTexture(char* filePath, int cols, int rows, int count, int R, int G, int B)
 {
 	Cols = cols;
 	Rows = rows;
 	Count = count;
-	FileName = _fileName;
-	this->Load(R, G, B);
-}
-
-GTexture::~GTexture()
-{
-	if(this->Texture != NULL)
-		this->Texture->Release();
-}
-
-void GTexture::Draw(int x, int y) 
-{
-	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
-
-	D3DXVECTOR3 position((float)x, (float)y, 0);
-	spriteHandler->Draw( Texture, &Size, NULL, &position, 0xFFFFFFFF);
-}
-  
-void GTexture::Load(int R, int G, int B)
-{
+ 	 
 	D3DXIMAGE_INFO info;
-	HRESULT result;
-
-	LPDIRECT3DDEVICE9 G_Device = Game::GetInstance()->GetDirect3DDevice();
-	 
-	result = D3DXGetImageInfoFromFileA(FileName, &info);
-
-	RECT s = { (LONG)0,(LONG)0, (LONG)info.Width,(LONG)info.Height };
-	this->Size = s;
+	HRESULT result = D3DXGetImageInfoFromFileA(filePath, &info);
+	if (result != D3D_OK)
+	{
+		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", filePath);
+		return;
+	}
 
 	FrameWidth = info.Width / Cols;
 	FrameHeight = info.Height / Rows;
 
-	if (result != D3D_OK)
-	{
-		DebugOut(L"[ERROR TEXTURE] Khong the load texture: %s \n", FileName);
- 		return;
-	}
-
+	LPDIRECT3DDEVICE9 d3ddv = Game::GetInstance()->GetDirect3DDevice();
+  
 	result = D3DXCreateTextureFromFileExA(
-		G_Device,
-		FileName,
-		info.Width,
-		info.Height,
+		d3ddv,								// Pointer to Direct3D device object
+		filePath,							// Path to the image to load
+		info.Width,							// Texture width
+		info.Height,						// Texture height
 		1,
 		D3DUSAGE_DYNAMIC,
 		D3DFMT_UNKNOWN,
@@ -57,14 +32,26 @@ void GTexture::Load(int R, int G, int B)
 		D3DX_DEFAULT,
 		D3DCOLOR_XRGB(R, G, B),
 		&info,
-		0,
-		&Texture
-	);
-
+		NULL,
+		&Texture);								// Created texture pointer
+	  
 	if (result != D3D_OK)
 	{
-		DebugOut(L"[ERROR TEXTURE] Khong the load texture: %s \n", FileName);
-
+		OutputDebugString(L"[ERROR] CreateTextureFromFile failed\n");
 		return;
 	}
 }
+
+GTexture::~GTexture()
+{
+	if(this->Texture != NULL)
+		this->Texture->Release();
+}
+//
+//void GTexture::Draw(int x, int y) 
+//{
+//	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
+//	D3DXVECTOR3 position((float)x, (float)y, 0);
+//	spriteHandler->Draw( Texture, &Size, NULL, &position, 0xFFFFFFFF);
+//}
+//   

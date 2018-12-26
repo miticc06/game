@@ -44,15 +44,15 @@ using namespace std;
 #define SCREEN_HEIGHT 480 
 
 
-#define IS_DEBUG_RENDER_BBOX 1
+#define IS_DEBUG_RENDER_BBOX 0
 
 #define MAX_FRAME_RATE 90
 
-#define COLOR_BACKGROUND_DEFAULT D3DCOLOR_XRGB(0, 0, 0) // Màu đen 0, 0, 0
+#define COLOR_BACKGROUND_DEFAULT D3DCOLOR_XRGB(0, 0, 0) // Màu đen
  
 #define TIME_LIMIT_WAIT_RESET_GAME 300 // Thời gian chờ vẽ màn màu đen khi reset game
 
-extern D3DCOLOR D3DCOLOR_BACKGROUND;
+extern D3DCOLOR D3DCOLOR_BACKGROUND; // màu nền game
 
 
 extern int Window_Width; 
@@ -171,11 +171,13 @@ typedef D3DXVECTOR2 GVector2;
 
 
 
-
+#ifndef CHECK_OBJECT_IN_CAMERA // Kiểm tra GameObject có nằm trong camera ko?
+#define CHECK_OBJECT_IN_CAMERA(obj) \
+checkObjectInCamera(obj->GetX(), obj->GetY(), obj->GetWidth(), obj->GetHeight())
+#endif
 
 
 #ifndef SAFE_DELETE
-
 #define SAFE_DELETE(ptr) \
 if(ptr) \
 {\

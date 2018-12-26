@@ -27,13 +27,14 @@ private:
 	bool isAutoGoX;
 	float AutoGoX_Backup_X;
 
+	Simon * simon;
 
 public:
-	Panther(float X, float Y, int Direction, float autoGoX_Dx);
+	Panther(float X, float Y, int Direction, float autoGoX_Dx, Simon * simon);
 	virtual ~Panther();
 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void Update(DWORD dt, Simon * simon,  vector<LPGAMEOBJECT> *coObjects = NULL);
+	void Update(DWORD dt,  vector<LPGAMEOBJECT> *coObjects = NULL);
 	void Render(Camera *camera);
 
 	bool GetIsStart(); 

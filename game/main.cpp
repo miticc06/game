@@ -119,10 +119,6 @@ SceneManager * _sceneManager;
 //
 //
 //
-
-
-
-
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
@@ -268,7 +264,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	_sceneManager = SceneManager::GetInstance();
 
 
-	_sceneManager->SetScene(new Scene_1()); // vào màn 1
+	_sceneManager->SetScene(new Scene_2()); // vào màn 1
 	 
 
 

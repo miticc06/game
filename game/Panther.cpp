@@ -2,7 +2,7 @@
 
 
 
-Panther::Panther(float X, float Y, int Direction, float autoGoX_Dx)
+Panther::Panther(float X, float Y, int Direction, float autoGoX_Dx, Simon * simon)
 {
 	type = eType::PANTHER;
 	Health = 1;
@@ -21,6 +21,8 @@ Panther::Panther(float X, float Y, int Direction, float autoGoX_Dx)
 	isJumping = 0;
 	isStart = 0;
 	isAutoGoX = 0;
+
+	this->simon = simon;
 }
 
 
@@ -33,7 +35,7 @@ void Panther::GetBoundingBox(float & left, float & top, float & right, float & b
 	bottom = y + _texture->FrameHeight;
 }
 
-void Panther::Update(DWORD dt, Simon * simon, vector<LPGAMEOBJECT>* coObjects)
+void Panther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	GameObject::Update(dt);
 

@@ -2,7 +2,7 @@
 #define __CAMERA_H__
 
 #include "define.h" 
-
+ 
 class Camera
 {
 protected:
@@ -20,11 +20,7 @@ protected:
 
 	float _boundaryLeft; // biên giới hạn bên trái 
 	float _boundaryRight; // biên giới hạn bên phải, không bao gồm đoạn simon đi được ở cuối - Window_Width 
-
-	//float _boundaryLeftBackup; // backup lại biên, dùng cho trường hợp simo 
-	//float _boundaryRightBackup; // biên giới hạn bên phải
-
-
+	  
 	float vx;
 	DWORD dt;
 
@@ -34,7 +30,7 @@ protected:
 	bool isAllowFollowSimon; 
 
 public:
-	Camera(int w, int h/*, int b_left, int b_right*/);
+	Camera(int w, int h);
 	~Camera();
 	 
 	void Update(DWORD dt);
@@ -49,7 +45,7 @@ public:
 	int GetHeight();
 
 	bool checkObjectInCamera(float x, float y, float w, float h);
-	
+ 
 	bool AllowFollowSimon();
 	void SetAllowFollowSimon(bool b);
 

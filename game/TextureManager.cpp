@@ -114,11 +114,7 @@ void TextureManager::LoadResource()
 
 
 }
-
-
-
-
-
+ 
 TextureManager::TextureManager()
 {
 	LoadResource();// load đúng 1 lần
@@ -127,4 +123,5 @@ TextureManager::TextureManager()
 
 TextureManager::~TextureManager()
 {
+	SAFE_DELETE(__Instance);
 }

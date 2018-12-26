@@ -12,7 +12,7 @@ class CrystalBall :
 	public Item
 {
 public:
-	CrystalBall(int X, int Y);
+	CrystalBall(float X, float Y);
 	virtual ~CrystalBall(); 
 
  	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *listObject = NULL);

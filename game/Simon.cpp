@@ -81,9 +81,7 @@ void Simon::Update(DWORD dt, Camera* camera, vector<LPGAMEOBJECT>* coObjects)
 	if (x + SIMON_BBOX_WIDTH > camera->GetBoundaryRight() + Window_Width)
 		x = (float)(camera->GetBoundaryRight() + Window_Width - SIMON_BBOX_WIDTH);
 	/* Không cho lọt khỏi camera */
-
-//	if (Health <= 0)
-//		isDeadth = true; 
+	 
 
 #pragma region Update về sprite
 	 
@@ -916,8 +914,10 @@ bool Simon::LoseLife()
 {
 	if (Lives - 1 < 0)
 		return false;
+
 	Health = SIMON_DEFAULT_HEALTH;
 	Lives = Lives - 1;
+	SetIsDeadth(false);
 	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
 	SAFE_DELETE(_weaponMain);
 	SAFE_DELETE(_weaponSub);
@@ -956,7 +956,7 @@ void Simon::SetPositionBackup(float X, float Y)
 
 void Simon::SetDeadth()
 {
-	isDeadth = true;
+	SetIsDeadth(true);
 	TimeWaitedAfterDeath = 0;
 	
 	ResetSit();
@@ -968,3 +968,14 @@ void Simon::SetDeadth()
 
 	Stop();
 }
+
+bool Simon::GetIsDeadth()
+{
+	return isDeadth;
+}
+
+void Simon::SetIsDeadth(bool b)
+{
+	isDeadth = b;
+}
+ 

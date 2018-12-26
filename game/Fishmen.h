@@ -31,22 +31,25 @@ private:
  
 	float xBefore;
 	float xAfter;
-	float xAccumulationAttack; // quảng đường đã đi tích lũy, để khi đi đủ giới hạn sẽ attack
+	float xAccumulationAttack; // quãng đường đã đi tích lũy, để khi đi đủ giới hạn sẽ attack
 	DWORD TimeAttack; // thời điểm attack
 	 
 	bool isRunning;
 	FireBall * weapon;
 	bool isAttacking;
+
+	/* Lưu thành phần ngoài phục vụ xử lí */
+	Simon* simon;
+	vector<Weapon*> *listWeaponOfEnemy;
+
 public:
-	Fishmen(float X = 0, float Y = 0, int Direction = -1);
+	Fishmen(float X, float Y, int Direction, Simon* simon, vector<Weapon*> *listWeaponOfEnemy);
 	virtual ~Fishmen();
 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *listObject = NULL);
-	void UpdateCustom(DWORD dt, vector<LPGAMEOBJECT> *listObject, Simon* simon, vector<Weapon*> *listWeaponOfEnemy);
-	void Render(Camera * camera);
-
-	void Attack(vector<Weapon*> *listWeaponOfEnemy);
+ 	void Render(Camera * camera); 
+	void Attack();
 };
 
 #endif 

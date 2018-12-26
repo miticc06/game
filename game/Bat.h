@@ -6,7 +6,7 @@
 #define BAT_SPEED_X 0.1f 
 #define BAT_SPEED_Y 0.05f
 
-#define DeltaY 20
+#define DeltaY 20 // Biên giao động trục y
 
 
 class Bat :	public GameObject
@@ -18,12 +18,9 @@ public:
 	Bat(float X = 0, float Y = 0, int Direction = -1);
 	virtual ~Bat();
 	  
-	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void Update(DWORD dt, vector<LPGAMEOBJECT> *listObject = NULL); 
+ 	void Update(DWORD dt, vector<LPGAMEOBJECT> *listObject = NULL); 
 	void Render(Camera * camera);
-
-
- 
+	 
 };
 
 #endif

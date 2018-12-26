@@ -25,7 +25,7 @@ void Scene_2::KeyState(BYTE * state)
 		return;
 	}
 
-	if (simon->isDeadth || isWaitResetGame || isGameOver)
+	if (simon->GetIsDeadth() || isWaitResetGame || isGameOver)
 	{
 		return;
 	}
@@ -38,19 +38,12 @@ void Scene_2::KeyState(BYTE * state)
 
 	if (simon->isJumping && simon->isWalking)
 		return;
-
-	//if (simon->isHurting && simon->isOnStair)
-	//{
-	//	simon->isHurting = 0;
-	//}
-
+  
 	if (simon->isHurting)
 		return;
 
 	if (!simon->isJumping)
-	{
-
-
+	{ 
 		if (Game::GetInstance()->IsKeyDown(DIK_UP))
 		{
 			if (!simon->isOnStair) // chưa trên thang
@@ -174,17 +167,20 @@ void Scene_2::KeyState(BYTE * state)
 	}
 
 
-
-
-
+	if (simon->isOnStair) // nếu đang trên thang thì không xét loại đi trái phải bt
+		return;
 
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 	{
-		if (simon->isAttacking)
+		if (simon->isAttacking) // đang attack
 		{
 			float vx, vy;
 			simon->GetSpeed(vx, vy);
-			simon->SetSpeed(0, vy);
+
+			//if (simon->isOnStair) // trên thang
+			//	simon->SetSpeed(0, 0);
+		//	else // bình thường
+				simon->SetSpeed(0, vy);
 			return;
 		}
 
@@ -194,13 +190,18 @@ void Scene_2::KeyState(BYTE * state)
 	else
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
 		{
-			if (simon->isAttacking)
+			if (simon->isAttacking) // đang attack
 			{
 				float vx, vy;
 				simon->GetSpeed(vx, vy);
-				simon->SetSpeed(0, vy);
+
+			//	if (simon->isOnStair) // trên thang
+			//		simon->SetSpeed(0, 0);
+			//	else // bình thường
+					simon->SetSpeed(0, vy);
 				return;
 			}
+
 			simon->Left();
 			simon->Go();
 		}
@@ -254,7 +255,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
-	if (simon->isDeadth || isWaitResetGame)
+	if (simon->GetIsDeadth() || isWaitResetGame)
 	{
 		return;
 	} 
@@ -530,18 +531,18 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 
 
-	if (KeyCode == DIK_M) // tesst fishmen
-	{ 
-		float vtx = simon->GetX() + 100;
-		float vty = 805;
-		listEnemy.push_back(new Fishmen(vtx, vty, -1));
+	//if (KeyCode == DIK_M) // tesst fishmen
+	//{ 
+	//	float vtx = simon->GetX() + 100;
+	//	float vty = 805;
+	//	listEnemy.push_back(new Fishmen(vtx, vty, -1));
 
-		listEffect.push_back(new Steam(vtx, vty, 1));
-		listEffect.push_back(new Steam(vtx, vty, 2));
-		listEffect.push_back(new Steam(vtx, vty, 3));
+	//	listEffect.push_back(new Steam(vtx, vty, 1));
+	//	listEffect.push_back(new Steam(vtx, vty, 2));
+	//	listEffect.push_back(new Steam(vtx, vty, 3));
 
-		sound->Play(eSound::soundSplashwater);
-	}
+	//	sound->Play(eSound::soundSplashwater);
+	//}
 
 
 	if (simon->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
@@ -569,7 +570,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
-	if (KeyCode == DIK_Z)
+	if (KeyCode == DIK_Z && simon->isProcessingOnStair == 0)
 	{
 		if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == true)
 		{
@@ -641,7 +642,7 @@ void Scene_2::OnKeyUp(int KeyCode)
 		return;
 	}
 
-	if (simon->isDeadth || isWaitResetGame || isGameOver)
+	if (simon->GetIsDeadth() || isWaitResetGame || isGameOver)
 	{
 		return;
 	}
@@ -843,7 +844,7 @@ void Scene_2::Update(DWORD dt)
 #pragma region Process_Gametime_OR_Health
 		if (_gameTime->GetTime() >= GAME_TIME_SCENE2 || simon->GetHealth() <= 0) // hết thời gian hoặc hết máu
 		{
-			if (simon->isDeadth) 
+			if (simon->GetIsDeadth())
 			{ 
 				simon->TimeWaitedAfterDeath += dt;
 				if (simon->TimeWaitedAfterDeath >= 1500)
@@ -855,7 +856,6 @@ void Scene_2::Update(DWORD dt)
 					else
 					{
 						bool result = simon->LoseLife(); // đã khôi phục x,y
-						simon->isDeadth = false;
 						camera->RestorePosition(); // khôi phục vị trí camera;
 						camera->RestoreBoundary(); // khôi phục biên camera
 
@@ -894,6 +894,7 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 
 	}
+
 
 #pragma region Process Gate 1
 
@@ -970,17 +971,7 @@ void Scene_2::Update(DWORD dt)
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 
 //	DebugOut(L"[GRID] size = %d\n", listObj.size());
-
-	for (UINT i = 0; i < listObj.size(); i++)
-	{
-		if (listObj[i]->GetId() == 31)
-		{
-
-			int xxxx = 0;
-			//544
-		}
-	}
-
+  
 	simon->Update(dt, camera, &listObj);
 
 	if (camera->AllowFollowSimon())
@@ -989,8 +980,7 @@ void Scene_2::Update(DWORD dt)
 	}
 
 	camera->Update(dt);
-
-	
+	 
 
 #pragma region Process_Region_Create_Enemy_Ghost
 
@@ -1163,9 +1153,9 @@ void Scene_2::Update(DWORD dt)
 			if (CountEnemyPanther == 0) // không còn Panther nào sống thì mới dc tạo lại cả 3
 			{
 				int directionPanther = abs(REGION_CREATE_PANTHER_LEFT - simon->GetX()) < abs(REGION_CREATE_PANTHER_RIGHT - simon->GetX()) ? -1 : 1; // hướng mặt của Panther quay về hướng simon
-				listEnemy.push_back(new Panther(1398.0f, 225.0f, directionPanther, directionPanther == -1 ? 20.0f : 9.0f));
-				listEnemy.push_back(new Panther(1783.0f, 160.0f, directionPanther, directionPanther == -1 ? 278.0f : 180.0f));
-				listEnemy.push_back(new Panther(1923.0f, 225.0f, directionPanther, directionPanther == -1 ? 68.0f : 66.0f));
+				listEnemy.push_back(new Panther(1398.0f, 225.0f, directionPanther, directionPanther == -1 ? 20.0f : 9.0f, simon));
+				listEnemy.push_back(new Panther(1783.0f, 160.0f, directionPanther, directionPanther == -1 ? 278.0f : 180.0f, simon));
+				listEnemy.push_back(new Panther(1923.0f, 225.0f, directionPanther, directionPanther == -1 ? 68.0f : 66.0f, simon));
 				CountEnemyPanther += 3;
 			}
 			isAllowRenewPanther = false;
@@ -1259,7 +1249,7 @@ void Scene_2::Update(DWORD dt)
 
 			
 			float vty = 805;
-			listEnemy.push_back(new Fishmen(vtx, vty, directionFishmen));
+			listEnemy.push_back(new Fishmen(vtx, vty, directionFishmen, simon, &listWeaponOfEnemy));
 			
 			CountEnemyFishmen++;
 
@@ -1299,22 +1289,15 @@ void Scene_2::Update(DWORD dt)
 				{
 				case eType::GHOST:
 				{
-					if (camera->checkObjectInCamera(
-						enemy->GetX(),
-						enemy->GetY(),
-						enemy->GetWidth(),
-						enemy->GetHeight()) == false)  // vượt khỏi cam
+					if (camera->CHECK_OBJECT_IN_CAMERA(enemy) == false)  // vượt khỏi cam
 					{
 						enemy->SetHealth(0); // ra khỏi cam thì coi như chết
-						if (dynamic_cast<Ghost*>(enemy) != NULL) // object này là ghost
+						CountEnemyGhost--; // giảm số lượng ghost hiện tại
+						if (CountEnemyGhost == 0)
 						{
-							CountEnemyGhost--; // giảm số lượng ghost hiện tại
-							if (CountEnemyGhost == 0)
-							{
-								TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-								isWaitProcessCreateGhost = true;
-								isAllowCheckTimeWaitProcessCreateGhost = true;
-							}
+							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
+							isWaitProcessCreateGhost = true;
+							isAllowCheckTimeWaitProcessCreateGhost = true;
 						}
 					}
 					else
@@ -1323,19 +1306,15 @@ void Scene_2::Update(DWORD dt)
 				}
 
 				case eType::PANTHER:
-				{
-					Panther * objPanther = dynamic_cast<Panther *>(enemy);
-					if (camera->checkObjectInCamera(
-						objPanther->GetX(),
-						objPanther->GetY(),
-						objPanther->GetWidth(),
-						objPanther->GetHeight())) // nếu Panther nằm trong camera thì update
+				{ 
+					if (camera->CHECK_OBJECT_IN_CAMERA(enemy)) // nếu Panther nằm trong camera thì update
 						// vì do Grid load object nền (Brick) dựa vào vùng camera, nên có nguy cơ khiến 1 số object Panther không xét được va chạm đất.
 					{
-						objPanther->Update(dt, simon, &listObj);
+						enemy->Update(dt, &listObj);
 					}
 					else // nằm ngoài camera
 					{
+						Panther * objPanther = dynamic_cast<Panther *>(enemy);
 						if (objPanther->GetIsStart())// ngoài cam và đã được kích hoạt r
 						{
 							objPanther->SetHealth(0); // cho Panther chết
@@ -1348,11 +1327,7 @@ void Scene_2::Update(DWORD dt)
 
 				case eType::BAT:
 				{
-					if (camera->checkObjectInCamera(
-						enemy->GetX(),
-						enemy->GetY(),
-						enemy->GetWidth(),
-						enemy->GetHeight())) // nếu bat nằm trong camera thì update
+					if (camera->CHECK_OBJECT_IN_CAMERA(enemy)) // nếu nằm trong camera thì update
 					{
 						enemy->Update(dt);
 					}
@@ -1363,21 +1338,12 @@ void Scene_2::Update(DWORD dt)
 
 					break;
 				}
-
-
-
+				 
 				case eType::FISHMEN:
 				{
-					if (camera->checkObjectInCamera(
-						enemy->GetX(),
-						enemy->GetY(),
-						enemy->GetWidth(),
-						enemy->GetHeight())) // nếu nằm trong camera thì update
-					{
-						Fishmen *objectFishmen = dynamic_cast<Fishmen*>(enemy);
-						objectFishmen->UpdateCustom(dt, &listObj, simon, &listWeaponOfEnemy);
-
-
+					if (camera->CHECK_OBJECT_IN_CAMERA(enemy)) // nếu nằm trong camera thì update
+					{ 
+						enemy->Update(dt, &listObj);
 					}
 					else
 					{
@@ -1411,11 +1377,10 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 
 
-	if (!simon->isDeadth)
+	if (!simon->GetIsDeadth())
 	{
 		CheckCollision();
-	}
-
+	} 
 	 
 }
 

@@ -24,7 +24,7 @@ void Scene_1::KeyState(BYTE * state)
 	}
 
 
-	if (simon->isDeadth || isWaitResetGame || isGameOver)
+	if (simon->GetIsDeadth() || isWaitResetGame || isGameOver)
 	{
 		return;
 	}
@@ -134,7 +134,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 	}
 
 
-	if (simon->isDeadth || isWaitResetGame)
+	if (simon->GetIsDeadth() || isWaitResetGame)
 	{
 		return;
 	}
@@ -248,7 +248,7 @@ void Scene_1::OnKeyUp(int KeyCode)
 		return;
 	}
 
-	if (simon->isDeadth || isWaitResetGame)
+	if (simon->GetIsDeadth() || isWaitResetGame)
 	{
 		return;
 	}
@@ -353,7 +353,7 @@ void Scene_1::Update(DWORD dt)
 
 	if (_gameTime->GetTime() >= GAME_TIME_SCENE1) // hết thời gian
 	{
-		if (simon->isDeadth)
+		if (simon->GetIsDeadth())
 		{
 			simon->TimeWaitedAfterDeath += dt;
 			if (simon->TimeWaitedAfterDeath >= 1500)
@@ -364,8 +364,7 @@ void Scene_1::Update(DWORD dt)
 				}
 				else
 				{
-					bool result = simon->LoseLife(); // đã khôi phục x,y
-					simon->isDeadth = false;
+					bool result = simon->LoseLife(); // đã khôi phục x,y 
 					camera->RestorePosition(); // khôi phục vị trí camera;
 					camera->RestoreBoundary(); // khôi phục biên camera
 

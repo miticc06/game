@@ -19,15 +19,7 @@ Ghost::Ghost(float X,  float Y, int Direction)
 Ghost::~Ghost()
 {
 }
-
-void Ghost::GetBoundingBox(float & left, float & top, float & right, float & bottom)
-{
-	left = x;
-	top = y;
-	right = x + _texture->FrameWidth;
-	bottom = y + _texture->FrameHeight;
-}
-
+ 
 void Ghost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	GameObject::Update(dt); 

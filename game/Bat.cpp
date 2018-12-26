@@ -3,10 +3,10 @@
  
 Bat::Bat(float X, float Y, int Direction)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::BAT);
-	_sprite = new GSprite(_texture, 70);
 	type = eType::BAT;
-
+	_texture = TextureManager::GetInstance()->GetTexture(type);
+	_sprite = new GSprite(_texture, 70);
+	 
 	this->x = X;
 	this->y = Y;
 	this->yBackup = y;
@@ -20,15 +20,7 @@ Bat::Bat(float X, float Y, int Direction)
 Bat::~Bat()
 {
 }
-
-void Bat::GetBoundingBox(float & left, float & top, float & right, float & bottom)
-{
-	left = x;
-	top = y;
-	right = x + _texture->FrameWidth;
-	bottom = y + _texture->FrameHeight;
-
-}
+ 
 
 void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 {  
