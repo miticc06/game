@@ -174,3 +174,4 @@ id 86: object ẩn -> vào hồ nước phía phải
 
 // id 64, type 26 Object ẩn dùng để mở cửa 
 
+id 104: Double shot

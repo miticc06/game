@@ -46,6 +46,9 @@ Simon::Simon(Camera* camera)
 	this->sound = Sound::GetInstance();
 	mapWeapon[eType::MORNINGSTAR] = new MorningStar();
 	TypeWeaponCollect = eType::NON_WEAPON_COLLECT;
+	
+	isUseDoubleShot = false;
+	
 }
 
 
@@ -862,6 +865,7 @@ void Simon::Attack(eType typeWeapon)
 		return;
 	} 
 
+	/* Kiểm tra còn đủ HeartCollect ko? */
 	switch (typeWeapon)
 	{
 	case MORNINGSTAR:
@@ -877,7 +881,7 @@ void Simon::Attack(eType typeWeapon)
 	{
 		if (HeartCollect >= 5)
 		{
-			HeartCollect -= 5;
+			//HeartCollect -= 5;
 		}
 		else
 			return; // ko đủ HeartCollect thì ko attack
@@ -888,7 +892,7 @@ void Simon::Attack(eType typeWeapon)
 	{
 		if (HeartCollect >= 1)
 		{
-			HeartCollect -= 1;
+		//	HeartCollect -= 1;
 		}
 		else
 			return;// ko đủ HeartCollect thì ko attack
@@ -896,13 +900,128 @@ void Simon::Attack(eType typeWeapon)
 	} 
 	}
 
+	bool isAllowSubHeartCollect = false;
 
 	if (mapWeapon[typeWeapon]->GetFinish()) // vũ khí đã kết thúc thì mới đc tấn công tiếp
 	{
+		if (isUseDoubleShot && typeWeapon != eType::MORNINGSTAR && mapWeapon.find(eType::WEAPON_DOUBLE_SHOT) != mapWeapon.end() && mapWeapon[eType::WEAPON_DOUBLE_SHOT]->GetFinish() == false) // Double shot sub weapon đã tạo mà lại chưa kết thúc thì thoát
+			return;
+
 		isAttacking = true; // set trang thái tấn công
 		_sprite->SelectIndex(0);
 		_sprite->ResetTime();
+
 		mapWeapon[typeWeapon]->Create(this->x, this->y, this->direction); // set vị trí weapon theo simon
+		isAllowSubHeartCollect = true;
+	}
+	else // xử lí Double Shot
+	{
+		if (isUseDoubleShot && typeWeapon!=eType::MORNINGSTAR && typeWeapon != eType::STOPWATCH) // đang ở chế độ DoubleShot và k phải là Morning star VÀ STOPWATCH
+		{
+			if (GetTickCount() - mapWeapon[typeWeapon]->GetLastTimeAttack() >= 300) // sau 200 ms thì mới được dùng Double Shot
+			{
+				bool isMustRecreateDoubleShot = false; // ban đầu k cần tạo lại
+
+				if (mapWeapon.find(eType::WEAPON_DOUBLE_SHOT) == mapWeapon.end()) // chưa tạo Double shot
+				{
+					isMustRecreateDoubleShot = true; // chưa tạo thì phải tạo lại
+				}
+				else
+				{
+					if (mapWeapon[eType::WEAPON_DOUBLE_SHOT]->GetFinish() == false) // vũ khí đã tạo vẫn còn đang chạy
+					{
+						return; // thoát luôn
+
+						//isMustRecreateDoubleShot = false; // ko tạo lại;
+					}
+					else
+					{
+						if (mapWeapon[eType::WEAPON_DOUBLE_SHOT]->GetType() != typeWeapon) // vũ khí đã tạo khác với vũ khí đang dùng để tấn công
+						{
+							isMustRecreateDoubleShot = true; // tạo lại cho đúng
+						}
+					}
+				}
+
+				if (isMustRecreateDoubleShot)
+				{
+					SAFE_DELETE(mapWeapon[eType::WEAPON_DOUBLE_SHOT]); // DELETE vũ khí hiện tại
+					eType t = GetTypeWeaponCollect();
+					switch (t)
+					{
+
+					case DAGGER:
+					{
+						mapWeapon[eType::WEAPON_DOUBLE_SHOT] = new Dagger(camera);
+						break;
+					}
+
+					case HOLYWATER:
+					{
+						mapWeapon[eType::WEAPON_DOUBLE_SHOT] = new HolyWater(camera);
+						break;
+					}
+
+					case STOPWATCH:
+					{
+						mapWeapon[eType::WEAPON_DOUBLE_SHOT] = new StopWatch();
+						break;
+					}
+
+					case THROWINGAXE:
+					{
+						mapWeapon[eType::WEAPON_DOUBLE_SHOT] = new ThrowingAxe(camera);
+						break;
+					}
+
+					case BOOMERANG:
+					{
+						mapWeapon[eType::WEAPON_DOUBLE_SHOT] = new Boomerang(camera, this);
+						break;
+					}
+					default:
+						break;
+					}
+				}
+
+
+
+				isAttacking = true; // set trang thái tấn công
+				_sprite->SelectIndex(0);
+				_sprite->ResetTime();
+
+
+				mapWeapon[eType::WEAPON_DOUBLE_SHOT]->Create(this->x, this->y, this->direction);
+				isAllowSubHeartCollect = true;
+
+
+			}
+
+		}
+	}
+
+	if (isAllowSubHeartCollect)
+	{
+		switch (typeWeapon)
+		{  
+		case MORNINGSTAR:
+		{ 
+			// ko trừ
+			break;
+		}
+
+		case STOPWATCH:
+		{
+			HeartCollect -= 5;
+			break;
+		}
+
+		default: // các vũ khí còn lại
+		{
+			HeartCollect -= 1;
+			break;
+		}
+		}
 	}
 	
 }
@@ -1053,6 +1172,8 @@ bool Simon::LoseLife()
 	x = PositionBackup.x;
 	y = PositionBackup.y;
 
+	isUseDoubleShot = false;
+
 	return true;
 }
 
@@ -1152,5 +1273,15 @@ void Simon::ProcessWeaponCollect(eType t)
 
 	sound->Play(eSound::soundCollectWeapon);
 	SetTypeWeaponCollect(t); // set kiểu vũ khí đang nhặt được
+}
+
+bool Simon::GetIsUseDoubleShot()
+{
+	return isUseDoubleShot;
+}
+
+void Simon::SetIsUseDoubleShot(bool b)
+{
+	isUseDoubleShot = b;
 }
  

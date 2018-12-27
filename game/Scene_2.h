@@ -39,6 +39,8 @@
 #include "Cross.h"
 #include "Scene_1.h"
 #include "ItemBoomerang.h"
+#include "ItemDoubleShot.h"
+
 #define GAME_TIME_SCENE2 300
 
 #define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo

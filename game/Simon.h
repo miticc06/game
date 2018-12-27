@@ -138,6 +138,9 @@ private:
 	
 	Camera * camera;
 	Sound * sound;
+	bool isUseDoubleShot;
+
+
 public:
 	bool isWalking;
 	bool isJumping;
@@ -149,19 +152,16 @@ public:
 	int isProcessingOnStair;  // có 2 giai đoạn 
 	int directionStair; // hướng của cầu thang đang đi, -1 đi qua trái, 1 đi qua phải
 	int directionY; // hướng đi theo trục y của simon
-
-
+	 
 	float DoCaoDiDuoc = 0;
 
 	bool untouchable;
 	DWORD untouchable_start;
-
-
+	 
 	bool isCollisionAxisYWithBrick = false; // Đang va chạm với đất theo trục y
-
-
-	
+	 
 	DWORD TimeWaitedAfterDeath;
+
 
 public:
 	Simon(Camera* camera);
@@ -170,10 +170,8 @@ public:
 
 
 	unordered_map<eType, Weapon*> mapWeapon;
+	 
 
-
-
- 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera);
@@ -230,6 +228,9 @@ public:
 	eType GetTypeWeaponCollect();
 	void SetTypeWeaponCollect(eType t);
 	void ProcessWeaponCollect(eType t);
+
+	bool GetIsUseDoubleShot();
+	void SetIsUseDoubleShot(bool b);
 };
 
 

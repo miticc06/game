@@ -192,6 +192,7 @@
     </ClCompile>
     <ClCompile Include="Boomerang.cpp" />
     <ClCompile Include="ItemBoomerang.cpp" />
+    <ClCompile Include="ItemDoubleShot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -382,6 +383,7 @@
     </ClInclude>
     <ClInclude Include="Boomerang.h" />
     <ClInclude Include="ItemBoomerang.h" />
+    <ClInclude Include="ItemDoubleShot.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

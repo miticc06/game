@@ -491,7 +491,8 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_B) // create BAT
 	{
 	//	listEnemy.push_back(new Bat(camera->GetXCam() + camera->GetWidth() - 100, simon->GetY() + 20, -1));
-		listItem.push_back(new ItemBoomerang(100, 100));
+		listItem.push_back(new ItemBoomerang(camera->GetXCam() + 100, 100));
+		simon->SetIsUseDoubleShot(true);
 	}
 
 
@@ -1475,7 +1476,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 		if (objWeapon.second->GetFinish() == false) // Vũ khí đang hoạt động
 		{
 			for (UINT i = 0; i < listObj.size(); i++)
-				if (listObj[i]->GetLastTimeAttacked() != objWeapon.second->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
+				if (objWeapon.second->GetLastTimeAttack() > listObj[i]->GetLastTimeAttacked()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
 				{
 					if (objWeapon.second->isCollision(listObj[i]) == true) // nếu có va chạm
 					{
@@ -1653,6 +1654,21 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
 									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
 									sound->Play(eSound::soundBrokenBrick); 
+									break;
+								}
+
+								case 104: // id 104: double shot
+								{
+									gameObject->SubHealth(1);
+
+									listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
+
+									listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
 
@@ -2388,6 +2404,12 @@ void Scene_2::CheckCollisionSimonWithItem()
 					break;
 				}
 
+				case eType::ITEMDOUBLESHOT:
+				{ 
+					simon->SetIsUseDoubleShot(true); // bật chế độ Double Shot
+					listItem[i]->SetFinish(true);
+					break;
+				}
 
 				/* Vũ khí phụ của simon */
 				case eType::ITEMDAGGER:
@@ -2985,7 +3007,9 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 			return new Bonus(X, Y);
 			break;
 
-
+		case 104: // Double shot
+			return new ItemDoubleShot(X, Y);
+			break;
 
 
 		default:

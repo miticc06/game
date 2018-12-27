@@ -27,6 +27,8 @@ private:
 	string FillNumber(string s, UINT MaxNumber);
 	 
 
+	GSprite * _spriteIconDoubleShot;
+
  public:
 	Board(int X, int Y);
 	void Render(Simon * simon, int state, int RemainingTime, GameObject * boss);

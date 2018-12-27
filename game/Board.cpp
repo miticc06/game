@@ -11,6 +11,9 @@ Board::Board(int X, int Y)
 {
  	_texture = TextureManager::GetInstance()->GetTexture(eType::BOARD);
 	_sprite = new GSprite(_texture, 0);
+
+	_spriteIconDoubleShot = new GSprite(TextureManager::GetInstance()->GetTexture(eType::ITEMDOUBLESHOT), 0);
+
 	x = X;
 	y = Y;
 }
@@ -33,8 +36,8 @@ void Board::Render(Simon * simon , int state, int RemainingTime, GameObject * bo
 	_font.Draw(x + 400 + 60, y + 15, FillNumber(std::to_string(state),2));
 
 
-	_font.Draw(x + 400 + 25, y + 15+18, FillNumber(std::to_string(simon->GetHeartCollect()),2)); // Số lượng tim nhặt dc
-	_font.Draw(x + 400 + 25, y + 15 + 18+18, FillNumber(std::to_string(simon->GetLives()),2)); // số mạng sông
+	_font.Draw(x + 400 + 25 - 32, y + 15+18, FillNumber(std::to_string(simon->GetHeartCollect()),2)); // Số lượng tim nhặt dc
+	_font.Draw(x + 400 + 25 - 32, y + 15 + 18+18, FillNumber(std::to_string(simon->GetLives()),2)); // số mạng sông
 
 
 	int BloodBoss = 16; 
@@ -51,24 +54,28 @@ void Board::Render(Simon * simon , int state, int RemainingTime, GameObject * bo
 	switch (TypeWeaponCollect)
 	{
 	case eType::DAGGER:
-		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 330 + 10, y + 40);
+		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 330 + 10-30, y + 40);
 		break;
 	case eType::HOLYWATER:
-		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 332 + 10, y + 33);
+		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 332 + 10 - 30, y + 33);
 		break;
 	case eType::STOPWATCH:
-		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 332 + 10, y + 31);
+		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 332 + 10 - 30, y + 31);
 		break;
 	case eType::THROWINGAXE:
-		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 330 + 10, y + 35);
+		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 330 + 10 - 30, y + 35);
 		break;
 	case eType::BOOMERANG:
-		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 330 + 10, y + 35);
+		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 330 + 10 - 30, y + 35);
 		break;
 	default:
 		break;
 	}
 
+	if (simon->GetIsUseDoubleShot())
+	{
+		_spriteIconDoubleShot->Draw(x + 470-5, y + 35);
+	}
 }
 
 

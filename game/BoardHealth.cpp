@@ -38,7 +38,7 @@ void BoardHealth::Draw(int x, int y, int HealthPlayer, int HealthEnemy)
 	for (j = i; j < BOARDHEALTH_MAX_CELL; j++)
 	{
 		_sprite->Draw(x + j * _texture->FrameWidth, y + 18);
-	}
+	} 
 
 }
  

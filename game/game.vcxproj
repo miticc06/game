@@ -154,6 +154,7 @@
     <ClInclude Include="IntroBat.h" />
     <ClInclude Include="InvisibilityPotion.h" />
     <ClInclude Include="ItemBoomerang.h" />
+    <ClInclude Include="ItemDoubleShot.h" />
     <ClInclude Include="ItemHolyWater.h" />
     <ClInclude Include="Bonus.h" />
     <ClInclude Include="ItemStopWatch.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="IntroBat.cpp" />
     <ClCompile Include="InvisibilityPotion.cpp" />
     <ClCompile Include="ItemBoomerang.cpp" />
+    <ClCompile Include="ItemDoubleShot.cpp" />
     <ClCompile Include="ItemHolyWater.cpp" />
     <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="ItemStopWatch.cpp" />

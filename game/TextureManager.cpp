@@ -74,6 +74,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::INVISIBILITYPOTION, new GTexture("Resources/item/14.png"));
 	AddTexture(eType::CROSS, new GTexture("Resources/item/6.png"));
 	AddTexture(eType::ITEMBOOMERANG, new GTexture("Resources/item/8.png"));
+	AddTexture(eType::ITEMDOUBLESHOT, new GTexture("Resources/item/11.png"));
 
 
 
