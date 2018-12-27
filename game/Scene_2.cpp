@@ -37,7 +37,15 @@ void Scene_2::KeyState(BYTE * state)
 		return;
 
 	if (simon->isJumping && simon->isWalking)
+	{
+	//	if (simon->isCollisionAxisYWithBrick)
+		{
+			DebugOut(L"simon->isJumping && simon->isWalking\n");
+		//	simon->SetVx(0);
+		}
 		return;
+	}
+		
   
 	if (simon->isHurting)
 		return;
@@ -170,15 +178,28 @@ void Scene_2::KeyState(BYTE * state)
 	if (simon->isOnStair) // nếu đang trên thang thì không xét loại đi trái phải bt
 		return;
 
+	if (simon->isAttacking) // đang attack
+	{
+		float vx, vy;
+		simon->GetSpeed(vx, vy);
+		simon->SetSpeed(0, vy);
+		DebugOut(L"DIK_RIGHT & attack \n");
+
+		return;
+	}
+
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 	{
-		if (simon->isAttacking) // đang attack
-		{
-			float vx, vy;
-			simon->GetSpeed(vx, vy);
-			simon->SetSpeed(0, vy);
-			return;
-		}
+		//if (simon->isAttacking) // đang attack
+		//{
+		//	float vx, vy;
+		//	simon->GetSpeed(vx, vy);
+		//	simon->SetSpeed(0, vy);
+		//	DebugOut(L"DIK_RIGHT & attack \n");
+
+		//	return;
+		//}
+		DebugOut(L"DIK_RIGHT\n");
 
 		simon->Right();
 		simon->Go();
@@ -186,19 +207,34 @@ void Scene_2::KeyState(BYTE * state)
 	else
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
 		{
-			if (simon->isAttacking) // đang attack
-			{
-				float vx, vy;
-				simon->GetSpeed(vx, vy);
-				simon->SetSpeed(0, vy);
-				return;
-			}
+			//if (simon->isAttacking) // đang attack
+			//{
+			//	float vx, vy;
+			//	simon->GetSpeed(vx, vy);
+			//	simon->SetSpeed(0, vy);
+			//	DebugOut(L"DIK_LEFT & attack \n");
+
+			//	return;
+			//}
 
 			simon->Left();
 			simon->Go();
+			DebugOut(L"DIK_LEFT\n");
+
 		}
 		else
 		{
+			DebugOut(L"Stop\n");
+
+			//if (simon->isAttacking) // đang attack
+			//{
+			//	float vx, vy;
+			//	simon->GetSpeed(vx, vy);
+			//	simon->SetSpeed(0, vy);
+			//	DebugOut(L"DIK_RIGHT & attack \n");
+
+			//	return;
+			//}
 
 			simon->Stop();
 		}
