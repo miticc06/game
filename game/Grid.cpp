@@ -59,7 +59,10 @@ void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 				{ 
 						if (mapObject.find(cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetId()) == mapObject.end()) // ko tìm thấy
 							mapObject[cells[row + GRID_BASE][col + GRID_BASE].at(i)->GetId()] = cells[row + GRID_BASE][col + GRID_BASE].at(i);
-				
+				}
+				else
+				{
+				//	cells[row + GRID_BASE][col + GRID_BASE].erase(cells[row + GRID_BASE][col + GRID_BASE].begin() + i); // xóa luôn
 				}
 			}
 		}

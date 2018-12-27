@@ -19,6 +19,7 @@ void Sound::LoadResourceSound()
 	AddSound(eSound::soundCollectItem, L"Resources/sound/collectitem.wav");
 	AddSound(eSound::soundCollectWeapon, L"Resources/sound/collectweapon.wav");
 	AddSound(eSound::soundHolyCross, L"Resources/sound/holycross.wav");
+	AddSound(eSound::soundBoomerang, L"Resources/sound/08-boomerang.wav");
 
 
 

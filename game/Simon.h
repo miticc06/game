@@ -10,6 +10,7 @@
 #include "Dagger.h"
 #include "HolyWater.h"
 #include "StopWatch.h"
+#include "Boomerang.h"
 
 #define SIMON_POSITION_DEFAULT  50.0f, 0
 

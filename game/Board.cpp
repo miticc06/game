@@ -62,7 +62,9 @@ void Board::Render(Simon * simon , int state, int RemainingTime, GameObject * bo
 	case eType::THROWINGAXE:
 		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 330 + 10, y + 35);
 		break;
-
+	case eType::BOOMERANG:
+		simon->mapWeapon[TypeWeaponCollect]->RenderIcon(x + 330 + 10, y + 35);
+		break;
 	default:
 		break;
 	}

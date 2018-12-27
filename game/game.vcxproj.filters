@@ -190,6 +190,8 @@
     <ClCompile Include="IntroBat.cpp">
       <Filter>Framework\Scene\Scene_Intro</Filter>
     </ClCompile>
+    <ClCompile Include="Boomerang.cpp" />
+    <ClCompile Include="ItemBoomerang.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -378,6 +380,8 @@
     <ClInclude Include="IntroBat.h">
       <Filter>Framework\Scene\Scene_Intro</Filter>
     </ClInclude>
+    <ClInclude Include="Boomerang.h" />
+    <ClInclude Include="ItemBoomerang.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

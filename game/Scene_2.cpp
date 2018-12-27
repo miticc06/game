@@ -490,8 +490,8 @@ void Scene_2::OnKeyDown(int KeyCode)
 
 	if (KeyCode == DIK_B) // create BAT
 	{
-		listEnemy.push_back(new Bat(camera->GetXCam() + camera->GetWidth() - 100, simon->GetY() + 20, -1));
-
+	//	listEnemy.push_back(new Bat(camera->GetXCam() + camera->GetWidth() - 100, simon->GetY() + 20, -1));
+		listItem.push_back(new ItemBoomerang(100, 100));
 	}
 
 
@@ -1565,6 +1565,9 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 								MorningStar * morningstar = dynamic_cast<MorningStar *>(objWeapon.second);
 								if (morningstar->GetLevel() > 0) // level 1 hoặc 2
 									gameObj->SubHealth(24 / 8); // 8 hit chết
+								else 
+									gameObj->SubHealth(24 / 12); // 12 hit chết
+
 							}
 							else
 								gameObj->SubHealth(24 / 12); // 12 hit chết
@@ -2417,6 +2420,13 @@ void Scene_2::CheckCollisionSimonWithItem()
 					listItem[i]->SetFinish(true);
 					break;
 				}
+
+				case eType::ITEMBOOMERANG:
+				{
+					simon->ProcessWeaponCollect(eType::BOOMERANG);
+					listItem[i]->SetFinish(true);
+					break;
+				}
 				/* Vũ khí phụ của simon */
 
 
@@ -2954,6 +2964,9 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 			break;
 		case 8: 
 			return new InvisibilityPotion(X, Y);
+			break;
+		case 9:
+			return new ItemBoomerang(X, Y);
 			break;
 		default: // còn lại là SmallHeart
 			return new SmallHeart(X, Y);

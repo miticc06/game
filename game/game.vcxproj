@@ -127,6 +127,7 @@
     <ClInclude Include="Bat.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="BoardHealth.h" />
+    <ClInclude Include="Boomerang.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrokenBrick.h" />
     <ClInclude Include="Camera.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="HolyWater.h" />
     <ClInclude Include="IntroBat.h" />
     <ClInclude Include="InvisibilityPotion.h" />
+    <ClInclude Include="ItemBoomerang.h" />
     <ClInclude Include="ItemHolyWater.h" />
     <ClInclude Include="Bonus.h" />
     <ClInclude Include="ItemStopWatch.h" />
@@ -191,6 +193,7 @@
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="BoardHealth.cpp" />
+    <ClCompile Include="Boomerang.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrokenBrick.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -216,6 +219,7 @@
     <ClCompile Include="HolyWater.cpp" />
     <ClCompile Include="IntroBat.cpp" />
     <ClCompile Include="InvisibilityPotion.cpp" />
+    <ClCompile Include="ItemBoomerang.cpp" />
     <ClCompile Include="ItemHolyWater.cpp" />
     <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="ItemStopWatch.cpp" />

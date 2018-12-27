@@ -1137,6 +1137,15 @@ void Simon::ProcessWeaponCollect(eType t)
 		}
 		break;
 	}
+
+	case BOOMERANG:
+	{
+		if (mapWeapon[t] == NULL)
+		{
+			mapWeapon[t] = new Boomerang(camera, this);
+		}
+		break;
+	}
 	default:
 		break;
 	}

@@ -29,7 +29,7 @@ enum eSound
 	soundInvisibilityPotion_Begin = 18,
 	soundInvisibilityPotion_End = 19,
 	soundHolyCross = 20,
-
+	soundBoomerang = 21,
 
 
 	musicState1 = 51,

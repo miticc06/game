@@ -73,6 +73,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::ITEMTHROWINGAXE, new GTexture("Resources/item/7.png"));
 	AddTexture(eType::INVISIBILITYPOTION, new GTexture("Resources/item/14.png"));
 	AddTexture(eType::CROSS, new GTexture("Resources/item/6.png"));
+	AddTexture(eType::ITEMBOOMERANG, new GTexture("Resources/item/8.png"));
 
 
 
@@ -84,6 +85,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::STOPWATCH, new GTexture("Resources/item/5.png"));
 	AddTexture(eType::FIREBALL, new GTexture("Resources/weapon/fireball.png"));
 	AddTexture(eType::THROWINGAXE, new GTexture("Resources/weapon/3.png",4,1,4));
+	AddTexture(eType::BOOMERANG, new GTexture("Resources/weapon/4.png",3,1,3));
 
 
 	//player

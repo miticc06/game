@@ -396,7 +396,7 @@ void Scene_1::Update(DWORD dt)
 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 	//DebugOut(L"[Grid] ListObject by Camera = %d\n", listObj.size());
-	DebugOut(L"[GRID] size = %d\n", listObj.size());
+	//DebugOut(L"[GRID] size = %d\n", listObj.size());
 
 
 	simon->Update(dt, &listObj);
@@ -536,59 +536,7 @@ void Scene_1::CheckCollisionWeapon()
 				}
 		}
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	/*
-	// main weapon
-	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
-	{
-		for (UINT i = 0; i < listObj.size(); i++)
-			if (listObj[i]->GetType() == eType::TORCH)
-				if (simon->_weaponMain->isCollision(listObj[i]) == true)
-				{
-					GameObject *gameObjTorch = listObj[i];
-					gameObjTorch->SubHealth(1);
-
-					listEffect.push_back(new Hit((int)gameObjTorch->GetX() + 14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng Hit
-					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY() + 8)); // hiệu ứng lửa
-
-					listItem.push_back(GetNewItem(gameObjTorch->GetId(), gameObjTorch->GetType(), gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
-
-					sound->Play(eSound::soundHit);
-				}
-	}
-
-
-	// subweapon
-	if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == false)
-	{
-		for (UINT i = 0; i < listObj.size(); i++)
-			if (listObj[i]->GetType() == eType::TORCH)
-				if (simon->_weaponSub->isCollision(listObj[i]) == true)
-				{
-					GameObject *gameObjTorch = listObj[i];
-
-					gameObjTorch->SubHealth(1);
-
-					simon->_weaponSub->SetFinish(true);   // cây kiếm trúng object thì tắt luôn
-
-					listEffect.push_back(new Hit((int)gameObjTorch->GetX() + 14, (int)gameObjTorch->GetY() + 14)); // hiệu ứng hit
-					listEffect.push_back(new Fire((int)gameObjTorch->GetX() - 5, (int)gameObjTorch->GetY() + 8)); // hiệu ứng lửa
-					listItem.push_back(GetNewItem(gameObjTorch->GetId(), gameObjTorch->GetType(), gameObjTorch->GetX() + 5, gameObjTorch->GetY()));
-
-					sound->Play(eSound::soundHit);
-
-				}
-	}
-	*/
-
-
+	 
 }
 
 void Scene_1::CheckCollisionSimonWithItem()

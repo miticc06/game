@@ -5,7 +5,7 @@
 CrystalBall::CrystalBall(float X, float Y)
 {
 	_texture = TextureManager::GetInstance()->GetTexture(eType::CRYSTALBALL);
-	_sprite = new GSprite(_texture, 100);
+	_sprite = new GSprite(_texture, 50);
 
 	x = X;
 	y = Y;
@@ -64,6 +64,8 @@ void CrystalBall::Render(Camera * camera)
 	{
 		return;
 	}
+
+	_sprite->Update(dt);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 
