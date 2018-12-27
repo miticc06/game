@@ -40,6 +40,8 @@
 #include "Scene_1.h"
 #include "ItemBoomerang.h"
 #include "ItemDoubleShot.h"
+#include "MoneyBag.h"
+#include "EffectMoney.h"
 
 #define GAME_TIME_SCENE2 300
 

@@ -138,6 +138,7 @@
     <ClInclude Include="Dagger.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="EffectMoney.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="Fishmen.h" />
     <ClInclude Include="Gate.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Bonus.h" />
     <ClInclude Include="ItemStopWatch.h" />
     <ClInclude Include="ItemThrowingAxe.h" />
+    <ClInclude Include="MoneyBag.h" />
     <ClInclude Include="ObjectHidden.h" />
     <ClInclude Include="Panther.h" />
     <ClInclude Include="PhantomBat.h" />
@@ -205,6 +207,7 @@
     <ClCompile Include="Dagger.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="define.cpp" />
+    <ClCompile Include="EffectMoney.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="Fishmen.cpp" />
     <ClCompile Include="Gate.cpp" />
@@ -227,6 +230,7 @@
     <ClCompile Include="Bonus.cpp" />
     <ClCompile Include="ItemStopWatch.cpp" />
     <ClCompile Include="ItemThrowingAxe.cpp" />
+    <ClCompile Include="MoneyBag.cpp" />
     <ClCompile Include="ObjectHidden.cpp" />
     <ClCompile Include="Panther.cpp" />
     <ClCompile Include="PhantomBat.cpp" />

@@ -2,7 +2,7 @@
 
  
 
-StairTop::StairTop(int X, int Y, int Direction)
+StairTop::StairTop(float X, float Y, int Direction)
 { 
 	width = 50;
 	height = 5;

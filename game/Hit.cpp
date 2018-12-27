@@ -2,7 +2,7 @@
 
  
 
-Hit::Hit(int X, int Y)
+Hit::Hit(float X, float Y)
 {
 	this->x = X;
 	this->y = Y;

@@ -12,7 +12,7 @@ public:
 	int _start;
 	int _end;
 	int _index;
-	int _timeAni;	//thời gian chuyển frame
+	DWORD _timeAni;	//thời gian chuyển frame
 	DWORD _timeLocal;
 
 	GSprite();

@@ -1412,15 +1412,18 @@ void Scene_2::Render()
 			if (listItem[i]->GetFinish() == false)
 				listItem[i]->Render(camera);
 
-		for (UINT i = 0; i < listEffect.size(); i++)
-			if (listEffect[i]->GetFinish() == false)
-				listEffect[i]->Render(camera);
+		
 
 		for (UINT i = 0; i < listEnemy.size(); i++)
 			listEnemy[i]->Render(camera);
 
 
 		simon->Render(camera);
+
+
+		for (UINT i = 0; i < listEffect.size(); i++)
+			if (listEffect[i]->GetFinish() == false)
+				listEffect[i]->Render(camera);
 
 		if (boss != NULL)
 			boss->Render(camera);
@@ -2386,14 +2389,45 @@ void Scene_2::CheckCollisionSimonWithItem()
 					break;
 				} 
 
+				/* Xử lí ăn tiền */
+				case eType::MONEY_BAG_RED:
+				{
+					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectItem);
+					simon->SetScore(simon->GetScore() + 100);
+					listEffect.push_back(new EffectMoney(listItem[i]->GetX(), listItem[i]->GetY(), eType::EFFECT_MONEY_100));
+					break;
+				}
+
+				case eType::MONEY_BAG_PURPLE:
+				{
+					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectItem);
+					simon->SetScore(simon->GetScore() + 400);
+					listEffect.push_back(new EffectMoney(listItem[i]->GetX(), listItem[i]->GetY(), eType::EFFECT_MONEY_400));
+					break;
+				}
+
+				case eType::MONEY_BAG_WHITE:
+				{
+					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectItem);
+					simon->SetScore(simon->GetScore() + 700);
+					listEffect.push_back(new EffectMoney(listItem[i]->GetX(), listItem[i]->GetY(), eType::EFFECT_MONEY_700));
+					break;
+				}
+
 				case eType::BONUS:
 				{
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
 					simon->SetScore(simon->GetScore() + 1000);
+					listEffect.push_back(new EffectMoney(listItem[i]->GetX(), listItem[i]->GetY(), eType::EFFECT_MONEY_1000));
+
 					break;
 				}
-				 
+				/* Xử lí ăn tiền */
+
 				case eType::POTROAST:
 				{
 					listItem[i]->SetFinish(true);
@@ -2915,6 +2949,10 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 	{
 		switch (Id)
 		{
+		case 2: 
+			return new MoneyBag(X, Y, eType::MONEY_BAG_WHITE);
+			break;
+
 		case 40: case 71:
 			return new ItemHolyWater(X, Y);
 			break; 
@@ -2935,8 +2973,25 @@ Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
 			break;  
 
 		default:
-			return new SmallHeart(X, Y);
+		{
+			int random = rand() % 10;
+			switch (random)
+			{
+			case 0: 
+				return new MoneyBag(X, Y, eType::MONEY_BAG_RED);
+				break;
+			case 1:
+				return new MoneyBag(X, Y, eType::MONEY_BAG_WHITE);
+				break;
+			case 2:
+				return new MoneyBag(X, Y, eType::MONEY_BAG_PURPLE);
+				break;
+			default:
+				return new SmallHeart(X, Y);
+				break;
+			}
 			break;
+		} 
 		}
 
 	}

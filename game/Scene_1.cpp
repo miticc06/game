@@ -580,6 +580,8 @@ void Scene_1::CheckCollisionSimonWithItem()
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
 					simon->SetScore(simon->GetScore() + 1000);
+					listEffect.push_back(new EffectMoney(listItem[i]->GetX(), listItem[i]->GetY(), eType::EFFECT_MONEY_1000));
+
 					break;
 				}
 

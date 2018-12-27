@@ -193,6 +193,8 @@
     <ClCompile Include="Boomerang.cpp" />
     <ClCompile Include="ItemBoomerang.cpp" />
     <ClCompile Include="ItemDoubleShot.cpp" />
+    <ClCompile Include="MoneyBag.cpp" />
+    <ClCompile Include="EffectMoney.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -384,6 +386,8 @@
     <ClInclude Include="Boomerang.h" />
     <ClInclude Include="ItemBoomerang.h" />
     <ClInclude Include="ItemDoubleShot.h" />
+    <ClInclude Include="MoneyBag.h" />
+    <ClInclude Include="EffectMoney.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">

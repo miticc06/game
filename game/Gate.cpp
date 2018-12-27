@@ -2,7 +2,7 @@
 
 
 
-Gate::Gate(int X, int Y)
+Gate::Gate(float X, float Y)
 {
 	type = eType::GATE; 
 	_texture = TextureManager::GetInstance()->GetTexture(type);

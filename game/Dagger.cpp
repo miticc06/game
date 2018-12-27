@@ -23,7 +23,7 @@ void Dagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//	return;
 	//}
 
-	if (!camera->checkObjectInCamera(x, y, GetWidth(), GetHeight())) // xử lí ra khỏi cam thì kết thúc 
+	if (!camera->checkObjectInCamera(x, y, (float)GetWidth(), (float)GetHeight())) // xử lí ra khỏi cam thì kết thúc 
 	{
 		isFinish = true;
 		return;

@@ -8,7 +8,7 @@
 class Hit :	public Effect
 {
 public:
-	Hit(int X = 0, int Y = 0);
+	Hit(float X = 0, float Y = 0);
 	~Hit();
 
 	void Update(DWORD dt);

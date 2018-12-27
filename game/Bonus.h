@@ -1,14 +1,14 @@
-﻿#ifndef __MONNEY_H__
-#define __MONNEY_H__
+﻿#ifndef __BONUS_H__
+#define __BONUS_H__
 
 
 
 #include "Item.h"
 
 
-#define MONEY_TIMEDISPLAYMAX 5000
-#define MONEY_TIMEWAITMAX 300
-#define MONEY_GRAVITY 0.25f
+#define BONUS_TIMEDISPLAYMAX 5000
+#define BONUS_TIMEWAITMAX 300
+#define BONUS_GRAVITY 0.25f
 
 
 
@@ -19,13 +19,10 @@ public:
 	Bonus(float X = 0, float Y = 0);
 	~Bonus();
 	void Render(Camera * camera);
-
-	// tong quan ve mo hinh hoa huong dịch vụ, các tp của nó và framewwork thực hiện
-
 };
 
 
 
 
-#endif // !__MONNEY_H__
+#endif
 

@@ -21,7 +21,7 @@ HolyWater::~HolyWater()
 
 void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (!camera->checkObjectInCamera(x, y, _texture->FrameWidth, _texture->FrameHeight))
+	if (!camera->checkObjectInCamera(x, y, (float)_texture->FrameWidth, (float)_texture->FrameHeight))
 		isFinish = true;
 
 	if (isFinish)

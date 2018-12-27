@@ -97,8 +97,12 @@ void TextureManager::LoadResource()
 	//effect
 	AddTexture(eType::FIRE, new GTexture("Resources/other/1.png", 4, 1, 4));
 	AddTexture(eType::HIT, new GTexture("Resources/other/0.png", 2,1,2));
-	AddTexture(eType::BROKENBRICK, new GTexture("Resources/other/BrokenBrick.png", 4,4,16));
+	AddTexture(eType::BROKENBRICK, new GTexture("Resources/other/BrokenBrick.png",2,1,2));//, 4,4,16));
 	AddTexture(eType::STEAM, new GTexture("Resources/other/2.png"));
+	AddTexture(eType::EFFECT_MONEY_700, new GTexture("Resources/other/effect700.png", 2,1,2));
+	AddTexture(eType::EFFECT_MONEY_100, new GTexture("Resources/other/effect100.png", 2, 1, 2));
+	AddTexture(eType::EFFECT_MONEY_1000, new GTexture("Resources/other/effect1000.png", 2, 1, 2));
+	AddTexture(eType::EFFECT_MONEY_400, new GTexture("Resources/other/effect400.png", 2, 1, 2));
 
 
 

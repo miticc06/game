@@ -11,7 +11,7 @@ class Gate :
 		int isStart;
 
 public:
-	Gate(int X, int Y);
+	Gate(float X, float Y);
 	virtual ~Gate();
 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);

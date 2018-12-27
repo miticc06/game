@@ -29,6 +29,11 @@ void MorningStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (StartFrame <= _sprite->GetIndex() && _sprite->GetIndex() < EndFrame)
 		_sprite->Update(dt);
+	else
+	{
+		_sprite->SelectIndex(StartFrame);
+	}
+		
 
 	//DebugOut(L"update ani Morningstar dt = %d, tich luy = %d\n", dt, _sprite->_timeLocal);
 
@@ -178,7 +183,15 @@ void MorningStar::UpgradeLevel()
 {
 	if (level >= 2)
 		return;
+
 	level++;
+	if (isFinish == false) // nếu chưa đánh xong mà update thì phải update lại frame để sau khi Freezed xong sẽ chạy tiếp
+	{
+		_sprite->SelectIndex(_sprite->GetIndex() + 4);
+
+	}
+
+
 }
 
 int MorningStar::GetLevel()

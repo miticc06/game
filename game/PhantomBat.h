@@ -24,8 +24,8 @@ https://www.desmos.com/calculator/lvdgnyhkvy
 
 #define PHANTOMBAT_PROCESS_ATTACK 6 // xử lí tấn công
 
-#define PHANTOMBAT_DEFAULT_X 5295
-#define PHANTOMBAT_DEFAULT_Y 90
+#define PHANTOMBAT_DEFAULT_X 5295.0f
+#define PHANTOMBAT_DEFAULT_Y 90.0f
 
 #define PHANTOMBAT_DEFAULT_HEALTH 24 // BCNN(8,12) = 24
 

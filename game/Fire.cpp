@@ -1,6 +1,6 @@
 ﻿#include "Fire.h"
 
-Fire::Fire(int X, int Y, int CountLoop)
+Fire::Fire(float X, float Y, int CountLoop)
 {
 	this->x = X;
 	this->y = Y;
