@@ -2,7 +2,7 @@
 
  
 
-PotRoast::PotRoast(int X, int Y)
+PotRoast::PotRoast(float X, float Y)
 {
 	type = eType::POTROAST;
 	_texture = TextureManager::GetInstance()->GetTexture(type);

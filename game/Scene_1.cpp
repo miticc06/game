@@ -261,7 +261,7 @@ void Scene_1::LoadResources()
 
 	camera = SceneManager::GetInstance()->GetCamera();
 
-	camera->SetBoundary(0, TileMap->GetMapWidth() - camera->GetWidth()); // set biên camera dựa vào kích thước map
+	camera->SetBoundary(0.0f, (float)(TileMap->GetMapWidth() - camera->GetWidth())); // set biên camera dựa vào kích thước map
 	camera->SetBoundaryBackup(camera->GetBoundaryLeft(), camera->GetBoundaryRight()); // backup lại biên
 
 	camera->SetPosition(0, 0);

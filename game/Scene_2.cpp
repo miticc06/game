@@ -1610,10 +1610,10 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 								{
 									gameObject->SubHealth(1);
 									listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14,gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14,gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
 									sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
@@ -1623,10 +1623,10 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 									gameObject->SubHealth(1);
 									listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
 									listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
 									sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
@@ -1637,10 +1637,10 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 									sound->Play(eSound::soundDisplayMonney);
 									listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
 									listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
 									sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
@@ -1649,11 +1649,11 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 								{
 									gameObject->SubHealth(1);
 									listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
-									sound->Play(eSound::soundBrokenBrick); 
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
 
@@ -1664,10 +1664,10 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 									listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
 
 									listEffect.push_back(new Hit((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14)); // hiệu ứng hit
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick((int)gameObject->GetX() + 14, (int)gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
+									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
 									sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
@@ -2384,18 +2384,16 @@ void Scene_2::CheckCollisionSimonWithItem()
 					simon->SetFreeze(true); // bật trạng thái đóng băng
 					sound->Play(eSound::soundCollectWeapon);
 					break;
-				}
-
+				} 
 
 				case eType::BONUS:
 				{
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
-					simon->SetScore(1000);
+					simon->SetScore(simon->GetScore() + 1000);
 					break;
 				}
-
-
+				 
 				case eType::POTROAST:
 				{
 					listItem[i]->SetFinish(true);
@@ -2734,7 +2732,7 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 				} 
 				if (isCollision == false && simon->checkAABB(gameobj) == true)
 				{
-					LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetDirection(), 0, NULL);
+					LPCOLLISIONEVENT e = new CollisionEvent(1.0f, (float) -simon->GetDirection(), 0.0f, NULL);
 					simon->SetHurt(e); 
 					isCollision = true;
 				}
@@ -2769,7 +2767,7 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 
 				if (simon->checkAABB(listWeaponOfEnemy[i]) == true)
 				{
-					LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetDirection(), 0, NULL);
+					LPCOLLISIONEVENT e = new CollisionEvent(1.0f, (float)-simon->GetDirection(), 0.0f, NULL);
 					simon->SetHurt(e);
 					return;
 				}
@@ -2901,8 +2899,8 @@ void Scene_2::CheckCollisionWithBoss()
 				return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
 			}
 			if (simon->checkAABB(boss) == true)
-			{
-				LPCOLLISIONEVENT e = new CollisionEvent(1, -simon->GetDirection(), 0, NULL);
+			{ 
+				LPCOLLISIONEVENT e = new CollisionEvent(1.0f, (float)-simon->GetDirection(), 0.0f, NULL);
 				simon->SetHurt(e);
 				return;
 			}

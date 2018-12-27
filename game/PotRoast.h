@@ -9,7 +9,7 @@
 class PotRoast : public Item
 {
 public:
-	PotRoast(int X, int Y);
+	PotRoast(float X, float Y);
 	virtual ~PotRoast();
 	 
 

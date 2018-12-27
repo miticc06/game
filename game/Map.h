@@ -31,12 +31,7 @@ private:
 	int CountTileFrame; // tổng số lương tile trong texture 
 	int TileMap[500][500];
 	int HeightBoard;
-
-
-	int row; // dòng hiện tại camera đang đứng
-	int column; //cột hiện tại camera đang đứng
-	//int x, y;
-
+	 
 
 public:
 	Map();
