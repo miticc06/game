@@ -34,7 +34,7 @@ void Item::Update(DWORD dt, vector<LPGAMEOBJECT> *listObject)
 		return;
 	}
 
-	GameObject::Update(dt, listObject);
+	GameObject::Update(dt);
 
 	vector<LPGAMEOBJECT> listObject_Brick;
 	listObject_Brick.clear();

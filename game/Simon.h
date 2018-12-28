@@ -12,7 +12,7 @@
 #include "StopWatch.h"
 #include "Boomerang.h"
 
-#define SIMON_POSITION_DEFAULT  50.0f, 0
+#define SIMON_POSITION_DEFAULT  50.0f, 300.0f
 
 #define SIMON_BBOX_WIDTH 60
 #define SIMON_BBOX_HEIGHT 63
@@ -190,7 +190,7 @@ public:
 	void SetHeartCollect(int h);
 	int GetHeartCollect();
 
-	void CollisionWithBrick(vector<LPGAMEOBJECT> *coObjects = NULL);
+	void CollisionWithBrick(const vector<LPGAMEOBJECT> *coObjects = NULL);
  
 	void CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects = NULL);
 	bool isCollisionWithItem(Item * objItem);

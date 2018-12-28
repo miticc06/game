@@ -200,8 +200,11 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 					break;
 				}
-				 
-			} 
+			}
+			else
+			{
+
+			}
 		} 
 
 
@@ -249,12 +252,12 @@ void PhantomBat::Render(Camera * camera)
 	}
 
 	D3DXVECTOR2 pos = camera->Transform(x, y); 
-	_sprite->Draw(pos.x, pos.y); 
-	if (IS_DEBUG_RENDER_BBOX)
-		RenderBoundingBox(camera);
+	_sprite->Draw(pos.x, pos.y);  
 	  
 	if (IS_DEBUG_RENDER_BBOX)
 	{ 
+		RenderBoundingBox(camera);
+
 		if (isUseBezierCurves) // sử dụng BezierCurves thì mới vẽ 
 		{
 			for (float i = 0; i < 1; i += 0.01f)
@@ -289,10 +292,7 @@ void PhantomBat::Render(Camera * camera)
 
 			}
 		}
-
-
-
-
+		  
 		RECT rect;
 		//float l, t, r, b;
 		rect.left = 0;
@@ -313,7 +313,6 @@ void PhantomBat::Render(Camera * camera)
 
 	}
 	
-
 }
  
 float PhantomBat::getPt(float n1, float n2, float perc)

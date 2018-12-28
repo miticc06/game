@@ -625,14 +625,13 @@ int Simon::GetHeartCollect()
 	return HeartCollect;
 }
 
-void Simon::CollisionWithBrick(vector<LPGAMEOBJECT>* coObjects)
+void Simon::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 {
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
-	coEvents.clear();
+	coEvents.clear(); 
 
-	 
 	vector<LPGAMEOBJECT> list_Brick;
 	list_Brick.clear();
 	for (UINT i = 0; i < coObjects->size(); i++)

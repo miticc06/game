@@ -30,25 +30,8 @@ public:
 	void SetFinish(bool b);
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
+ 
 #endif // !__ITEM_H__
 
 

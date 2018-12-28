@@ -292,7 +292,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 //	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 
 	if (KeyCode == DIK_ESCAPE)
-		DestroyWindow(/*hWnd*/ Game::GetInstance()->GetWindowHandle()); // thoát
+		DestroyWindow(Game::GetInstance()->GetWindowHandle()); // thoát
 
 	if (KeyCode == DIK_Q)
 		simon->SetPosition(SIMON_POSITION_DEFAULT);
@@ -308,11 +308,13 @@ void Scene_2::OnKeyDown(int KeyCode)
 		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->GetX(), simon->GetY());
 	}
 
-	if (KeyCode == DIK_A) // change trục y file txt
+	if (KeyCode == DIK_T)
 	{
-
 		listItem.push_back(new ItemThrowingAxe(simon->GetX(), simon->GetY()));
+	}
 
+	if (KeyCode == DIK_A) // change trục y file txt
+	{  
 /*
 		ifstream inp;
 		ofstream out;
@@ -513,20 +515,10 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_C) // test AUTO GO CAM
 	{
 		camera->SetAutoGoX(200.0f, SIMON_WALKING_SPEED);
-	}
+	} 
 
-	if (KeyCode == DIK_T) // change isCameraFollowSimon
+	if (KeyCode == DIK_B) 
 	{
-		if (camera->AllowFollowSimon())
-			camera->SetAllowFollowSimon(0);
-		else
-			camera->SetAllowFollowSimon(1);
-
-	}
-
-	if (KeyCode == DIK_B) // create BAT
-	{
-	//	listEnemy.push_back(new Bat(camera->GetXCam() + camera->GetWidth() - 100, simon->GetY() + 20, -1));
 		listItem.push_back(new ItemBoomerang(camera->GetXCam() + 100, 100));
 		simon->SetIsUseDoubleShot(true);
 	}
@@ -541,37 +533,10 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_F) // create hollywater
 	{
 		simon->SetHealth(SIMON_DEFAULT_HEALTH);
-		simon->SetLives(9999);
-		simon->SetHeartCollect(9999);
+		simon->SetLives(99);
+		simon->SetHeartCollect(99);
 		_gameTime->SetTime(0);
-	//	simon->_weaponSub = new HolyWater();
-
 	}
-
-
-	if (KeyCode == DIK_H)
-	{
-		simon->SetHealth(9999);
-		simon->SetLives(9999);
-		simon->SetHeartCollect(9999);
-		_gameTime->SetTime(0);
-	//simon->_weaponSub = new HolyWater();
-	}
-
-
-
-	//if (KeyCode == DIK_M) // tesst fishmen
-	//{ 
-	//	float vtx = simon->GetX() + 100;
-	//	float vty = 805;
-	//	listEnemy.push_back(new Fishmen(vtx, vty, -1));
-
-	//	listEffect.push_back(new Steam(vtx, vty, 1));
-	//	listEffect.push_back(new Steam(vtx, vty, 2));
-	//	listEffect.push_back(new Steam(vtx, vty, 3));
-
-	//	sound->Play(eSound::soundSplashwater);
-	//}
 
 
 	if (simon->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
@@ -595,57 +560,9 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
-
-
-	/*
-	if (KeyCode == DIK_X && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
-	{
-		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
-
-		if (simon->isAttacking == false)
-			sound->Play(eSound::soundWhip);
-
-		simon->Attack(simon->_weaponMain);
-
-	}
-
-
-	if (KeyCode == DIK_Z && simon->isProcessingOnStair == 0)
-	{
-		if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == true)
-		{
-			bool isOk = false;
-			switch (simon->_weaponSub->GetType())
-			{
-			case eType::STOPWATCH:
-				if (simon->GetHeartCollect() >= 5)
-				{
-					simon->SetHeartCollect(simon->GetHeartCollect() - 5); // giảm 5 heart 
-					isOk = true;
-				}
-				break;
-
-			default:
-				if (simon->GetHeartCollect() > 0)
-				{
-					simon->SetHeartCollect(simon->GetHeartCollect() - 1); // giảm 1 heart 
-					isOk = true;
-				}				
-				break;
-			}
-
-			if (isOk)
-				simon->Attack(simon->_weaponSub); 
-		}
-	}
-
-
-	*/
-
 	if (KeyCode == DIK_D)
 	{
 		listItem.push_back(new ItemDagger(simon->GetX(), simon->GetY()));
-
 	}
 
 
@@ -731,53 +648,9 @@ void Scene_2::LoadResources()
 	
 	
 	StateCurrent = 1;
-
 	 
-
 	ResetResource();
-
-
-	/*
-	// bật nhạc game
-	if (sound->isPlaying(eSound::musicState1) == false)
-		sound->Play(eSound::musicState1, true);
-
-	CountEnemyGhost = 0;
-	TimeCreateGhost = 0;
-	isWaitProcessCreateGhost = false; // lúc đầu thì không cần chờ
-	CountEnemyGhost = 0;
-
-	isProcessingGoThroughTheDoor1 = false; // ban đầu chưa cần xử lí qua cửa
-	isDoneSimonGoThroughTheDoor1 = false;
-
-	isProcessingGoThroughTheDoor2 = false; // ban đầu chưa cần xử lí qua cửa
-	isDoneSimonGoThroughTheDoor2 = false;
-
-
-	isAllowRenewPanther = true;
-	CountEnemyPanther = 0;
-
-	isAllowCreateFishmen = false;
-	TimeCreateFishmen = 0;
-	TimeWaitCreateFishmen = 0;
-	CountEnemyFishmen = 0;
-
-	CountEnemyPanther = 0;
-
-
-
-	TimeCreateBat = 0;
-	TimeWaitCreateBat = 0;
-	isAllowCreateBat = 0;
-
-	StateCurrent = 1;
-
-	isStopWatch = 0;
-
-	isUseInvisibilityPotion = false;
-	isUseCross = false;
-
-	*/
+	 
 }
  
 void Scene_2::ResetResource()
@@ -1014,6 +887,8 @@ void Scene_2::Update(DWORD dt)
 
 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
+
+
 
 //	DebugOut(L"[GRID] size = %d\n", listObj.size());
   
@@ -2579,8 +2454,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 }
 
 void Scene_2::CheckCollisionSimonWithObjectHidden()
-{
-#pragma region Object Hidden
+{ 
 	for (UINT i = 0; i < listObj.size(); i++)
 	{
 		if (listObj[i]->GetType() == eType::OBJECT_HIDDEN)
@@ -2716,12 +2590,8 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 					{
 						boss->Start(); 
 
-					//	simon->SetPositionBackup(simon->GetX(), 0);
-					//	camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
-
 						camera->SetBoundary(camera->GetBoundaryRight(), camera->GetBoundaryRight());
 						camera->SetAllowFollowSimon(false);
-
 
 						if (sound->isPlaying(eSound::musicState1))
 						{
@@ -2739,8 +2609,7 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 			}
 		}
 	}
-
-#pragma endregion
+	 
 
 }
 
