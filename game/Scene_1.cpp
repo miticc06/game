@@ -317,7 +317,7 @@ void Scene_1::ResetResource()
 {
 	SAFE_DELETE(gridGame);
 	gridGame = new Grid();
-	gridGame->ReadFileToGrid("Resources/map/Obj_1.txt"); // đọc lại các object từ list
+	gridGame->Readfile("Resources/map/Obj_1.txt"); // đọc lại các object từ list
 
 	listItem.clear();
 	listEffect.clear();

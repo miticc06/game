@@ -25,28 +25,25 @@ using namespace std;
 #define GRID_INSERT_OBJECT__DIXUONGHONUOC_RIGHT 86, eType::OBJECT_HIDDEN, -1, 3835, 423, 25, 10, 0 // object ẩn đụng vào sẽ đi ra khỏi hồ nước, phía trái
 #define GRID_INSERT_OBJECT__DIRAKHOIHONUOC_RIGHT 81, eType::OBJECT_HIDDEN, -1, 3807, 460, 30, 20, 0 // object ẩn đụng vào sẽ đi ra khỏi hồ nước, phía trái
 
-#define GRID_CELL_MAX_ROW 30 // số dòng tối đa;
+#define GRID_CELL_MAX_ROW 20 // số dòng tối đa;
 #define GRID_CELL_MAX_COLUMN 100 // số cột tối đa
-#define GRID_BASE 10
- 
+
 
 class Grid
-{ 
-
+{  
 private:
 	vector<GameObject*> cells[GRID_CELL_MAX_ROW][GRID_CELL_MAX_COLUMN];
   
  
 public:
-	void ReadFileToGrid(char * filename); // Đọc các object từ file
-	void GetListObject(vector<GameObject*>& ListObj, Camera * camera); 
-	 
-	void Insert(int id, int type, int direction, float x, float y, int w, int h, int Model); //Thêm object vào grid
-
-	GameObject * GetNewObject(int type, float x, float y, int w, int h, int Model);
-
 	Grid();
 	~Grid();
+
+	void Readfile(char * str); // Đọc các object từ file
+	GameObject * GetNewObject(int type, float x, float y, int w, int h, int Model);
+	void Insert(int id, int type, int direction, float x, float y, int w, int h, int Model); //Thêm object vào grid
+	void GetListObject(vector<GameObject*>& ListObj, Camera * camera);
+	
 };
 
 #endif

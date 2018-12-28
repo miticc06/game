@@ -460,7 +460,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		DebugOut(L"[RESET GRID]");
 		SAFE_DELETE(gridGame);
 		gridGame = new Grid();
-		gridGame->ReadFileToGrid("Resources/map/Obj_2.txt"); // load lai
+		gridGame->Readfile("Resources/map/Obj_2.txt"); // load lai
 	}
 	 
 	if (KeyCode == DIK_P) // tesst autogo 
@@ -614,7 +614,7 @@ void Scene_2::ResetResource()
 {
 	SAFE_DELETE(gridGame);
 	gridGame = new Grid();
-	gridGame->ReadFileToGrid("Resources/map/Obj_2.txt"); // đọc lại các object từ list
+	gridGame->Readfile("Resources/map/Obj_2.txt"); // đọc lại các object từ list
 
 	listItem.clear();
 	listEffect.clear();
@@ -1114,15 +1114,11 @@ void Scene_2::Update(DWORD dt)
 			
 			float vty = 805;
 			listEnemy.push_back(new Fishmen(vtx, vty, directionFishmen, simon, &listWeaponOfEnemy));
-			
 			CountEnemyFishmen++;
 
-			listEffect.push_back(new Steam(vtx, vty, 1));
-			listEffect.push_back(new Steam(vtx, vty, 2));
-			listEffect.push_back(new Steam(vtx, vty, 3)); 
+			STEAM_ADD_EFFECT(listEffect, vtx, vty);
+
 			sound->Play(eSound::soundSplashwater);
-			 
-			 
 			TimeWaitCreateFishmen = 2000 + (rand() % 2000);
 		}
 	}
@@ -1459,11 +1455,8 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 								case 39: // id 39 : brick 4 ô-> chỉ hiện effect
 								{
 									gameObject->SubHealth(1);
-									listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14,gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14,gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									HIT_ADD_EFFECT(listEffect, gameObject); // hiệu ứng hit
+									BROKEN_BRICK_ADD_EFFECT(listEffect, gameObject); // hiệu ứng BrokenBrick
 									sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
@@ -1472,12 +1465,8 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 								{
 									gameObject->SubHealth(1);
 									listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
-									listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
-									sound->Play(eSound::soundBrokenBrick);
+									HIT_ADD_EFFECT(listEffect, gameObject); // hiệu ứng hit
+									BROKEN_BRICK_ADD_EFFECT(listEffect, gameObject); // hiệu ứng BrokenBrick								sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
 
@@ -1486,11 +1475,8 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 									gameObject->SubHealth(1);
 									sound->Play(eSound::soundDisplayMonney);
 									listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
-									listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									HIT_ADD_EFFECT(listEffect, gameObject); // hiệu ứng hit
+									BROKEN_BRICK_ADD_EFFECT(listEffect, gameObject); // hiệu ứng BrokenBrick								sound->Play(eSound::soundBrokenBrick);
 									sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
@@ -1498,11 +1484,8 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 								case 51: // id 51: brick 2 -> effect
 								{
 									gameObject->SubHealth(1);
-									listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									HIT_ADD_EFFECT(listEffect, gameObject); // hiệu ứng hit
+									BROKEN_BRICK_ADD_EFFECT(listEffect, gameObject); // hiệu ứng BrokenBrick								sound->Play(eSound::soundBrokenBrick);
 									sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
@@ -1513,11 +1496,8 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 									listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
 
-									listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-									listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
+									HIT_ADD_EFFECT(listEffect, gameObject); // hiệu ứng hit
+									BROKEN_BRICK_ADD_EFFECT(listEffect, gameObject); // hiệu ứng BrokenBrick								sound->Play(eSound::soundBrokenBrick);
 									sound->Play(eSound::soundBrokenBrick);
 									break;
 								}
@@ -1548,655 +1528,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 					}
 				} 
 		}
-	}
-	  
-
-
-	/*
-
-
-	// main weapon
-	
-
-
-	// subweapon
-	if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == false)
-	{
-		for (UINT i = 0; i < listObj.size(); i++)// đã kt object còn sống hay k trong hàm va chạm của vũ khí
-			if (listObj[i]->GetLastTimeAttacked() != simon->_weaponSub->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
-			{
-				if (simon->_weaponSub->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
-				{
-					bool RunEffectHit = false;
-					GameObject *gameObj = listObj[i];
-
-					switch (gameObj->GetType())
-					{
-					case eType::CANDLE:
-					{
-						gameObj->SubHealth(1);
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						RunEffectHit = true;
-
-						break;
-					}
-
-					case eType::GHOST:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 100);
-
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						}
-						RunEffectHit = true;
-						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-						if (CountEnemyGhost == 0)
-						{
-							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-							isWaitProcessCreateGhost = true;
-							isAllowCheckTimeWaitProcessCreateGhost = true;
-						}
-						break;
-					}
-					case eType::PANTHER:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 200);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						}
-						RunEffectHit = true;
-						CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
-						break;
-					}
-
-
-					case eType::BAT:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 200);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						}
-
-						RunEffectHit = true;
-						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-						if (CountEnemyGhost == 0)
-						{
-							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-							isWaitProcessCreateGhost = true;
-							isAllowCheckTimeWaitProcessCreateGhost = true;
-						}
-						break;
-					}
-
-					case eType::FISHMEN:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 200);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						RunEffectHit = true;
-						CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
-						break;
-					}
-
-					case eType::PHANTOMBAT:
-					{
-						gameObj->SubHealth(24 / 12); // 12 hit chết 
-
-						DebugOut(L"1 hit!\n");
-
-						if (gameObj->GetHealth() == 0) // chết
-						{
-							for (int u = 0; u < 2; u++)
-							{
-								for (int v = 0; v < 3; v++)
-								{
-									listEffect.push_back(new Fire(gameObj->GetX() + v * FIRE_WIDTH, gameObj->GetY() + u * FIRE_HEIGHT - 10, 3)); // hiệu ứng lửa
-									RunEffectHit = false;
-								}
-							}
-							RunEffectHit = false;
-							sound->Play(eSound::soundHit);
-							listItem.push_back(new CrystalBall(CRYSTALBALL_DEFAULT_POSITION_X, CRYSTALBALL_DEFAULT_POSITION_y));
-
-
-						}
-						else
-						{
-							RunEffectHit = true;
-						}
-						break;
-					}
-					default:
-						break;
-					}
-
-
-
-
-					if (RunEffectHit)
-					{
-						listEffect.push_back(new Hit(listObj[i]->GetX() + 10, listObj[i]->GetY() + 14)); // hiệu ứng hit
-						listEffect.push_back(new Fire(gameObj->GetX() - 5, gameObj->GetY() + 8)); // hiệu ứng lửa
-
-						sound->Play(eSound::soundHit);
-						switch (simon->_weaponSub->GetType())
-						{
-						case eType::HOLYWATER:
-						{
-							//HolyWater * objHolyWater = dynamic_cast<HolyWater *>(simon->_weaponSub);
-							//if (objHolyWater->is==true)
-							break;
-						}
-
-						case eType::DAGGER:
-						{
-
-							simon->_weaponSub->SetFinish(true); // hủy cây kiếm 
-							break;
-						}
-
-						}
-					}
-
-					gameObj->SetLastTimeAttacked(simon->_weaponSub->GetLastTimeAttack()); // bị đánh trúng->udate thời gian bị đánh lần cuối
-
-
-				}
-			}
-
-	}
-	
-
-#pragma endregion 
-
-
-
-
-#pragma region main weapon Object Brick
-	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
-		for (UINT i = 0; i < listObj.size(); i++)
-		{
-			if (listObj[i]->GetType() == eType::BRICK)
-			{
-				GameObject * gameObject = listObj[i];
-				if (gameObject->GetHealth() > 0)
-				{
-					switch (gameObject->GetId())
-					{
-
-					case 39: // id 39 : brick 4 ô-> chỉ hiện effect
-					{
-						if (simon->_weaponMain->isCollision(listObj[i]) == true)
-						{
-							gameObject->SubHealth(1);
-							listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
-							sound->Play(eSound::soundBrokenBrick);
-						}
-						break;
-					}
-
-					case 40: // id 40: brick 3 ô-> effect
-					{
-						if (simon->_weaponMain->isCollision(listObj[i]) == true)
-						{
-							gameObject->SubHealth(1);
-							listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
-							listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
-							sound->Play(eSound::soundBrokenBrick);
-						}
-						break;
-					}
-
-					case 72: // id 72: brick -> a bonus
-					{
-						if (simon->_weaponMain->isCollision(listObj[i]) == true)
-						{
-							gameObject->SubHealth(1);
-							sound->Play(eSound::soundDisplayMonney);
-							listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
-							listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
-							sound->Play(eSound::soundBrokenBrick);
-
-						}
-						break;
-					}
-
-					case 51: // id 51: brick 2 -> effect
-					{
-						if (simon->_weaponMain->isCollision(listObj[i]) == true)
-						{
-							gameObject->SubHealth(1);
-							listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
-							sound->Play(eSound::soundBrokenBrick);
-
-						}
-						break;
-					}
-
-					}
-				}
-
-
-
-			}
-		}
-
-#pragma endregion
-
- 
-
-#pragma region cmt
-	 
-#pragma region Weapon Simon
-	// main weapon
-	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
-	{
-		for (UINT i = 0; i < listObj.size(); i++) // đã kt object còn sống hay k trong hàm va chạm của vũ khí
-			if (listObj[i]->GetLastTimeAttacked() != simon->_weaponMain->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
-			{
-				if (simon->_weaponMain->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
-				{
-					bool RunEffectHit = false;
-					GameObject *gameObj = listObj[i];
-					switch (gameObj->GetType())
-					{
-					case eType::CANDLE:
-					{
-						gameObj->SubHealth(1);
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));// hiệu ứng hit
-
-						RunEffectHit = true;
-						break;
-					}
-
-					case eType::GHOST:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 100);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						}
-
-						RunEffectHit = true;
-						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-						if (CountEnemyGhost == 0)
-						{
-							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-							isWaitProcessCreateGhost = true;
-							isAllowCheckTimeWaitProcessCreateGhost = true;
-						}
-						break;
-					}
-
-					case eType::PANTHER:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 200);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						}
-						RunEffectHit = true;
-						CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
-						break;
-					}
-
-					case eType::BAT:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 200);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-
-						}
-
-						RunEffectHit = true;
-						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-						if (CountEnemyGhost == 0)
-						{
-							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-							isWaitProcessCreateGhost = true;
-							isAllowCheckTimeWaitProcessCreateGhost = true;
-						}
-						break;
-					}
-
-					case eType::FISHMEN:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 300);
-						if (rand() % 2 == 1) // tỉ lệ 50% 
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-
-						RunEffectHit = true;
-						CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
-
-						break;
-					}
-
-					case eType::PHANTOMBAT:
-					{
-						if (simon->_weaponMain->GetLevel()==0)
-							gameObj->SubHealth(24/12); // 12 hit chết
-						else
-							gameObj->SubHealth(24/8); // 8 hit chết
-
-						DebugOut(L"1 hit!\n"); 
-
-						if (gameObj->GetHealth() == 0) // chết
-						{
-							for (int u = 0; u < 2; u++)
-							{
-								for (int v = 0; v < 3; v++)
-								{
-									listEffect.push_back(new Fire(gameObj->GetX() + v * FIRE_WIDTH , gameObj->GetY() + u * FIRE_HEIGHT -10, 3)); // hiệu ứng lửa
-									RunEffectHit = false;
-								}
-							}
-							RunEffectHit = false;
-							sound->Play(eSound::soundHit);
-							listItem.push_back(new CrystalBall(CRYSTALBALL_DEFAULT_POSITION_X, CRYSTALBALL_DEFAULT_POSITION_y));
-							
-						}
-						else
-						{
-							RunEffectHit = true;
-						} 
-						break;
-					}
-					default:
-						break;
-					}
-
-					if (RunEffectHit)
-					{
-						listEffect.push_back(new Hit(listObj[i]->GetX() + 10, listObj[i]->GetY() + 14)); // hiệu ứng hit
-						listEffect.push_back(new Fire(gameObj->GetX() - 5, gameObj->GetY() + 8)); // hiệu ứng lửa
-
-						sound->Play(eSound::soundHit);
-					}
-
-					gameObj->SetLastTimeAttacked(simon->_weaponMain->GetLastTimeAttack()); // bị đánh trúng->udate thời gian bị đánh lần cuối
-				}
-			}
-	
-	}
-
-
-	// subweapon
-	if (simon->_weaponSub != NULL && simon->_weaponSub->GetFinish() == false)
-	{
-		for (UINT i = 0; i < listObj.size(); i++)// đã kt object còn sống hay k trong hàm va chạm của vũ khí
-			if (listObj[i]->GetLastTimeAttacked() != simon->_weaponSub->GetLastTimeAttack()) // Nếu chưa xét va chạm của lượt attack này ở các frame trước
-			{
-				if (simon->_weaponSub->isCollision(listObj[i]) == true) // nếu có va chạm thì kt kiểu
-				{
-					bool RunEffectHit = false;
-					GameObject *gameObj = listObj[i];
-
-					switch (gameObj->GetType())
-					{
-					case eType::CANDLE:
-					{
-						gameObj->SubHealth(1);
-						listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						RunEffectHit = true;
-
-						break;
-					}
-
-					case eType::GHOST:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 100);
-
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						}
-						RunEffectHit = true;
-						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-						if (CountEnemyGhost == 0)
-						{
-							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-							isWaitProcessCreateGhost = true;
-							isAllowCheckTimeWaitProcessCreateGhost = true;
-						}
-						break;
-					}
-					case eType::PANTHER:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 200);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						}
-						RunEffectHit = true;
-						CountEnemyPanther--; // giảm số lượng Panther đang hoạt động
-						break;
-					}
-
-
-					case eType::BAT:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 200);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-						{
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						}
-
-						RunEffectHit = true;
-						CountEnemyGhost--; // giảm số lượng Ghost đang hoạt động
-						if (CountEnemyGhost == 0)
-						{
-							TimeWaitProcessCreateGhost = GetTickCount(); // set thời điểm hiện tại
-							isWaitProcessCreateGhost = true;
-							isAllowCheckTimeWaitProcessCreateGhost = true;
-						}
-						break;
-					}
-
-					case eType::FISHMEN:
-					{
-						gameObj->SubHealth(1);
-						simon->SetScore(simon->GetScore() + 200);
-						if (rand() % 2 == 1) // tỉ lệ 50%
-							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));
-						RunEffectHit = true;
-						CountEnemyFishmen--; // giảm số lượng Fishmen đang hoạt động
-						break;
-					}
-
-					case eType::PHANTOMBAT:
-					{ 
-						gameObj->SubHealth(24 / 12); // 12 hit chết 
-
-						DebugOut(L"1 hit!\n");
-
-						if (gameObj->GetHealth() == 0) // chết
-						{
-							for (int u = 0; u < 2; u++)
-							{
-								for (int v = 0; v < 3; v++)
-								{
-									listEffect.push_back(new Fire(gameObj->GetX() + v * FIRE_WIDTH, gameObj->GetY() + u * FIRE_HEIGHT - 10, 3)); // hiệu ứng lửa
-									RunEffectHit = false;
-								}
-							}
-							RunEffectHit = false;
-							sound->Play(eSound::soundHit);
-							listItem.push_back(new CrystalBall(CRYSTALBALL_DEFAULT_POSITION_X, CRYSTALBALL_DEFAULT_POSITION_y));
-							 
-							
-						}
-						else
-						{
-							RunEffectHit = true;
-						}
-						break;
-					}
-					default:
-						break;
-					}
-
-
-					
-
-					if (RunEffectHit)
-					{
-						listEffect.push_back(new Hit(listObj[i]->GetX() + 10, listObj[i]->GetY() + 14)); // hiệu ứng hit
-						listEffect.push_back(new Fire(gameObj->GetX() - 5, gameObj->GetY() + 8)); // hiệu ứng lửa
-
-						sound->Play(eSound::soundHit);
-						switch (simon->_weaponSub->GetType())
-						{
-						case eType::HOLYWATER:
-						{
-							//HolyWater * objHolyWater = dynamic_cast<HolyWater *>(simon->_weaponSub);
-							//if (objHolyWater->is==true)
-							break;
-						}
-
-						case eType::DAGGER:
-						{
-
-							simon->_weaponSub->SetFinish(true); // hủy cây kiếm 
-							break;
-						}
-
-						}
-					}
-
-					gameObj->SetLastTimeAttacked(simon->_weaponSub->GetLastTimeAttack()); // bị đánh trúng->udate thời gian bị đánh lần cuối
-
-
-				}
-			}
-			
-	}
-
-#pragma endregion 
-	
-
-
-
-#pragma region main weapon Object Brick
-	if (simon->_weaponMain->GetFinish() == false) // Vũ khí đang hoạt động
-		for (UINT i = 0; i < listObj.size(); i++)
-		{
-			if (listObj[i]->GetType() == eType::BRICK)
-			{
-				GameObject * gameObject = listObj[i];
-				if (gameObject->GetHealth() > 0)
-				{
-					switch (gameObject->GetId())
-					{
-
-					case 39: // id 39 : brick 4 ô-> chỉ hiện effect
-					{
-						if (simon->_weaponMain->isCollision(listObj[i]) == true)
-						{
-							gameObject->SubHealth(1);
-							listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
-							sound->Play(eSound::soundBrokenBrick);
-						}
-						break;
-					}
-
-					case 40: // id 40: brick 3 ô-> effect
-					{
-						if (simon->_weaponMain->isCollision(listObj[i]) == true)
-						{
-							gameObject->SubHealth(1);
-							listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
-							listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
-							sound->Play(eSound::soundBrokenBrick);
-						}
-						break;
-					}
-
-					case 72: // id 72: brick -> a bonus
-					{
-						if (simon->_weaponMain->isCollision(listObj[i]) == true)
-						{
-							gameObject->SubHealth(1);
-							sound->Play(eSound::soundDisplayMonney);
-							listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), gameObject->GetX(), gameObject->GetY()));
-							listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
-							sound->Play(eSound::soundBrokenBrick);
-
-						}
-						break;
-					}
-
-					case 51: // id 51: brick 2 -> effect
-					{
-						if (simon->_weaponMain->isCollision(listObj[i]) == true)
-						{
-							gameObject->SubHealth(1);
-							listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14)); // hiệu ứng hit
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 1)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 2)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 3)); // hiệu ứng BrokenBrick
-							listEffect.push_back(new BrokenBrick(gameObject->GetX() + 14, gameObject->GetY() + 14, 4)); // hiệu ứng BrokenBrick
-							sound->Play(eSound::soundBrokenBrick);
-
-						}
-						break;
-					}
-
-					}
-				}
-
-
-
-			}
-		}
-
-#pragma endregion
-
-	*/  
-
-
+	} 
 }
 
 void Scene_2::CheckCollisionSimonWithItem()
@@ -2287,6 +1619,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 				{ 
 					simon->SetIsUseDoubleShot(true); // bật chế độ Double Shot
 					listItem[i]->SetFinish(true);
+					sound->Play(eSound::soundCollectItem);
 					break;
 				}
 

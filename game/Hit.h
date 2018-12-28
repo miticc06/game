@@ -16,3 +16,8 @@ public:
 
 #endif
  
+#ifndef HIT_ADD_EFFECT
+#define HIT_ADD_EFFECT(listEffect, gameObject) \
+listEffect.push_back(new Hit(gameObject->GetX() + 14, gameObject->GetY() + 14));\
+
+#endif

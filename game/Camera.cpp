@@ -37,9 +37,9 @@ void Camera::Update(DWORD dt)
 
 	if (isAutoGoX == true)
 	{
-		if (abs(_xCam - AutoGoX_Backup_X) >= AutoGoX_Dx)
+		if (abs(_xCam - AutoGoX_Backup_X) >= AutoGoX_Distance)
 		{
-			_xCam = _xCam - (abs(_xCam - AutoGoX_Backup_X) - AutoGoX_Dx);
+			_xCam = _xCam - (abs(_xCam - AutoGoX_Backup_X) - AutoGoX_Distance);
 			isAutoGoX = false;
 		}
 	}
@@ -104,13 +104,13 @@ void Camera::SetAllowFollowSimon(bool b)
 	isAllowFollowSimon = b;
 }
 
-void Camera::SetAutoGoX(float Dx, float Speed)
+void Camera::SetAutoGoX(float Distance, float Speed)
 {
 	if (isAutoGoX == true)
 		return;
 	vx = Speed;
 	AutoGoX_Backup_X = _xCam;
-	AutoGoX_Dx = Dx;
+	AutoGoX_Distance = Distance;
 	isAutoGoX = true;
 	isAllowFollowSimon = false;
 }

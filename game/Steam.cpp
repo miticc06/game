@@ -13,20 +13,20 @@ Steam::Steam(float X, float Y, int Model)
 	 _model = Model; 
 	 switch (_model)
 	 {
-	 case 1:
+	 case STEAM_MODEL_1:
 	 { 
  		 vy = -0.4f;
 		 vx = -0.04f;
 		 break;
 	 }
 
-	 case 2:
+	 case STEAM_MODEL_2:
 	 {
  		 vy = -0.5f;
 		 vx = 0.0f;
 		 break;
 	 } 
-	 case 3:
+	 case STEAM_MODEL_3:
 	 {
 		 vy = -0.4f;
 		 vx = 0.1f;

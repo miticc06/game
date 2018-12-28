@@ -24,9 +24,10 @@ protected:
 	float vx;
 	DWORD dt;
 
-	bool isAutoGoX;
-	float AutoGoX_Dx;
-	float AutoGoX_Backup_X;
+	bool isAutoGoX; // đang ở chế độ tự đi
+	float AutoGoX_Distance; //khoảng cách cần tự động đi
+	float AutoGoX_Backup_X; // vị trí camera trước khi vào chế độ tự đi
+
 	bool isAllowFollowSimon; 
 
 public:
@@ -50,7 +51,7 @@ public:
 	void SetAllowFollowSimon(bool b);
 
 
-	void SetAutoGoX(float Dx, float Speed); // set các thông số auto
+	void SetAutoGoX(float Distance, float Speed); // set các thông số auto
 	void StopAutoGoX();
 	bool GetIsAutoGoX();
 
