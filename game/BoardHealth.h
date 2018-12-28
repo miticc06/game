@@ -17,11 +17,12 @@ class BoardHealth
 private:
 	GSprite * _sprite;
 	GTexture * _texture;
-
+	float x, y;
 public:
-	BoardHealth();
+	BoardHealth(float X, float Y);
+
 	~BoardHealth();
-	void Draw(int x, int y, int HealthPlayer, int HealthEnemy);
+	void Draw(int HealthPlayer, int HealthEnemy);
 };
 
 

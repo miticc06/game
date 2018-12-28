@@ -44,14 +44,6 @@ GTexture::GTexture(char* filePath, int cols, int rows, int count, int R, int G, 
 
 GTexture::~GTexture()
 {
-	if(this->Texture != NULL)
+	if (this->Texture != NULL)
 		this->Texture->Release();
-}
-//
-//void GTexture::Draw(int x, int y) 
-//{
-//	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
-//	D3DXVECTOR3 position((float)x, (float)y, 0);
-//	spriteHandler->Draw( Texture, &Size, NULL, &position, 0xFFFFFFFF);
-//}
-//   
+} 

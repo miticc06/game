@@ -249,7 +249,7 @@ void PhantomBat::Render(Camera * camera)
 	}
 
 	D3DXVECTOR2 pos = camera->Transform(x, y); 
-	_sprite->Draw((int)pos.x, (int)pos.y); 
+	_sprite->Draw(pos.x, pos.y); 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
 	  
@@ -382,8 +382,8 @@ void PhantomBat::StartStaight()
 	}
 	xBefore = x;
 	yBefore = y;
-	xTarget = PHANTOMBAT_BOUNDARY_START_STAIGHT_LEFT + rand() % (PHANTOMBAT_BOUNDARY_START_STAIGHT_RIGHT- PHANTOMBAT_BOUNDARY_START_STAIGHT_LEFT);
-	yTarget = 80 + rand() % (190 - 80);
+	xTarget = (float) PHANTOMBAT_BOUNDARY_START_STAIGHT_LEFT + rand() % (PHANTOMBAT_BOUNDARY_START_STAIGHT_RIGHT- PHANTOMBAT_BOUNDARY_START_STAIGHT_LEFT);
+	yTarget = 80.0f + rand() % (190 - 80);
 
 	DebugOut(L"StatusProcessing = %d, Target (%f, %f) \n", StatusProcessing, xTarget, yTarget);
 	

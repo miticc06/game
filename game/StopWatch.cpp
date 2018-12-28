@@ -50,7 +50,7 @@ bool StopWatch::isCollision(GameObject * obj)
 	return false; // StopWatch ko xét va chạm
 }
 
-void StopWatch::RenderIcon(int X, int Y)
+void StopWatch::RenderIcon(float X, float Y)
 {
 	_sprite->Draw(X, Y);
 }

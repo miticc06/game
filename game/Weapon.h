@@ -30,7 +30,7 @@ public:
 	virtual void Render(Camera *camera); 
 	virtual void UpdatePositionFitSimon(); 
 	virtual bool isCollision(GameObject* obj); // kiểm tra vũ khí này có va chạm với object kia hay không?
-	virtual void RenderIcon(int X, int Y) = 0; 
+	virtual void RenderIcon(float X, float Y) = 0;
 	bool GetFinish();
 
 	void SetFinish(bool b);

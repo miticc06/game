@@ -432,25 +432,25 @@ void Simon::Render(Camera* camera)
 	if (isDeadth && isCollisionAxisYWithBrick)
 	{
 		if (direction == -1)
-			_sprite_deadth->Draw((int)pos.x, (int)pos.y, 255);
+			_sprite_deadth->Draw(pos.x, pos.y, 255);
 		else
-			_sprite_deadth->DrawFlipX((int)pos.x, (int)pos.y, 255);
+			_sprite_deadth->DrawFlipX(pos.x, pos.y, 255);
 	}
 	else
 	{
 		if (this->GetFreeze() == true)
 		{
 			if (direction == -1)
-				_sprite->DrawRandomColor((int)pos.x, (int)pos.y, alpha);
+				_sprite->DrawRandomColor(pos.x, pos.y, alpha);
 			else
-				_sprite->DrawRandomColorFlipX((int)pos.x, (int)pos.y, alpha);
+				_sprite->DrawRandomColorFlipX(pos.x, pos.y, alpha);
 		}
 		else
 		{
 			if (direction == -1)
-				_sprite->Draw((int)pos.x, (int)pos.y, alpha);
+				_sprite->Draw(pos.x, pos.y, alpha);
 			else
-				_sprite->DrawFlipX((int)pos.x, (int)pos.y, alpha);
+				_sprite->DrawFlipX(pos.x, pos.y, alpha);
 		}
 	}
 	 
@@ -1094,7 +1094,7 @@ void Simon::SetAutoGoX(int DirectionGo, int directionAfterGo, float Dx, float Sp
 
 	AutoGoX_Dx = Dx;
 	AutoGoX_Speed = Speed;
-	AutoGoX_DirectionGo = DirectionGo;
+	AutoGoX_DirectionGo = (float) DirectionGo;
 	this->directionAfterGo = directionAfterGo;
 
 

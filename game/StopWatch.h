@@ -19,7 +19,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(Camera *camera);
  	virtual bool isCollision(GameObject* obj); 
-	virtual void RenderIcon(int X, int Y);
+	virtual void RenderIcon(float X, float Y);
 };
 
 #endif

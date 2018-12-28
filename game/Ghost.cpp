@@ -72,9 +72,9 @@ void Ghost::Render(Camera * camera)
 	 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
-		_sprite->Draw((int)pos.x, (int)pos.y);
+		_sprite->Draw(pos.x, pos.y);
 	else
-		_sprite->DrawFlipX((int)pos.x, (int)pos.y);
+		_sprite->DrawFlipX(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

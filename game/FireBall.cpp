@@ -33,7 +33,7 @@ void FireBall::Create(float X, float Y, int Direction)
 	//vx = FIREBALL_SPEED * direction;
 }
  
-void FireBall::RenderIcon(int X, int Y)
+void FireBall::RenderIcon(float X, float Y)
 {
 }
  

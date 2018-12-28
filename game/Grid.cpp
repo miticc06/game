@@ -19,7 +19,9 @@ void Grid::ReadFileToGrid(char * filename)
  	ifstream inp;
 	inp.open(filename, ios::in);
 	 
-	int id, type, direction, x, y, w, h, model;
+	int id, type, direction, w, h, model;
+
+	float x, y;
 
 	if (inp)
 	{
@@ -74,7 +76,7 @@ void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 
 }
 
-void Grid::Insert(int id, int type, int direction, int x, int y, int w, int h, int Model)
+void Grid::Insert(int id, int type, int direction, float x, float y, int w, int h, int Model)
 { 
 	int Top = (int)floor(y / (float)(GRID_CELL_HEIGHT));
 	int Bottom = (int)floor((y + h) / (float)(GRID_CELL_HEIGHT));
@@ -103,7 +105,7 @@ void Grid::Insert(int id, int type, int direction, int x, int y, int w, int h, i
 }
 
 
-GameObject * Grid::GetNewObject(int type, int x, int y,int w, int h, int Model)
+GameObject * Grid::GetNewObject(int type, float x, float y,int w, int h, int Model)
 {
 	if (type == eType::BRICK) return new Brick(x, y, w, h, Model);
 	if (type == eType::TORCH) return new Torch(x, y);

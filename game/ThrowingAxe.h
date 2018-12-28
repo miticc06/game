@@ -22,7 +22,7 @@ public:
 	 
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	void Create(float simonX, float simonY, int simonDirection);
-	virtual void RenderIcon(int X, int Y);
+	virtual void RenderIcon(float X, float Y);
 
 };
 

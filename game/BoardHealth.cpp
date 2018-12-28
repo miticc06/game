@@ -2,11 +2,12 @@
 
 
 
-BoardHealth::BoardHealth()
+BoardHealth::BoardHealth(float X, float Y)
 {
 	_texture = TextureManager::GetInstance()->GetTexture(eType::BOARDHEALTH);
 	_sprite = new GSprite(_texture, 0);
-
+	this->x = X;
+	this->y = Y;
 } 
 
 BoardHealth::~BoardHealth()
@@ -14,7 +15,7 @@ BoardHealth::~BoardHealth()
 	SAFE_DELETE(_sprite);
 }
 
-void BoardHealth::Draw(int x, int y, int HealthPlayer, int HealthEnemy)
+void BoardHealth::Draw(int HealthPlayer, int HealthEnemy)
 {
 	HealthPlayer = min(HealthPlayer, 16);
 	HealthEnemy = min(HealthEnemy, 16);

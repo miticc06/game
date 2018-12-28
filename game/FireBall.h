@@ -14,7 +14,7 @@ public:
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	void Create(float X, float Y, int Direction);
- 	void RenderIcon(int X, int Y); 
+ 	void RenderIcon(float X, float Y); 
 
 	void Render(Camera *camera);
 

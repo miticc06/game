@@ -8,7 +8,7 @@ class Torch : public GameObject
 {
 
 public:
-	Torch(int X = 0, int Y = 0);
+	Torch(float X = 0, float Y = 0);
 	~Torch();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera);

@@ -6,7 +6,7 @@
 class Candle : 	public GameObject
 {
 public:
-	Candle(int X, int Y);
+	Candle(float X, float Y);
 	~Candle();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

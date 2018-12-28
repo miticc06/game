@@ -3,12 +3,12 @@
 
  
 
-Torch::Torch(int X, int Y)
+Torch::Torch(float X, float Y)
 {
 	_texture = TextureManager::GetInstance()->GetTexture(eType::TORCH);
 	_sprite = new GSprite(_texture, 100);
-	this->x = (float)X;
-	this->y = (float)Y;
+	this->x = X;
+	this->y = Y;
 	type = eType::TORCH;
 	Health = 1; 
 }
@@ -25,12 +25,11 @@ void Torch::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Torch::Render(Camera * camera)
 { 
-
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y); 
-	_sprite->Draw((int)pos.x, (int)pos.y);
+	_sprite->Draw(pos.x, pos.y);
 
 
 }

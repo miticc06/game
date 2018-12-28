@@ -3,7 +3,7 @@
  
 
 
-StairBottom::StairBottom(int X, int Y, int Direction)
+StairBottom::StairBottom(float X, float Y, int Direction)
 {
 	x = X-25;
 	y = Y;

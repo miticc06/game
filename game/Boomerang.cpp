@@ -17,7 +17,7 @@ Boomerang::Boomerang(Camera * camera, GameObject* simon)
 }
  
 
-void Boomerang::RenderIcon(int X, int Y)
+void Boomerang::RenderIcon(float X, float Y)
 {
 	_spriteIcon->Draw(X, Y);
 

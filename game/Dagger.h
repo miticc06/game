@@ -19,7 +19,7 @@ public:
 
 	void Create(float simonX, float simonY, int simonDirection);
 	 
- 	void RenderIcon(int X, int Y);
+ 	void RenderIcon(float X, float Y);
 	  
 
 };

@@ -41,9 +41,9 @@ public:
 	void ReadFileToGrid(char * filename); // Đọc các object từ file
 	void GetListObject(vector<GameObject*>& ListObj, Camera * camera); 
 	 
-	void Insert(int id, int type, int direction, int x, int y, int w, int h, int Model); //Thêm object vào grid
+	void Insert(int id, int type, int direction, float x, float y, int w, int h, int Model); //Thêm object vào grid
 
-	GameObject * GetNewObject(int type, int x, int y, int w, int h, int Model);
+	GameObject * GetNewObject(int type, float x, float y, int w, int h, int Model);
 
 	Grid();
 	~Grid();

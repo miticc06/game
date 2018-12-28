@@ -7,7 +7,7 @@ private:
 	int height;
 
 public:
-	ObjectHidden(int X, int Y, int W, int H);
+	ObjectHidden(float X, float Y, int W, int H);
 	~ObjectHidden();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

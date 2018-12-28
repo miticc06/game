@@ -1,10 +1,10 @@
 #include "ObjectHidden.h"
 
  
-ObjectHidden::ObjectHidden(int X, int Y, int W, int H)
+ObjectHidden::ObjectHidden(float X, float Y, int W, int H)
 {
-	x = (float) X;
-	y = (float) Y;
+	x = X;
+	y = Y;
 	width = W;
 	height = H;
 	type = eType::OBJECT_HIDDEN;

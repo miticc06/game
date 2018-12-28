@@ -546,8 +546,8 @@ void Scene_1::CheckCollisionWeapon()
 
 						if (RunEffectHit)
 						{
-							listEffect.push_back(new Hit((int)listObj[i]->GetX() + 10, (int)listObj[i]->GetY() + 14)); // hiệu ứng hit
-							listEffect.push_back(new Fire((int)gameObj->GetX() - 5, (int)gameObj->GetY() + 8)); // hiệu ứng lửa
+							listEffect.push_back(new Hit(listObj[i]->GetX() + 10, listObj[i]->GetY() + 14)); // hiệu ứng hit
+							listEffect.push_back(new Fire(gameObj->GetX() - 5, gameObj->GetY() + 8)); // hiệu ứng lửa
 
 							sound->Play(eSound::soundHit);
 

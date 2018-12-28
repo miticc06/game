@@ -24,7 +24,7 @@ private:
 public:
 	Boomerang(Camera * camera, GameObject* simon);
 	 
-	virtual void RenderIcon(int X, int Y);
+	virtual void RenderIcon(float X, float Y);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	void Create(float X, float Y, int Direction);
 

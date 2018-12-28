@@ -3,7 +3,7 @@
 
 
 
-Brick::Brick(int X, int Y, int W, int H, int Model)
+Brick::Brick(float X, float Y, int W, int H, int Model)
 {
 	model = Model;
 	switch (Model)
@@ -33,8 +33,8 @@ Brick::Brick(int X, int Y, int W, int H, int Model)
 
 	type = eType::BRICK; 
 	_sprite = new GSprite(_texture, 1000);
-	this->x = (float)X;
-	this->y = (float)Y;
+	this->x = X;
+	this->y = Y;
 	this->width = W;
 	this->height = H;
 }
@@ -54,7 +54,7 @@ void Brick::Render(Camera * camera)
  
 	for (int i = 0; i < (int)ceil(width / _texture->FrameWidth); i++)
 		for (int j = 0; j < (int)ceil(height / _texture->FrameHeight); j++)
-			_sprite->Draw((int)pos.x + i * _texture->FrameWidth, (int)pos.y + j * _texture->FrameHeight);
+			_sprite->Draw(pos.x + i * _texture->FrameWidth, pos.y + j * _texture->FrameHeight);
  
 	//int vtd = 0;
 	//if (x < camera->GetXCam())

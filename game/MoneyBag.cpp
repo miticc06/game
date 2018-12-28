@@ -27,7 +27,6 @@ void MoneyBag::Render(Camera * camera)
 		return;
 	}
 
-	D3DXVECTOR2 pos = camera->Transform(x, y);
 	switch (type)
 	{ 
 	case eType::MONEY_BAG_RED:
@@ -42,7 +41,9 @@ void MoneyBag::Render(Camera * camera)
 		_sprite->SelectIndex(MONEYBAG_ANI_PURPLE);
 		break;
 	}
-	_sprite->Draw((int)pos.x, (int)pos.y);
+
+	D3DXVECTOR2 pos = camera->Transform(x, y);
+	_sprite->Draw(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

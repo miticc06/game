@@ -55,7 +55,7 @@ void ThrowingAxe::Create(float simonX, float simonY, int simonDirection)
 	Sound::GetInstance()->Play(eSound::soundAxe, true);
 }
 
-void ThrowingAxe::RenderIcon(int X, int Y)
+void ThrowingAxe::RenderIcon(float X, float Y)
 {
 	_spriteIcon->Draw(X, Y);
 }
