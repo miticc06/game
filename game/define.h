@@ -44,7 +44,7 @@ using namespace std;
 #define SCREEN_HEIGHT 480 
 
 
-#define IS_DEBUG_RENDER_BBOX 0
+#define IS_DEBUG_RENDER_BBOX isDebug_RenderBBox
 
 #define MAX_FRAME_RATE 90
 
@@ -61,6 +61,7 @@ extern int ScreenRow;
 
 
 extern int isDebug_Untouchable;
+extern int isDebug_RenderBBox;
 
 
 // ID của Sprite, object

@@ -103,10 +103,9 @@ class Simon : public GameObject
 private:
 	GSprite * _sprite_deadth;
 
-
 	int HeartCollect; // số lượng item heart người chơi nhặt được
-	int Lives;
-	int score;
+	int Lives; // số mạng của simon
+	int score; // điểm
 
 	bool isFreeze; // Trạng thái đóng băng thay đổi màu liên tục
 	DWORD TimeFreeze; // thời gian đã đóng băng
@@ -124,16 +123,15 @@ private:
 	int directionY_Backup;
 	int directionAfterGo;
 
-	float AutoGoX_Dx;
-	float AutoGoX_Speed;
-	float AutoGoX_DirectionGo;
-	float AutoGoX_Backup_X;
+	float AutoGoX_Distance; // khoảng cách simon cần tự đi
+	float AutoGoX_Speed; // vận tốc đi tự động
+	float AutoGoX_DirectionGo; // hướng tự động đi
+	float AutoGoX_Backup_X; // lưu vị trí trước khi đi tự động
 
 	bool isAutoGoX = 0; // đang ở chế độ auto go?
 
 	bool isDeadth;
-
-
+	 
 	eType TypeWeaponCollect; // loại vũ khí phụ đang giữ
 	
 	Camera * camera;

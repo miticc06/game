@@ -406,9 +406,9 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (isAutoGoX == true)
 	{
-		if (abs(x - AutoGoX_Backup_X) >= AutoGoX_Dx)
+		if (abs(x - AutoGoX_Backup_X) >= AutoGoX_Distance)
 		{
-			x = x - (abs(x - AutoGoX_Backup_X) - AutoGoX_Dx);
+			x = x - (abs(x - AutoGoX_Backup_X) - AutoGoX_Distance);
 			RestoreBackupAutoGoX();
 			isAutoGoX = false;
 
@@ -862,7 +862,7 @@ void Simon::Attack(eType typeWeapon)
 	if (typeWeapon == eType::NON_WEAPON_COLLECT) // nếu dùng type NON_WEAPON_COLLECT thì bỏ qua
 	{
 		return;
-	} 
+	}
 
 	/* Kiểm tra còn đủ HeartCollect ko? */
 	switch (typeWeapon)
@@ -930,8 +930,6 @@ void Simon::Attack(eType typeWeapon)
 					if (mapWeapon[eType::WEAPON_DOUBLE_SHOT]->GetFinish() == false) // vũ khí đã tạo vẫn còn đang chạy
 					{
 						return; // thoát luôn
-
-						//isMustRecreateDoubleShot = false; // ko tạo lại;
 					}
 					else
 					{
@@ -1072,14 +1070,14 @@ void Simon::StartUntouchable()
 	untouchable_start = GetTickCount();
 }
  
-void Simon::SetAutoGoX(int DirectionGo, int directionAfterGo, float Dx, float Speed)
+void Simon::SetAutoGoX(int DirectionGo, int directionAfterGo, float Distance, float Speed)
 {
 	if (isAutoGoX == true)
 		return;
 
 	isAutoGoX = true;// chưa vào chế độ autoGo thì set
 
-	AutoGoX_Backup_X = x;
+	AutoGoX_Backup_X = x; // set lại vị trí trước khi đi tự động
 
 	//Backup trạng thái
 	isWalking_Backup = isWalking;
@@ -1091,7 +1089,7 @@ void Simon::SetAutoGoX(int DirectionGo, int directionAfterGo, float Dx, float Sp
 	directionStair_Backup = directionStair;
 	directionY_Backup = directionY;
 
-	AutoGoX_Dx = Dx;
+	AutoGoX_Distance = Distance;
 	AutoGoX_Speed = Speed;
 	AutoGoX_DirectionGo = (float) DirectionGo;
 	this->directionAfterGo = directionAfterGo;
@@ -1143,8 +1141,6 @@ bool Simon::LoseLife()
 	SetIsDeadth(false);
 	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
    
-
-
 
 	isAttacking = 0;
 	isJumping = 0;

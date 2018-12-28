@@ -8,3 +8,4 @@ int ScreenColumn;
 int ScreenRow;
 
 int isDebug_Untouchable = 0;
+int isDebug_RenderBBox = 0;

@@ -18,6 +18,7 @@ Scene_1::~Scene_1()
 
 void Scene_1::KeyState(BYTE * state)
 {
+
 	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
 	{
 		return;
@@ -122,6 +123,14 @@ void Scene_1::KeyState(BYTE * state)
 
 void Scene_1::OnKeyDown(int KeyCode)
 {
+	if (KeyCode == DIK_R) // render bbox
+	{
+		if (isDebug_RenderBBox == 0)
+			isDebug_RenderBBox = 1;
+		else
+			isDebug_RenderBBox = 0;
+	}
+
 	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
 	{
 		return;
@@ -200,18 +209,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 		DebugOut(L"[SET POSITION SIMON] x = 1275 \n");
 		simon->SetPosition(1275.0f, 0);
 	}
-
-
-
-
-	if (KeyCode == DIK_P) // tesst autogo 
-	{
-		simon->SetAutoGoX(simon->GetDirection(), simon->GetDirection(), 200, SIMON_WALKING_SPEED);
-	}
-
-
-
-
+	 
 
 	if (simon->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
 		return;

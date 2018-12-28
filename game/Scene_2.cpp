@@ -20,6 +20,9 @@ Scene_2::~Scene_2()
 
 void Scene_2::KeyState(BYTE * state)
 {
+ 
+
+
 	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
 	{
 		return;
@@ -38,11 +41,11 @@ void Scene_2::KeyState(BYTE * state)
 
 	if (simon->isJumping && simon->isWalking)
 	{
-		if (simon->isCollisionAxisYWithBrick)
+	/*	if (simon->isCollisionAxisYWithBrick)
 		{
 			DebugOut(L"simon->isJumping && simon->isWalking\n");
 			simon->SetVx(0);
-		}
+		}*/
 		return;
 	}
 		
@@ -189,16 +192,7 @@ void Scene_2::KeyState(BYTE * state)
 	}
 
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
-	{
-		//if (simon->isAttacking) // đang attack
-		//{
-		//	float vx, vy;
-		//	simon->GetSpeed(vx, vy);
-		//	simon->SetSpeed(0, vy);
-		//	DebugOut(L"DIK_RIGHT & attack \n");
-
-		//	return;
-		//}
+	{ 
 		DebugOut(L"DIK_RIGHT\n");
 
 		simon->Right();
@@ -206,17 +200,7 @@ void Scene_2::KeyState(BYTE * state)
 	}
 	else
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
-		{
-			//if (simon->isAttacking) // đang attack
-			//{
-			//	float vx, vy;
-			//	simon->GetSpeed(vx, vy);
-			//	simon->SetSpeed(0, vy);
-			//	DebugOut(L"DIK_LEFT & attack \n");
-
-			//	return;
-			//}
-
+		{  
 			simon->Left();
 			simon->Go();
 			DebugOut(L"DIK_LEFT\n");
@@ -225,17 +209,6 @@ void Scene_2::KeyState(BYTE * state)
 		else
 		{
 			DebugOut(L"Stop\n");
-
-			//if (simon->isAttacking) // đang attack
-			//{
-			//	float vx, vy;
-			//	simon->GetSpeed(vx, vy);
-			//	simon->SetSpeed(0, vy);
-			//	DebugOut(L"DIK_RIGHT & attack \n");
-
-			//	return;
-			//}
-
 			simon->Stop();
 		}
 
@@ -244,6 +217,14 @@ void Scene_2::KeyState(BYTE * state)
 
 void Scene_2::OnKeyDown(int KeyCode)
 {
+	if (KeyCode == DIK_R) // render bbox
+	{
+		if (isDebug_RenderBBox == 0)
+			isDebug_RenderBBox = 1;
+		else
+			isDebug_RenderBBox = 0;
+	}
+
 	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
 	{
 		return;
@@ -341,8 +322,6 @@ void Scene_2::OnKeyDown(int KeyCode)
 		GetCursorPos(&p);
 		ScreenToClient(Game::GetInstance()->GetWindowHandle(), &p);
 		DebugOut(L"[MOUSE POSITION] %d %d \n", p.x + (int)camera->GetXCam(), p.y + (int)camera->GetYCam());
-
-
 	}
 
 
@@ -405,8 +384,6 @@ void Scene_2::OnKeyDown(int KeyCode)
 	{
 		DebugOut(L"[SET POSITION SIMON] x = .... \n");
 		simon->SetPosition(4000.0f, 500.0f);
-		 
-
 	}
 
 
@@ -422,31 +399,25 @@ void Scene_2::OnKeyDown(int KeyCode)
 	{
 		boss->Start();
 	}
+
 	if (KeyCode == DIK_0) // boss
 	{ 
 		simon->SetPosition(5328.0f, 240.0f);
 
-//5122
 		camera->SetBoundary(CAMERA_BOUNDARY_BOSS_RIGHT, CAMERA_BOUNDARY_BOSS_RIGHT);
 
 		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
 		   
 		camera->SetPosition(camera->GetXCam(), 0); 
 
-
 		boss = new PhantomBat(simon, camera, &listWeaponOfEnemy);
-		
-
 	}
 
 	if (KeyCode == DIK_K) // test boss 
 	{
 		boss->StartCurves();
 	}
-	//if (KeyCode == DIK_U) // stop boss
-	//{
-	//	boss->Stop();
-	//}
+
 
 	if (KeyCode == DIK_E) // set healsimon 2;
 	{
@@ -459,17 +430,12 @@ void Scene_2::OnKeyDown(int KeyCode)
 		DebugOut(L"[SET POSITION SIMON] x = .... \n");
 		simon->SetPosition(3084.0f, 310.0f);
 
-
 		camera->SetBoundary(3073, camera->GetBoundaryRight() + 1023);// mở biên phải rộng ra thêm để chạy AutoGo
 		//camera->SetAutoGoX(abs(GATE1_POSITION_CAM_BEFORE_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
 		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
 		isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
 		isDoneSimonGoThroughTheDoor1 = false;
-
-
 		isDoneSimonGoThroughTheDoor1 = true;
-		//	camera->SetAutoGoX(abs(GATE1_POSITION_CAM_AFTER_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
-		//isDoneCameraGoThroughTheDoor1 = false;
 		simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
 		TimeCreateBat = GetTickCount();
 		TimeWaitCreateBat = 2000;
@@ -489,9 +455,6 @@ void Scene_2::OnKeyDown(int KeyCode)
 			isDebug_Untouchable = 1;
 	}
 
-
-
-
 	if (KeyCode == DIK_R)
 	{
 		DebugOut(L"[RESET GRID]");
@@ -499,8 +462,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		gridGame = new Grid();
 		gridGame->ReadFileToGrid("Resources/map/Obj_2.txt"); // load lai
 	}
-
-
+	 
 	if (KeyCode == DIK_P) // tesst autogo 
 	{
 		simon->SetAutoGoX(simon->GetDirection(), -1, 200, SIMON_WALKING_SPEED);
@@ -510,11 +472,6 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_G) // add ghost 
 	{
 		listEnemy.push_back(new Ghost(200, 200, 1));
-	}
-
-	if (KeyCode == DIK_C) // test AUTO GO CAM
-	{
-		camera->SetAutoGoX(200.0f, SIMON_WALKING_SPEED);
 	} 
 
 	if (KeyCode == DIK_B) 
