@@ -186,14 +186,14 @@ void Scene_2::KeyState(BYTE * state)
 		float vx, vy;
 		simon->GetSpeed(vx, vy);
 		simon->SetSpeed(0, vy);
-		DebugOut(L"DIK_RIGHT & attack \n");
+		//DebugOut(L"DIK_RIGHT & attack \n");
 
 		return;
 	}
 
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 	{ 
-		DebugOut(L"DIK_RIGHT\n");
+		//DebugOut(L"DIK_RIGHT\n");
 
 		simon->Right();
 		simon->Go();
@@ -203,12 +203,12 @@ void Scene_2::KeyState(BYTE * state)
 		{  
 			simon->Left();
 			simon->Go();
-			DebugOut(L"DIK_LEFT\n");
+		//	DebugOut(L"DIK_LEFT\n");
 
 		}
 		else
 		{
-			DebugOut(L"Stop\n");
+		//	DebugOut(L"Stop\n");
 			simon->Stop();
 		}
 

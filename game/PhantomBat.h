@@ -86,6 +86,8 @@ public:
 	float getPt(float n1, float n2, float perc);
 	void Stop(); // Debug
 
+	void ProcessSmart();
+
 	void ResetResource();
 };
 

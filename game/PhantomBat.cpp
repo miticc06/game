@@ -159,7 +159,16 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			x + GetWidth()>camera->GetXCam() + camera->GetWidth()) // đi xong hoặc chạm biên trái phải màn hình thì dừng
 		{
 			vx = vy = 0;
-			
+			/*vượt quá camera thì đẩy lại vào cam*/
+			if (x < camera->GetXCam())
+				x += 1.0f;
+
+			if (x + GetWidth() > camera->GetXCam() + camera->GetWidth())
+			{
+				x -= 1.0f;
+			}
+			/*vượt quá camera thì đẩy lại vào cam*/
+
 			StartStaight();
 
 		}
@@ -176,7 +185,15 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				x + GetWidth()>camera->GetXCam() + camera->GetWidth()) // đi xong hoặc chạm biên trái phải màn hình thì dừng
 			{
 				vx = vy = 0;
+				/*vượt quá camera thì đẩy lại vào cam*/
+				if (x < camera->GetXCam())
+					x += 1.0f;
 
+				if (x + GetWidth() > camera->GetXCam() + camera->GetWidth())
+				{
+					x -= 1.0f;
+				}
+				/*vượt quá camera thì đẩy lại vào cam*/
 				isWaiting = true; // bật trạng thái chờ
 				TimeWaited = 0; // reset lại time đã chờ
 			}
@@ -203,7 +220,7 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else
 			{
-
+				ProcessSmart();
 			}
 		} 
 
@@ -231,9 +248,18 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 
+//	DebugOut(L"simon - boss = %f\n", sqrt((simon->GetX() - x)*(simon->GetX() - x) + (simon->GetY() - y)*(simon->GetY() - y)));
+
+
 	GameObject::Update(dt);
 	x += dx;
 	y += dy;
+
+	//if (x < camera->GetXCam())
+	//	x = camera->GetXCam();
+	//if (x + _texture->FrameWidth > camera->GetXCam() + camera->GetWidth())
+	//	x = camera->GetXCam() + camera->GetWidth() - _texture->FrameWidth;
+
 	yLastFrame = y;// lưu lại y frame hiện tại
 }
 
@@ -327,6 +353,38 @@ void PhantomBat::Stop()
 	vx = vy = 0;
 }
 
+void PhantomBat::ProcessSmart()
+{
+	if (simon->isJumping && sqrt((simon->GetX() - x)*(simon->GetX() - x) + (simon->GetY() - y)*(simon->GetY() - y)) <= 150.0f) // nếu nhảy lên & khoảng cách nhỏ hơn 150 thì random cách xử lí
+	{
+		int random = rand() % 6;
+		switch (random)
+		{
+		case 0:
+			StartStaight();
+			return;
+		case 1:
+			StartCurves();
+			return;
+		case 2:
+			StartAttack();
+			return;
+
+		default:
+			break;
+		}
+	}
+
+	if (rand() % 5 == 0) //25%
+	{
+		if (Health <= 10 && simon->isAttacking)
+		{
+			StartCurves();
+		}
+	}
+	
+}
+
 void PhantomBat::Start() 
 {
 	StatusProcessing = PHANTOMBAT_PROCESS_START_1;
@@ -386,9 +444,7 @@ void PhantomBat::StartStaight()
 
 	DebugOut(L"StatusProcessing = %d, Target (%f, %f) \n", StatusProcessing, xTarget, yTarget);
 	
-	//float tt = 1000.0f / (50 + rand() % 100);
-	//vx = (xTarget - xBefore) / (abs(xTarget - xBefore)*tt);
-	//vy = (yTarget - yBefore) / (abs(yTarget - yBefore)*tt);
+ 
 	vx = (xTarget - xBefore) / (1000); // cho đi 1 giây
 	vy = (yTarget - yBefore) / (1000);
 }
