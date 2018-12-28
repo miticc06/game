@@ -430,7 +430,7 @@ void Scene_1::Update(DWORD dt)
 
 	if (camera->AllowFollowSimon())
 	{
-		camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
+		camera->SetPosition(simon->GetX() - SCREEN_WIDTH / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
 	}
 	camera->Update(dt);
 

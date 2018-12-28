@@ -336,10 +336,10 @@ HWND Game::GetWindowHandle()
 	return hWnd;
 }
 
-bool Game::AABBCheck(RECT b1, RECT b2)
-{
-	return !(b1.right < b2.left || b1.left > b2.right || b1.top > b2.bottom || b1.bottom < b2.top);
-}
+//bool Game::AABBCheck(RECT b1, RECT b2)
+//{
+//	return !(b1.right < b2.left || b1.left > b2.right || b1.top > b2.bottom || b1.bottom < b2.top);
+//}
 
 
 bool Game::checkAABB(float b1left, float b1top, float b1right, float b1bottom, float b2left, float b2top, float b2right, float b2bottom )

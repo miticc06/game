@@ -67,7 +67,7 @@ void Panther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	
 	if (isSitting)
 	{
-		_sprite->SelectIndex(PANTHER_ANI_SITTING);
+		_sprite->SelectFrame(PANTHER_ANI_SITTING);
 	}
 	else
 	{
@@ -75,12 +75,12 @@ void Panther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			if (!isJumping) // ko đang nhảy thì chạy => đang nhảy thì cho animation đứng yên
 			{
-				if (PANTHER_ANI_RUNNING_BEGIN <= _sprite->GetIndex() && _sprite->GetIndex() < PANTHER_ANI_RUNNING_END)
+				if (PANTHER_ANI_RUNNING_BEGIN <= _sprite->GetCurrentFrame() && _sprite->GetCurrentFrame() < PANTHER_ANI_RUNNING_END)
 				{
 					_sprite->Update(dt);
 				}
 				else
-					_sprite->SelectIndex(PANTHER_ANI_RUNNING_BEGIN);
+					_sprite->SelectFrame(PANTHER_ANI_RUNNING_BEGIN);
 			}
 			
 		}

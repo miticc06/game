@@ -53,15 +53,8 @@ using namespace std;
 #define TIME_LIMIT_WAIT_RESET_GAME 300 // Thời gian chờ vẽ màn màu đen khi reset game
 
 extern D3DCOLOR D3DCOLOR_BACKGROUND; // màu nền game
-
-
-extern int Window_Width; 
-extern int Window_Height;
-// kích thước màn hình
  
-
-
-
+ 
 
 extern int ScreenColumn;
 extern int ScreenRow;

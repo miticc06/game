@@ -242,6 +242,8 @@ int Run()
 
 			game->ProcessKeyboard();
 			
+			//DebugOut(L"dt = %d , tickPerFrame = %d \n", dt, tickPerFrame);
+
 			Update(dt);
 			Render();
 		}
@@ -254,9 +256,7 @@ int Run()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	//HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, Window_Width, Window_Height);
+	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	game = Game::GetInstance();
 	game->Init(hWnd);
@@ -264,7 +264,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	_sceneManager = SceneManager::GetInstance();
 
 
-	_sceneManager->SetScene(new Scene_2()); // vào màn 1
+	_sceneManager->SetScene(new Scene_1()); // vào màn 1
 	 
 
 
@@ -275,7 +275,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//LoadResources();
 	
 
-	SetWindowPos(hWnd, 0, 0, 0, Window_Width, Window_Height, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
  
 	Run();
 

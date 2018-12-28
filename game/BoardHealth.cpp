@@ -21,21 +21,21 @@ void BoardHealth::Draw(int HealthPlayer, int HealthEnemy)
 	HealthEnemy = min(HealthEnemy, 16);
 
 	int i, j;
-	_sprite->SelectIndex(BOARDHEALTH_FRAME_PLAYER);
+	_sprite->SelectFrame(BOARDHEALTH_FRAME_PLAYER);
 	for (i = 0; i < HealthPlayer; i++) 
 		_sprite->Draw(x + i*_texture->FrameWidth, y); 
 	 
-	_sprite->SelectIndex(BOARDHEALTH_FRAME_NONE);
+	_sprite->SelectFrame(BOARDHEALTH_FRAME_NONE);
 	for (j = i; j<BOARDHEALTH_MAX_CELL; j++)
 	{ 
 		_sprite->Draw(x + j * _texture->FrameWidth, y);
 	}
 
-	_sprite->SelectIndex(BOARDHEALTH_FRAME_ENEMY);
+	_sprite->SelectFrame(BOARDHEALTH_FRAME_ENEMY);
 	for (i = 0; i < HealthEnemy; i++)
 		_sprite->Draw(x + i * _texture->FrameWidth, y + 18);
 
-	_sprite->SelectIndex(BOARDHEALTH_FRAME_NONE);
+	_sprite->SelectFrame(BOARDHEALTH_FRAME_NONE);
 	for (j = i; j < BOARDHEALTH_MAX_CELL; j++)
 	{
 		_sprite->Draw(x + j * _texture->FrameWidth, y + 18);

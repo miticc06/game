@@ -22,15 +22,15 @@ void Font::Draw(float x, float y, const string & s)
 			continue;
 		if (s[i] >= 'A' && s[i] <= 'Z')
 		{
-			_sprite->SelectIndex(s[i] - 'A');
+			_sprite->SelectFrame(s[i] - 'A');
 		}
 		else
 			if (s[i] >= '0' && s[i] <= '9')
 			{
-				_sprite->SelectIndex(s[i] - '0' + 26);
+				_sprite->SelectFrame(s[i] - '0' + 26);
 			}
 			else
-				_sprite->SelectIndex(36);
+				_sprite->SelectFrame(36);
 		_sprite->Draw(x + i * _texture->FrameWidth, y);
 	}
 }

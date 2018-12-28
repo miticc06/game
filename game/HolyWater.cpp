@@ -77,7 +77,7 @@ void HolyWater::Create(float simonX, float simonY, int simonDirection)
 	vx = HOLLYWATER_SPEED_X * simonDirection;
 	vy = - HOLLYWATER_SPEED_Y;
 	isCollisionBrick = false;
-	_sprite->SelectIndex(0);
+	_sprite->SelectFrame(0);
 	CountLoop = 0;
 }
 
@@ -87,7 +87,7 @@ void HolyWater::GetBoundingBox(float & left, float & top, float & right, float &
 	top = y;
 	right = x + _texture->FrameWidth+5;
 	bottom = y + _texture->FrameHeight;
-	if (_sprite->GetIndex() == 0) // frame đầu
+	if (_sprite->GetCurrentFrame() == 0) // frame đầu
 	{
 		left += 5;
 		top += 5;
@@ -129,13 +129,13 @@ void HolyWater::Render(Camera * camera)
  		RenderBoundingBox(camera);
 	}
 
-	if (_sprite->GetIndex() == 3) // là frame cuối cùng thì kết thúc
+	if (_sprite->GetCurrentFrame() == 3) // là frame cuối cùng thì kết thúc
 	{ 
 		CountLoop++;
 		if (CountLoop >= 2) // lặp đúng 2 lần thì dừng
 			isFinish = true;
 		else
-			_sprite->SelectIndex(1);
+			_sprite->SelectFrame(1);
 	}
 }
  

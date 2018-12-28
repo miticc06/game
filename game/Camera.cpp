@@ -13,7 +13,7 @@ Camera::Camera(int w, int h/*, int b_left, int b_right*/)
 	 
 	// Biên mặc định ban đầu là kích thước MAP
 	_boundaryLeft = 0;
-	_boundaryRight = 0;// (float)(MapWidth - Window_Width);
+	_boundaryRight = 0;// (float)(MapWidth - SCREEN_WIDTH);
 	_xCamBackup = _yCamBackup = 0;
 	SetBoundaryBackup(_boundaryLeft, _boundaryRight);
 	vx = 0;

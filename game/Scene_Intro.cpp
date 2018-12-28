@@ -87,7 +87,7 @@ void Scene_Intro::Update(DWORD dt)
 				simon->SetPosition(500, 336);
 				simon->SetDirection(-1);
 				 
-				simon->SetAutoGoX(-1, -1, abs(225 - simon->GetX()), SIMON_WALKING_SPEED);
+				simon->SetAutoGoX(-1, -1, abs(225 - simon->GetX()), INTRO_SIMON_WALKING_SPEED);
 			}
 			else
 			{
@@ -111,7 +111,7 @@ void Scene_Intro::Update(DWORD dt)
 		}
 		else
 		{
-			simon->GetSprite()->SelectIndex(SIMON_ANI_HIDE_FACE);
+			simon->GetSprite()->SelectFrame(SIMON_ANI_HIDE_FACE);
 		}
 
 		heliCopter->Update(dt);

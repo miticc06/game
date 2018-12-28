@@ -16,6 +16,8 @@
 #define INTRO_STATUS_PROCESS_MENU 0 
 #define INTRO_STATUS_PROCESS_GO_SCENE1 1 
 
+#define INTRO_SIMON_WALKING_SPEED 0.08f
+
 
 class Scene_Intro : public Scene
 {

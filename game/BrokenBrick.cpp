@@ -58,7 +58,7 @@ void BrokenBrick::Update(DWORD dt)
 	y += dy;
 
 	Effect::Update(dt);
-	if (_sprite->GetIndex() == _sprite->_end) // nếu là frame cuối thì xong,
+	if (_sprite->GetCurrentFrame() == _sprite->GetTotalFrames()) // nếu là frame cuối thì xong,
 		isFinish = true;
 }
 

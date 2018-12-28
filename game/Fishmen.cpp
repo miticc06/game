@@ -18,7 +18,7 @@ Fishmen::Fishmen(float X, float Y, int Direction, Simon* simon, vector<Weapon*> 
 	xInit = x; 
 	xAccumulationAttack = 0;
 	 
-	_sprite->SelectIndex(FISHMEN_ANI_JUMP);
+	_sprite->SelectFrame(FISHMEN_ANI_JUMP);
 
 	isRunning = 0;
 	isAttacking = false;
@@ -145,18 +145,18 @@ void Fishmen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 #pragma region Update Animation
 	if (isAttacking)
 	{
-		_sprite->SelectIndex(FISHMEN_ANI_ATTACK);
+		_sprite->SelectFrame(FISHMEN_ANI_ATTACK);
 	}
 	else
 		if (isRunning)
 		{
-			int index = _sprite->GetIndex();
+			int index = _sprite->GetCurrentFrame();
 
 			if (FISHMEN_ANI_WALK_BEGIN <= index && index <= FISHMEN_ANI_WALK_END)
 				_sprite->Update(dt);
 
-			if (_sprite->GetIndex() == FISHMEN_ANI_ATTACK) // đang trong trạng thái đi mà quay về frame attack thì set thành frame đi
-				_sprite->SelectIndex(FISHMEN_ANI_WALK_BEGIN);
+			if (_sprite->GetCurrentFrame() == FISHMEN_ANI_ATTACK) // đang trong trạng thái đi mà quay về frame attack thì set thành frame đi
+				_sprite->SelectFrame(FISHMEN_ANI_WALK_BEGIN);
 
 		}
 #pragma endregion

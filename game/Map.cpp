@@ -35,8 +35,8 @@ void Map::LoadMap(eType type)
 	 
  	
 	
-	ScreenColumn = Window_Width / _texture->FrameWidth;
-	ScreenRow = Window_Height / _texture->FrameHeight;
+	ScreenColumn = SCREEN_WIDTH / _texture->FrameWidth;
+	ScreenRow = SCREEN_HEIGHT / _texture->FrameHeight;
 
 }
 
@@ -89,7 +89,7 @@ void Map::DrawMap(Camera *camera)
 			{
 				if (!(row + i < 0 || row + i>RowMatrix || j + column < 0 || j + column > ColumnMatrix))
  				{
-					_sprite->SelectIndex(TileMap[row + i][column + j]);
+					_sprite->SelectFrame(TileMap[row + i][column + j]);
 					_sprite->Draw(x + _texture->FrameWidth*j, y + _texture->FrameHeight*i + HeightBoard);
  				}
 			}

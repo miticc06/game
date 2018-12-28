@@ -42,7 +42,7 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	x += dx;
 
 	_sprite->Update(dt);
-	if (_sprite->GetIndex() == 0)
+	if (_sprite->GetCurrentFrame() == 0)
 		_sprite->Update(dt);
 }
 

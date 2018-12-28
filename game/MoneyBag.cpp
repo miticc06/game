@@ -30,15 +30,15 @@ void MoneyBag::Render(Camera * camera)
 	switch (type)
 	{ 
 	case eType::MONEY_BAG_RED:
-		_sprite->SelectIndex(MONEYBAG_ANI_RED);
+		_sprite->SelectFrame(MONEYBAG_ANI_RED);
 		break;
 
 	case eType::MONEY_BAG_WHITE:
-		_sprite->SelectIndex(MONEYBAG_ANI_WHITE);
+		_sprite->SelectFrame(MONEYBAG_ANI_WHITE);
 		break;
 
 	case eType::MONEY_BAG_PURPLE:
-		_sprite->SelectIndex(MONEYBAG_ANI_PURPLE);
+		_sprite->SelectFrame(MONEYBAG_ANI_PURPLE);
 		break;
 	}
 

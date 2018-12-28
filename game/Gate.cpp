@@ -37,15 +37,15 @@ void Gate::Render(Camera * camera)
 	if (isStart != 0)
 	{
 
-		int index = _sprite->GetIndex();
+		int index = _sprite->GetCurrentFrame();
 		switch (isStart)
 		{
 		case 1:
 		{
-			_sprite->_timeLocal += dt;
-			if (_sprite->_timeLocal >= 1000)
+			_sprite->timeAccumulated += dt;
+			if (_sprite->timeAccumulated >= 1000)
 			{
-				_sprite->_timeLocal = 0;
+				_sprite->timeAccumulated = 0;
 				_sprite->Next();
 				isStart++;
 				Sound::GetInstance()->Play(eSound::soundOpenDoor);
@@ -54,10 +54,10 @@ void Gate::Render(Camera * camera)
 		}
 		case 2:
 		{
-			_sprite->_timeLocal += dt;
-			if (_sprite->_timeLocal >= 100)
+			_sprite->timeAccumulated += dt;
+			if (_sprite->timeAccumulated >= 100)
 			{
-				_sprite->_timeLocal = 0;
+				_sprite->timeAccumulated = 0;
 				_sprite->Next();
 				isStart++;
 			}
@@ -65,10 +65,10 @@ void Gate::Render(Camera * camera)
 		}
 		case 3:
 		{
-			_sprite->_timeLocal += dt;
-			if (_sprite->_timeLocal >= 100)
+			_sprite->timeAccumulated += dt;
+			if (_sprite->timeAccumulated >= 100)
 			{
-				_sprite->_timeLocal = 0;
+				_sprite->timeAccumulated = 0;
 				_sprite->Next();
 				isStart++;
 			}
@@ -76,10 +76,10 @@ void Gate::Render(Camera * camera)
 		}
 		case 4:
 		{
-			_sprite->_timeLocal += dt;
-			if (_sprite->_timeLocal >= 500)
+			_sprite->timeAccumulated += dt;
+			if (_sprite->timeAccumulated >= 500)
 			{
-				_sprite->_timeLocal = 0;
+				_sprite->timeAccumulated = 0;
 				_sprite->Next();
 				isStart++;
 			}

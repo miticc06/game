@@ -10,81 +10,70 @@ RECT GSprite::GetRectFrame(int index)
 	return res;
 }
   
-GSprite::GSprite(GTexture* texture, DWORD timeAnimation)
+GSprite::GSprite(GTexture* texture, DWORD TimeAnimation)
 {
 	_texture = texture;
-	_start = 0;
-	_end = _texture->Count - 1;
-	_timeAni = timeAnimation;
-	_index = 0;
-	_timeLocal = 0; 
+	currentFrame = 0;
+ 	totalFrames = _texture->Count - 1;
+	this->timeAnimation = TimeAnimation;
 
 	spriteHandler = Game::GetInstance()->GetSpriteHandler();
 }
 
 GSprite::~GSprite()
-{
-
+{ 
 }
  
 void GSprite::Next()
 {
-	_index++;
-	if (_index > _end)
-		_index = _start;
+	currentFrame++;
+	if (currentFrame > totalFrames)
+		currentFrame = 0;
 }
-
-void GSprite::Reset()
-{
-	_index = _start;
-	_timeLocal = 0;
-}
-
+ 
 void GSprite::ResetTime()
 { 
-	_timeLocal = 0; 
+	timeAccumulated = 0; 
 }
 
-void GSprite::SelectIndex(int index)
+void GSprite::SelectFrame(int index)
 {
-	_index = index;
-	//_timeLocal = 0;
+	currentFrame = index;
+	//timeAccumulated = 0;
 }
 
 void GSprite::Update(DWORD dt)
 {
-	_timeLocal += dt;
-	if (_timeLocal >= _timeAni)
+	timeAccumulated += dt;
+	if (timeAccumulated >= timeAnimation)
 	{
-		_timeLocal -= _timeAni;
-		//_timeLocal = 0;
+		timeAccumulated -= timeAnimation;
 		this->Next();
 	}
 }
-
-//void GSprite::Draw(int X, int Y, int alpha)
-//{
-//	this->Draw((float)X, (float)Y, alpha);
-//}
-
-
+  
 void GSprite::Draw(float X, float Y, int alpha)
 { 
-	RECT r = GetRectFrame(_index);
-	D3DXVECTOR3 p(X, Y, 0);
+	RECT r = GetRectFrame(currentFrame);
+
+	//	D3DXVECTOR3 p((float)X, (float)Y, 0);
+	D3DXVECTOR3 p((float)((int)X), (float)((int)Y), 0);
+
 	spriteHandler->Draw(_texture->Texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 } 
 
 void GSprite::DrawRandomColor(float X, float Y, int alpha)
 {
-	RECT r = GetRectFrame(_index);
+	RECT r = GetRectFrame(currentFrame);
 
 	int RR, GG, BB;
 	RR = rand() % 256;
 	GG = rand() % 256;
 	BB = rand() % 256;
  
-	D3DXVECTOR3 p((float)X, (float)Y, 0);
+//	D3DXVECTOR3 p((float)X, (float)Y, 0);
+	D3DXVECTOR3 p((float)((int)X), (float)((int)Y), 0);
+
 	spriteHandler->Draw(_texture->Texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, RR, GG, BB));
 }
 
@@ -143,16 +132,23 @@ void GSprite::DrawFlipXIndex(int index, float x, float y, int alpha)
 
 	x -= _texture->FrameWidth;
 
-	D3DXVECTOR3 p(x, y, 0);
+	//	D3DXVECTOR3 p((float)X, (float)Y, 0);
+	D3DXVECTOR3 p((float)((int)x), (float)((int)y), 0); 
+
 	spriteHandler->Draw(_texture->Texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 
 	spriteHandler->SetTransform(&oldMt);
 }
   
  
-int GSprite::GetIndex()
+int GSprite::GetCurrentFrame()
 {
-	return _index;
+	return currentFrame;
+}
+
+int GSprite::GetTotalFrames()
+{
+	return totalFrames;
 }
 
  

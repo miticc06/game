@@ -66,9 +66,9 @@
 #define CAMERA_POSITION_Y_LAKE 374.0f
   
 #define CAMERA_BOUNDARY_LAKE_LEFT 3075.0f
-#define CAMERA_BOUNDARY_LAKE_RIGHT (4111.0f-Window_Width)
+#define CAMERA_BOUNDARY_LAKE_RIGHT (4111.0f-SCREEN_WIDTH)
  
-#define CAMERA_BOUNDARY_BOSS_RIGHT (5648.0f - Window_Width)
+#define CAMERA_BOUNDARY_BOSS_RIGHT (5648.0f - SCREEN_WIDTH)
 
 
 #pragma region define FISHMEN
@@ -126,6 +126,7 @@
 #define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_HEALTH 200 // thời gian chờ tăng mỗi đơn vị máu
 #define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_GETSCORE_TIME 10 // thời gian chờ mỗi lượt update time
 #define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_GETSCORE_HEART 50 // thời gian chờ mỗi lượt update tim
+#define CLEARSTATE3_LIMITTIMEWAIT_PROCESS_OPENGAMEOVER 2000 // thời gian chờ mở gameover sau khi clearstate xong
 
 #pragma endregion
 

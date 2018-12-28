@@ -25,18 +25,11 @@ void Board::Render(Simon * simon , int state, int RemainingTime, GameObject * bo
 {  
 	_sprite->Draw(x,y); 
 
-	_font.Draw(x + 10, y + 15, "SCORE-" + FillNumber(std::to_string(simon->GetScore()), 6)  );
-	            
-	_font.Draw(x + 10, y+ 33, "PLAYER");
-	_font.Draw(x + 10, y + 51, "ENEMY");
+ 	_font.Draw(x + 100, y + 15, FillNumber(std::to_string(simon->GetScore()), 6));
+	 
+ 	_font.Draw(x + 295, y + 15, FillNumber(std::to_string(RemainingTime), 4));
 
-
-	_font.Draw(x + 220 , y + 15, "TIME " + FillNumber(std::to_string(RemainingTime), 4) );
-
-
-	_font.Draw(x + 380, y + 15, "STAGE");
-	_font.Draw(x + 460, y + 15, FillNumber(std::to_string(state),2));
-
+	_font.Draw(x + 465, y + 15, FillNumber(std::to_string(state),2));
 
 	_font.Draw(x + 393, y + 33, FillNumber(std::to_string(simon->GetHeartCollect()),2)); // Số lượng tim nhặt dc
 	_font.Draw(x + 393, y + 51, FillNumber(std::to_string(simon->GetLives()),2)); // số mạng sông

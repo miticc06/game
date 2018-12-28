@@ -38,7 +38,7 @@ void Weapon::Render(Camera * camera)
 	if (isFinish)
 		return; 
 	 
-	//DebugOut(L"WEAPON: index = %d \n", _sprite->GetIndex());
+	//DebugOut(L"WEAPON: index = %d \n", _sprite->GetCurrentFrame());
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
 		_sprite->Draw(pos.x, pos.y);

@@ -18,6 +18,6 @@ Hit::~Hit()
 void Hit::Update(DWORD dt)
 {
 	Effect::Update(dt);
-	if (_sprite->GetIndex() == 1) // nếu là frame cuối thì xong, frame cuối trống
+	if (_sprite->GetCurrentFrame() == 1) // nếu là frame cuối thì xong, frame cuối trống
 		isFinish = true;
 }

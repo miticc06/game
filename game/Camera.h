@@ -19,7 +19,7 @@ protected:
 	int _height;
 
 	float _boundaryLeft; // biên giới hạn bên trái 
-	float _boundaryRight; // biên giới hạn bên phải, không bao gồm đoạn simon đi được ở cuối - Window_Width 
+	float _boundaryRight; // biên giới hạn bên phải, không bao gồm đoạn simon đi được ở cuối - SCREEN_WIDTH 
 	  
 	float vx;
 	DWORD dt;

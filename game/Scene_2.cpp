@@ -1021,7 +1021,7 @@ void Scene_2::Update(DWORD dt)
 
 	if (camera->AllowFollowSimon())
 	{
-		camera->SetPosition(simon->GetX() - Window_Width / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
+		camera->SetPosition(simon->GetX() - SCREEN_WIDTH / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
 	}
 
 	camera->Update(dt);
@@ -1037,7 +1037,7 @@ void Scene_2::Update(DWORD dt)
 	if (isWaitProcessCreateGhost == false) // nếu không phải chờ xử lí thì vào xử lí
 	{
 #pragma region Vùng 1 & Vùng 2
-		if ((simon->GetX() >= -16.0f /* 0.0f */ && simon->GetX() <= 825.0f) || (simon->GetX() > 2200 && simon->GetX() < 2775))
+		if ((simon->GetX() >= -16.0f && simon->GetX() <= 825.0f) || (simon->GetX() > 2200 && simon->GetX() < 2775))
 		{
 			if (now - TimeCreateGhost >= ThoiGianChoGiua2GhostDuocTao)
 			{
@@ -1212,10 +1212,7 @@ void Scene_2::Update(DWORD dt)
 	}
 #pragma endregion
 	 
-#pragma region Create_Bat
-
-
-
+#pragma region Create_Bat 
 	if (isAllowCreateBat)
 	{
 		DWORD now = GetTickCount();
@@ -1226,8 +1223,7 @@ void Scene_2::Update(DWORD dt)
 
 			TimeWaitCreateBat = 4000 + (rand() % 3000);
 		}
-	}
-
+	} 
 #pragma endregion
 	 
 #pragma region Create Fishmen
@@ -1245,50 +1241,41 @@ void Scene_2::Update(DWORD dt)
 
 			if (FISHMEN_ZONE_1_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_1_RIGHT)
 			{
-				//vtx = (rand() % 2) ? (FISHMEN_POS_2) : ((rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4));
 				vtx = (rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4);
-
 			}
 
 			if (FISHMEN_ZONE_2_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_2_RIGHT)
 			{
 				vtx = (rand() % 2) ? (FISHMEN_POS_1) : ((rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4));
-
 			} 
 
 			if (FISHMEN_ZONE_3_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_3_RIGHT)
 			{
 				vtx = (rand() % 2) ?  (FISHMEN_POS_4) : (FISHMEN_POS_5);
-
 			} 
 
 			if (FISHMEN_ZONE_4_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_4_RIGHT)
 			{
 				vtx = (rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_5);
-
 			}
 
 			if (FISHMEN_ZONE_5_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_5_RIGHT)
 			{
 				vtx = (rand() % 2) ? (FISHMEN_POS_4) : (FISHMEN_POS_6);
-
 			} 
 
 			if (FISHMEN_ZONE_6_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_6_RIGHT)
 			{
 				vtx = (rand() % 2) ? (FISHMEN_POS_5) : ((rand() % 2) ? (FISHMEN_POS_7) : (FISHMEN_POS_8));
-
 			} 
 
 			if (FISHMEN_ZONE_7_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_7_RIGHT)
 			{
 				vtx = (rand() % 2) ? (FISHMEN_POS_6) : (FISHMEN_POS_8);
-
 			} 
 			if (FISHMEN_ZONE_8_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_8_RIGHT)
 			{
 				vtx = (rand() % 2) ? (FISHMEN_POS_6) : (FISHMEN_POS_7);
-
 			}
 			int directionFishmen = vtx < simon->GetX() ? 1 : -1;
 
@@ -1393,11 +1380,8 @@ void Scene_2::Update(DWORD dt)
 					else
 					{
 						enemy->SetHealth(0); // ra khỏi cam coi như chết
-
 						CountEnemyFishmen--; 
-
 					}
-
 					break;
 				}
 
@@ -1418,7 +1402,6 @@ void Scene_2::Update(DWORD dt)
 			listWeaponOfEnemy[i]->Update(dt, &listObj);
 		}
 	}
-
 #pragma endregion
 
 
@@ -1431,14 +1414,11 @@ void Scene_2::Update(DWORD dt)
 
 void Scene_2::Render()
 { 
-
-	if (isWaitResetGame) // vẽ màn đen trước khi bắt đầu game
+	if (isWaitResetGame) // màn đen trước khi bắt đầu game
 		return; // thoát và ko vẽ gì
-
 
 	if (!isGameOver)
 	{ 
-
 		TileMap->DrawMap(camera);
 
 		for (UINT i = 0; i < listObj.size(); i++)
@@ -1489,8 +1469,6 @@ void Scene_2::Render()
 	}
 
 	board->Render(simon, StateCurrent, GAME_TIME_SCENE2 - _gameTime->GetTime(), boss);
-
-
 }
 
 void Scene_2::CheckCollision()
@@ -1503,7 +1481,7 @@ void Scene_2::CheckCollision()
 
 	
 	CheckCollisionWithEnemy(); // kt vũ khí với enemy và simon với enemy
-	CheckCollisionWithBoss(); // kt vũ khí với enemy và simon với enemy
+	CheckCollisionWithBoss(); // kt vũ khí với enemy và simon với boss
 
 }
 
@@ -2959,7 +2937,6 @@ void Scene_2::CheckCollisionWithBoss()
 
 	if (simon->untouchable == false) // đã tắt chế độ ko cho chạm
 	{ 
-
 		if (boss->GetHealth() > 0) // còn sống
 		{
 			LPCOLLISIONEVENT e = simon->SweptAABBEx(boss);
@@ -3177,7 +3154,7 @@ void Scene_2::ProcessClearState3(DWORD dt)
 
 				if (simon->GetHeartCollect() > 0) // thời gian còn lại lớn hơn 0
 				{
-					simon->SetScore(simon->GetScore() + 100); // mỗi giây +10 điểm
+					simon->SetScore(simon->GetScore() + 100); // mỗi giây +100 điểm
 					simon->SetHeartCollect(simon->GetHeartCollect() - 1); // giảm 1 heart
 					sound->Play(eSound::soundGetScoreHeart, true);
 				}
@@ -3194,8 +3171,12 @@ void Scene_2::ProcessClearState3(DWORD dt)
 
 		case CLEARSTATE3_PROCESS_DONE:
 		{
-		 
-
+			TimeWaited_ClearState3 += dt;
+			if (TimeWaited_ClearState3 >= CLEARSTATE3_LIMITTIMEWAIT_PROCESS_OPENGAMEOVER)
+			{
+				isAllowProcessClearState3 = false; // tắt clear state
+				isGameOver = true; // bật bảng hiện gameover
+			} 
 			break;
 		}
 

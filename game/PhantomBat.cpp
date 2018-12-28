@@ -240,12 +240,12 @@ void PhantomBat::Render(Camera * camera)
 		return;
 
 	if (StatusProcessing == PHANTOMBAT_PROCESS_SLEEP)
-		_sprite->SelectIndex(0);
+		_sprite->SelectFrame(0);
 	else
 	{ 
 		_sprite -> Update(dt);
-		if (_sprite->_index == 0)
-			_sprite->SelectIndex(1);
+		if (_sprite->GetCurrentFrame() == 0)
+			_sprite->SelectFrame(1);
 	}
 
 	D3DXVECTOR2 pos = camera->Transform(x, y); 

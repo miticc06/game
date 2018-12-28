@@ -18,17 +18,17 @@ void Fire::Update(DWORD dt)
 {
 	Effect::Update(dt);
 
-	//DebugOut(L"GetIndex = %d\n", _sprite->GetIndex());
+	//DebugOut(L"GetCurrentFrame = %d\n", _sprite->GetCurrentFrame());
  
 
-	if (_sprite->GetIndex() == 3) // nếu là frame cuối thì xong, frame cuối trống
+	if (_sprite->GetCurrentFrame() == 3) // nếu là frame cuối thì xong, frame cuối trống
 	{
 		CountNeedLoop--; // giảm số lần cần lặp
 		if (CountNeedLoop == 0) // hết lần cần lặp thì kết thúc
 			isFinish = true;
 		else
 		{
-			_sprite->_timeLocal = _sprite->_timeAni; 
+			_sprite->timeAccumulated = _sprite->timeAnimation; 
 			//DebugOut(L"CountNeedLoop = %d\n", CountNeedLoop);
 		}
 	}
