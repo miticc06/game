@@ -1311,8 +1311,9 @@ void Scene_2::CheckCollision()
 	CheckCollisionSimonWithObjectHidden();
 	CheckCollisionSimonWithGate(); //va chạm với cửa
 
-	
-	CheckCollisionWithEnemy(); // kt vũ khí với enemy và simon với enemy
+	if (!isProcessingGoThroughTheDoor1 && !isProcessingGoThroughTheDoor2) // ko phải đang xử lí qua cửa
+		CheckCollisionWithEnemy(); // kt vũ khí với enemy và simon với enemy
+
 	CheckCollisionWithBoss(); // kt vũ khí với enemy và simon với boss
 
 }
