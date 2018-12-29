@@ -214,17 +214,17 @@ void Scene_1::OnKeyDown(int KeyCode)
 	if (simon->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
 		return;
 
-
-
-	if (KeyCode == DIK_X && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
-	{
-		simon->Attack(eType::MORNINGSTAR);
-	}
-
-	if (KeyCode == DIK_Z && simon->isProcessingOnStair == 0)
+	if (KeyCode == DIK_A && Game::GetInstance()->IsKeyDown(DIK_UP) && simon->isProcessingOnStair == 0)
 	{
 		simon->Attack(simon->GetTypeWeaponCollect()); // attack với vũ khí phụ đang nhặt
 	}
+	else
+		if (KeyCode == DIK_A && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
+		{
+			simon->Attack(eType::MORNINGSTAR);
+		}
+
+	
 
 	if (simon->isJumping && simon->isWalking)
 	{
@@ -235,7 +235,7 @@ void Scene_1::OnKeyDown(int KeyCode)
 
 
 
-	if (KeyCode == DIK_SPACE && simon->isOnStair == false)
+	if (KeyCode == DIK_S && simon->isOnStair == false)
 	{
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		{

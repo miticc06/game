@@ -1,10 +1,10 @@
 #include "GTexture.h"
   
-GTexture::GTexture(char* filePath, int cols, int rows, int count, int R, int G, int B)
+GTexture::GTexture(char* filePath, int column, int row, int totalframes, int R, int G, int B)
 {
-	Cols = cols;
-	Rows = rows;
-	Count = count;
+	NumColumn = column;
+	NumRow = row;
+	TotalFrames = totalframes;
  	 
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFileA(filePath, &info);
@@ -14,8 +14,8 @@ GTexture::GTexture(char* filePath, int cols, int rows, int count, int R, int G, 
 		return;
 	}
 
-	FrameWidth = info.Width / Cols;
-	FrameHeight = info.Height / Rows;
+	FrameWidth = info.Width / NumColumn;
+	FrameHeight = info.Height / NumRow;
 
 	LPDIRECT3DDEVICE9 d3ddv = Game::GetInstance()->GetDirect3DDevice();
   

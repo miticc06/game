@@ -263,7 +263,6 @@ void Scene_2::OnKeyDown(int KeyCode)
 		return;
 	}
 
-
 	if (simon->GetIsDeadth() || isWaitResetGame)
 	{
 		return;
@@ -462,13 +461,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		gridGame = new Grid();
 		gridGame->Readfile("Resources/map/Obj_2.txt"); // load lai
 	}
-	 
-	if (KeyCode == DIK_P) // tesst autogo 
-	{
-		simon->SetAutoGoX(simon->GetDirection(), -1, 200, SIMON_WALKING_SPEED);
-	}
-
-
+	   
 	if (KeyCode == DIK_G) // add ghost 
 	{
 		listEnemy.push_back(new Ghost(200, 200, 1));
@@ -480,12 +473,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 		simon->SetIsUseDoubleShot(true);
 	}
 
-
-	//if (KeyCode == DIK_H) // create hollywater
-	//{
-	//	simon->_weaponSub = new HolyWater();
-
-	//}
+	 
 
 	if (KeyCode == DIK_F) // create hollywater
 	{
@@ -506,29 +494,27 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (simon->isHurting)
 		return;
 
-	if (KeyCode == DIK_X && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
-	{ 
-		simon->Attack(eType::MORNINGSTAR);
-	}
-	 
-	if (KeyCode == DIK_Z && simon->isProcessingOnStair == 0)
+
+	if (KeyCode == DIK_A && Game::GetInstance()->IsKeyDown(DIK_UP) && simon->isProcessingOnStair == 0)
 	{
 		simon->Attack(simon->GetTypeWeaponCollect()); // attack với vũ khí phụ đang nhặt
 	}
+	else
+		if (KeyCode == DIK_A && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
+		{
+			simon->Attack(eType::MORNINGSTAR);
+		}
 
-
-	if (KeyCode == DIK_D)
-	{
-		listItem.push_back(new ItemDagger(simon->GetX(), simon->GetY()));
-	}
-
-
-	if (KeyCode == DIK_S)
-	{
-		listItem.push_back(new ItemStopWatch(simon->GetX(), simon->GetY()));
-
-	}
-
+	//if (KeyCode == DIK_X && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
+	//{ 
+	//	simon->Attack(eType::MORNINGSTAR);
+	//}
+	// 
+	//if (KeyCode == DIK_Z && simon->isProcessingOnStair == 0)
+	//{
+	//	simon->Attack(simon->GetTypeWeaponCollect()); // attack với vũ khí phụ đang nhặt
+	//}
+	 
 	if (simon->isJumping && simon->isWalking)
 	{
 		return;

@@ -3,7 +3,7 @@
 PhantomBat::PhantomBat(Simon * simon, Camera *camera, vector <Weapon*> * listWeaponOfEnemy)
 { 
 	type = eType::PHANTOMBAT; 
-	_texture = TextureManager::GetInstance()->GetTexture(eType::PHANTOMBAT);
+	_texture = TextureManager::GetInstance()->GetTexture(type);
 	_sprite = new GSprite(_texture, 70);
 
 	this->simon = simon;
@@ -254,12 +254,7 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	GameObject::Update(dt);
 	x += dx;
 	y += dy;
-
-	//if (x < camera->GetXCam())
-	//	x = camera->GetXCam();
-	//if (x + _texture->FrameWidth > camera->GetXCam() + camera->GetWidth())
-	//	x = camera->GetXCam() + camera->GetWidth() - _texture->FrameWidth;
-
+	  
 	yLastFrame = y;// lưu lại y frame hiện tại
 }
 

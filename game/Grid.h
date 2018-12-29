@@ -33,7 +33,6 @@ class Grid
 {  
 private:
 	vector<GameObject*> cells[GRID_CELL_MAX_ROW][GRID_CELL_MAX_COLUMN];
-  
  
 public:
 	Grid();

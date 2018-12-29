@@ -84,7 +84,6 @@ void Map::DrawMap(Camera *camera)
 					_sprite->Draw(x + _texture->FrameWidth*j, y + _texture->FrameHeight*i + HeightBoard);
  				}
 			}  
- 
 }
 
 int Map::GetMapWidth()

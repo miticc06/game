@@ -3,8 +3,8 @@
 RECT GSprite::GetRectFrame(int index)
 {
 	RECT res; 
-	res.left = (index % _texture->Cols)*(_texture->FrameWidth);
-	res.top = (index / _texture->Cols)*(_texture->FrameHeight);
+	res.left = (index % _texture->NumColumn)*(_texture->FrameWidth);
+	res.top = (index / _texture->NumColumn)*(_texture->FrameHeight);
 	res.right = res.left + _texture->FrameWidth;
 	res.bottom = res.top + _texture->FrameHeight;
 	return res;
@@ -14,7 +14,7 @@ GSprite::GSprite(GTexture* texture, DWORD TimeAnimation)
 {
 	_texture = texture;
 	currentFrame = 0;
- 	totalFrames = _texture->Count - 1;
+ 	totalFrames = _texture->TotalFrames - 1;
 	this->timeAnimation = TimeAnimation;
 
 	spriteHandler = Game::GetInstance()->GetSpriteHandler();

@@ -20,14 +20,8 @@ void FireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isFinish)
 		return;
-
-	if (x + _sprite->_texture->FrameWidth < camera->GetXCam() ||
-		x > camera->GetXCam() + camera->GetWidth() ||
-
-		y + _sprite->_texture->FrameHeight < camera->GetYCam() ||
-		y > camera->GetYCam() + camera->GetHeight()
-
-		) // ra khỏi cam thì kết thúc
+ 
+	if (!camera->CHECK_OBJECT_IN_CAMERA(this)) // ra khỏi cam thì kết thúc
 	{
 		isFinish = true;
 		return;

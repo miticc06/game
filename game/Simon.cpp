@@ -54,6 +54,7 @@ Simon::Simon(Camera* camera)
 
 Simon::~Simon()
 {
+	SAFE_DELETE(_sprite_deadth);
 }
 
 void Simon::GetBoundingBox(float & left, float & top, float & right, float & bottom)
@@ -360,9 +361,6 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	 
 
-
-
-		
 	if (isOnStair == false)
 	{
 		if (isAutoGoX == false)
@@ -371,13 +369,9 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			x += dx;
 	}
 	 
-
-
-
 	if (isOnStair == true)
 		CollisionIsOnStair(coObjects);
 		 
-
 	for (auto& objWeapon : mapWeapon)
 	{
 		if (objWeapon.second->GetFinish() == false) // vũ khi này chưa kết thúc thì update
