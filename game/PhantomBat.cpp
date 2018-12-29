@@ -10,7 +10,7 @@ PhantomBat::PhantomBat(Simon * simon, Camera *camera, vector <Weapon*> * listWea
 	this->camera = camera;
 
 	this->listWeaponOfEnemy = listWeaponOfEnemy;
-	weapon = new FireBall();
+	weapon = new FireBall(camera);
 	listWeaponOfEnemy->push_back(weapon);
 
 	ResetResource();

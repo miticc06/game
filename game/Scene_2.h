@@ -71,6 +71,9 @@
 #define CAMERA_BOUNDARY_BOSS_RIGHT (5648.0f - SCREEN_WIDTH)
 
 
+#define CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_X 3590.0f // Biên chia đôi vùng, bên trái thì Bat bay hướng -1, phải thì 1
+#define CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_Y 207.0f // Biên chia đôi vùng, trên thì bay hướng 1, dưới thì -1
+
 #pragma region define FISHMEN
 
 #define FISHMEN_ZONE_1_LEFT 3065.0f
@@ -167,8 +170,8 @@ private:
 	/*Xử lí liên quan tạo Fishmen*/
 	bool isAllowCreateFishmen;
 	int CountEnemyFishmen;
-	DWORD TimeCreateFishmen;
-	DWORD TimeWaitCreateFishmen;
+	DWORD TimeCreateFishmen; // thời điểm đã tạo fishmen
+	DWORD TimeWaitCreateFishmen; // thời gian cần chờ để tạo fishmen
 
 	/* Xử lí liên quan Clear State 3 */
 	bool isAllowProcessClearState3;

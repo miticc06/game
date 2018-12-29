@@ -852,9 +852,7 @@ void Scene_2::Update(DWORD dt)
 	simon->Update(dt, &listObj);
 
 	if (camera->AllowFollowSimon())
-	{
 		camera->SetPosition(simon->GetX() - SCREEN_WIDTH / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
-	}
 
 	camera->Update(dt);
 	 
@@ -1051,7 +1049,10 @@ void Scene_2::Update(DWORD dt)
 		if (now - TimeCreateBat >= TimeWaitCreateBat) // đủ thời gian chờ
 		{
 			TimeCreateBat = now; // đặt lại thời gian đã tạo bat
-			listEnemy.push_back(new Bat(camera->GetXCam() + camera->GetWidth() - 10, simon->GetY() + 40, -1));
+			if (simon->GetX() < CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_X || (simon->GetX()> CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_X && simon->GetY()> CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_Y))
+				listEnemy.push_back(new Bat(camera->GetXCam() + camera->GetWidth() - 10, simon->GetY() + 40, -1));
+			else
+				listEnemy.push_back(new Bat(camera->GetXCam() - 10, simon->GetY() + 40, 1));
 
 			TimeWaitCreateBat = 4000 + (rand() % 3000);
 		}
@@ -1059,8 +1060,7 @@ void Scene_2::Update(DWORD dt)
 #pragma endregion
 	 
 #pragma region Create Fishmen
-
-
+	 
 
 	if (isAllowCreateFishmen && CountEnemyFishmen < 2)
 	{
@@ -1113,7 +1113,7 @@ void Scene_2::Update(DWORD dt)
 
 			
 			float vty = 805;
-			listEnemy.push_back(new Fishmen(vtx, vty, directionFishmen, simon, &listWeaponOfEnemy));
+			listEnemy.push_back(new Fishmen(vtx, vty, directionFishmen, simon, &listWeaponOfEnemy, camera));
 			CountEnemyFishmen++;
 
 			STEAM_ADD_EFFECT(listEffect, vtx, vty);

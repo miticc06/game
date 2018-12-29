@@ -1,7 +1,7 @@
 ﻿#include "Fishmen.h"
 
  
-Fishmen::Fishmen(float X, float Y, int Direction, Simon* simon, vector<Weapon*> *listWeaponOfEnemy)
+Fishmen::Fishmen(float X, float Y, int Direction, Simon* simon, vector<Weapon*> *listWeaponOfEnemy, Camera * camera)
 {
 	_texture = TextureManager::GetInstance()->GetTexture(eType::FISHMEN);
 	_sprite = new GSprite(_texture, 200);
@@ -25,6 +25,7 @@ Fishmen::Fishmen(float X, float Y, int Direction, Simon* simon, vector<Weapon*> 
 
 	this->simon = simon;
 	this->listWeaponOfEnemy = listWeaponOfEnemy;
+	this->camera = camera;
 }
 
 Fishmen::~Fishmen()
@@ -185,7 +186,7 @@ void Fishmen::Attack()
 
 	if (weapon == NULL)
 	{
-		weapon = new FireBall();
+		weapon = new FireBall(camera);
 		listWeaponOfEnemy->push_back(weapon);
 	}
 

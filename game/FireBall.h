@@ -8,8 +8,11 @@
 class FireBall :
 	public Weapon
 {
+private :
+	Camera *camera;
+
 public:
-	FireBall();
+	FireBall(Camera *camera);
 	virtual ~FireBall();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);

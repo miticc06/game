@@ -41,9 +41,10 @@ private:
 	/* Lưu thành phần ngoài phục vụ xử lí */
 	Simon* simon;
 	vector<Weapon*> *listWeaponOfEnemy;
+	Camera * camera;
 
 public:
-	Fishmen(float X, float Y, int Direction, Simon* simon, vector<Weapon*> *listWeaponOfEnemy);
+	Fishmen(float X, float Y, int Direction, Simon* simon, vector<Weapon*> *listWeaponOfEnemy, Camera * camera);
 	virtual ~Fishmen();
 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
