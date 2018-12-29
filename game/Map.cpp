@@ -16,8 +16,7 @@ Map::~Map()
 void Map::LoadMap(eType type)
 {
 	switch (type)
-	{
-	 
+	{ 
 	case eType::MAP1:
 		ReadMapTXT("Resources/map/1.txt");
 		break; 
@@ -28,16 +27,11 @@ void Map::LoadMap(eType type)
 		DebugOut(L"[MAP] Load map that bai!");
 		return;
 		break;
-	}
+	}	
 
 	_texture = TextureManager::GetInstance()->GetTexture(type);
 	_sprite = new GSprite(_texture, 100);
-	 
- 	
-	
-	ScreenColumn = SCREEN_WIDTH / _texture->FrameWidth;
-	ScreenRow = SCREEN_HEIGHT / _texture->FrameHeight;
-
+	   
 }
 
 void Map::ReadMapTXT(char * filename)
@@ -46,30 +40,29 @@ void Map::ReadMapTXT(char * filename)
 	fileIn.open(filename, ios::in);
 	if (fileIn)
 	{
-		fileIn >> RowMatrix >> ColumnMatrix >> ColTile >> RowTile >> CountTileFrame >> HeightBoard;
+		fileIn >> RowMatrix >> ColumnMatrix >> NumColumnTile >> NumRowTile >> TotalTiles >> HeightBoard;
  		for (int i = 0; i < RowMatrix; i++)
 			for (int j = 0; j < ColumnMatrix; j++)
 				fileIn >> TileMap[i][j]; 
 		fileIn.close(); 
+	} 
+
+
+	/*ofstream fileOut;
+	int x;
+	fileOut.open("C:\\Users\\MITICC06\\Desktop\\chuyendoi.txt", ios::out);
+	for (int i = 0; i < RowMatrix; i++)
+	{
+		for (int j = 0; j < ColumnMatrix; j++)
+		{
+			fileOut << TileMap[i][j] + 1 << ",";
+
+		}
+		fileOut << endl;
+
 	}
 
- 
-
-	//ofstream fileOut;
-	//int x;
-	//fileOut.open("C:\\Users\\MITICC06\\Desktop\\map2\\chuyendoi.txt", ios::out);
-	//for (int i = 0; i < RowMatrix; i++)
-	//{
-	//	for (int j = 0; j < ColumnMatrix; j++)
-	//	{
-	//		fileOut << TileMap[i][j] + 1 << ",";
-
-	//	}
-	//	fileOut << endl;
-
-	//}
-
-	//fileOut.close();
+	fileOut.close();*/
 
 
 }
@@ -82,19 +75,15 @@ void Map::DrawMap(Camera *camera)
 	float x = -(float)((int)(camera->GetXCam()) % _texture->FrameHeight);
 	float y = -(float)((int)(camera->GetYCam()) % _texture->FrameHeight);
 
-	for (int i = 0; i < ScreenRow+1; i++)
-	{ 
-		{
-			for (int j = 0; j < ScreenColumn +1; j++) 
+	for (int i = 0; i < SCREEN_HEIGHT / _texture->FrameHeight + 1; i++)
+			for (int j = 0; j < SCREEN_WIDTH / _texture->FrameWidth +1; j++)
 			{
 				if (!(row + i < 0 || row + i>RowMatrix || j + column < 0 || j + column > ColumnMatrix))
  				{
 					_sprite->SelectFrame(TileMap[row + i][column + j]);
 					_sprite->Draw(x + _texture->FrameWidth*j, y + _texture->FrameHeight*i + HeightBoard);
  				}
-			}
-		}
- 	}
+			}  
  
 }
 

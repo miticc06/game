@@ -23,14 +23,14 @@ private:
 	bool isJumping;
 	bool isStart; // trạng thái bắt đầu
 	
-	float AutoGoX_Dx; // khoảng cách cần chạy
+	float AutoGoX_Distance; // khoảng cách cần chạy
 	bool isAutoGoX;
 	float AutoGoX_Backup_X;
 
 	Simon * simon;
 
 public:
-	Panther(float X, float Y, int Direction, float autoGoX_Dx, Simon * simon);
+	Panther(float X, float Y, int Direction, float autoGoX_Distance, Simon * simon);
 	virtual ~Panther();
 
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);

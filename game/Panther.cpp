@@ -2,7 +2,7 @@
 
 
 
-Panther::Panther(float X, float Y, int Direction, float autoGoX_Dx, Simon * simon)
+Panther::Panther(float X, float Y, int Direction, float autoGoX_Distance, Simon * simon)
 {
 	type = eType::PANTHER;
 	Health = 1;
@@ -11,9 +11,9 @@ Panther::Panther(float X, float Y, int Direction, float autoGoX_Dx, Simon * simo
 	x = X;
 	y = Y;
 	AutoGoX_Backup_X = x;
-	AutoGoX_Dx = autoGoX_Dx;
+	AutoGoX_Distance = autoGoX_Distance;
 
-	_texture = TextureManager::GetInstance()->GetTexture(eType::PANTHER);
+	_texture = TextureManager::GetInstance()->GetTexture(type);
 	_sprite = new GSprite(_texture, 200);
 
 	isSitting = 1;
@@ -144,9 +144,9 @@ void Panther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (isAutoGoX == true)
 	{
-		if (abs(x - AutoGoX_Backup_X) >= AutoGoX_Dx)
+		if (abs(x - AutoGoX_Backup_X) >= AutoGoX_Distance)
 		{
-			x = x - (abs(x - AutoGoX_Backup_X) - AutoGoX_Dx);
+			x = x - (abs(x - AutoGoX_Backup_X) - AutoGoX_Distance);
 			isAutoGoX = false;
 			vx = 0;
 

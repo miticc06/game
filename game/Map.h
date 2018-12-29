@@ -1,37 +1,31 @@
 ﻿#ifndef __MAP_H__
 #define __MAP_H__
 
-
-
+#include "define.h"
 #include "GTexture.h"
 #include "GSprite.h"
-#include "define.h"
 
 #include "Camera.h"
 #include "TextureManager.h"
-
-
-#define TILE_FRAME_WIDTH 64
-#define TILE_FRAME_HEIGHT 64
-
+ 
 class Map
 {
 private:
 	GTexture *_texture;
 	GSprite *_sprite;
-
-	int ScreenColumn;
-	int ScreenRow;
-
-	int RowMatrix; // số lượng dòng của ma trận tilemap txt
-	int ColumnMatrix;// số lượng cột của ma trận tilemap txt
-
-	int ColTile; // số lượng cột tile trong texture
-	int RowTile;// số lượng dòng tile trong texture
-	int CountTileFrame; // tổng số lương tile trong texture 
-	int TileMap[500][500];
-	int HeightBoard;
 	 
+	int NumColumnTile;
+	int NumRowTile;
+
+	int RowMatrix; 
+	int ColumnMatrix;
+	 
+	int TotalTiles;
+
+
+	int HeightBoard; // chiều cao board
+	 
+	int TileMap[500][500];
 
 public:
 	Map();

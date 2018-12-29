@@ -109,6 +109,9 @@
 #define FISHMEN_ZONE_8_RIGHT 4095.0f
 #define FISHMEN_POS_8 4017.0f
 
+#define FISHMEN_POS_Y 805.0f
+
+
 #pragma endregion
 
 #pragma region define GHOST

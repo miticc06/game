@@ -712,8 +712,7 @@ void Scene_2::Update(DWORD dt)
 
 
 	if (!isAllowProcessClearState3)
-	{
-
+	{ 
 
 #pragma region Process_Gametime_OR_Health
 		if (_gameTime->GetTime() >= GAME_TIME_SCENE2 || simon->GetHealth() <= 0) // hết thời gian hoặc hết máu
@@ -1112,7 +1111,8 @@ void Scene_2::Update(DWORD dt)
 			int directionFishmen = vtx < simon->GetX() ? 1 : -1;
 
 			
-			float vty = 805;
+			float vty = FISHMEN_POS_Y;
+
 			listEnemy.push_back(new Fishmen(vtx, vty, directionFishmen, simon, &listWeaponOfEnemy, camera));
 			CountEnemyFishmen++;
 

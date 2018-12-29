@@ -149,8 +149,7 @@ void Camera::SetPositionBackup(float X, float Y)
 }
 
 void Camera::SetBoundaryBackup(float l, float r)
-{
-	int ix = 0;
+{ 
 	_boundaryLeftBackup = l;
 	_boundaryRightBackup = r;
 }
