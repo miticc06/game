@@ -166,7 +166,7 @@
     <ClInclude Include="Panther.h" />
     <ClInclude Include="PhantomBat.h" />
     <ClInclude Include="PotRoast.h" />
-    <ClInclude Include="Scene_2.h" />
+    <ClInclude Include="SceneGame.h" />
     <ClInclude Include="Scene_Intro.h" />
     <ClInclude Include="SmallHeart.h" />
     <ClInclude Include="Sound.h" />
@@ -181,7 +181,6 @@
     <ClInclude Include="MorningStar.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Scene_1.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="StairBottom.h" />
     <ClInclude Include="StairTop.h" />
@@ -235,7 +234,7 @@
     <ClCompile Include="Panther.cpp" />
     <ClCompile Include="PhantomBat.cpp" />
     <ClCompile Include="PotRoast.cpp" />
-    <ClCompile Include="Scene_2.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="Scene_Intro.cpp" />
     <ClCompile Include="SmallHeart.cpp" />
     <ClCompile Include="Sound.cpp" />
@@ -251,7 +250,6 @@
     <ClCompile Include="MorningStar.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Scene_1.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="StairBottom.cpp" />
     <ClCompile Include="StairTop.cpp" />

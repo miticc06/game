@@ -58,9 +58,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Framework\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_1.cpp">
-      <Filter>Framework\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="GSprite.cpp">
       <Filter>Framework\Animation</Filter>
     </ClCompile>
@@ -102,9 +99,6 @@
     </ClCompile>
     <ClCompile Include="ObjectHidden.cpp">
       <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_2.cpp">
-      <Filter>Framework\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Candle.cpp">
       <Filter>Object\Ground</Filter>
@@ -205,6 +199,9 @@
     <ClCompile Include="Boomerang.cpp">
       <Filter>Object\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>Framework\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="define.h">
@@ -264,9 +261,6 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Framework\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_1.h">
-      <Filter>Framework\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="GSprite.h">
       <Filter>Framework\Animation</Filter>
     </ClInclude>
@@ -308,9 +302,6 @@
     </ClInclude>
     <ClInclude Include="ObjectHidden.h">
       <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_2.h">
-      <Filter>Framework\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Candle.h">
       <Filter>Object\Ground</Filter>
@@ -407,6 +398,9 @@
     </ClInclude>
     <ClInclude Include="Boomerang.h">
       <Filter>Object\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame.h">
+      <Filter>Framework\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -51,6 +51,12 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (GetHealth() <= 0)
 		return;
 
+	//DebugOut(L"\n Trang thai trc x = %d", StatusProcessing);
+
+
+	
+
+	
 	switch (StatusProcessing)
 	{
 	case PHANTOMBAT_PROCESS_SLEEP:
@@ -116,27 +122,17 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	case PHANTOMBAT_PROCESS_CURVES:
 	{  
-		if (abs(x - xBefore) >= abs(xTarget-xBefore) || x <camera->GetXCam() || x+GetWidth()>camera->GetXCam()+ camera->GetWidth()) // đi xong hoặc chạm biên trái phải màn hình thì dừng
+		if (abs(x - xBefore) >= abs(xTarget-xBefore)) // đi xong thid đi thẳng
 		{
 			vx = 0;
 			vy = 0;
 			isUseBezierCurves = false;
-
-			/*vượt quá camera thì đẩy lại vào cam*/
-			if (x < camera->GetXCam())
-				x += 1.0f;
-			
-			if (x + GetWidth() > camera->GetXCam() + camera->GetWidth())
-			{
-				x -= 1.0f;
-			}
-			/*vượt quá camera thì đẩy lại vào cam*/
-			 
-
+ 
 			StartStaight();
 
 			break;
 		}
+
 
 		float perc = (x - xBefore) / (xTarget - xBefore); // sử dụng phần trăm đã đi được tương ứng t của Bézier curve
 		 
@@ -154,21 +150,10 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	case PHANTOMBAT_PROCESS_STRAIGHT_1:
 	{
 		if (abs(x - xBefore) >= abs(xTarget - xBefore) || 
-			abs(y - yBefore) >= abs(yTarget - yBefore) ||
-			x <camera->GetXCam() || 
-			x + GetWidth()>camera->GetXCam() + camera->GetWidth()) // đi xong hoặc chạm biên trái phải màn hình thì dừng
+			abs(y - yBefore) >= abs(yTarget - yBefore)) // đi xong thì đi thẳng theo hướng random
 		{
 			vx = vy = 0;
-			/*vượt quá camera thì đẩy lại vào cam*/
-			if (x < camera->GetXCam())
-				x += 1.0f;
-
-			if (x + GetWidth() > camera->GetXCam() + camera->GetWidth())
-			{
-				x -= 1.0f;
-			}
-			/*vượt quá camera thì đẩy lại vào cam*/
-
+			  
 			StartStaight();
 
 		}
@@ -180,20 +165,11 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (!isWaiting)
 		{
 			if (abs(x - xBefore) >= abs(xTarget - xBefore) ||
-				abs(y - yBefore) >= abs(yTarget - yBefore) ||
-				x <camera->GetXCam() ||
-				x + GetWidth()>camera->GetXCam() + camera->GetWidth()) // đi xong hoặc chạm biên trái phải màn hình thì dừng
+				abs(y - yBefore) >= abs(yTarget - yBefore)) // đi xongthì dừng
 			{
 				vx = vy = 0;
-				/*vượt quá camera thì đẩy lại vào cam*/
-				if (x < camera->GetXCam())
-					x += 1.0f;
+			 
 
-				if (x + GetWidth() > camera->GetXCam() + camera->GetWidth())
-				{
-					x -= 1.0f;
-				}
-				/*vượt quá camera thì đẩy lại vào cam*/
 				isWaiting = true; // bật trạng thái chờ
 				TimeWaited = 0; // reset lại time đã chờ
 			}
@@ -205,14 +181,14 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				isWaiting = false; // ngừng chờ
 
-				int random = rand() % 2;
+				int random = rand() % 3;
 				switch (random)
 				{
-				case 0: //25 %
+				case 0: //33 %
 					StartAttack();
 					break;
 
-				default: // 75%
+				default: // 66%
 					StartCurves();
 
 					break;
@@ -251,10 +227,83 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 //	DebugOut(L"simon - boss = %f\n", sqrt((simon->GetX() - x)*(simon->GetX() - x) + (simon->GetY() - y)*(simon->GetY() - y)));
 
 
+	
+
+	
+	  
+
 	GameObject::Update(dt);
 	x += dx;
 	y += dy;
-	  
+
+
+	DebugOut(L"\n xCam = %f , xcam-r = %f , x = %f , y = %f \n", camera->GetXCam(), camera->GetXCam() + camera->GetWidth(), x, y);
+
+
+	if (x < camera->GetXCam()
+		|| camera->GetXCam()+camera->GetWidth() <x + GetWidth()
+		|| y < camera->GetYCam()
+		|| camera->GetYCam() + camera->GetHeight() < y + GetHeight()
+		
+		) // ra khỏi cam thì xử lí hướng tiếp theo
+	{
+
+		if (camera->GetXCam() + camera->GetWidth() < x + GetWidth())
+		{
+			DebugOut(L"\n Vuot qua ben phai!!!!!!!\n");
+		}
+
+		if (x < camera->GetXCam())
+		{
+			DebugOut(L"\n Vuot qua ben trai!!\n");
+		}
+		if (y < camera->GetYCam())
+		{
+			DebugOut(L"\n Vuot tren!!\n");
+		}
+		if (camera->GetYCam() + camera->GetHeight() < y + GetHeight())
+		{
+			DebugOut(L"\n Vuot duoi!!\n");
+		}
+
+		switch (StatusProcessing)
+		{
+		case PHANTOMBAT_PROCESS_CURVES:
+		{
+			isUseBezierCurves = false;
+			StartStaight();
+			break;
+		}
+
+		case PHANTOMBAT_PROCESS_STRAIGHT_1:
+		{
+			StartStaight();
+			break;
+		}
+
+		case PHANTOMBAT_PROCESS_STRAIGHT_2:
+		{
+			int random = rand() % 3;
+			switch (random)
+			{
+			case 0: //33 %
+				StartAttack();
+				break;
+
+			default: // 66%
+				StartCurves();
+
+				break;
+			}
+
+			break;
+		}
+		 
+		}
+
+	}
+
+
 	yLastFrame = y;// lưu lại y frame hiện tại
 }
 
@@ -370,7 +419,7 @@ void PhantomBat::ProcessSmart()
 		}
 	}
 
-	if (rand() % 5 == 0) //25%
+	if (rand() % 5 == 0) //20%
 	{
 		if (Health <= 10 && simon->isAttacking)
 		{

@@ -7,48 +7,13 @@ Simon::Simon(Camera* camera)
 	_sprite = new GSprite(_texture, 250);
 	_sprite_deadth = new GSprite(TextureManager::GetInstance()->GetTexture(eType::SIMON_DEADTH), 250);
 	type = eType::SIMON;
-
-
-	isWalking = 0;
-	isJumping = 0;
-	isSitting = 0;
-	isAttacking = 0;
-	isProcessingOnStair = 0;// ko phải đang xử lí
-	isOnStair = 0;
-
-	Health = SIMON_DEFAULT_HEALTH; // simon dính 16 phát là chết
-	Lives = 3; // có 5 mạng sống
-	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
-	score = 0;
-	
-
-
-	isAttacking = 0;
-	isJumping = 0;
- 	isSitting = 0;
-	isWalking = 0;
-
-	isAutoGoX = 0;
-	isHurting = 0;
-
-	vx = 0;
-	vy = 0; 
-	isProcessingOnStair = 0;
-	DoCaoDiDuoc = 0;
-	isFreeze = 0;
-	TimeFreeze = 0;
-	direction = 1;
-
 	 
-	isDeadth = false;
 
 	this->camera = camera;
 	this->sound = Sound::GetInstance();
 	mapWeapon[eType::MORNINGSTAR] = new MorningStar();
-	TypeWeaponCollect = eType::NON_WEAPON_COLLECT;
-	
-	isUseDoubleShot = false;
-	
+	 
+	Init();
 }
 
 
@@ -897,7 +862,7 @@ void Simon::Attack(eType typeWeapon)
 
 	if (mapWeapon[typeWeapon]->GetFinish()) // vũ khí đã kết thúc thì mới đc tấn công tiếp
 	{
-		if (isUseDoubleShot && typeWeapon != eType::MORNINGSTAR && mapWeapon.find(eType::WEAPON_DOUBLE_SHOT) != mapWeapon.end() && mapWeapon[eType::WEAPON_DOUBLE_SHOT]->GetFinish() == false) // Double shot sub weapon đã tạo mà lại chưa kết thúc thì thoát
+		if (isUseDoubleShot && typeWeapon != eType::MORNINGSTAR && IsUsingWeapon(eType::WEAPON_DOUBLE_SHOT)) // Double shot, sub weapon , và vũ khí phụ còn hoạt động thì bỏ qua
 			return;
 
 		isAttacking = true; // set trang thái tấn công
@@ -914,6 +879,7 @@ void Simon::Attack(eType typeWeapon)
 			if (GetTickCount() - mapWeapon[typeWeapon]->GetLastTimeAttack() >= 300) // sau 200 ms thì mới được dùng Double Shot
 			{
 				bool isMustRecreateDoubleShot = false; // ban đầu k cần tạo lại
+
 
 				if (mapWeapon.find(eType::WEAPON_DOUBLE_SHOT) == mapWeapon.end()) // chưa tạo Double shot
 				{
@@ -976,7 +942,6 @@ void Simon::Attack(eType typeWeapon)
 				}
 
 
-
 				isAttacking = true; // set trang thái tấn công
 				_sprite->SelectFrame(0);
 				_sprite->ResetTime();
@@ -984,7 +949,6 @@ void Simon::Attack(eType typeWeapon)
 
 				mapWeapon[eType::WEAPON_DOUBLE_SHOT]->Create(this->x, this->y, this->direction);
 				isAllowSubHeartCollect = true;
-
 
 			}
 
@@ -1125,47 +1089,6 @@ void Simon::RestoreBackupAutoGoX()
 	// đi xong thì cho simon đứng yên
 }
  
-bool Simon::LoseLife()
-{
-	if (Lives - 1 < 0)
-		return false;
-
-	Health = SIMON_DEFAULT_HEALTH;
-	Lives = Lives - 1;
-	SetIsDeadth(false);
-	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
-   
-
-	isAttacking = 0;
-	isJumping = 0;
-	isFreeze = 0;
-	isSitting = 0;
-	isWalking = 0;
-
-	isAutoGoX = 0;
-	isHurting = 0;
-
-	vx = 0;
-	vy = 0;
-
-	isOnStair = 0;
-	isProcessingOnStair = 0;
-	DoCaoDiDuoc = 0;
-	isFreeze = 0;
-	TimeFreeze = 0;
-	direction = 1;
-
-
-	TypeWeaponCollect = eType::NON_WEAPON_COLLECT;
-
-	x = PositionBackup.x;
-	y = PositionBackup.y;
-
-	isUseDoubleShot = false;
-
-	return true;
-}
-
 void Simon::SetPositionBackup(float X, float Y)
 {
 	PositionBackup = D3DXVECTOR2(X, Y);
@@ -1264,6 +1187,16 @@ void Simon::ProcessWeaponCollect(eType t)
 	SetTypeWeaponCollect(t); // set kiểu vũ khí đang nhặt được
 }
 
+bool Simon::IsUsingWeapon(eType typeWeapon)
+{
+	if (this->mapWeapon.find(typeWeapon) != this->mapWeapon.end()) // có tồn tại
+	{
+		if (this->mapWeapon[typeWeapon]->GetFinish() == false) //chưa kết thúc
+			return true;
+	}
+	return false;
+}
+
 bool Simon::GetIsUseDoubleShot()
 {
 	return isUseDoubleShot;
@@ -1273,4 +1206,59 @@ void Simon::SetIsUseDoubleShot(bool b)
 {
 	isUseDoubleShot = b;
 }
+
+void Simon::Init()
+{
+	Health = SIMON_DEFAULT_HEALTH; // simon dính 16 phát là chết
+	Lives = SIMON_DEFAULT_LIVES;
+	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
+	score = SIMON_DEFAULT_SCORE;
+
+	Reset();
+}
+
+void Simon::Reset()
+{
+	isWalking = 0;
+	isSitting = 0;
+	isAttacking = 0;
+	isProcessingOnStair = 0;// ko phải đang xử lí
+	isOnStair = 0;
+	isJumping = 0;
+
+	isAutoGoX = 0;
+	isHurting = 0;
+
+	vx = 0;
+	vy = 0;
+	DoCaoDiDuoc = 0;
+	isFreeze = 0;
+	TimeFreeze = 0;
+	direction = 1;
+
+	isDeadth = false;
+	isUseDoubleShot = false;
+	TypeWeaponCollect = eType::NON_WEAPON_COLLECT;
+}
  
+
+bool Simon::LoseLife()
+{
+	if (Lives - 1 < 0)
+		return false;
+
+	Health = SIMON_DEFAULT_HEALTH;
+	Lives = Lives - 1;
+
+	HeartCollect = SIMON_DEFAULT_HEARTCOLLECT;
+	
+
+
+	Reset();
+
+
+	x = PositionBackup.x;
+	y = PositionBackup.y;
+
+	return true;
+}

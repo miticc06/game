@@ -9,12 +9,22 @@ Grid::~Grid()
 
 }
 
-void Grid::Readfile(char * str)
+void Grid::SetFile(char * str)
 {
+	filepath = str;
+}
+
+void Grid::ReloadGrid()
+{
+	for (int i=0; i< GRID_CELL_MAX_ROW; i++)
+		for (int j = 0; j < GRID_CELL_MAX_COLUMN; j++)
+			cells[i][j].clear();
+
+
 	int id, type, direction, w, h, model, n;
 	float x, y;
 
-	ifstream inp(str, ios::in);
+	ifstream inp(filepath, ios::in);
 	inp >> n;
 	for (int i = 0; i < n; i++)
 	{

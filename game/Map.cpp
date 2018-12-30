@@ -78,7 +78,7 @@ void Map::DrawMap(Camera *camera)
 	for (int i = 0; i < SCREEN_HEIGHT / _texture->FrameHeight + 1; i++)
 			for (int j = 0; j < SCREEN_WIDTH / _texture->FrameWidth +1; j++)
 			{
-				if (!(row + i < 0 || row + i>RowMatrix || j + column < 0 || j + column > ColumnMatrix))
+				if (!(row + i < 0 || row + i>=RowMatrix || j + column < 0 || j + column > ColumnMatrix))
  				{
 					_sprite->SelectFrame(TileMap[row + i][column + j]);
 					_sprite->Draw(x + _texture->FrameWidth*j, y + _texture->FrameHeight*i + HeightBoard);

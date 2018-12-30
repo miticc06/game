@@ -1,27 +1,20 @@
-﻿#include "Scene_2.h"
-
-
-
-Scene_2::Scene_2(Simon * _si, GameTime* _ga)
-{
-	simon = _si;
-	_gameTime = _ga;
-
+﻿#include "SceneGame.h"
+ 
+SceneGame::SceneGame()
+{ 
 	LoadResources();
 
 }
 
-Scene_2::~Scene_2()
+SceneGame::~SceneGame()
 {
 	SAFE_DELETE(TileMap);
 	SAFE_DELETE(board);
-	SAFE_DELETE(gridGame); 
+	SAFE_DELETE(gridGame);
 }
 
-void Scene_2::KeyState(BYTE * state)
-{
- 
-
+void SceneGame::KeyState(BYTE * state)
+{ 
 
 	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
 	{
@@ -39,142 +32,145 @@ void Scene_2::KeyState(BYTE * state)
 	if (camera->GetIsAutoGoX()) // camera đang chế độ tự đi thì ko xét phím
 		return;
 
-	if (simon->isJumping && simon->isWalking)
-	{
-	/*	if (simon->isCollisionAxisYWithBrick)
-		{
-			DebugOut(L"simon->isJumping && simon->isWalking\n");
-			simon->SetVx(0);
-		}*/
-		return;
-	}
-		
-  
+
+
+
 	if (simon->isHurting)
 		return;
 
-	if (!simon->isJumping)
-	{ 
-		if (Game::GetInstance()->IsKeyDown(DIK_UP) && simon->isAttacking == false)
+	if (Game::GetInstance()->IsKeyDown(DIK_UP) && Game::GetInstance()->IsKeyDown(DIK_A) && simon->isProcessingOnStair==0 && !simon->isAttacking)
+	{
+		simon->Attack(simon->GetTypeWeaponCollect()); // attack với vũ khí phụ đang nhặt
+	}
+	else
+		if (!simon->isJumping)
 		{
-			if (!simon->isOnStair) // chưa trên thang
+			if (Game::GetInstance()->IsKeyDown(DIK_UP) && simon->isAttacking == false)
 			{
-				for (UINT i = 0; i < listObj.size(); i++)
-					if (listObj[i]->GetType() == eType::STAIR_BOTTOM)
-					{
-						if (simon->isCollisionAxisYWithBrick && simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với trục y brick và STAIR BOTOM
-						{
-							GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
-							simon->directionStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon
-							simon->directionY = -1;// hướng đi lên
-							simon->SetDirection(simon->directionStair);// hướng của simon khi đi lên là hướng của cầu thang
-
-							simon->isOnStair = true; // set trạng thái đang trên cầu thang
-							simon->DoCaoDiDuoc = 0;
-
-							if (simon->GetX() < gameobj->GetX())
-							{
-								simon->SetAutoGoX(1, gameobj->GetDirection(), gameobj->GetX() - simon->GetX(), SIMON_WALKING_SPEED);
-								// hướng sau khi autogo phải là hướng của cầu thang:  gameobj->GetDirection()
-							}
-							else
-								simon->SetAutoGoX(-1, gameobj->GetDirection(), simon->GetX() - gameobj->GetX(), SIMON_WALKING_SPEED);
- 						//	DebugOut(L"bat dau len cau thang!\n"); 
-							return;
-						}
-					}
-			}
-			else // nếu đã trên cầu thang
-			{
-				//	DebugOut(L"Da o tren cau thang!\n");
-
-				if (simon->isProcessingOnStair == 0 || simon->isProcessingOnStair == 3) // kết thúc xử lí trước đó
+				if (!simon->isOnStair) // chưa trên thang
 				{
-					simon->isWalking = true;
-					simon->isProcessingOnStair = 1;
-					simon->directionY = -1;// hướng đi lên
-					simon->SetDirection(simon->directionStair);// hướng của simon khi đi lên là hướng của cầu thang
-					simon->SetSpeed(simon->GetDirection()* SIMON_SPEED_ONSTAIR, -1 * SIMON_SPEED_ONSTAIR);
-
-					float vvx, vvy;
-					simon->GetSpeed(vvx, vvy);
-					//DebugOut(L"vy = %f\n", vvy);
-				}
-
-
-			}
-		}
-		else
-		{
-			if (Game::GetInstance()->IsKeyDown(DIK_DOWN) && simon->isAttacking == false) // ngược lại nếu nhấn nút xuống
-			{
-				if (!simon->isOnStair) // chưa trên cầu thang
-				{
-					int CountCollisionTop = 0;
 					for (UINT i = 0; i < listObj.size(); i++)
-						if (listObj[i]->GetType() == eType::STAIR_TOP)
+						if (listObj[i]->GetType() == eType::STAIR_BOTTOM)
 						{
-							if (simon->isCollitionObjectWithObject(listObj[i]) 
-								//&& simon->isCheckCollisionAxisY_WithBrickSweptAABB(&listObj)
-								&&
-								simon->isCollisionAxisYWithBrick
-								) // nếu va chạm với STAIR TOP
+							if (simon->isCollisionAxisYWithBrick && simon->isCollitionObjectWithObject(listObj[i])) // nếu va chạm với trục y brick và STAIR BOTOM
 							{
 								GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
 								simon->directionStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon
-								simon->directionY = 1;// hướng đi xuống
-								simon->SetDirection(simon->directionStair);// hướng của simon khi đi xuống là hướng của cầu thang
+								simon->directionY = -1;// hướng đi lên
+								simon->SetDirection(simon->directionStair);// hướng của simon khi đi lên là hướng của cầu thang
 
 								simon->isOnStair = true; // set trạng thái đang trên cầu thang
 								simon->DoCaoDiDuoc = 0;
 
-
 								if (simon->GetX() < gameobj->GetX())
 								{
-									simon->SetAutoGoX(1, -gameobj->GetDirection(), gameobj->GetX() - simon->GetX(), SIMON_WALKING_SPEED);
+									simon->SetAutoGoX(1, gameobj->GetDirection(), gameobj->GetX() - simon->GetX(), SIMON_WALKING_SPEED);
 									// hướng sau khi autogo phải là hướng của cầu thang:  gameobj->GetDirection()
 								}
 								else
-									simon->SetAutoGoX(-1, -gameobj->GetDirection(), simon->GetX() - gameobj->GetX(), SIMON_WALKING_SPEED);
-
-								 
-
-								CountCollisionTop++;
+									simon->SetAutoGoX(-1, gameobj->GetDirection(), simon->GetX() - gameobj->GetX(), SIMON_WALKING_SPEED);
+								//	DebugOut(L"bat dau len cau thang!\n"); 
 								return;
 							}
 						}
-
-					if (CountCollisionTop == 0) // ko đụng stair top, tức là ngồi bt
-					{
-						simon->Sit();
-						if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
-							simon->Right();
-
-						if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
-							simon->Left();
-						return;
-					}
-
 				}
-				else // đã ở trên cầu thang
+				else // nếu đã trên cầu thang
 				{
+					//	DebugOut(L"Da o tren cau thang!\n");
+
 					if (simon->isProcessingOnStair == 0 || simon->isProcessingOnStair == 3) // kết thúc xử lí trước đó
 					{
 						simon->isWalking = true;
 						simon->isProcessingOnStair = 1;
-						simon->directionY = 1;// hướng đi xuống
-						simon->SetDirection(simon->directionStair*-1);// hướng của simon khi đi xuóng là ngược của cầu thang
-						simon->SetSpeed(simon->GetDirection()* SIMON_SPEED_ONSTAIR, SIMON_SPEED_ONSTAIR);
+						simon->directionY = -1;// hướng đi lên
+						simon->SetDirection(simon->directionStair);// hướng của simon khi đi lên là hướng của cầu thang
+						simon->SetSpeed(simon->GetDirection()* SIMON_SPEED_ONSTAIR, -1 * SIMON_SPEED_ONSTAIR);
+
+						float vvx, vvy;
+						simon->GetSpeed(vvx, vvy);
+						//DebugOut(L"vy = %f\n", vvy);
 					}
+
 
 				}
 			}
 			else
 			{
-				simon->Stop();
+				if (Game::GetInstance()->IsKeyDown(DIK_DOWN) && simon->isAttacking == false) // ngược lại nếu nhấn nút xuống
+				{
+					if (!simon->isOnStair) // chưa trên cầu thang
+					{
+						int CountCollisionTop = 0;
+						for (UINT i = 0; i < listObj.size(); i++)
+							if (listObj[i]->GetType() == eType::STAIR_TOP)
+							{
+								if (simon->isCollitionObjectWithObject(listObj[i])
+									//&& simon->isCheckCollisionAxisY_WithBrickSweptAABB(&listObj)
+									&&
+									simon->isCollisionAxisYWithBrick
+									) // nếu va chạm với STAIR TOP
+								{
+									GameObject* gameobj = dynamic_cast<GameObject*>(listObj[i]);
+									simon->directionStair = gameobj->GetDirection(); // lưu hướng của cầu thang đang đi vào simon
+									simon->directionY = 1;// hướng đi xuống
+									simon->SetDirection(simon->directionStair);// hướng của simon khi đi xuống là hướng của cầu thang
+
+									simon->isOnStair = true; // set trạng thái đang trên cầu thang
+									simon->DoCaoDiDuoc = 0;
+
+
+									if (simon->GetX() < gameobj->GetX())
+									{
+										simon->SetAutoGoX(1, -gameobj->GetDirection(), gameobj->GetX() - simon->GetX(), SIMON_WALKING_SPEED);
+										// hướng sau khi autogo phải là hướng của cầu thang:  gameobj->GetDirection()
+									}
+									else
+										simon->SetAutoGoX(-1, -gameobj->GetDirection(), simon->GetX() - gameobj->GetX(), SIMON_WALKING_SPEED);
+
+
+
+									CountCollisionTop++;
+									return;
+								}
+							}
+
+						if (CountCollisionTop == 0) // ko đụng stair top, tức là ngồi bt
+						{
+							simon->Sit();
+							if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
+								simon->Right();
+
+							if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
+								simon->Left();
+							return;
+						}
+
+					}
+					else // đã ở trên cầu thang
+					{
+						if (simon->isProcessingOnStair == 0 || simon->isProcessingOnStair == 3) // kết thúc xử lí trước đó
+						{
+							simon->isWalking = true;
+							simon->isProcessingOnStair = 1;
+							simon->directionY = 1;// hướng đi xuống
+							simon->SetDirection(simon->directionStair*-1);// hướng của simon khi đi xuóng là ngược của cầu thang
+							simon->SetSpeed(simon->GetDirection()* SIMON_SPEED_ONSTAIR, SIMON_SPEED_ONSTAIR);
+						}
+
+					}
+				}
+				else
+				{
+					simon->Stop();
+				}
 			}
+
 		}
 
+
+	if (simon->isJumping && simon->isWalking)
+	{
+		return;
 	}
 
 
@@ -193,29 +189,24 @@ void Scene_2::KeyState(BYTE * state)
 
 	if (Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 	{ 
-		//DebugOut(L"DIK_RIGHT\n");
-
 		simon->Right();
 		simon->Go();
 	}
 	else
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT))
-		{  
+		{
 			simon->Left();
-			simon->Go();
-		//	DebugOut(L"DIK_LEFT\n");
-
+			simon->Go();  
 		}
 		else
-		{
-		//	DebugOut(L"Stop\n");
+		{ 
 			simon->Stop();
 		}
 
 
 }
 
-void Scene_2::OnKeyDown(int KeyCode)
+void SceneGame::OnKeyDown(int KeyCode)
 {
 	if (KeyCode == DIK_R) // render bbox
 	{
@@ -248,7 +239,8 @@ void Scene_2::OnKeyDown(int KeyCode)
 		{
 			if (GameOverSelect == GAMEOVER_SELECT_CONTINUE)
 			{
-				SceneManager::GetInstance()->SetScene(new Scene_1());
+				InitGame(); 
+				isGameOver = false; 
 			}
 			else
 				if (GameOverSelect == GAMEOVER_SELECT_END)
@@ -257,8 +249,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 				}
 			break;
 		}
-		}  
-		 
+		}
 
 		return;
 	}
@@ -266,55 +257,18 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (simon->GetIsDeadth() || isWaitResetGame)
 	{
 		return;
-	} 
-	
-
-//	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-
+	}
+ 
 	if (KeyCode == DIK_ESCAPE)
 		DestroyWindow(Game::GetInstance()->GetWindowHandle()); // thoát
 
-	if (KeyCode == DIK_Q)
-		simon->SetPosition(SIMON_POSITION_DEFAULT);
-
-
-	if (KeyCode == DIK_N && boss != NULL)
-		boss->SetHealth(1);
-
-
-
+#pragma region Keydown Debug
+	 
 	if (KeyCode == DIK_1) // vị trí simon
 	{
 		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->GetX(), simon->GetY());
 	}
-
-	if (KeyCode == DIK_T)
-	{
-		listItem.push_back(new ItemThrowingAxe(simon->GetX(), simon->GetY()));
-	}
-
-	if (KeyCode == DIK_A) // change trục y file txt
-	{  
-/*
-		ifstream inp;
-		ofstream out;
-
-		inp.open("C:\\Users\\MITICC06\\Desktop\\in.txt", ios::in);
-		out.open("C:\\Users\\MITICC06\\Desktop\\out.txt", ios::out);
-
-		int id, type, direction, x, y, w, h, model;
-
-		while (inp >> id >> type >> direction >> x >> y >> w >> h >> model)
-		{
-			out << id <<" "<< type << " " << direction << " " << x << " " << y +8 << " " << w << " " << h << " " << model << endl;
-		}
-		inp.close(); 
-		out.close();
-*/
-
-	}
-
-
+	 
 	if (KeyCode == DIK_2) // lấy tọa độ world của chuột 
 	{
 		POINT p;
@@ -338,7 +292,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 	{
 		DebugOut(L"[SET POSITION SIMON] x = .... \n");
 		simon->SetPosition(2787.0f, 0);
-	//	simon->isOnStair = false;
+		//	simon->isOnStair = false;
 	}
 
 	if (KeyCode == DIK_5)
@@ -379,7 +333,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
-	if (KeyCode == DIK_7) 
+	if (KeyCode == DIK_7)
 	{
 		DebugOut(L"[SET POSITION SIMON] x = .... \n");
 		simon->SetPosition(4000.0f, 500.0f);
@@ -400,29 +354,18 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 	if (KeyCode == DIK_0) // boss
-	{ 
+	{
 		simon->SetPosition(5328.0f, 240.0f);
 
 		camera->SetBoundary(CAMERA_BOUNDARY_BOSS_RIGHT, CAMERA_BOUNDARY_BOSS_RIGHT);
 
 		simon->Stop(); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
-		   
-		camera->SetPosition(camera->GetXCam(), 0); 
+
+		camera->SetPosition(camera->GetXCam(), 0);
 
 		boss = new PhantomBat(simon, camera, &listWeaponOfEnemy);
 	}
-
-	if (KeyCode == DIK_K) // test boss 
-	{
-		boss->StartCurves();
-	}
-
-
-	if (KeyCode == DIK_E) // set healsimon 2;
-	{
-		simon->SetHealth(2);
-	}
-
+ 
 
 	if (KeyCode == DIK_9) // đứng ngay cầu thang gần xuoosg hồ nước
 	{
@@ -444,7 +387,7 @@ void Scene_2::OnKeyDown(int KeyCode)
 	}
 
 
-	 
+
 
 	if (KeyCode == DIK_U)
 	{
@@ -457,32 +400,20 @@ void Scene_2::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_R)
 	{
 		DebugOut(L"[RESET GRID]");
-		SAFE_DELETE(gridGame);
-		gridGame = new Grid();
-		gridGame->Readfile("Resources/map/Obj_2.txt"); // load lai
+		gridGame->ReloadGrid();
 	}
-	   
-	if (KeyCode == DIK_G) // add ghost 
-	{
-		listEnemy.push_back(new Ghost(200, 200, 1));
-	} 
-
-	if (KeyCode == DIK_B) 
-	{
-		listItem.push_back(new ItemBoomerang(camera->GetXCam() + 100, 100));
-		simon->SetIsUseDoubleShot(true);
-	}
-
-	 
-
+ 
+  
 	if (KeyCode == DIK_F) // create hollywater
 	{
 		simon->SetHealth(SIMON_DEFAULT_HEALTH);
 		simon->SetLives(99);
 		simon->SetHeartCollect(99);
-		_gameTime->SetTime(0);
+		gameTime->SetTime(0);
 	}
 
+
+#pragma endregion
 
 	if (simon->GetIsAutoGoX() == true) // đang chế độ tự đi thì ko xét phím
 		return;
@@ -495,50 +426,43 @@ void Scene_2::OnKeyDown(int KeyCode)
 		return;
 
 
-	if (KeyCode == DIK_A && Game::GetInstance()->IsKeyDown(DIK_UP) && simon->isProcessingOnStair == 0)
-	{
-		simon->Attack(simon->GetTypeWeaponCollect()); // attack với vũ khí phụ đang nhặt
-	}
-	else
+	//if (KeyCode == DIK_A && Game::GetInstance()->IsKeyDown(DIK_UP) && simon->isProcessingOnStair == 0)
+	//{
+	//	simon->Attack(simon->GetTypeWeaponCollect()); // attack với vũ khí phụ đang nhặt
+	//}
+	//else
+
+	if (!(Game::GetInstance()->IsKeyDown(DIK_UP) && Game::GetInstance()->IsKeyDown(DIK_A) /*&& simon->isProcessingOnStair == 0*/ && simon->isAttacking==true))
 		if (KeyCode == DIK_A && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
 		{
 			simon->Attack(eType::MORNINGSTAR);
 		}
-
-	//if (KeyCode == DIK_X && simon->isProcessingOnStair == 0) // không phải đang xử lí việc đi trên thang thì đc đánh
-	//{ 
-	//	simon->Attack(eType::MORNINGSTAR);
-	//}
-	// 
-	//if (KeyCode == DIK_Z && simon->isProcessingOnStair == 0)
-	//{
-	//	simon->Attack(simon->GetTypeWeaponCollect()); // attack với vũ khí phụ đang nhặt
-	//}
 	 
+
 	if (simon->isJumping && simon->isWalking)
 	{
 		return;
 	}
-	 
 
-	if (KeyCode == DIK_SPACE && simon->isOnStair == false)
+
+	if (KeyCode == DIK_S && simon->isOnStair == false)
 	{
 		if (Game::GetInstance()->IsKeyDown(DIK_LEFT) || Game::GetInstance()->IsKeyDown(DIK_RIGHT))
 		{
-			simon->Stop(); 
-			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetDirection(),  - SIMON_VJUMP);
+			simon->Stop();
+			simon->SetSpeed(SIMON_WALKING_SPEED * simon->GetDirection(), -SIMON_VJUMP);
 			simon->isJumping = 1;
 			simon->isWalking = 1;
 		}
 		else
 		{
 			simon->Jump();
-		} 
+		}
 	}
 
 }
 
-void Scene_2::OnKeyUp(int KeyCode)
+void SceneGame::OnKeyUp(int KeyCode)
 {
 	if (simon->GetFreeze() == true) // Đang bóng băng thì không quan tâm phím
 	{
@@ -550,57 +474,46 @@ void Scene_2::OnKeyUp(int KeyCode)
 		return;
 	}
 
-	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 
-	switch (KeyCode)
-	{
-	case DIK_SPACE:
-		//simon->Sit();
-		break;
-	}
 }
- 
-void Scene_2::LoadResources()
+
+void SceneGame::LoadResources()
 {
-	TextureManager * _textureManager = TextureManager::GetInstance(); // Đã gọi load resource
+	TextureManager * _textureManager = TextureManager::GetInstance();
 	sound = Sound::GetInstance();
-	 
-	if (_gameTime == NULL)
-		_gameTime = new GameTime();
+
+	gameTime = new GameTime();
 
 	TileMap = new Map();
-	TileMap->LoadMap(eType::MAP2);
+	gridGame = new Grid();
 
-	camera = SceneManager::GetInstance()->GetCamera();
-	camera->SetPosition(0, 0);
-
-	camera->SetBoundary(0, CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT); // biên camera khi chưa qua cửa
-	camera->SetBoundaryBackup(0, CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT); // biên camera khi chưa qua cửa
-
-	if (simon == NULL)
-		simon = new Simon(camera);
-
-
+	camera = new Camera(SCREEN_WIDTH, SCREEN_HEIGHT);
+	simon = new Simon(camera);
 	board = new Board(BOARD_DEFAULT_POSITION_X, BOARD_DEFAULT_POSITION_Y);
 
-	simon->SetPosition(SIMON_POSITION_DEFAULT);
-	simon->SetPositionBackup(SIMON_POSITION_DEFAULT);
- 
-	
 	_spriteLagerHeart = new GSprite(TextureManager::GetInstance()->GetTexture(eType::LARGEHEART), 100);
-	
-	
-	StateCurrent = 1;
 	 
-	ResetResource();
-	 
+	InitGame();
 }
- 
-void Scene_2::ResetResource()
+
+void SceneGame::InitGame()
 {
-	SAFE_DELETE(gridGame);
-	gridGame = new Grid();
-	gridGame->Readfile("Resources/map/Obj_2.txt"); // đọc lại các object từ list
+	LoadMap(1);
+	simon->Init();
+
+	//ResetResource();
+	
+
+	gameTime->SetTime(0); // đếm lại từ 0
+	
+	ReplayMusicGame();
+
+
+}
+
+void SceneGame::ResetResource()
+{ 
+	gridGame->ReloadGrid(); // nạp lại lưới
 
 	listItem.clear();
 	listEffect.clear();
@@ -610,15 +523,7 @@ void Scene_2::ResetResource()
 	CountEnemyGhost = 0;
 	TimeCreateGhost = 0;
 	isWaitProcessCreateGhost = false; // lúc đầu thì không cần chờ
-	CountEnemyGhost = 0;
 
-	_gameTime->SetTime(0); // đếm lại từ 0
-
-
-	sound->StopAll();// tắt hết nhạc
-	 
-	sound->Play(eSound::musicState1, true); // mở lại nhạc nền
-	 
 	isAllowRenewPanther = true;
 	CountEnemyPanther = 0;
 
@@ -627,12 +532,10 @@ void Scene_2::ResetResource()
 	TimeWaitCreateFishmen = 0;
 	CountEnemyFishmen = 0;
 
-
 	TimeCreateBat = 0;
 	TimeWaitCreateBat = 0;
 	isAllowCreateBat = 0;
-
-	isStopWatch = 0;
+	 
 	camera->SetAllowFollowSimon(true);
 
 	isProcessingGoThroughTheDoor1 = false; // ban đầu chưa cần xử lí qua cửa
@@ -658,17 +561,17 @@ void Scene_2::ResetResource()
 	GameOverSelect = GAMEOVER_SELECT_CONTINUE;
 }
 
-void Scene_2::Update(DWORD dt)
-{ 
+void SceneGame::Update(DWORD dt)
+{
 	if (isGameOver)
 		return;
 
-	#pragma region process debug
+#pragma region process debug
 
 	if (isDebug_Untouchable == 1)
 		simon->StartUntouchable();
 
-	#pragma endregion
+#pragma endregion
 
 #pragma region xử lí vẽ màn đen trước khi bắt đầu game
 	if (isWaitResetGame)
@@ -694,58 +597,59 @@ void Scene_2::Update(DWORD dt)
 
 	ProcessClearState3(dt); // xử lí sau khi diệt xong boss
 	ProcessInvisibilityPotion(dt);
-	ProcessCross(dt); 
+	ProcessCross(dt);
 
 
 	if (!isAllowProcessClearState3)
-	{ 
+	{
 
 #pragma region Process_Gametime_OR_Health
-		if (_gameTime->GetTime() >= GAME_TIME_SCENE2 || simon->GetHealth() <= 0) // hết thời gian hoặc hết máu
+		if (gameTime->GetTime() >= GAME_TIME_MAX || simon->GetHealth() <= 0) // hết thời gian hoặc hết máu
 		{
 			if (simon->GetIsDeadth())
-			{ 
+			{
 				simon->TimeWaitedAfterDeath += dt;
 				if (simon->TimeWaitedAfterDeath >= 1500)
-				{
-					if (simon->GetLives() == 0)
-					{
-						isGameOver = true;
-					}
-					else
-					{
+				{ 
 						bool result = simon->LoseLife(); // đã khôi phục x,y
-						camera->RestorePosition(); // khôi phục vị trí camera;
-						camera->RestoreBoundary(); // khôi phục biên camera
 
 						if (result == true) // còn mạng để chơi tiếp, giảm mạng reset máu xong
 						{
+							camera->RestorePosition(); // khôi phục vị trí camera;
+							camera->RestoreBoundary(); // khôi phục biên camera
+
+							gameTime->SetTime(0);
+							ReplayMusicGame();
+
 							ResetResource(); // reset lại game
+						}
+						else
+						{
+							isGameOver = true;
 						} 
-					}
-					return;					
+					return;
 				}
 			}
 			else // chưa chết mà hết máu hoặc time thì set trạng thái isDeadth
-			{ 
- 				simon->SetDeadth(); 
+			{
+				simon->SetDeadth();
 			}
-			 
+
 		}
 		else
 		{
 			if (isAllowProcessClearState3 == false) // đang xử lí ClearState thì không đếm time
 			{
-				_gameTime->Update(dt);
+				gameTime->Update(dt);
 			}
 		}
 
 
 
 
-		if (GAME_TIME_SCENE2 - _gameTime->GetTime() <= 30) // đúng còn lại 30 giây thì bật sound loop
+		if (GAME_TIME_MAX - gameTime->GetTime() <= 30) // đúng còn lại 30 giây thì bật sound loop
 		{
-			if (_gameTime->CheckIsJustChanged() == true) // Kiểm tra _time vừa thay đổi thì mới play nhạc. Nếu chỉ kt <=30s thì cứ mỗi deltatime nó sẽ Play nhạc -> thừa, ko đều
+			if (gameTime->CheckIsJustChanged() == true) // Kiểm tra _time vừa thay đổi thì mới play nhạc. Nếu chỉ kt <=30s thì cứ mỗi deltatime nó sẽ Play nhạc -> thừa, ko đều
 			{
 				sound->Play(eSound::soundStopTimer);
 			}
@@ -768,7 +672,7 @@ void Scene_2::Update(DWORD dt)
 		}
 		else
 		{
-			if (camera->GetXCam()>= GATE1_POSITION_CAM_AFTER_GO)
+			if (camera->GetXCam() >= GATE1_POSITION_CAM_AFTER_GO)
 			{
 				camera->SetBoundary(GATE1_POSITION_CAM_AFTER_GO, camera->GetBoundaryRight());
 
@@ -782,16 +686,16 @@ void Scene_2::Update(DWORD dt)
 	}
 
 #pragma endregion
-	 
+
 #pragma region Process Gate 2
 
 	if (isProcessingGoThroughTheDoor2) // simon chạm cửa thì bắt đầu xử lí
 	{
 		if (isDoneSimonGoThroughTheDoor2 == false) // simon chưa hoàn thành việc qua cửa
 		{
-			if (camera->GetXCam() >= GATE2_POSITION_CAM_BEFORE_GO) 
+			if (camera->GetXCam() >= GATE2_POSITION_CAM_BEFORE_GO)
 			{
-				simon->SetAutoGoX(1, 1, abs( GATE2_POSITION_CAM_AFTER_GO + DISTANCE_AUTO_WALK_AFTER_GATE - simon->GetX()), SIMON_WALKING_SPEED); // bắt đầu cho simon di chuyển tự động đến vị trí tiếp theo
+				simon->SetAutoGoX(1, 1, abs(GATE2_POSITION_CAM_AFTER_GO + DISTANCE_AUTO_WALK_AFTER_GATE - simon->GetX()), SIMON_WALKING_SPEED); // bắt đầu cho simon di chuyển tự động đến vị trí tiếp theo
 			}
 		}
 		else
@@ -811,20 +715,20 @@ void Scene_2::Update(DWORD dt)
 
 #pragma endregion
 
-#pragma region Process_StopWatch
-	 
-	if (simon->mapWeapon.find(eType::STOPWATCH) != simon->mapWeapon.end()) // có tồn tại
-	{
-		if (simon->mapWeapon[eType::STOPWATCH]->GetFinish() == false) //stopwatch chưa kt
-		{
-			isStopWatch = true;
-		}
-		else
-			isStopWatch = false;
-	}
-	else
-		isStopWatch = false;
-#pragma endregion
+//#pragma region Process_StopWatch
+//
+//	if (simon->mapWeapon.find(eType::STOPWATCH) != simon->mapWeapon.end()) // có tồn tại
+//	{
+//		if (simon->mapWeapon[eType::STOPWATCH]->GetFinish() == false) //stopwatch chưa kt
+//		{
+//			isStopWatch = true;
+//		}
+//		else
+//			isStopWatch = false;
+//	}
+//	else
+//		isStopWatch = false;
+//#pragma endregion
 
 
 
@@ -833,74 +737,76 @@ void Scene_2::Update(DWORD dt)
 
 
 //	DebugOut(L"[GRID] size = %d\n", listObj.size());
-  
+
 	simon->Update(dt, &listObj);
 
 	if (camera->AllowFollowSimon())
 		camera->SetPosition(simon->GetX() - SCREEN_WIDTH / 2 + 30, camera->GetYCam()); // cho camera chạy theo simon
 
 	camera->Update(dt);
-	 
 
+
+	if (mapCurrent == 2)
+	{
 #pragma region Process_Region_Create_Enemy_Ghost
 
-//	DebugOut(L"now = %d - listenemy = %d\n", CountEnemyGhost, listEnemy.size());
-	DWORD now = GetTickCount();
+		//	DebugOut(L"now = %d - listenemy = %d\n", CountEnemyGhost, listEnemy.size());
+		DWORD now = GetTickCount();
 
 
 
-	if (isWaitProcessCreateGhost == false) // nếu không phải chờ xử lí thì vào xử lí
-	{
-#pragma region Vùng 1 & Vùng 2
-		if ((simon->GetX() >= -16.0f && simon->GetX() <= 825.0f) || (simon->GetX() > 2200 && simon->GetX() < 2775))
+		if (isWaitProcessCreateGhost == false) // nếu không phải chờ xử lí thì vào xử lí
 		{
-			if (now - TimeCreateGhost >= ThoiGianChoGiua2GhostDuocTao)
+#pragma region Vùng 1 & Vùng 2
+			if ((simon->GetX() >= -16.0f && simon->GetX() <= 825.0f) || (simon->GetX() > 2200 && simon->GetX() < 2775))
 			{
-				if (CountEnemyGhost < 3)
+				if (now - TimeCreateGhost >= ThoiGianChoGiua2GhostDuocTao)
 				{
-					if (simon->GetVx() > 0) // vx>0 đang chạy về bên phải
+					if (CountEnemyGhost < 3)
 					{
-						// cho ghost chạy từ bên phải qua
-						listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326 - 10, -1));// 34 framewidth của ghost
-					}
-					else
-						if (simon->GetVx() < 0) // vx>0 đang chạy về bên trái
+						if (simon->GetVx() > 0) // vx>0 đang chạy về bên phải
 						{
-							// cho ghost chạy từ bên trái qua 
-							listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326 - 10, 1));
+							// cho ghost chạy từ bên phải qua
+							listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326 - 10, -1));// 34 framewidth của ghost
 						}
-						else // đứng yên thì cứ random
-						{
-							int random = rand() % 2;
-							if (random == 0) // đi từ bên trái
+						else
+							if (simon->GetVx() < 0) // vx>0 đang chạy về bên trái
 							{
+								// cho ghost chạy từ bên trái qua 
 								listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326 - 10, 1));
 							}
-							else // đi từ bên phải
+							else // đứng yên thì cứ random
 							{
-								listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326 - 10, -1));
+								int random = rand() % 2;
+								if (random == 0) // đi từ bên trái
+								{
+									listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326 - 10, 1));
+								}
+								else // đi từ bên phải
+								{
+									listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 326 - 10, -1));
+								}
 							}
+						CountEnemyGhost++;
+						if (CountEnemyGhost == 3)
+						{
+							isWaitProcessCreateGhost = true; // phải chờ đến khi cả 3 ghost bị giết
+							isAllowCheckTimeWaitProcessCreateGhost = false;
 						}
-					CountEnemyGhost++;
-					if (CountEnemyGhost == 3)
-					{
-						isWaitProcessCreateGhost = true; // phải chờ đến khi cả 3 ghost bị giết
-						isAllowCheckTimeWaitProcessCreateGhost = false;
+						TimeCreateGhost = now; // set lại thời điểm đã tạo ghost
 					}
-					TimeCreateGhost = now; // set lại thời điểm đã tạo ghost
 				}
 			}
-		}
 #pragma endregion
 
 #pragma region Vùng 3
-		if ((simon->GetX() >= GHOST_ZONE3_LEFT && simon->GetX() <= GHOST_ZONE3_RIGHT))
-		{
-			if (now - TimeCreateGhost >= ThoiGianChoGiua2GhostDuocTao)
+			if ((simon->GetX() >= GHOST_ZONE3_LEFT && simon->GetX() <= GHOST_ZONE3_RIGHT))
 			{
-				if (CountEnemyGhost < 3)
+				if (now - TimeCreateGhost >= ThoiGianChoGiua2GhostDuocTao)
 				{
-					
+					if (CountEnemyGhost < 3)
+					{
+
 						int random = rand() % 2; // tỉ lệ 50%
 						switch (random)
 						{
@@ -924,7 +830,7 @@ void Scene_2::Update(DWORD dt)
 						}
 						case 1: // ở dưới
 						{
-							if (simon->GetVx()>0) // đang chạy về bên phải
+							if (simon->GetVx() > 0) // đang chạy về bên phải
 								listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 330, -1));// bên phải chạy qua trái
 							else
 								if (simon->GetVx() < 0) // đang chạy bên trái 
@@ -933,12 +839,12 @@ void Scene_2::Update(DWORD dt)
 								{
 									if (rand() % 2 == 0)
 										listEnemy.push_back(new Ghost(camera->GetXCam() + camera->GetWidth(), 330, -1));// bên phải chạy qua trái
-									else 
+									else
 										listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 330, 1)); // đi từ trái qua phải 
-								} 
+								}
 							break;
 						}
-							
+
 						}
 
 						CountEnemyGhost++;
@@ -948,8 +854,8 @@ void Scene_2::Update(DWORD dt)
 							isAllowCheckTimeWaitProcessCreateGhost = false;
 						}
 						TimeCreateGhost = now; // set lại thời điểm đã tạo ghost
-						 
-					
+
+
 
 					/*
 					if (simon->GetVx() > 0) // vx>0 đang chạy về bên phải
@@ -960,7 +866,7 @@ void Scene_2::Update(DWORD dt)
 					else
 						if (simon->GetVx() < 0) // vx>0 đang chạy về bên trái
 						{
-							// cho ghost chạy từ bên trái qua 
+							// cho ghost chạy từ bên trái qua
 							listEnemy.push_back(new Ghost(camera->GetXCam() - 34, 326 - 10, 1));
 						}
 						else // đứng yên thì cứ random
@@ -983,133 +889,136 @@ void Scene_2::Update(DWORD dt)
 					}
 					TimeCreateGhost = now; // set lại thời điểm đã tạo ghost
 					*/
+					}
+				}
+			}
+#pragma endregion
+
+		}
+		else
+		{
+			if (isAllowCheckTimeWaitProcessCreateGhost)
+			{
+				if (now - TimeWaitProcessCreateGhost >= ThoiGianChoDeXuLiTaoGhost) // đã chờ đủ
+				{
+					isWaitProcessCreateGhost = false; // không phải chờ nữa
 				}
 			}
 		}
-#pragma endregion
-
-	}
-	else
-	{
-		if (isAllowCheckTimeWaitProcessCreateGhost)
-		{
-			if (now - TimeWaitProcessCreateGhost >= ThoiGianChoDeXuLiTaoGhost) // đã chờ đủ
-			{
-				isWaitProcessCreateGhost = false; // không phải chờ nữa
-			}
-		}
-	}
 
 
 
 
 #pragma endregion
-	 
+
 #pragma region Process_Region_Create_Panther
-	if (REGION_CREATE_PANTHER_LEFT < simon->GetX() && simon->GetX() < REGION_CREATE_PANTHER_RIGHT)
-	{
-		if (isAllowRenewPanther)
+		if (REGION_CREATE_PANTHER_LEFT < simon->GetX() && simon->GetX() < REGION_CREATE_PANTHER_RIGHT)
 		{
-			if (CountEnemyPanther == 0) // không còn Panther nào sống thì mới dc tạo lại cả 3
+			if (isAllowRenewPanther)
 			{
-				int directionPanther = abs(REGION_CREATE_PANTHER_LEFT - simon->GetX()) < abs(REGION_CREATE_PANTHER_RIGHT - simon->GetX()) ? -1 : 1; // hướng mặt của Panther quay về hướng simon
-				listEnemy.push_back(new Panther(1398.0f, 225.0f, directionPanther, directionPanther == -1 ? 20.0f : 9.0f, simon));
-				listEnemy.push_back(new Panther(1783.0f, 160.0f, directionPanther, directionPanther == -1 ? 278.0f : 180.0f, simon));
-				listEnemy.push_back(new Panther(1923.0f, 225.0f, directionPanther, directionPanther == -1 ? 68.0f : 66.0f, simon));
-				CountEnemyPanther += 3;
+				if (CountEnemyPanther == 0) // không còn Panther nào sống thì mới dc tạo lại cả 3
+				{
+					int directionPanther = abs(REGION_CREATE_PANTHER_LEFT - simon->GetX()) < abs(REGION_CREATE_PANTHER_RIGHT - simon->GetX()) ? -1 : 1; // hướng mặt của Panther quay về hướng simon
+					listEnemy.push_back(new Panther(1398.0f, 225.0f, directionPanther, directionPanther == -1 ? 20.0f : 9.0f, simon));
+					listEnemy.push_back(new Panther(1783.0f, 160.0f, directionPanther, directionPanther == -1 ? 278.0f : 180.0f, simon));
+					listEnemy.push_back(new Panther(1923.0f, 225.0f, directionPanther, directionPanther == -1 ? 68.0f : 66.0f, simon));
+					CountEnemyPanther += 3;
+				}
+				isAllowRenewPanther = false;
 			}
-			isAllowRenewPanther = false;
 		}
-	}
-	else
-	{
-		isAllowRenewPanther = true;
-	}
+		else
+		{
+			isAllowRenewPanther = true;
+		}
 #pragma endregion
-	 
+
 #pragma region Create_Bat 
-	if (isAllowCreateBat)
-	{
-		DWORD now = GetTickCount();
-		if (now - TimeCreateBat >= TimeWaitCreateBat) // đủ thời gian chờ
+		if (isAllowCreateBat)
 		{
-			TimeCreateBat = now; // đặt lại thời gian đã tạo bat
-			if (simon->GetX() < CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_X || (simon->GetX()> CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_X && simon->GetY()> CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_Y))
-				listEnemy.push_back(new Bat(camera->GetXCam() + camera->GetWidth() - 10, simon->GetY() + 40, -1));
-			else
-				listEnemy.push_back(new Bat(camera->GetXCam() - 10, simon->GetY() + 40, 1));
+			DWORD now = GetTickCount();
+			if (now - TimeCreateBat >= TimeWaitCreateBat) // đủ thời gian chờ
+			{
+				TimeCreateBat = now; // đặt lại thời gian đã tạo bat
+				if (simon->GetX() < CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_X || (simon->GetX() > CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_X && simon->GetY() > CREATE_BAT_BOUNDARY_DIVISION_DIRECTION_Y))
+					listEnemy.push_back(new Bat(camera->GetXCam() + camera->GetWidth() - 10, simon->GetY() + 40, -1));
+				else
+					listEnemy.push_back(new Bat(camera->GetXCam() - 10, simon->GetY() + 40, 1));
 
-			TimeWaitCreateBat = 4000 + (rand() % 3000);
+				TimeWaitCreateBat = 4000 + (rand() % 3000);
+			}
 		}
-	} 
 #pragma endregion
-	 
+
 #pragma region Create Fishmen
-	 
 
-	if (isAllowCreateFishmen && CountEnemyFishmen < 2)
-	{
-		DWORD now = GetTickCount();
-		if (now - TimeCreateFishmen >= TimeWaitCreateFishmen) // đủ thời gian chờ
+
+		if (isAllowCreateFishmen && CountEnemyFishmen < 2)
 		{
-			TimeCreateFishmen = now; // đặt lại thời gian đã tạo
-
-			float vtx = 0;
-
-			if (FISHMEN_ZONE_1_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_1_RIGHT)
+			DWORD now = GetTickCount();
+			if (now - TimeCreateFishmen >= TimeWaitCreateFishmen) // đủ thời gian chờ
 			{
-				vtx = (rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4);
+				TimeCreateFishmen = now; // đặt lại thời gian đã tạo
+
+				float vtx = 0;
+
+				if (FISHMEN_ZONE_1_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_1_RIGHT)
+				{
+					vtx = (rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4);
+				}
+
+				if (FISHMEN_ZONE_2_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_2_RIGHT)
+				{
+					vtx = (rand() % 2) ? (FISHMEN_POS_1) : ((rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4));
+				}
+
+				if (FISHMEN_ZONE_3_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_3_RIGHT)
+				{
+					vtx = (rand() % 2) ? (FISHMEN_POS_4) : (FISHMEN_POS_5);
+				}
+
+				if (FISHMEN_ZONE_4_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_4_RIGHT)
+				{
+					vtx = (rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_5);
+				}
+
+				if (FISHMEN_ZONE_5_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_5_RIGHT)
+				{
+					vtx = (rand() % 2) ? (FISHMEN_POS_4) : (FISHMEN_POS_6);
+				}
+
+				if (FISHMEN_ZONE_6_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_6_RIGHT)
+				{
+					vtx = (rand() % 2) ? (FISHMEN_POS_5) : ((rand() % 2) ? (FISHMEN_POS_7) : (FISHMEN_POS_8));
+				}
+
+				if (FISHMEN_ZONE_7_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_7_RIGHT)
+				{
+					vtx = (rand() % 2) ? (FISHMEN_POS_6) : (FISHMEN_POS_8);
+				}
+				if (FISHMEN_ZONE_8_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_8_RIGHT)
+				{
+					vtx = (rand() % 2) ? (FISHMEN_POS_6) : (FISHMEN_POS_7);
+				}
+				int directionFishmen = vtx < simon->GetX() ? 1 : -1;
+
+
+				float vty = FISHMEN_POS_Y;
+
+				listEnemy.push_back(new Fishmen(vtx, vty, directionFishmen, simon, &listWeaponOfEnemy, camera));
+				CountEnemyFishmen++;
+
+				STEAM_ADD_EFFECT(listEffect, vtx, vty);
+
+				sound->Play(eSound::soundSplashwater);
+				TimeWaitCreateFishmen = 2000 + (rand() % 2000);
 			}
-
-			if (FISHMEN_ZONE_2_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_2_RIGHT)
-			{
-				vtx = (rand() % 2) ? (FISHMEN_POS_1) : ((rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_4));
-			} 
-
-			if (FISHMEN_ZONE_3_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_3_RIGHT)
-			{
-				vtx = (rand() % 2) ?  (FISHMEN_POS_4) : (FISHMEN_POS_5);
-			} 
-
-			if (FISHMEN_ZONE_4_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_4_RIGHT)
-			{
-				vtx = (rand() % 2) ? (FISHMEN_POS_3) : (FISHMEN_POS_5);
-			}
-
-			if (FISHMEN_ZONE_5_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_5_RIGHT)
-			{
-				vtx = (rand() % 2) ? (FISHMEN_POS_4) : (FISHMEN_POS_6);
-			} 
-
-			if (FISHMEN_ZONE_6_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_6_RIGHT)
-			{
-				vtx = (rand() % 2) ? (FISHMEN_POS_5) : ((rand() % 2) ? (FISHMEN_POS_7) : (FISHMEN_POS_8));
-			} 
-
-			if (FISHMEN_ZONE_7_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_7_RIGHT)
-			{
-				vtx = (rand() % 2) ? (FISHMEN_POS_6) : (FISHMEN_POS_8);
-			} 
-			if (FISHMEN_ZONE_8_LEFT < simon->GetX() && simon->GetX() <= FISHMEN_ZONE_8_RIGHT)
-			{
-				vtx = (rand() % 2) ? (FISHMEN_POS_6) : (FISHMEN_POS_7);
-			}
-			int directionFishmen = vtx < simon->GetX() ? 1 : -1;
-
-			
-			float vty = FISHMEN_POS_Y;
-
-			listEnemy.push_back(new Fishmen(vtx, vty, directionFishmen, simon, &listWeaponOfEnemy, camera));
-			CountEnemyFishmen++;
-
-			STEAM_ADD_EFFECT(listEffect, vtx, vty);
-
-			sound->Play(eSound::soundSplashwater);
-			TimeWaitCreateFishmen = 2000 + (rand() % 2000);
 		}
+
+#pragma endregion
 	}
 
-#pragma endregion
+
 
 #pragma region Process_Update_Object
 
@@ -1124,7 +1033,7 @@ void Scene_2::Update(DWORD dt)
 		if (listEffect[i]->GetFinish() == false)
 			listEffect[i]->Update(dt);
 
-	if (!isStopWatch) // đang dùng stopwatch thì không update enemy
+	if (!simon->IsUsingWeapon(eType::STOPWATCH)) // đang dùng stopwatch thì không update enemy
 	{
 		for (UINT i = 0; i < listEnemy.size(); i++)
 		{
@@ -1152,7 +1061,7 @@ void Scene_2::Update(DWORD dt)
 				}
 
 				case eType::PANTHER:
-				{ 
+				{
 					if (camera->CHECK_OBJECT_IN_CAMERA(enemy)) // nếu Panther nằm trong camera thì update
 						// vì do Grid load object nền (Brick) dựa vào vùng camera, nên có nguy cơ khiến 1 số object Panther không xét được va chạm đất.
 					{
@@ -1184,17 +1093,17 @@ void Scene_2::Update(DWORD dt)
 
 					break;
 				}
-				 
+
 				case eType::FISHMEN:
 				{
 					if (camera->CHECK_OBJECT_IN_CAMERA(enemy)) // nếu nằm trong camera thì update
-					{ 
+					{
 						enemy->Update(dt, &listObj);
 					}
 					else
 					{
 						enemy->SetHealth(0); // ra khỏi cam coi như chết
-						CountEnemyFishmen--; 
+						CountEnemyFishmen--;
 					}
 					break;
 				}
@@ -1208,9 +1117,9 @@ void Scene_2::Update(DWORD dt)
 		if (boss != NULL)
 			boss->Update(dt, &listObj);
 	}
-	
+
 	for (UINT i = 0; i < listWeaponOfEnemy.size(); i++)
-	{ 
+	{
 		if (listWeaponOfEnemy[i]->GetFinish() == false)
 		{
 			listWeaponOfEnemy[i]->Update(dt, &listObj);
@@ -1222,17 +1131,17 @@ void Scene_2::Update(DWORD dt)
 	if (!simon->GetIsDeadth())
 	{
 		CheckCollision();
-	} 
-	 
+	}
+
 }
 
-void Scene_2::Render()
-{ 
+void SceneGame::Render()
+{
 	if (isWaitResetGame) // màn đen trước khi bắt đầu game
 		return; // thoát và ko vẽ gì
 
 	if (!isGameOver)
-	{ 
+	{
 		TileMap->DrawMap(camera);
 
 		for (UINT i = 0; i < listObj.size(); i++)
@@ -1242,7 +1151,7 @@ void Scene_2::Render()
 			if (listItem[i]->GetFinish() == false)
 				listItem[i]->Render(camera);
 
-		
+
 
 		for (UINT i = 0; i < listEnemy.size(); i++)
 			listEnemy[i]->Render(camera);
@@ -1279,13 +1188,57 @@ void Scene_2::Render()
 			_spriteLagerHeart->Draw(175, 275);
 			break;
 		}
-		} 
+		}
 	}
 
-	board->Render(simon, StateCurrent, GAME_TIME_SCENE2 - _gameTime->GetTime(), boss);
+	board->Render(simon, StateCurrent, GAME_TIME_MAX - gameTime->GetTime(), boss);
 }
 
-void Scene_2::CheckCollision()
+void SceneGame::LoadMap(int x)
+{
+	mapCurrent = x;
+
+	switch (x)
+	{
+	case 1:
+		gridGame->SetFile("Resources/map/Obj_1.txt");
+		TileMap->LoadMap(eType::MAP1);
+
+		camera->SetAllowFollowSimon(true);
+
+		camera->SetBoundary(0.0f, (float)(TileMap->GetMapWidth() - camera->GetWidth())); // set biên camera dựa vào kích thước map
+		camera->SetBoundaryBackup(camera->GetBoundaryLeft(), camera->GetBoundaryRight()); // backup lại biên
+
+		camera->SetPosition(0, 0);
+
+		camera->SetAllowFollowSimon(true);
+
+		simon->SetPosition(SIMON_POSITION_DEFAULT);
+		simon->SetPositionBackup(SIMON_POSITION_DEFAULT);
+
+		StateCurrent = 1;
+		break;
+
+	case 2:
+
+		gridGame->SetFile("Resources/map/Obj_2.txt");
+		TileMap->LoadMap(eType::MAP2);
+
+		camera->SetAllowFollowSimon(true);
+
+		camera->SetPosition(0, 0);
+		camera->SetBoundary(0, CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT); // biên camera khi chưa qua cửa
+		camera->SetBoundaryBackup(0, CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT); // biên camera khi chưa qua cửa
+
+		simon->SetPosition(SIMON_POSITION_DEFAULT);
+		simon->SetPositionBackup(SIMON_POSITION_DEFAULT);
+		break;
+	}
+
+	ResetResource();
+}
+
+void SceneGame::CheckCollision()
 {
 	CheckCollisionWeapon(listObj); // kt va chạm vũ khí với các object nền
 
@@ -1300,8 +1253,8 @@ void Scene_2::CheckCollision()
 
 }
 
-void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
-{ 
+void SceneGame::CheckCollisionWeapon(vector<GameObject*> listObj)
+{
 
 	for (auto& objWeapon : simon->mapWeapon)
 	{
@@ -1316,6 +1269,15 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 						GameObject *gameObj = listObj[i];
 						switch (gameObj->GetType())
 						{
+
+						case eType::TORCH:
+						{
+							gameObj->SubHealth(1);
+							listItem.push_back(GetNewItem(gameObj->GetId(), gameObj->GetType(), gameObj->GetX() + 5, gameObj->GetY()));// hiệu ứng hit
+							RunEffectHit = true;
+							break;
+						}
+
 						case eType::CANDLE:
 						{
 							gameObj->SubHealth(1);
@@ -1398,7 +1360,7 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 								MorningStar * morningstar = dynamic_cast<MorningStar *>(objWeapon.second);
 								if (morningstar->GetLevel() > 0) // level 1 hoặc 2
 									gameObj->SubHealth(24 / 8); // 8 hit chết
-								else 
+								else
 									gameObj->SubHealth(24 / 12); // 12 hit chết
 
 							}
@@ -1512,12 +1474,12 @@ void Scene_2::CheckCollisionWeapon(vector<GameObject*> listObj)
 
 						gameObj->SetLastTimeAttacked(objWeapon.second->GetLastTimeAttack()); // bị đánh trúng->update thời gian bị đánh lần cuối
 					}
-				} 
+				}
 		}
-	} 
+	}
 }
 
-void Scene_2::CheckCollisionSimonWithItem()
+void SceneGame::CheckCollisionSimonWithItem()
 {
 	for (UINT i = 0; i < listItem.size(); i++)
 		if (listItem[i]->GetFinish() == false && listItem[i]->isWaitingDisplay() == false) // chưa kết thúc và "không phải" đang chờ để hiển thị
@@ -1552,7 +1514,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 					simon->SetFreeze(true); // bật trạng thái đóng băng
 					sound->Play(eSound::soundCollectWeapon);
 					break;
-				} 
+				}
 
 				/* Xử lí ăn tiền */
 				case eType::MONEY_BAG_RED:
@@ -1602,7 +1564,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 				}
 
 				case eType::ITEMDOUBLESHOT:
-				{ 
+				{
 					simon->SetIsUseDoubleShot(true); // bật chế độ Double Shot
 					listItem[i]->SetFinish(true);
 					sound->Play(eSound::soundCollectItem);
@@ -1611,7 +1573,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 
 				/* Vũ khí phụ của simon */
 				case eType::ITEMDAGGER:
-				{  
+				{
 					simon->ProcessWeaponCollect(eType::DAGGER);
 					listItem[i]->SetFinish(true);
 					break;
@@ -1620,16 +1582,16 @@ void Scene_2::CheckCollisionSimonWithItem()
 				case eType::ITEMHOLYWATER:
 				{
 					simon->ProcessWeaponCollect(eType::HOLYWATER);
- 					listItem[i]->SetFinish(true);
+					listItem[i]->SetFinish(true);
 
 					break;
 				}
 
 				case eType::STOPWATCH:
-				{  
+				{
 					simon->ProcessWeaponCollect(eType::STOPWATCH);
 
-					listItem[i]->SetFinish(true);  
+					listItem[i]->SetFinish(true);
 					break;
 				}
 
@@ -1666,18 +1628,18 @@ void Scene_2::CheckCollisionSimonWithItem()
 				}
 
 
-				 
+
 				case eType::INVISIBILITYPOTION:
 				{
 					sound->Play(eSound::soundInvisibilityPotion_Begin);
 					isUseInvisibilityPotion = true;
 					simon->SetTexture(TextureManager::GetInstance()->GetTexture(eType::SIMON_TRANS));
-					listItem[i]->SetFinish(true); 
+					listItem[i]->SetFinish(true);
 					break;
 				}
-				 
+
 				case eType::CROSS:
-				{ 
+				{
 					isUseCross = true;
 					TimeWaited_UseCross = 0;
 					TimeWaited_UseCross_ChangeColorBackground = 0;
@@ -1713,7 +1675,7 @@ void Scene_2::CheckCollisionSimonWithItem()
 					sound->Play(eSound::soundHolyCross);
 					break;
 				}
-				 
+
 				default:
 					DebugOut(L"[CheckCollisionSimonWithItem] Khong nhan dang duoc loai Item!\n");
 					break;
@@ -1730,8 +1692,8 @@ void Scene_2::CheckCollisionSimonWithItem()
 
 }
 
-void Scene_2::CheckCollisionSimonWithObjectHidden()
-{ 
+void SceneGame::CheckCollisionSimonWithObjectHidden()
+{
 	for (UINT i = 0; i < listObj.size(); i++)
 	{
 		if (listObj[i]->GetType() == eType::OBJECT_HIDDEN)
@@ -1739,164 +1701,190 @@ void Scene_2::CheckCollisionSimonWithObjectHidden()
 			GameObject * gameObject = listObj[i];
 
 			if (gameObject->GetHealth() > 0)
-			{ 
+			{
 				if (simon->isCollitionObjectWithObject(gameObject)) // có va chạm xảy ra
 				{
-					switch (gameObject->GetId())
+					if (mapCurrent == 1)
 					{
-					case 67: // đụng trúng box xác nhận simon đã qua GATE1
-					{
-						if (isProcessingGoThroughTheDoor1)
+						switch (gameObject->GetId())
 						{
-							isDoneSimonGoThroughTheDoor1 = true;
-							camera->SetAutoGoX(abs(GATE1_POSITION_CAM_AFTER_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
-							simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
-						}
-						
-						TimeCreateBat = GetTickCount();
-						TimeWaitCreateBat = 3000;
-						isAllowCreateBat = true;
-						StateCurrent = 2;// set hiển thị đang ở state2
-						camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
-						gameObject->SubHealth(1);
-						DebugOut(L"Xac nhan qua xong cua!\n");
-						break;
-					}
-
-
-					case 94: // đụng trúng box xác nhận simon đã qua GATE2
-					{
-						if (isProcessingGoThroughTheDoor2)
+						case 7: // đụng trúng cửa
 						{
-							isDoneSimonGoThroughTheDoor2 = true;
-							camera->SetAutoGoX(abs(GATE2_POSITION_CAM_AFTER_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
-							simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
+							LoadMap(2);
+
+							return;
+							break;
 						}
-						StateCurrent = 3;// set hiển thị đang ở state3
-						camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
+
+						case 8:
+						{
+							sound->Play(eSound::soundDisplayMonney);
+							listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), simon->GetX(), simon->GetY()));
+							break;
+						}
+						}
 						gameObject->SubHealth(1);
-						  
-						DebugOut(L"Xac nhan qua xong cua 2!\n");
-						break;
 					}
 
-
-					case 65: //id 65 : object ẩn->bonus
+					if (mapCurrent == 2)
 					{
-						sound->Play(eSound::soundDisplayMonney);
-						listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), simon->GetX(), simon->GetY()));
-						gameObject->SetHealth(0);
-						break;
-					}
+						switch (gameObject->GetId())
+						{
+						case 67: // đụng trúng box xác nhận simon đã qua GATE1
+						{
+							if (isProcessingGoThroughTheDoor1)
+							{
+								isDoneSimonGoThroughTheDoor1 = true;
+								camera->SetAutoGoX(abs(GATE1_POSITION_CAM_AFTER_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
+								simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
+							}
+
+							TimeCreateBat = GetTickCount();
+							TimeWaitCreateBat = 3000;
+							isAllowCreateBat = true;
+							StateCurrent = 2;// set hiển thị đang ở state2
+							camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
+							gameObject->SubHealth(1);
+							DebugOut(L"Xac nhan qua xong cua!\n");
+							break;
+						}
 
 
-					case 66: //id 66: object ẩn -> chạm nước -> chết
-					{
-						simon->SetHealth(0);
-						sound->Play(eSound::soundFallingDownWaterSurface);
+						case 94: // đụng trúng box xác nhận simon đã qua GATE2
+						{
+							if (isProcessingGoThroughTheDoor2)
+							{
+								isDoneSimonGoThroughTheDoor2 = true;
+								camera->SetAutoGoX(abs(GATE2_POSITION_CAM_AFTER_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
+								simon->SetPositionBackup(simon->GetX(), 0); // backup lại vị trí sau khi qua màn 
+							}
+							StateCurrent = 3;// set hiển thị đang ở state3
+							camera->SetPositionBackup(camera->GetXCam(), camera->GetYCam());
+							gameObject->SubHealth(1);
+
+							DebugOut(L"Xac nhan qua xong cua 2!\n");
+							break;
+						}
 
 
-						break;
-					}
+						case 65: //id 65 : object ẩn->bonus
+						{
+							sound->Play(eSound::soundDisplayMonney);
+							listItem.push_back(GetNewItem(gameObject->GetId(), gameObject->GetType(), simon->GetX(), simon->GetY()));
+							gameObject->SetHealth(0);
+							break;
+						}
+
+
+						case 66: //id 66: object ẩn -> chạm nước -> chết
+						{
+							simon->SetHealth(0);
+							sound->Play(eSound::soundFallingDownWaterSurface);
+
+
+							break;
+						}
 
 #pragma region Lên & xuống hồ nước phía Phải
 
-					case 41: // id 41: object ẩn -> bắt đầu xuống hồ nước
-					{
-						camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
-						camera->SetBoundary(CAMERA_BOUNDARY_LAKE_LEFT, CAMERA_BOUNDARY_LAKE_RIGHT);
-						simon->SetPosition(3150, 405);
-						isAllowCreateBat = false;  // không cho tạo Bat
-						isAllowCreateFishmen = true;
-						gameObject->SetHealth(0);
+						case 41: // id 41: object ẩn -> bắt đầu xuống hồ nước
+						{
+							camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
+							camera->SetBoundary(CAMERA_BOUNDARY_LAKE_LEFT, CAMERA_BOUNDARY_LAKE_RIGHT);
+							simon->SetPosition(3150, 405);
+							isAllowCreateBat = false;  // không cho tạo Bat
+							isAllowCreateFishmen = true;
+							gameObject->SetHealth(0);
 
 
-						gridGame->Insert(GRID_INSERT_OBJECT__DIRAKHOIHONUOC_LEFT); // thêm object ẩn để có thể đi lên
+							gridGame->Insert(GRID_INSERT_OBJECT__DIRAKHOIHONUOC_LEFT); // thêm object ẩn để có thể đi lên
 
-						break;
-					}
-					case 45: // id 45: object ẩn -> trở lên trước khi xuống hồ nước
-					{
-						camera->SetPosition(camera->GetXCam(), 0);
-						simon->SetPosition(3152, 345);
-						isAllowCreateBat = true;  // cho tạo Bat
-						isAllowCreateFishmen = false;
-						TimeWaitCreateBat = 3000 + rand() % 1000;
-						gameObject->SetHealth(0);
+							break;
+						}
+						case 45: // id 45: object ẩn -> trở lên trước khi xuống hồ nước
+						{
+							camera->SetPosition(camera->GetXCam(), 0);
+							simon->SetPosition(3152, 345);
+							isAllowCreateBat = true;  // cho tạo Bat
+							isAllowCreateFishmen = false;
+							TimeWaitCreateBat = 3000 + rand() % 1000;
+							gameObject->SetHealth(0);
 
-						gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_LEFT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
+							gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_LEFT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
 
-						break;
-					}
+							break;
+						}
 #pragma endregion
 
 #pragma region Lên & xuống hồ nước phía Phải
-					case 81: // id 81: object ẩn -> ra khỏi hồ nước phía phải
-					{
-						camera->SetPosition(camera->GetXCam(), 0);
-						simon->SetPosition(3806, 361);
-						isAllowCreateBat = true;
-						isAllowCreateFishmen = false;
-						TimeWaitCreateBat = 3000 + rand() % 1000;
-						gameObject->SetHealth(0);
-						gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_RIGHT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
-						gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_LEFT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
-						break;
-					}
+						case 81: // id 81: object ẩn -> ra khỏi hồ nước phía phải
+						{
+							camera->SetPosition(camera->GetXCam(), 0);
+							simon->SetPosition(3806, 361);
+							isAllowCreateBat = true;
+							isAllowCreateFishmen = false;
+							TimeWaitCreateBat = 3000 + rand() % 1000;
+							gameObject->SetHealth(0);
+							gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_RIGHT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
+							gridGame->Insert(GRID_INSERT_OBJECT__DIXUONGHONUOC_LEFT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
+							break;
+						}
 
 
-					case 86: // id 86: object ẩn -> vào hồ nước phía phải
-					{
-						camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
-						simon->SetPosition(3825, 442);
-						isAllowCreateBat = false;  // không cho tạo Bat
-						isAllowCreateFishmen = true;
+						case 86: // id 86: object ẩn -> vào hồ nước phía phải
+						{
+							camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
+							simon->SetPosition(3825, 442);
+							isAllowCreateBat = false;  // không cho tạo Bat
+							isAllowCreateFishmen = true;
 
-						gameObject->SetHealth(0);
+							gameObject->SetHealth(0);
 
-						gridGame->Insert(GRID_INSERT_OBJECT__DIRAKHOIHONUOC_RIGHT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
+							gridGame->Insert(GRID_INSERT_OBJECT__DIRAKHOIHONUOC_RIGHT); // thêm object ẩn để có thể đi xuống sau khi đã lên lại
 
-						break;
-					}
+							break;
+						}
 #pragma endregion
 
- 
 
 
-					case 124: //id 124 : kích hoạt boss
-					{
-						boss->Start(); 
 
-						camera->SetBoundary(camera->GetBoundaryRight(), camera->GetBoundaryRight());
-						camera->SetAllowFollowSimon(false);
-
-						if (sound->isPlaying(eSound::musicState1))
+						case 124: //id 124 : kích hoạt boss
 						{
-							sound->Stop(eSound::musicState1);
+							boss->Start();
+
+							camera->SetBoundary(camera->GetBoundaryRight(), camera->GetBoundaryRight());
+							camera->SetAllowFollowSimon(false);
+
+							if (sound->isPlaying(eSound::musicState1))
+							{
+								sound->Stop(eSound::musicState1);
+							}
+							sound->Play(eSound::music_PhantomBat, true);
+
+							gameObject->SetHealth(0);
+							break;
 						}
-						sound->Play(eSound::music_PhantomBat, true);
 
-						gameObject->SetHealth(0);
-						break;
-					}
+						}
 
 					}
-					
+
 				}
 			}
 		}
 	}
-	 
+
 
 }
 
-void Scene_2::CheckCollisionWithEnemy()
+void SceneGame::CheckCollisionWithEnemy()
 {
 	CheckCollisionWeapon(listEnemy); // enemy bt
 	CheckCollisionSimonWithEnemy();
 }
 
-void Scene_2::CheckCollisionSimonWithEnemy()
+void SceneGame::CheckCollisionSimonWithEnemy()
 {
 	if (GetTickCount() - simon->untouchable_start > SIMON_UNTOUCHABLE_TIME)
 	{
@@ -1923,11 +1911,11 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 				{
 					simon->SetHurt(e);
 					isCollision = true;
-				} 
+				}
 				if (isCollision == false && simon->checkAABB(gameobj) == true)
 				{
-					LPCOLLISIONEVENT e = new CollisionEvent(1.0f, (float) -simon->GetDirection(), 0.0f, NULL);
-					simon->SetHurt(e); 
+					LPCOLLISIONEVENT e = new CollisionEvent(1.0f, (float)-simon->GetDirection(), 0.0f, NULL);
+					simon->SetHurt(e);
 					isCollision = true;
 				}
 
@@ -1969,10 +1957,10 @@ void Scene_2::CheckCollisionSimonWithEnemy()
 		}
 #pragma endregion
 	}
-	 
+
 }
 
-void Scene_2::CheckCollisionSimonWithGate()
+void SceneGame::CheckCollisionSimonWithGate()
 {
 	for (UINT i = 0; i < listObj.size(); i++)
 	{
@@ -1980,86 +1968,93 @@ void Scene_2::CheckCollisionSimonWithGate()
 		{
 			if (simon->isCollitionObjectWithObject(listObj[i]))
 			{
-				Gate* objGate = dynamic_cast<Gate*>(listObj[i]); 
-				switch (objGate->GetId())
+				Gate* objGate = dynamic_cast<Gate*>(listObj[i]);
+
+				 
+				if (mapCurrent == 2)
 				{
-				case 64: // gate 1
-				{
-					if (objGate->GetStart() == 0)
+					switch (objGate->GetId())
 					{
-						//di chuyển camera đến GATE1_POSITION_CAM_BEFORE_GO = 2825.0f
-						camera->SetBoundary(camera->GetBoundaryLeft(), camera->GetBoundaryRight() + 9999.0f);// mở biên phải rộng ra thêm để chạy AutoGo
-						camera->SetAutoGoX(abs(GATE1_POSITION_CAM_BEFORE_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
+					case 64: // gate 1
+					{
+						if (objGate->GetStart() == 0)
+						{
+							//di chuyển camera đến GATE1_POSITION_CAM_BEFORE_GO = 2825.0f
+							camera->SetBoundary(camera->GetBoundaryLeft(), camera->GetBoundaryRight() + 9999.0f);// mở biên phải rộng ra thêm để chạy AutoGo
+							camera->SetAutoGoX(abs(GATE1_POSITION_CAM_BEFORE_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
 
 #pragma region Stop simon
-						simon->SetSpeed(0, simon->GetVy()); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
-						simon->isWalking = 0;
-						if (simon->isSitting == true) // nếu simon đang ngồi
-						{
-							simon->isSitting = 0; // hủy trạng thái ngồi
-							simon->SetY(simon->GetY() - PULL_UP_SIMON_AFTER_SITTING); // kéo simon lên
-						}
+							simon->SetSpeed(0, simon->GetVy()); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
+							simon->isWalking = 0;
+							if (simon->isSitting == true) // nếu simon đang ngồi
+							{
+								simon->isSitting = 0; // hủy trạng thái ngồi
+								simon->SetY(simon->GetY() - PULL_UP_SIMON_AFTER_SITTING); // kéo simon lên
+							}
 #pragma endregion
 
-						isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
-						isDoneSimonGoThroughTheDoor1 = false;
-						objGate->Start();
+							isProcessingGoThroughTheDoor1 = true; // bật trạng thái xử lí qua cửa
+							isDoneSimonGoThroughTheDoor1 = false;
+							objGate->Start();
 
-						DebugOut(L"Simon dung trung cua!\n");
+							DebugOut(L"Simon dung trung cua!\n");
 
 
+							break;
+						}
 						break;
 					}
-					break;
-				}
 
-				case 93: // gate 2
-				{
-					if (objGate->GetStart() == 0)
+					case 93: // gate 2
 					{
-						camera->SetBoundary(camera->GetBoundaryLeft(), CAMERA_BOUNDARY_BOSS_RIGHT);// mở biên phải rộng ra thêm để chạy AutoGo
-						camera->SetAutoGoX(abs(GATE2_POSITION_CAM_BEFORE_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
+						if (objGate->GetStart() == 0)
+						{
+							camera->SetBoundary(camera->GetBoundaryLeft(), CAMERA_BOUNDARY_BOSS_RIGHT);// mở biên phải rộng ra thêm để chạy AutoGo
+							camera->SetAutoGoX(abs(GATE2_POSITION_CAM_BEFORE_GO - camera->GetXCam()), SIMON_WALKING_SPEED);
 
 #pragma region Stop simon
-						simon->SetSpeed(0, simon->GetVy()); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
-						simon->isWalking = 0;
-						if (simon->isSitting == true) // nếu simon đang ngồi
-						{
-							simon->isSitting = 0; // hủy trạng thái ngồi
-							simon->SetY(simon->GetY() - PULL_UP_SIMON_AFTER_SITTING); // kéo simon lên
-						}
+							simon->SetSpeed(0, simon->GetVy()); // cho simon dừng, tránh trường hợp không vào được trạng thái stop trong KeyState()
+							simon->isWalking = 0;
+							if (simon->isSitting == true) // nếu simon đang ngồi
+							{
+								simon->isSitting = 0; // hủy trạng thái ngồi
+								simon->SetY(simon->GetY() - PULL_UP_SIMON_AFTER_SITTING); // kéo simon lên
+							}
 #pragma endregion
 
-						isProcessingGoThroughTheDoor2 = true; // bật trạng thái xử lí qua cửa
-						isDoneSimonGoThroughTheDoor2 = false;
+							isProcessingGoThroughTheDoor2 = true; // bật trạng thái xử lí qua cửa
+							isDoneSimonGoThroughTheDoor2 = false;
 
-						isAllowCreateBat = false; // tắt tạo Bat
+							isAllowCreateBat = false; // tắt tạo Bat
 
-						objGate->Start();
-						DebugOut(L"Simon dung trung cua 2!\n");
+							objGate->Start();
+							DebugOut(L"Simon dung trung cua 2!\n");
 
-						if (boss == NULL)
-							boss = new PhantomBat(simon, camera, &listWeaponOfEnemy);
+							if (boss == NULL)
+								boss = new PhantomBat(simon, camera, &listWeaponOfEnemy);
 
+							break;
+						}
 						break;
 					}
-					break;
+
+
+
+
+					default:
+						break;
+					}
+
 				}
 
-
-
-
-				default:
-					break;
-				}
-
+				
 
 			}
 		}
 	}
 }
 
-void Scene_2::CheckCollisionWithBoss()
+void SceneGame::CheckCollisionWithBoss()
 {
 	if (boss == NULL)
 		return;
@@ -2082,7 +2077,7 @@ void Scene_2::CheckCollisionWithBoss()
 	}
 
 	if (simon->untouchable == false) // đã tắt chế độ ko cho chạm
-	{ 
+	{
 		if (boss->GetHealth() > 0) // còn sống
 		{
 			LPCOLLISIONEVENT e = simon->SweptAABBEx(boss);
@@ -2092,163 +2087,189 @@ void Scene_2::CheckCollisionWithBoss()
 				return; // giảm chi phí duyệt, vì nếu có va chạm thì cũng đang untouchable
 			}
 			if (simon->checkAABB(boss) == true)
-			{ 
+			{
 				LPCOLLISIONEVENT e = new CollisionEvent(1.0f, (float)-simon->GetDirection(), 0.0f, NULL);
 				simon->SetHurt(e);
 				return;
 			}
 		}
-		 
+
 	}
 }
- 
-Item * Scene_2::GetNewItem(int Id, eType Type, float X, float Y)
+
+Item * SceneGame::GetNewItem(int Id, eType Type, float X, float Y)
 {
-	if (Type == eType::CANDLE)
+	if (mapCurrent == 1)
 	{
-		switch (Id)
+		if (Type == eType::TORCH)
 		{
-		case 2: 
-			return new MoneyBag(X, Y, eType::MONEY_BAG_WHITE);
-			break;
+			if (Id == 1 || Id == 4)
+				return new LargeHeart(X, Y);
 
-		case 40: case 71:
-			return new ItemHolyWater(X, Y);
-			break; 
-		case 76:
-			return new ItemStopWatch(X, Y);
-			break;
+			if (Id == 2 || Id == 3)
+				return new UpgradeMorningStar(X, Y);
 
-		case 109:
-			return new InvisibilityPotion(X, Y);
-			break;
+			if (Id == 5)
+				return new ItemDagger(X, Y);
+		}
 
-		case 111:
-			return new ItemThrowingAxe(X, Y);
-			break;
-
-		case 23: case 98:
-			return new Cross(X, Y);
-			break;  
-
-		default:
+		if (Type == eType::OBJECT_HIDDEN)
 		{
-			int random = rand() % 10;
-			switch (random)
+			if (Id == 8)
+				return new Bonus(1240, 305);
+		}
+	}
+
+	if (mapCurrent == 2)
+	{
+		if (Type == eType::CANDLE)
+		{
+			switch (Id)
 			{
-			case 0: 
-				return new MoneyBag(X, Y, eType::MONEY_BAG_RED);
-				break;
-			case 1:
+			case 2:
 				return new MoneyBag(X, Y, eType::MONEY_BAG_WHITE);
 				break;
-			case 2:
-				return new MoneyBag(X, Y, eType::MONEY_BAG_PURPLE);
+
+			case 40: case 71:
+				return new ItemHolyWater(X, Y);
 				break;
+
+			case 76:
+				return new ItemStopWatch(X, Y);
+				break;
+
+			case 109:
+				return new InvisibilityPotion(X, Y);
+				break;
+
+			case 111:
+				return new ItemThrowingAxe(X, Y);
+				break;
+
+			case 23: case 98:
+				return new Cross(X, Y);
+				break;
+
+			default:
+			{
+				int random = rand() % 10;
+				switch (random)
+				{
+				case 0:
+					return new MoneyBag(X, Y, eType::MONEY_BAG_RED);
+					break;
+				case 1:
+					return new MoneyBag(X, Y, eType::MONEY_BAG_WHITE);
+					break;
+				case 2:
+					return new MoneyBag(X, Y, eType::MONEY_BAG_PURPLE);
+					break;
+				default:
+					return new SmallHeart(X, Y);
+					break;
+				}
+				break;
+			}
+			}
+
+		}
+
+
+		if (Type == eType::GHOST || Type == eType::PANTHER || Type == eType::BAT || Type == eType::FISHMEN)
+		{
+			int random = rand() % 15;
+
+			if (random == 4)
+			{
+				MorningStar * morningstar = dynamic_cast<MorningStar*>(simon->mapWeapon[eType::MORNINGSTAR]);
+				while (morningstar->GetLevel() == 2 && random == 4)
+				{
+					random = rand() % 15;
+				}
+			}
+
+
+			switch (random)
+			{
+			case 0:
+				return new LargeHeart(X, Y);
+				break;
+			case 1:
+				return new SmallHeart(X, Y);
+				break;
+			case 2:
+				return new ItemDagger(X, Y);
+				break;
+			case 3:
+				return new Bonus(X, Y);
+				break;
+			case 4:
+				return new UpgradeMorningStar(X, Y);
+				break;
+			case 5:
+				return new ItemHolyWater(X, Y);
+				break;
+			case 6:
+				return new ItemStopWatch(X, Y);
+				break;
+			case 7:
+				return new ItemThrowingAxe(X, Y);
+				break;
+			case 8:
+				return new InvisibilityPotion(X, Y);
+				break;
+			case 9:
+				return new ItemBoomerang(X, Y);
+				break;
+			default: // còn lại là SmallHeart
+				return new SmallHeart(X, Y);
+				break;
+			}
+		}
+
+		if (Type == eType::BRICK)
+		{
+			switch (Id)
+			{
+			case 40:
+				return new PotRoast(X, Y);
+				break;
+			case 72:
+				return new Bonus(X, Y);
+				break;
+
+			case 104: // Double shot
+				return new ItemDoubleShot(X, Y);
+				break;
+
+
 			default:
 				return new SmallHeart(X, Y);
 				break;
 			}
-			break;
-		} 
+
 		}
 
-	}
 
-
-	if (Type == eType::GHOST || Type == eType::PANTHER || Type == eType::BAT || Type==eType::FISHMEN)
-	{
-		int random = rand() % 15;
-
-		if (random == 4)
+		if (Type == eType::OBJECT_HIDDEN)
 		{
-			MorningStar * morningstar = dynamic_cast<MorningStar*>(simon->mapWeapon[eType::MORNINGSTAR]);
-			while (morningstar->GetLevel() == 2 && random == 4)
-			{
-				random = rand() % 15;
-			}
-		}
-		
+			if (Id == 65)
+				return new Bonus(3763.0f, 587.0f);
 
-		switch (random)
-		{
-		case 0:
-			return new LargeHeart(X, Y);
-			break;
-		case 1:
-			return new SmallHeart(X, Y);
-			break;
-		case 2:
-			return new ItemDagger(X, Y);
-			break;
-		case 3:
-			return new Bonus(X, Y);
-			break;
-		case 4:
-			return new UpgradeMorningStar(X, Y);
-			break;
-		case 5:
-			return new ItemHolyWater(X, Y);
-			break;
-		case 6:
-			return new ItemStopWatch(X, Y);
-			break;
-		case 7: 
-			return new ItemThrowingAxe(X, Y);
-			break;
-		case 8: 
-			return new InvisibilityPotion(X, Y);
-			break;
-		case 9:
-			return new ItemBoomerang(X, Y);
-			break;
-		default: // còn lại là SmallHeart
-			return new SmallHeart(X, Y);
-			break;
-		}
-	}
-
-	if (Type == eType::BRICK)
-	{
-		switch (Id)
-		{
-		case 40:
-			return new PotRoast(X, Y);
-			break;
-		case 72:
-			return new Bonus(X, Y);
-			break;
-
-		case 104: // Double shot
-			return new ItemDoubleShot(X, Y);
-			break;
-
-
-		default:
-			return new SmallHeart(X, Y);
-			break;
 		}
 
 	}
-
-
-	if (Type == eType::OBJECT_HIDDEN)
-	{
-		if (Id == 65)
-			return new Bonus(3763.0f,587.0f);
-
-	}
-
+	 
 	return new LargeHeart(X, Y);
 }
 
-void Scene_2::ProcessClearState3(DWORD dt)
-{ 
+void SceneGame::ProcessClearState3(DWORD dt)
+{
 	if (isAllowProcessClearState3)
-	{ 
+	{
 		switch (StatusProcessClearState3)
 		{
-		case CLEARSTATE3_PROCESS_HEALTH: 
+		case CLEARSTATE3_PROCESS_HEALTH:
 		{
 			TimeWaited_ClearState3 += dt;
 			if (TimeWaited_ClearState3 >= CLEARSTATE3_LIMITTIMEWAIT_PROCESS_HEALTH)
@@ -2274,10 +2295,10 @@ void Scene_2::ProcessClearState3(DWORD dt)
 			{
 				TimeWaited_ClearState3 = 0;
 
-				if (GAME_TIME_SCENE2 - _gameTime->GetTime() > 0) // thời gian còn lại lớn hơn 0
+				if (GAME_TIME_MAX - gameTime->GetTime() > 0) // thời gian còn lại lớn hơn 0
 				{
 					simon->SetScore(simon->GetScore() + 10); // mỗi giây +10 điểm
-					_gameTime->SetTime(_gameTime->GetTime() + 1);// giảm giây còn lại
+					gameTime->SetTime(gameTime->GetTime() + 1);// giảm giây còn lại
 					sound->Play(eSound::soundGetScoreTimer, true);
 				}
 				else
@@ -2305,7 +2326,7 @@ void Scene_2::ProcessClearState3(DWORD dt)
 					sound->Play(eSound::soundGetScoreHeart, true);
 				}
 				else
-				{ 
+				{
 					sound->Stop(eSound::soundGetScoreHeart);
 					StatusProcessClearState3 = CLEARSTATE3_PROCESS_DONE;
 
@@ -2322,33 +2343,33 @@ void Scene_2::ProcessClearState3(DWORD dt)
 			{
 				isAllowProcessClearState3 = false; // tắt clear state
 				isGameOver = true; // bật bảng hiện gameover
-			} 
+			}
 			break;
 		}
 
 		default:
 			break;
 		}
-	} 
+	}
 }
 
-void Scene_2::ProcessInvisibilityPotion(DWORD dt)
+void SceneGame::ProcessInvisibilityPotion(DWORD dt)
 {
 	if (isUseInvisibilityPotion)
 	{
-		TimeWaited_InvisibilityPotion += dt; 
+		TimeWaited_InvisibilityPotion += dt;
 		if (TimeWaited_InvisibilityPotion >= INVISIBILITYPOTION_LIMITTIMEWAIT)
 		{
 			isUseInvisibilityPotion = false; // kết thúc
 			TimeWaited_InvisibilityPotion = 0;
-			sound->Play(eSound::soundInvisibilityPotion_End); 
+			sound->Play(eSound::soundInvisibilityPotion_End);
 
 			simon->SetTexture(TextureManager::GetInstance()->GetTexture(eType::SIMON));
 		}
 	}
 }
 
-void Scene_2::ProcessCross(DWORD dt)
+void SceneGame::ProcessCross(DWORD dt)
 {
 	if (isUseCross)
 	{
@@ -2378,6 +2399,12 @@ void Scene_2::ProcessCross(DWORD dt)
 					D3DCOLOR_BACKGROUND = COLOR_BACKGROUND_DEFAULT;
 				}
 			}
-		} 
+		}
 	}
+}
+
+void SceneGame::ReplayMusicGame()
+{
+	sound->StopAll();// tắt hết nhạc
+	sound->Play(eSound::musicState1, true); // mở lại nhạc nền
 }

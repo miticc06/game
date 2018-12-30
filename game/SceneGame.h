@@ -1,6 +1,6 @@
-﻿#ifndef __SCENE_2_H__
-#define __SCENE_2_H__
- 
+﻿ #ifndef __SCENEGAME_H__
+#define __SCENEGAME_H__
+
 #include "Scene.h"
 #include "Camera.h"
 #include "GSprite.h"
@@ -37,13 +37,12 @@
 #include "ItemThrowingAxe.h"
 #include "InvisibilityPotion.h"
 #include "Cross.h"
-#include "Scene_1.h"
 #include "ItemBoomerang.h"
 #include "ItemDoubleShot.h"
 #include "MoneyBag.h"
 #include "EffectMoney.h"
 
-#define GAME_TIME_SCENE2 300
+#define GAME_TIME_MAX 300
 
 #define ThoiGianChoGiua2GhostDuocTao 1000 // 1 giây - khoảng thời gian phải chờ giữa ghost đầu và ghost sẽ đưcọ tạo tiếp theo
 #define ThoiGianChoDeXuLiTaoGhost 2500 // 2.5 giây
@@ -55,19 +54,19 @@
 #define GATE2_POSITION_CAM_AFTER_GO 4095.0f
 
 #define DISTANCE_AUTO_WALK_AFTER_GATE 80.0f // simon phải tự đi 80px sau khi chạm vào cửa
- 
+
 #define CAMERA_BOUNDARY_BEFORE_GO_GATE1_RIGHT (2576.0f-15.0f) // Biên phải camera trước khi qua cửa 1
- 
+
 
 
 #define REGION_CREATE_PANTHER_LEFT 1090.0f
 #define REGION_CREATE_PANTHER_RIGHT 2305.0f
 
 #define CAMERA_POSITION_Y_LAKE 374.0f
-  
+
 #define CAMERA_BOUNDARY_LAKE_LEFT 3075.0f
 #define CAMERA_BOUNDARY_LAKE_RIGHT (4111.0f-SCREEN_WIDTH)
- 
+
 #define CAMERA_BOUNDARY_BOSS_RIGHT (5648.0f - SCREEN_WIDTH)
 
 
@@ -145,10 +144,10 @@
 #define CROSS_LIMITTIME 1000 // thời gian tối đa khi dùng Cross
  
 
-class Scene_2 : public Scene
+class SceneGame : public Scene
 {
 private:
-	
+
 	/*Xử lí liên quan tạo ghost*/
 	int CountEnemyGhost; // số lượng ghost hiện tại
 	DWORD TimeCreateGhost; // thời điểm bắt đầu tạo ghost
@@ -158,12 +157,12 @@ private:
 
 	/*Xử lí liên quan đi qua cửa 1*/
 	bool isProcessingGoThroughTheDoor1;
-	bool isDoneSimonGoThroughTheDoor1; 
- 
+	bool isDoneSimonGoThroughTheDoor1;
+
 	/*Xử lí liên quan đi qua cửa 2*/
 	bool isProcessingGoThroughTheDoor2;
 	bool isDoneSimonGoThroughTheDoor2;
- 
+
 
 	/*Xử lí liên quan tạo Panther*/
 	bool isAllowRenewPanther;
@@ -210,39 +209,45 @@ private:
 	vector <Effect*> listEffect;
 	vector <GameObject*> listEnemy;
 	PhantomBat * boss;
-	
+
 	vector <Weapon*> listWeaponOfEnemy; // list chứa các viên đạn của enemy
 
-	GameTime * _gameTime;
+	GameTime * gameTime;
 	int StateCurrent;
-
-	bool isStopWatch; /*Xử lí stopWatch*/
-
 
 	/* xử lí chờ vẽ màn đen khi bắt đầu lại game*/
 	bool isWaitResetGame;
 	DWORD TimeWaitedResetGame;
-	
+
 	/* Xử lí gameover*/
 	bool isGameOver;
 	Font Text;
- 
+
 	GSprite * _spriteLagerHeart;
 	int GameOverSelect;
 
+	int mapCurrent;
+
 public:
-	Scene_2(Simon * _si = NULL, GameTime* _ga = NULL);
-	~Scene_2();
+	SceneGame();
+ 	~SceneGame();
 
 	void KeyState(BYTE *state);
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
 	void LoadResources();
+
+	void InitGame(); // khởi tạo lại như chơi từ đầu
+	void ResetResource(); // reset lai resource khi simon mất 1 mạng
+
+
+
 	void Update(DWORD dt);
 	void Render();
 
 
-	void ResetResource(); // reset lai resource khi simon mất 1 mạng
+	void LoadMap(int);
+	 
 
 
 	void CheckCollision();
@@ -260,8 +265,6 @@ public:
 	void ProcessInvisibilityPotion(DWORD dt);
 	void ProcessCross(DWORD dt);
 
+	void ReplayMusicGame();
 };
-
-
-
 #endif

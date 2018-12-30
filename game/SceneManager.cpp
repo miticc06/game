@@ -4,8 +4,7 @@ SceneManager * SceneManager::_Instance = NULL;
 
 
 SceneManager::SceneManager()
-{
-	camera = new Camera(SCREEN_WIDTH, SCREEN_HEIGHT);
+{ 
 }
 
 
@@ -23,10 +22,6 @@ SceneManager * SceneManager::GetInstance()
 void SceneManager::SetScene(Scene * x)
 {
 	Scene * scene_temp = _scene;
-	
-	// .....
-	// có thể là truyền pointer simon cho Scene sau - quản lí điểm
-	
 	_scene = x;
 	SAFE_DELETE(scene_temp);
 }
@@ -64,11 +59,6 @@ void SceneManager::Update(DWORD dt)
 void SceneManager::Render()
 { 
 	_scene->Render();
-}
-
-Camera * SceneManager::GetCamera()
-{
-	return camera;
 }
  
 

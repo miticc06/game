@@ -10,9 +10,7 @@ class SceneManager
 private:
 	static SceneManager * _Instance;
 	Scene * _scene;
-	Camera * camera;
-
- 
+  
 public:
 	SceneManager();
 	~SceneManager();
@@ -30,7 +28,6 @@ public:
 	void Update(DWORD dt);
 	void Render();
 
-	Camera * GetCamera();
  
 	Scene * GetScene();
 

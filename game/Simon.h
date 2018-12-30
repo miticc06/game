@@ -94,6 +94,8 @@
 
 #define SIMON_DEFAULT_HEALTH 16
 #define SIMON_DEFAULT_HEARTCOLLECT 5
+#define SIMON_DEFAULT_SCORE 0
+#define SIMON_DEFAULT_LIVES 1
 
 #define SIMON_UNTOUCHABLE_TIME 2000 
 
@@ -164,12 +166,9 @@ public:
 public:
 	Simon(Camera* camera);
 	~Simon();
-	 
-
-
+	  
 	unordered_map<eType, Weapon*> mapWeapon;
-	 
-
+	  
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera);
@@ -226,9 +225,14 @@ public:
 	eType GetTypeWeaponCollect();
 	void SetTypeWeaponCollect(eType t);
 	void ProcessWeaponCollect(eType t);
+	bool IsUsingWeapon(eType typeWeapon);
 
 	bool GetIsUseDoubleShot();
 	void SetIsUseDoubleShot(bool b);
+
+	void Init(); // khởi tạo lại các trạng thái, HeartCollect, Heath, Lives, Score
+	void Reset(); // khởi tạo lại các trạng thái.
+
 };
 
 

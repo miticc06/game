@@ -5,10 +5,10 @@
 
 ItemStopWatch::ItemStopWatch(float X, float Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::STOPWATCH);
+	type = eType::STOPWATCH;
+	_texture = TextureManager::GetInstance()->GetTexture(type);
 
 	_sprite = new GSprite(_texture, 100);
-	type = eType::STOPWATCH;
 
 	this->x = X;
 	this->y = Y;

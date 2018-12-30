@@ -33,12 +33,16 @@ class Grid
 {  
 private:
 	vector<GameObject*> cells[GRID_CELL_MAX_ROW][GRID_CELL_MAX_COLUMN];
- 
+	char * filepath;
+
 public:
 	Grid();
 	~Grid();
 
-	void Readfile(char * str); // Đọc các object từ file
+	void SetFile(char * str); // Đọc các object từ file
+	void ReloadGrid();
+
+
 	GameObject * GetNewObject(int type, float x, float y, int w, int h, int Model);
 	void Insert(int id, int type, int direction, float x, float y, int w, int h, int Model); //Thêm object vào grid
 	void GetListObject(vector<GameObject*>& ListObj, Camera * camera);

@@ -12,7 +12,7 @@
 #include "HeliCopter.h"
 #include "IntroBat.h"
 
-#include "Scene_1.h"
+#include "SceneGame.h"
 #define INTRO_STATUS_PROCESS_MENU 0 
 #define INTRO_STATUS_PROCESS_GO_SCENE1 1 
 

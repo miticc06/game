@@ -53,7 +53,7 @@ void Scene_Intro::LoadResources()
 
 	isDrawTextPressStart = true; 
 
-	camera = SceneManager::GetInstance()->GetCamera();
+	camera = new Camera(SCREEN_WIDTH, SCREEN_HEIGHT);
 	camera->SetPosition(0, 0);
 
 	simon = new Simon(camera);
@@ -121,7 +121,7 @@ void Scene_Intro::Update(DWORD dt)
 
 		if (sound->isPlaying(eSound::musicGame_Start_Prologue) == false)
 		{
-			SceneManager::GetInstance()->SetScene(new Scene_1());
+			SceneManager::GetInstance()->SetScene(new SceneGame());
 		}
 
 		break;
