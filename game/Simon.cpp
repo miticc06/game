@@ -142,10 +142,7 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						_sprite->SelectFrame(SIMON_ANI_STAIR_GO_UP_END);
 					else
 						_sprite->SelectFrame(SIMON_ANI_STAIR_GO_DOWN_END);
-
 				}
-				 
-				float kk = 8.0f;
 				 
 				DoCaoDiDuoc = DoCaoDiDuoc + abs(vy) * 16.0f;
 
@@ -385,6 +382,7 @@ void Simon::Render(Camera* camera)
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	 
 	int alpha = 255;
+
 	if (untouchable) 
 		alpha = 128;
 

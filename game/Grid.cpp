@@ -6,7 +6,11 @@ Grid::Grid()
 
 Grid::~Grid()
 {
-
+	for (int i = 0; i < GRID_CELL_MAX_ROW; i++)
+		for (int j = 0; j < GRID_CELL_MAX_COLUMN; j++)
+		{
+			cells[i][j].clear();
+		}
 }
 
 void Grid::SetFile(char * str)
@@ -16,9 +20,11 @@ void Grid::SetFile(char * str)
 
 void Grid::ReloadGrid()
 {
-	for (int i=0; i< GRID_CELL_MAX_ROW; i++)
+	for (int i = 0; i < GRID_CELL_MAX_ROW; i++)
 		for (int j = 0; j < GRID_CELL_MAX_COLUMN; j++)
+		{
 			cells[i][j].clear();
+		}
 
 
 	int id, type, direction, w, h, model, n;
@@ -58,7 +64,6 @@ GameObject * Grid::GetNewObject(int type, float x, float y, int w, int h, int Mo
 
 	case eType::GATE:
 		return new Gate(x, y);
-
 	}
 	return NULL;
 }
@@ -74,7 +79,6 @@ void Grid::GetListObject(vector<GameObject*>& ListObj, Camera * camera)
 
 	int left = (int)((camera->GetXCam() + 1) / GRID_CELL_WIDTH);
 	int right = (int)((camera->GetXCam() + camera->GetWidth() - 1) / GRID_CELL_WIDTH);
-
 
 	for (int i = top; i <= bottom; i++)
 		for (int j = left; j <= right; j++)
@@ -106,9 +110,7 @@ void Grid::Insert(int id, int type, int direction, float x, float y, int w, int 
 
 	GameObject * obj = GetNewObject(type, x, y, w, h, Model);
 	if (obj == NULL)
-	{
 		return;
-	}
 
 	obj->SetId(id);
 	obj->SetDirection(direction);

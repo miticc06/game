@@ -1,10 +1,8 @@
 ﻿#ifndef __GRID_H__
 #define	__GRID_H__
 
-
 #include "Game.h" 
-#include "GSprite.h" 
-#include "Map.h"
+#include "GSprite.h"  
 #include "Torch.h"
 #include "Brick.h"
 #include "define.h"

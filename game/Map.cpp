@@ -18,10 +18,10 @@ void Map::LoadMap(eType type)
 	switch (type)
 	{ 
 	case eType::MAP1:
-		ReadMapTXT("Resources/map/1.txt");
+		ReadMapTXT("Resources/map/readfile_map_1.txt");
 		break; 
 	case eType::MAP2:
-		ReadMapTXT("Resources/map/2.txt");
+		ReadMapTXT("Resources/map/readfile_map_2.txt");
 		break;
 	default:
 		DebugOut(L"[MAP] Load map that bai!");

@@ -498,7 +498,7 @@ void SceneGame::LoadResources()
 
 void SceneGame::InitGame()
 {
-	LoadMap(1);
+	LoadMap(eType::MAP1);
 	simon->Init();
 
 	//ResetResource();
@@ -730,7 +730,7 @@ void SceneGame::Update(DWORD dt)
 	camera->Update(dt);
 
 
-	if (mapCurrent == 2)
+	if (mapCurrent == eType::MAP2)
 	{
 #pragma region Process_Region_Create_Enemy_Ghost
 
@@ -1178,14 +1178,14 @@ void SceneGame::Render()
 	board->Render(simon, StateCurrent, GAME_TIME_MAX - gameTime->GetTime(), boss);
 }
 
-void SceneGame::LoadMap(int x)
+void SceneGame::LoadMap(eType x)
 {
 	mapCurrent = x;
 
 	switch (x)
 	{
-	case 1:
-		gridGame->SetFile("Resources/map/Obj_1.txt");
+	case eType::MAP1:
+		gridGame->SetFile("Resources/map/file_gameobject_map1.txt");
 		TileMap->LoadMap(eType::MAP1);
 
 		camera->SetAllowFollowSimon(true);
@@ -1203,9 +1203,9 @@ void SceneGame::LoadMap(int x)
 		StateCurrent = 1;
 		break;
 
-	case 2:
+	case eType::MAP2:
 
-		gridGame->SetFile("Resources/map/Obj_2.txt");
+		gridGame->SetFile("Resources/map/file_gameobject_map2.txt");
 		TileMap->LoadMap(eType::MAP2);
 
 		camera->SetAllowFollowSimon(true);
@@ -1688,13 +1688,13 @@ void SceneGame::CheckCollisionSimonWithObjectHidden()
 			{
 				if (simon->isCollitionObjectWithObject(gameObject)) // có va chạm xảy ra
 				{
-					if (mapCurrent == 1)
+					if (mapCurrent == eType::MAP1)
 					{
 						switch (gameObject->GetId())
 						{
 						case 7: // đụng trúng cửa
 						{
-							LoadMap(2);
+							LoadMap(eType::MAP2);
 
 							return;
 							break;
@@ -1710,7 +1710,7 @@ void SceneGame::CheckCollisionSimonWithObjectHidden()
 						gameObject->SubHealth(1);
 					}
 
-					if (mapCurrent == 2)
+					if (mapCurrent == eType::MAP2)
 					{
 						switch (gameObject->GetId())
 						{
@@ -1769,7 +1769,7 @@ void SceneGame::CheckCollisionSimonWithObjectHidden()
 							break;
 						}
 
-#pragma region Lên & xuống hồ nước phía Phải
+#pragma region Lên & xuống hồ nước phía trái
 
 						case 41: // id 41: object ẩn -> bắt đầu xuống hồ nước
 						{
@@ -1818,7 +1818,7 @@ void SceneGame::CheckCollisionSimonWithObjectHidden()
 						case 86: // id 86: object ẩn -> vào hồ nước phía phải
 						{
 							camera->SetPosition(camera->GetXCam(), CAMERA_POSITION_Y_LAKE);
-							simon->SetPosition(3825, 442);
+							simon->SetPosition(3825, 450);
 							isAllowCreateBat = false;  // không cho tạo Bat
 							isAllowCreateFishmen = true;
 
@@ -1955,7 +1955,7 @@ void SceneGame::CheckCollisionSimonWithGate()
 				Gate* objGate = dynamic_cast<Gate*>(listObj[i]);
 
 				 
-				if (mapCurrent == 2)
+				if (mapCurrent == eType::MAP2)
 				{
 					switch (objGate->GetId())
 					{
@@ -2083,7 +2083,7 @@ void SceneGame::CheckCollisionWithBoss()
 
 Item * SceneGame::GetNewItem(int Id, eType Type, float X, float Y)
 {
-	if (mapCurrent == 1)
+	if (mapCurrent == eType::MAP1)
 	{
 		if (Type == eType::TORCH)
 		{
@@ -2104,7 +2104,7 @@ Item * SceneGame::GetNewItem(int Id, eType Type, float X, float Y)
 		}
 	}
 
-	if (mapCurrent == 2)
+	if (mapCurrent == eType::MAP2)
 	{
 		if (Type == eType::CANDLE)
 		{

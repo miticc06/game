@@ -226,7 +226,7 @@ private:
 	GSprite * _spriteLagerHeart;
 	int GameOverSelect;
 
-	int mapCurrent;
+	eType mapCurrent;
 
 public:
 	SceneGame();
@@ -246,7 +246,7 @@ public:
 	void Render();
 
 
-	void LoadMap(int);
+	void LoadMap(eType);
 	 
 
 

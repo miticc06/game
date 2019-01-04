@@ -38,8 +38,8 @@ void TextureManager::LoadResource()
 	AddTexture(eType::RENDERBBOX, new GTexture("textures/bbox.png")); // dùng để vẽ BBOX
 
 	//MAP
-	AddTexture(eType::MAP1, new GTexture("Resources/map/1.png", 8, 4, 32));
-	AddTexture(eType::MAP2, new GTexture("Resources/map/2.png", 22, 4, 88));
+	AddTexture(eType::MAP1, new GTexture("Resources/map/tileset_map1.png", 8, 4, 32));
+	AddTexture(eType::MAP2, new GTexture("Resources/map/tileset_map2.png", 22, 4, 88));
 
 
 	//gameobject ground
