@@ -11,8 +11,8 @@ private:
 	int totalFrames;
 
 public:
-	GSprite(GTexture* texture, DWORD TimeAnimation);
-	~GSprite();
+	GSprite(GTexture* Texture, DWORD TimeAnimation);
+	virtual ~GSprite();
 
 	GTexture * _texture;
 	DWORD timeAccumulated;	 // thời gian chờ đã tích lũy
@@ -26,12 +26,9 @@ public:
 
  	void Update(DWORD dt);
 
- 	void Draw(float X, float Y, int alpha = 255);
-	void DrawFlipX(float x, float y, int alpha = 255);
-	void DrawFlipXIndex(int index, float x, float y, int alpha = 255);
-
-	void DrawRandomColor(float X, float Y, int alpha = 255);
-	void DrawRandomColorFlipX(float x, float y, int alpha = 255);
+ 	void Draw(float X, float Y, int alpha = 255, int R = 255, int G = 255, int B = 255);
+	void DrawFlipX(float X, float Y, int alpha = 255, int R = 255, int G = 255, int B = 255);
+	void DrawFlipXIndex(int idFrame, float X, float Y, int alpha = 255, int R = 255, int G = 255, int B = 255);
 	  
 	int GetCurrentFrame();
 	int GetTotalFrames();

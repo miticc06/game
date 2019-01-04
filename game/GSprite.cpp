@@ -10,13 +10,12 @@ RECT GSprite::GetRectFrame(int index)
 	return res;
 }
   
-GSprite::GSprite(GTexture* texture, DWORD TimeAnimation)
+GSprite::GSprite(GTexture* Texture, DWORD TimeAnimation)
 {
-	_texture = texture;
+	_texture = Texture;
 	currentFrame = 0;
  	totalFrames = _texture->TotalFrames - 1;
 	this->timeAnimation = TimeAnimation;
-
 	spriteHandler = Game::GetInstance()->GetSpriteHandler();
 }
 
@@ -52,66 +51,21 @@ void GSprite::Update(DWORD dt)
 	}
 }
   
-void GSprite::Draw(float X, float Y, int alpha)
-{ 
-	RECT r = GetRectFrame(currentFrame);
-	D3DXVECTOR3 p(trunc(X), trunc(Y), 0);
-	spriteHandler->Draw(_texture->Texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
-} 
-
-void GSprite::DrawRandomColor(float X, float Y, int alpha)
+void GSprite::Draw(float X, float Y, int alpha, int R, int G, int B)
 {
 	RECT r = GetRectFrame(currentFrame);
-	 
- 
 	D3DXVECTOR3 p(trunc(X), trunc(Y), 0);
-
-	spriteHandler->Draw(_texture->Texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, rand() % 256, rand() % 256, rand() % 256));
+	spriteHandler->Draw(_texture->Texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, R, G, B));
 }
 
-void GSprite::DrawRandomColorFlipX(float x, float y, int alpha)
+void GSprite::DrawFlipX(float X, float Y, int alpha, int R, int G, int B)
 {
-	D3DXMATRIX oldMt;
-	spriteHandler->GetTransform(&oldMt);
-
-	D3DXMATRIX newMt;
-	D3DXVECTOR2 top_left = D3DXVECTOR2((float)x, (float)y);
-	D3DXVECTOR2 rotate = D3DXVECTOR2(-1.0f, 1.0f);
-	D3DXMatrixTransformation2D(&newMt, &top_left, 0.0f, &rotate, NULL, 0.0f, NULL);
-
-	D3DXMATRIX finalMt = newMt * oldMt;
-	spriteHandler->SetTransform(&finalMt);
-
-	x -= _texture->FrameWidth;
-
-	this->DrawRandomColor(x, y, alpha);
-
-	spriteHandler->SetTransform(&oldMt);
-} 
-
-void GSprite::DrawFlipX(float x, float y, int alpha)
-{
-	D3DXMATRIX oldMt;
-	spriteHandler->GetTransform(&oldMt);
-
-	D3DXMATRIX newMt;
-	D3DXVECTOR2 top_left = D3DXVECTOR2((float)x, (float)y);
-	D3DXVECTOR2 rotate = D3DXVECTOR2(-1.0f, 1.0f);
-	D3DXMatrixTransformation2D(&newMt, &top_left, 0.0f, &rotate, NULL, 0.0f, NULL);
-
-	D3DXMATRIX finalMt = newMt * oldMt;
-
-	spriteHandler->SetTransform(&finalMt);
-
-	x -= _texture->FrameWidth;
-	this->Draw(x, y, alpha);
-
-	spriteHandler->SetTransform(&oldMt);
+	this->DrawFlipXIndex(currentFrame, X, Y, alpha, R, G, B);
 }
 
-void GSprite::DrawFlipXIndex(int index, float X, float Y, int alpha)
+void GSprite::DrawFlipXIndex(int idFrame, float X, float Y, int alpha, int R, int G, int B)
 {
-	RECT r = GetRectFrame(index);
+	RECT r = GetRectFrame(idFrame);
 
 	D3DXMATRIX oldMt;
 	spriteHandler->GetTransform(&oldMt); 
@@ -122,11 +76,11 @@ void GSprite::DrawFlipXIndex(int index, float X, float Y, int alpha)
 	D3DXMATRIX finalMt = newMt * oldMt; 
 	spriteHandler->SetTransform(&finalMt);
 
-	Y -= _texture->FrameWidth;
+	X -= _texture->FrameWidth;
 
 	D3DXVECTOR3 p(trunc(X), trunc(Y), 0);
 
-	spriteHandler->Draw(_texture->Texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	spriteHandler->Draw(_texture->Texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, R, G, B));
 
 	spriteHandler->SetTransform(&oldMt);
 }

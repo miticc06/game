@@ -400,9 +400,10 @@ void Simon::Render(Camera* camera)
 		if (this->GetFreeze() == true)
 		{
 			if (direction == -1)
-				_sprite->DrawRandomColor(pos.x, pos.y, alpha);
+				_sprite->Draw(pos.x, pos.y, alpha, rand() % 256, rand() % 256, rand() % 256);
 			else
-				_sprite->DrawRandomColorFlipX(pos.x, pos.y, alpha);
+				_sprite->DrawFlipX(pos.x, pos.y, alpha, rand() % 256, rand() % 256, rand() % 256);
+
 		}
 		else
 		{
