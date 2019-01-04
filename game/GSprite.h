@@ -1,10 +1,8 @@
-﻿#ifndef CSPRITE_H
-#define CSPRITE_H
+﻿#ifndef __GSPRITE_H__
+#define __GSPRITE_H__
  
-
 #include "GTexture.h"
  
-
 class GSprite
 {
 private:
@@ -12,23 +10,16 @@ private:
 	int currentFrame;
 	int totalFrames;
 
-
-
 public:
+	GSprite(GTexture* texture, DWORD TimeAnimation);
+	~GSprite();
+
 	GTexture * _texture;
 	DWORD timeAccumulated;	 // thời gian chờ đã tích lũy
 	DWORD timeAnimation; // thời gian phải chờ giữa các frame
-
-
-
-	GSprite(GTexture* texture, DWORD TimeAnimation); 
-	~GSprite();
-
-
-	RECT GetRectFrame(int index);
-
- 	void Next();
 	 
+	RECT GetRectFrame(int index);
+ 	void Next();
 	void ResetTime();
 
  	void SelectFrame(int index);

@@ -22,12 +22,12 @@
 #define PULL_UP_SIMON_AFTER_SITTING 18.0f // Kéo simon lên 18px sau khi ngồi rồi đứng dậy, tránh overlaping do BBOX bottom thu lại khi ngồi
 
  
-#define SIMON_GRAVITY 0.005f//0.005f
-#define SIMON_GRAVITY_JUMPING 0.001f//0.005f
+#define SIMON_GRAVITY 0.005f 
+#define SIMON_GRAVITY_JUMPING 0.001f 
 #define SIMON_GRAVITY_HURTING 0.001f
 
 
-#define SIMON_VJUMP 0.34f//0.9f
+#define SIMON_VJUMP 0.34f
 #define SIMON_VJUMP_HURTING 0.2f // nhảy lúc bị đau
 #define PULL_UP_SIMON_AFTER_JUMPING 18.0f // Kéo simon lên 18px sau khi nhảy, tránh overlaping do BBOX bottom thu lại khi nhảy
 
@@ -81,7 +81,7 @@
 #define SIMON_ANI_HIDE_FACE 9
 
 
-#define SIMON_SPEED_ONSTAIR 0.09f//0.08f//0.05f
+#define SIMON_SPEED_ONSTAIR 0.09f 
 
 
 

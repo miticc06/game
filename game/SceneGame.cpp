@@ -714,30 +714,14 @@ void SceneGame::Update(DWORD dt)
 	}
 
 #pragma endregion
-
-//#pragma region Process_StopWatch
-//
-//	if (simon->mapWeapon.find(eType::STOPWATCH) != simon->mapWeapon.end()) // có tồn tại
-//	{
-//		if (simon->mapWeapon[eType::STOPWATCH]->GetFinish() == false) //stopwatch chưa kt
-//		{
-//			isStopWatch = true;
-//		}
-//		else
-//			isStopWatch = false;
-//	}
-//	else
-//		isStopWatch = false;
-//#pragma endregion
-
+	 
 
 
 	gridGame->GetListObject(listObj, camera); // lấy hết các object "còn Alive" trong vùng camera;
 
 
 
-//	DebugOut(L"[GRID] size = %d\n", listObj.size());
-
+ 
 	simon->Update(dt, &listObj);
 
 	if (camera->AllowFollowSimon())

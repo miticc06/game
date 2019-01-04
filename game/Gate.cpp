@@ -4,11 +4,11 @@
 
 Gate::Gate(float X, float Y)
 {
-	type = eType::GATE; 
+	type = eType::GATE;
 	_texture = TextureManager::GetInstance()->GetTexture(type);
 	_sprite = new GSprite(_texture, 200);
 	Health = 1;
-	isStart = 0;
+	isStart = GATE_CLOSE;
 	x = X;
 	y = Y;
 }
@@ -34,62 +34,60 @@ void Gate::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Gate::Render(Camera * camera)
 {
-	if (isStart != 0)
+	switch (isStart)
+	{
+	case GATE_CLOSE:
 	{
 
-		int index = _sprite->GetCurrentFrame();
-		switch (isStart)
+		break;
+	}
+	case GATE_OPEN_1:
+	{
+		_sprite->timeAccumulated += dt;
+		if (_sprite->timeAccumulated >= 1000)
 		{
-		case 1:
+			_sprite->timeAccumulated = 0;
+			_sprite->Next();
+			isStart++;
+			Sound::GetInstance()->Play(eSound::soundOpenDoor);
+		}
+		break;
+	}
+	case GATE_OPEN_2:
+	{
+		_sprite->timeAccumulated += dt;
+		if (_sprite->timeAccumulated >= 100)
 		{
-			_sprite->timeAccumulated += dt;
-			if (_sprite->timeAccumulated >= 1000)
-			{
-				_sprite->timeAccumulated = 0;
-				_sprite->Next();
-				isStart++;
-				Sound::GetInstance()->Play(eSound::soundOpenDoor);
-			}
-			break;
+			_sprite->timeAccumulated = 0;
+			_sprite->Next();
+			isStart++;
 		}
-		case 2:
+		break;
+	}
+	case GATE_OPEN_3:
+	{
+		_sprite->timeAccumulated += dt;
+		if (_sprite->timeAccumulated >= 100)
 		{
-			_sprite->timeAccumulated += dt;
-			if (_sprite->timeAccumulated >= 100)
-			{
-				_sprite->timeAccumulated = 0;
-				_sprite->Next();
-				isStart++;
-			}
-			break;
+			_sprite->timeAccumulated = 0;
+			_sprite->Next();
+			isStart++;
 		}
-		case 3:
+		break;
+	}
+	case GATE_OPEN_4:
+	{
+		_sprite->timeAccumulated += dt;
+		if (_sprite->timeAccumulated >= 500)
 		{
-			_sprite->timeAccumulated += dt;
-			if (_sprite->timeAccumulated >= 100)
-			{
-				_sprite->timeAccumulated = 0;
-				_sprite->Next();
-				isStart++;
-			}
-			break;
+			_sprite->timeAccumulated = 0;
+			_sprite->Next();
+			isStart++;
 		}
-		case 4:
-		{
-			_sprite->timeAccumulated += dt;
-			if (_sprite->timeAccumulated >= 500)
-			{
-				_sprite->timeAccumulated = 0;
-				_sprite->Next();
-				isStart++;
-			}
-			break;
-		}
-		default:
-			break;
-		}
-
-		
+		break;
+	}
+	default:
+		break;
 	}
 
 
@@ -104,7 +102,7 @@ void Gate::Render(Camera * camera)
 
 void Gate::Start()
 {
-	isStart = 1;
+	isStart = GATE_OPEN_1;
 }
 
 int Gate::GetStart()

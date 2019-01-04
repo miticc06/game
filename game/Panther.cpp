@@ -14,7 +14,7 @@ Panther::Panther(float X, float Y, int Direction, float autoGoX_Distance, Simon 
 	AutoGoX_Distance = autoGoX_Distance;
 
 	_texture = TextureManager::GetInstance()->GetTexture(type);
-	_sprite = new GSprite(_texture, 200);
+	_sprite = new GSprite(_texture, 120);
 
 	isSitting = 1;
 	isRunning = 0;
@@ -50,10 +50,13 @@ void Panther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy += PANTHER_GRAVITY * dt;// Simple fall down
 
 
-	float DistanceLimit = 177.0f;
+	float DistanceLimit;
 	if (direction == 1)
-		DistanceLimit -= 85;
-	if (abs(simon->GetX() - (x+_texture->FrameWidth)) <= DistanceLimit && isStart == 0)
+		DistanceLimit = PANTHER_DEFAULT_DISTANCE_AUTO_GO_X_DIRECTION_RIGHT;
+	else
+		DistanceLimit = PANTHER_DEFAULT_DISTANCE_AUTO_GO_X_DIRECTION_LEFT;
+
+	if (isStart == 0 && abs(simon->GetX() - (x+_texture->FrameWidth)) <= DistanceLimit)
 	{
 		isSitting = false;
 		isRunning = true;

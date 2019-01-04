@@ -40,10 +40,10 @@ PhantomBat::~PhantomBat()
 
 void PhantomBat::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	left = x;
+	left = x+5;
 	top = y;
-	right = x + _texture->FrameWidth;
-	bottom = y + _texture->FrameHeight;
+	right = x + _texture->FrameWidth-5;
+	bottom = y + _texture->FrameHeight - 10;
 }
 
 void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -52,10 +52,7 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 
 	//DebugOut(L"\n Trang thai trc x = %d", StatusProcessing);
-
-
-	
-
+	 
 	
 	switch (StatusProcessing)
 	{
@@ -108,7 +105,7 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else
 		{
 			TimeWaited += dt;
-			if (TimeWaited >= 2000+rand()%1500)
+			if (TimeWaited >= (UINT)(2000+rand()%1500))
 			{
 				isWaiting = false; // ngừng chờ
 
@@ -225,19 +222,13 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 //	DebugOut(L"simon - boss = %f\n", sqrt((simon->GetX() - x)*(simon->GetX() - x) + (simon->GetY() - y)*(simon->GetY() - y)));
-
-
-	
-
-	
-	  
-
+	 
 	GameObject::Update(dt);
 	x += dx;
 	y += dy;
 
 
-	DebugOut(L"\n xCam = %f , xcam-r = %f , x = %f , y = %f \n", camera->GetXCam(), camera->GetXCam() + camera->GetWidth(), x, y);
+	//DebugOut(L"\n xCam = %f , xcam-r = %f , x = %f , y = %f \n", camera->GetXCam(), camera->GetXCam() + camera->GetWidth(), x, y);
 
 
 	if (x < camera->GetXCam()
@@ -247,7 +238,7 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		
 		) // ra khỏi cam thì xử lí hướng tiếp theo
 	{
-
+/*
 		if (camera->GetXCam() + camera->GetWidth() < x + GetWidth())
 		{
 			DebugOut(L"\n Vuot qua ben phai!!!!!!!\n");
@@ -264,7 +255,7 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (camera->GetYCam() + camera->GetHeight() < y + GetHeight())
 		{
 			DebugOut(L"\n Vuot duoi!!\n");
-		}
+		}*/
 
 		switch (StatusProcessing)
 		{
@@ -302,7 +293,6 @@ void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 
 	}
-
 
 	yLastFrame = y;// lưu lại y frame hiện tại
 }
@@ -363,8 +353,7 @@ void PhantomBat::Render(Camera * camera)
 			}
 		}
 		  
-		RECT rect;
-		//float l, t, r, b;
+		RECT rect; 
 		rect.left = 0;
 		rect.top = 0;
 		rect.right = 15;
@@ -380,9 +369,7 @@ void PhantomBat::Render(Camera * camera)
 			rect.right,
 			rect.bottom,
 			100);
-
 	}
-	
 }
  
 float PhantomBat::getPt(float n1, float n2, float perc)
@@ -486,7 +473,7 @@ void PhantomBat::StartStaight()
 	xTarget = (float) PHANTOMBAT_BOUNDARY_START_STAIGHT_LEFT + rand() % (PHANTOMBAT_BOUNDARY_START_STAIGHT_RIGHT- PHANTOMBAT_BOUNDARY_START_STAIGHT_LEFT);
 	yTarget = 80.0f + rand() % (190 - 80);
 
-	DebugOut(L"StatusProcessing = %d, Target (%f, %f) \n", StatusProcessing, xTarget, yTarget);
+//	DebugOut(L"StatusProcessing = %d, Target (%f, %f) \n", StatusProcessing, xTarget, yTarget);
 	
  
 	vx = (xTarget - xBefore) / (1000); // cho đi 1 giây
@@ -495,8 +482,7 @@ void PhantomBat::StartStaight()
 
 void PhantomBat::StartAttack()
 {
-	//DebugOut(L"\n\n!===========================!\n");
-
+ 
 	DebugOut(L"ATTACK!\n");
 	int DirectionWeapon = 0;
 	float xAttack = x + GetWidth() / 2;

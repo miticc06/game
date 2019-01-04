@@ -12,6 +12,10 @@
 #define PANTHER_GRAVITY 0.005f
 #define PANTHER_GRAVITY_JUMPING 0.001f
 
+#define PANTHER_DEFAULT_DISTANCE_AUTO_GO_X_DIRECTION_LEFT 177.0f // khoảng cách Panther tự đi khi chạy bên trái
+#define PANTHER_DEFAULT_DISTANCE_AUTO_GO_X_DIRECTION_RIGHT PANTHER_DEFAULT_DISTANCE_AUTO_GO_X_DIRECTION_LEFT - 85 // khoảng cách Panther tự đi khi chạy bên phải
+
+
 #include "GameObject.h"
 #include "Simon.h"
 
