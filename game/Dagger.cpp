@@ -44,6 +44,6 @@ void Dagger::Create(float simonX, float simonY, int simonDirection)
 
 void Dagger::RenderIcon(float X, float Y)
 {
-	_sprite->DrawFlipXIndex(0, X, Y); 
+	_sprite->DrawFrameFlipX(0, X, Y); 
 }
   

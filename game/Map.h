@@ -1,30 +1,22 @@
 ﻿#ifndef __MAP_H__
 #define __MAP_H__
 
-#include "define.h"
-#include "GTexture.h"
-#include "GSprite.h"
-
-#include "Camera.h"
 #include "TextureManager.h"
- 
+#include "GSprite.h"
+#include "define.h"
+
 class Map
 {
 private:
 	GTexture *_texture;
 	GSprite *_sprite;
-	 
-	int NumColumnTile;
-	int NumRowTile;
 
-	int RowMatrix; 
-	int ColumnMatrix;
-	 
-	int TotalTiles;
+	int ColumnTile, RowTile, TotalTiles;
 
+	int ColumnMap, RowMap;
 
 	int HeightBoard; // chiều cao board
-	 
+
 	int TileMap[500][500];
 
 public:
@@ -37,8 +29,6 @@ public:
 	int GetMapWidth();
 	int GetMapHeight();
 };
-
-
 
 
 #endif

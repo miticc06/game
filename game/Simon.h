@@ -20,17 +20,14 @@
 #define SIMON_BBOX_JUMPING_HEIGHT 45
 
 #define PULL_UP_SIMON_AFTER_SITTING 18.0f // Kéo simon lên 18px sau khi ngồi rồi đứng dậy, tránh overlaping do BBOX bottom thu lại khi ngồi
-
  
-#define SIMON_GRAVITY 0.005f 
-#define SIMON_GRAVITY_JUMPING 0.001f 
-#define SIMON_GRAVITY_HURTING 0.001f
-
-
 #define SIMON_VJUMP 0.34f
 #define SIMON_VJUMP_HURTING 0.2f // nhảy lúc bị đau
 #define PULL_UP_SIMON_AFTER_JUMPING 18.0f // Kéo simon lên 18px sau khi nhảy, tránh overlaping do BBOX bottom thu lại khi nhảy
 
+#define SIMON_GRAVITY 0.005f 
+#define SIMON_GRAVITY_JUMPING 0.001f 
+#define SIMON_GRAVITY_HURTING 0.001f
 
 #define SIMON_WALKING_SPEED 0.12f //0.12f 
 
@@ -43,7 +40,6 @@
 #define SIMON_ANI_IDLE 0
 
 #define SIMON_ANI_JUMPING 4
-
 #define SIMON_ANI_SITTING 4
 
 
@@ -56,35 +52,35 @@
 #define SIMON_ANI_STANDING_ATTACKING_BEGIN 5
 #define SIMON_ANI_STANDING_ATTACKING_END 7
 
-/*Ani đang đi lên cầu thang đánh*/
-#define SIMON_ANI_STAIR_UP_ATTACKING_BEGIN 21
-#define SIMON_ANI_STAIR_UP_ATTACKING_END 23
-
 /*Ani đang đi xuống cầu thang đánh*/
 #define SIMON_ANI_STAIR_DOWN_ATTACKING_BEGIN 18
 #define SIMON_ANI_STAIR_DOWN_ATTACKING_END 20
 
+/*Ani đang đi lên cầu thang đánh*/
+#define SIMON_ANI_STAIR_UP_ATTACKING_BEGIN 21
+#define SIMON_ANI_STAIR_UP_ATTACKING_END 23
+
+
+
 /* Time Ani attack */ 
 #define SIMON_TIME_WAIT_ANI_ATTACKING 120// thời gian thời của mỗi frame khi tấn công
-
-
-#define SIMON_ANI_STAIR_GO_UP_BEGIN 12
-#define SIMON_ANI_STAIR_GO_UP_END 13
-
-#define SIMON_ANI_STAIR_GO_DOWN_BEGIN 10
-#define SIMON_ANI_STAIR_GO_DOWN_END 11
-
 
 
 #define SIMON_ANI_HURTING 8
 
 #define SIMON_ANI_HIDE_FACE 9
 
+#define SIMON_ANI_STAIR_GO_DOWN_BEGIN 10
+#define SIMON_ANI_STAIR_GO_DOWN_END 11
+
+#define SIMON_ANI_STAIR_GO_UP_BEGIN 12
+#define SIMON_ANI_STAIR_GO_UP_END 13
+
+ 
+
 
 #define SIMON_SPEED_ONSTAIR 0.09f 
-
-
-
+ 
 #define SIMON_ANI_STAIR_STANDING_UP 12
 #define SIMON_ANI_STAIR_STANDING_DOWN 10
 
@@ -142,11 +138,13 @@ private:
 
 
 public:
+
+	bool isAttacking;
+	bool isHurting;
 	bool isWalking;
 	bool isJumping;
 	bool isSitting;
-	bool isAttacking;
-	bool isHurting;
+
 
 	bool isOnStair;
 	int isProcessingOnStair;  // có 2 giai đoạn 
@@ -172,15 +170,16 @@ public:
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(Camera * camera);
-	void Left();  // set lại hướng của simon
-	void Right(); // set lại hướng của simon
-	void Go();
-	
+
 	void Sit();
+
+	void Stop();
 	void ResetSit();
 
+	void Go();
 	void Jump();
-	void Stop();
+	void Right(); 
+	void Left();
 
 	void SetHurt(LPCOLLISIONEVENT e);
 

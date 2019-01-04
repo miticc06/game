@@ -54,17 +54,22 @@ void GSprite::Update(DWORD dt)
   
 void GSprite::Draw(float X, float Y, int alpha, int R, int G, int B)
 {
-	RECT r = GetRectFrame(currentFrame);
+	DrawFrame(currentFrame, X, Y, alpha, R, G, B);
+}
+
+void GSprite::DrawFrame(int idFrame, float X, float Y, int alpha, int R, int G, int B)
+{
+	RECT r = GetRectFrame(idFrame);
 	D3DXVECTOR3 p(trunc(X), trunc(Y), 0);
 	spriteHandler->Draw(_texture->Texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, R, G, B));
 }
 
 void GSprite::DrawFlipX(float X, float Y, int alpha, int R, int G, int B)
 {
-	this->DrawFlipXIndex(currentFrame, X, Y, alpha, R, G, B);
+	this->DrawFrameFlipX(currentFrame, X, Y, alpha, R, G, B);
 }
 
-void GSprite::DrawFlipXIndex(int idFrame, float X, float Y, int alpha, int R, int G, int B)
+void GSprite::DrawFrameFlipX(int idFrame, float X, float Y, int alpha, int R, int G, int B)
 {
 	RECT r = GetRectFrame(idFrame);
 

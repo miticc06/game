@@ -24,25 +24,24 @@ Simon::~Simon()
 
 void Simon::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	if (isSitting == true) // simon đang ngồi
+	if (isSitting == true)
 	{
 		left = x + 15;
-		top = y - 1; // không chỉnh lại y bởi vì hàm Sit() đã điều chỉnh
-		right = x + SIMON_BBOX_WIDTH - 17+5-3;
+		top = y - 1;
+		right = x + SIMON_BBOX_WIDTH - 15;
 		bottom = y + SIMON_BBOX_SITTING_HEIGHT;
 	}
 	else
-	{ 
-		left = x +15;
-		top = y -1 ;
-		right = x + SIMON_BBOX_WIDTH - 17+5-3;
+	{
+		left = x + 15;
+		top = y - 1;
+		right = x + SIMON_BBOX_WIDTH - 15;
 		bottom = y + SIMON_BBOX_HEIGHT;
 
 		if (isJumping)
 			bottom = y + SIMON_BBOX_JUMPING_HEIGHT;
-
 	}
- 	
+
 }
 
 void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -429,30 +428,24 @@ void Simon::Left()
 {
 	if (isOnStair == true)
 		return;
-
-	// (isJumping == true || isAttacking == true)
-	//	return;
 	direction = -1;
 }
 
 void Simon::Right()
 {
 	if (isOnStair == true)
-		return;
-	//if (isJumping == true || isAttacking == true)
-	//	return;
-	direction = 1; // quay qua phải
+		return; 
+	direction = 1;
 }
 
 void Simon::Go()
 {
 	if (isOnStair == true)
-	{
-		//isWalking = 1;
+	{ 
 		return;
 	}
 
-	if (isAttacking == true /*|| isJumping == true*/)
+	if (isAttacking == true )
 		return;
 
 	vx = SIMON_WALKING_SPEED * direction;
@@ -468,18 +461,18 @@ void Simon::Sit()
 	vx = 0;
 	isWalking = 0;
 
-	if (isSitting == false) // nếu trước đó simon chưa ngồi
-		y = y + PULL_UP_SIMON_AFTER_SITTING; // kéo simon xuống
+	if (isSitting == false)
+		y = y + PULL_UP_SIMON_AFTER_SITTING;
 
 	isSitting = 1;
 }
 
 void Simon::ResetSit()
 {
-	if (isSitting == true) // nếu simon đang ngồi
+	if (isSitting == true)
 	{
-		isSitting = 0; // hủy trạng thái ngồi
-		y = y - PULL_UP_SIMON_AFTER_SITTING; // kéo simon lên
+		isSitting = 0;
+		y = y - PULL_UP_SIMON_AFTER_SITTING;
 	}
 }
 
@@ -519,10 +512,10 @@ void Simon::Stop()
 	 
 
 	isWalking = 0;
-	if (isSitting == true) // nếu simon đang ngồi
+	if (isSitting == true)
 	{
-		isSitting = 0; // hủy trạng thái ngồi
-		y = y - PULL_UP_SIMON_AFTER_SITTING; // kéo simon lên
+		isSitting = 0;
+		y = y - PULL_UP_SIMON_AFTER_SITTING;
 	}
 	
 }
@@ -596,9 +589,8 @@ void Simon::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 		if (coObjects->at(i)->GetType() == eType::BRICK)
 			list_Brick.push_back(coObjects->at(i));
 
-	
-	CalcPotentialCollisions(&list_Brick, coEvents); // Lấy danh sách các va chạm 
-	// No collision occured, proceed normally
+	CalcPotentialCollisions(&list_Brick, coEvents);
+
 	if (coEvents.size() == 0)
 	{
 		x += dx;
@@ -610,11 +602,8 @@ void Simon::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 	{
 		float min_tx, min_ty, nx = 0, ny; 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-		// nếu ko va chạm thì min_tx,min_ty = 1.0, còn nếu có thì nó trả về thời gian va chạm. 
-		//Còn nx,ny là hướng va chạm,  = 0 nếu ko va chạm;
-
-		// block 
-		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		
+		x += min_tx * dx + nx * 0.4f;
 		
 		if (ny == -1)
 			y += min_ty * dy + ny * 0.4f;
@@ -626,11 +615,10 @@ void Simon::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 			vy = 0.1f;
 			dy = vy * dt;
 
-			//vy = 0;
 			if (isJumping)
 			{
-				isJumping = false; // kết thúc nhảy
-				y = y - PULL_UP_SIMON_AFTER_JUMPING; // kéo simon lên tránh overlaping
+				isJumping = false;
+				y = y - PULL_UP_SIMON_AFTER_JUMPING;
 			}
 		}
 
@@ -654,8 +642,7 @@ void Simon::CollisionWithBrick(const vector<LPGAMEOBJECT>* coObjects)
 		}
 
 	}
-
-	// clean up collision events
+	 
 	for (UINT i = 0; i < coEvents.size(); i++)
 		delete coEvents[i];
 }
@@ -714,7 +701,7 @@ void Simon::CollisionIsOnStair(vector<LPGAMEOBJECT> *coObjects)
 			for (UINT i = 0; i < coEvents.size(); i++)
 				delete coEvents[i];
 
-			return; // ko cần xét tiếp
+			return; 
 		}
 
 	}
@@ -1218,12 +1205,15 @@ void Simon::Init()
 
 void Simon::Reset()
 {
-	isWalking = 0;
+
+	direction = 1;
+
 	isSitting = 0;
-	isAttacking = 0;
 	isProcessingOnStair = 0;// ko phải đang xử lí
 	isOnStair = 0;
 	isJumping = 0;
+	isWalking = 0;
+	isAttacking = 0;
 
 	isAutoGoX = 0;
 	isHurting = 0;
@@ -1233,14 +1223,12 @@ void Simon::Reset()
 	DoCaoDiDuoc = 0;
 	isFreeze = 0;
 	TimeFreeze = 0;
-	direction = 1;
 
 	isDeadth = false;
 	isUseDoubleShot = false;
 	TypeWeaponCollect = eType::NON_WEAPON_COLLECT;
 }
- 
-
+  
 bool Simon::LoseLife()
 {
 	if (Lives - 1 < 0)

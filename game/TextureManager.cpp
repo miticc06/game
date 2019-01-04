@@ -35,7 +35,7 @@ void TextureManager::LoadResource()
 	AddTexture(eType::BOARD_TRANS, new GTexture("Resources/blackboard.png",1,1,1,0,0,0));
 	
 	AddTexture(eType::BOARDHEALTH, new GTexture("Resources/heal.png", 3, 1, 3));
-	AddTexture(eType::RENDERBBOX, new GTexture("textures/bbox.png")); // dùng để vẽ BBOX
+	AddTexture(eType::RENDERBBOX, new GTexture("Resources/bbox.png")); // dùng để vẽ BBOX
 
 	//MAP
 	AddTexture(eType::MAP1, new GTexture("Resources/map/tileset_map1.png", 8, 4, 32));
