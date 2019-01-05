@@ -3,122 +3,15 @@
 
 #include "SceneManager.h"
 
-#define WINDOW_CLASS_NAME L"Game"
-#define MAIN_WINDOW_TITLE L"Game"
+#define WINDOW_CLASS_NAME L"Castlevania"
+#define MAIN_WINDOW_TITLE L"Castlevania"
  
-
 #include "SceneGame.h"
 #include "Scene_Intro.h"
 
-
 Game *game;
 SceneManager * _sceneManager;
-
-
-
-
-//
-//
-//class CSampleKeyHander: public KeyEventHandler
-//{
-//	virtual void KeyState(BYTE *states);
-//	virtual void OnKeyDown(int KeyCode);
-//	virtual void OnKeyUp(int KeyCode);
-//};
-//
-//CSampleKeyHander * keyHandler; 
-//
-//void CSampleKeyHander::OnKeyDown(int KeyCode) // khi đè phím
-//{
-//	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-//
-//	if (KeyCode == DIK_ESCAPE)
-//		DestroyWindow(hWnd); // thoát
-//
-//	if (KeyCode == DIK_Q)
-//		simon->SetPosition(SIMON_POSITION_DEFAULT);
-//	
-//	if (KeyCode == DIK_SPACE)
-//	{ 
-//			simon->Jump();
-//	}
-//
-//	if (KeyCode == DIK_1)
-//	{
-//		DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->GetX()+10, simon->GetY());
-//	}
-//
-//	if (KeyCode == DIK_X)
-//	{
-//		//DebugOut(L"[SIMON] X = %f , Y = %f \n", simon->x + 10, simon->y);
-//		simon->Attack(simon->_ListWeapon[0]);
-//	}
-// 
-//}
-//
-//void CSampleKeyHander::OnKeyUp(int KeyCode) // khi buông phím
-//{
-//	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
-//
-//	switch (KeyCode)
-//	{
-//	case DIK_SPACE:
-//		//simon->Sit();
-//		break; 
-//	}
-//}
-//
-//void CSampleKeyHander::KeyState(BYTE *states)
-//{
-//
-//	if (game->IsKeyDown(DIK_DOWN))
-//	{ 
-//		simon->Sit();
-//
-//		if (game->IsKeyDown(DIK_RIGHT))
-//			simon->Right();
-//
-//		if (game->IsKeyDown(DIK_LEFT))
-//			simon->Left();
-//
-//		return;
-//	}
-//	else
-//		simon->Stop();
-//
-//
-//	if (game->IsKeyDown(DIK_RIGHT))
-//	{
-//		simon->Right();
-//		simon->Go();
-//	}
-//	else
-//		if (game->IsKeyDown(DIK_LEFT))
-//		{
-//			simon->Left();
-//			simon->Go();
-//		}
-//		else
-//		{
-//			simon->Stop();
-//		}
-//		//DebugOut(L"ahihihihi\n");
-//	// disable control key when Mario die 
-//	//if (mario->GetState() == MARIO_STATE_DIE) return;
-//	//if (game->IsKeyDown(DIK_RIGHT))
-//	//	mario->SetState(MARIO_STATE_WALKING_RIGHT);
-//	//else if (game->IsKeyDown(DIK_LEFT))
-//	//	mario->SetState(MARIO_STATE_WALKING_LEFT);
-//	//else
-//	//	mario->SetState(MARIO_STATE_IDLE);
-//
-//
-//
-//
-//}
-//
-//
-//
+ 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
@@ -264,16 +157,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	_sceneManager = SceneManager::GetInstance();
 
 
-	_sceneManager->SetScene(new SceneGame()); // vào màn 1
+	_sceneManager->SetScene(new Scene_Intro()); 
 	 
 
-
-	//keyHandler = new CSampleKeyHander();
-	game->InitKeyboard(/*keyHandler*/);
+	game->InitKeyboard();
 
 
-	//LoadResources();
-	
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
  

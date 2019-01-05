@@ -9,18 +9,17 @@ GameObject::GameObject()
 	x = y = 0;
 	vx = vy = 0;
 	direction = 1;	
-	Health = 1;  // Alive
+	Health = 1; 
 
 	LastTimeAttacked = 0;
-	 
 }
 
 void GameObject::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
 	left = x;
 	top = y;
-	right = x + _texture->FrameWidth;
-	bottom = y + _texture->FrameHeight;
+	right = left + texture->GetFrameWidth();
+	bottom = top + texture->GetFrameHeight();
 }
 
 void GameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -29,10 +28,7 @@ void GameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	dx = vx*dt;
 	dy = vy*dt; 
 }
-
-
- 
-
+  
 int GameObject::GetHealth()
 {
 	return Health;
@@ -68,10 +64,7 @@ int GameObject::GetId()
 {
 	return id;
 }
-
-
-
-
+ 
 void GameObject::SetPosition(float x, float y)
 {
 	this->x = x;
@@ -138,12 +131,12 @@ void GameObject::SetVy(float VY)
 
 int GameObject::GetHeight()
 {
-	return _texture->FrameHeight;
+	return texture->GetFrameHeight();
 }
 
 int GameObject::GetWidth()
 {
-	return _texture->FrameWidth;
+	return texture->GetFrameWidth();
 }
 
 eType GameObject::GetType()
@@ -154,23 +147,20 @@ eType GameObject::GetType()
 
 void GameObject::RenderBoundingBox(Camera * camera)
 {
-	RECT rect;
-
 	float l, t, r, b;
-
 	GetBoundingBox(l, t, r, b);
+	RECT rect;
 	rect.left = 0;
 	rect.top = 0;
-	rect.right = (int)r - (int)l;
-	rect.bottom = (int)b - (int)t;
+	rect.right = (LONG)r - (LONG)l;
+	rect.bottom = (LONG)b - (LONG)t;
 
 	D3DXVECTOR2 pos = camera->Transform(l, t);
 
 	Game::GetInstance()->Draw(
 		pos.x,
 		pos.y,
-		TextureManager::GetInstance()->GetTexture(
-			eType::RENDERBBOX)->Texture,
+		TextureManager::GetInstance()->GetTexture(eType::RENDERBBOX)->Texture,
 		rect.left,
 		rect.top,
 		rect.right,
@@ -242,14 +232,14 @@ void GameObject::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vector<LPCO
 		LPCOLLISIONEVENT c = coEvents[i];
 
 		if (c->t <= min_tx && c->nx != 0)
-		{ // va chạm theo trục x
+		{
 			min_tx = c->t;
 			nx = c->nx;
 			min_ix = i;
 		}
 
 		if (c->t <= min_ty && c->ny != 0)
-		{ // va chạm theo trục y
+		{
 			min_ty = c->t;
 			ny = c->ny;
 			min_iy = i;
@@ -298,20 +288,20 @@ void GameObject::SetLastTimeAttacked(DWORD t)
 
 void GameObject::SetTexture(GTexture * tex)
 {
-	_texture = tex;
-	_sprite->_texture = tex;
+	texture = tex;
+	sprite->texture = tex;
 }
 
 GSprite * GameObject::GetSprite()
 {
-	return _sprite;
+	return sprite;
 }
 
 GameObject::~GameObject()
 {
-	/*SAFE_DELETE(_texture);*/
+	/*SAFE_DELETE(texture);*/
 	// ko xóa texture vì đây là texture dùng chung được quản lí bởi TextureManager
-	SAFE_DELETE(_sprite);
+	SAFE_DELETE(sprite);
 } 
 
 

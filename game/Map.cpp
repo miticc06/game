@@ -36,59 +36,36 @@ void Map::LoadMap(eType type)
 
 void Map::ReadMapTXT(char * filename)
 {
-	ifstream fileIn;
-	fileIn.open(filename, ios::in);
-	if (fileIn)
-	{
-		fileIn >> RowMap >> ColumnMap >> ColumnTile >> RowTile >> TotalTiles >> HeightBoard;
-		for (int i = 0; i < RowMap; i++)
-			for (int j = 0; j < ColumnMap; j++)
-				fileIn >> TileMap[i][j];
-		fileIn.close();
-	}
-
-
-	/*ofstream fileOut;
-	int x;
-	fileOut.open("C:\\Users\\MITICC06\\Desktop\\chuyendoi.txt", ios::out);
+	ifstream inp(filename, ios::in);
+	inp >> RowMap >> ColumnMap >> ColumnTile >> RowTile >> TotalTiles >> HeightBoard;
 	for (int i = 0; i < RowMap; i++)
-	{
 		for (int j = 0; j < ColumnMap; j++)
-		{
-			fileOut << TileMap[i][j] + 1 << ",";
-
-		}
-		fileOut << endl;
-
-	}
-
-	fileOut.close();*/
-
-
+			inp >> TileMap[i][j];
+	inp.close(); 
 }
 
 void Map::DrawMap(Camera *camera)
 {
-	int row = (int)(camera->GetYCam()) / _texture->FrameHeight;
-	int column = (int)(camera->GetXCam()) / _texture->FrameHeight;
+	int row = (int)(camera->GetYCam()) / _texture->GetFrameHeight();
+	int column = (int)(camera->GetXCam()) / _texture->GetFrameHeight();
 
-	float x = -(float)((int)(camera->GetXCam()) % _texture->FrameHeight);
-	float y = -(float)((int)(camera->GetYCam()) % _texture->FrameHeight);
+	float x = -(float)((int)(camera->GetXCam()) % _texture->GetFrameHeight());
+	float y = -(float)((int)(camera->GetYCam()) % _texture->GetFrameHeight());
 
-	for (int i = 0; i < SCREEN_HEIGHT / _texture->FrameHeight + 1; i++)
-		for (int j = 0; j < SCREEN_WIDTH / _texture->FrameWidth + 1; j++)
+	for (int i = 0; i < SCREEN_HEIGHT / _texture->GetFrameHeight() + 1; i++)
+		for (int j = 0; j < SCREEN_WIDTH / _texture->GetFrameWidth() + 1; j++)
 		{
 			if (!(row + i < 0 || row + i >= RowMap || j + column < 0 || j + column > ColumnMap))
-				_sprite->DrawFrame(TileMap[row + i][column + j], x + _texture->FrameWidth*j, y + _texture->FrameHeight*i + HeightBoard);
+				_sprite->DrawFrame(TileMap[row + i][column + j], x + _texture->GetFrameWidth()*j, y + _texture->GetFrameHeight()*i + HeightBoard);
 		}
 }
 
 int Map::GetMapWidth()
 {
-	return ColumnMap * _texture->FrameWidth;
+	return ColumnMap * _texture->GetFrameWidth();
 }
 
 int Map::GetMapHeight()
 {
-	return RowMap * _texture->FrameHeight;
+	return RowMap * _texture->GetFrameHeight();
 }

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-std::ofstream out("C:\\Users\\MITICC06\\Desktop\\DEBUG_OUT_GAME.txt", ios::out);
+//std::ofstream out("C:\\Users\\MITICC06\\Desktop\\DEBUG_OUT_GAME.txt", ios::out);
 
 
 void DebugOut(wchar_t *fmt, ...)
@@ -19,9 +19,9 @@ void DebugOut(wchar_t *fmt, ...)
 	va_end(argp);
 	OutputDebugString(dbg_out);
 	 
-	std::wstring string(dbg_out);
+	/*std::wstring string(dbg_out);
 	std::string str(string.begin(), string.end());
-	out << str;
+	out << str;*/
 	 
 
  }

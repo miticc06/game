@@ -6,13 +6,17 @@
 
 class GTexture 
 {
-private:
-	RECT Size;
+private: 
+	int frameWidth, frameHeight, Column, Row;
 	 
 public:
- 	int NumColumn, NumRow, TotalFrames, FrameWidth, FrameHeight;
-
+ 	int TotalFrames;
 	LPDIRECT3DTEXTURE9 Texture;
+
+	int GetFrameWidth();
+	int GetFrameHeight();
+	int GetColumn();
+	int GetRow();
 
 	GTexture(char* filePath, int column = 1, int row = 1, int totalframes = 1, int R = 255, int G = 0, int B = 255);
  	~GTexture(); 

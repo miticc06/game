@@ -4,8 +4,8 @@
   
 CrystalBall::CrystalBall(float X, float Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::CRYSTALBALL);
-	_sprite = new GSprite(_texture, 50);
+	texture = TextureManager::GetInstance()->GetTexture(eType::CRYSTALBALL);
+	sprite = new GSprite(texture, 50);
 
 	x = X;
 	y = Y;
@@ -65,11 +65,11 @@ void CrystalBall::Render(Camera * camera)
 		return;
 	}
 
-	_sprite->Update(dt);
+	sprite->Update(dt);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 
-	_sprite->Draw(pos.x, pos.y);
+	sprite->Draw(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

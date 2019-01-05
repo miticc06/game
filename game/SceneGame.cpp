@@ -2136,7 +2136,7 @@ Item * SceneGame::GetNewItem(int Id, eType Type, float X, float Y)
 
 			default:
 			{
-				int random = rand() % 10;
+				int random = rand() % 15;
 				switch (random)
 				{
 				case 0:
@@ -2148,6 +2148,7 @@ Item * SceneGame::GetNewItem(int Id, eType Type, float X, float Y)
 				case 2:
 					return new MoneyBag(X, Y, eType::MONEY_BAG_PURPLE);
 					break;
+
 				default:
 					return new SmallHeart(X, Y);
 					break;

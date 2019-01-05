@@ -82,20 +82,8 @@ int Game::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;
 }
-
-void Game::KeyState(BYTE * state)
-{
-}
-
-void Game::OnKeyDown(int KeyCode)
-{
-}
-
-void Game::OnKeyUp(int KeyCode)
-{
-}
-
-void Game::InitKeyboard(/*LPKEYEVENTHANDLER handler*/)
+ 
+void Game::InitKeyboard()
 {
 	HRESULT
 		hr = DirectInput8Create
@@ -131,7 +119,6 @@ void Game::InitKeyboard(/*LPKEYEVENTHANDLER handler*/)
 	hr = didv->SetDataFormat(&c_dfDIKeyboard);
 
 	hr = didv->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
-	//hr = didv->SetCooperativeLevel(hWnd, DISCL_EXCLUSIVE | DISCL_NONEXCLUSIVE | DISCL_FOREGROUND | DISCL_BACKGROUND | DISCL_NOWINKEY);
 	 
 
 
@@ -161,7 +148,6 @@ void Game::InitKeyboard(/*LPKEYEVENTHANDLER handler*/)
 		return;
 	}
 
-	//this->keyHandler = handler;
 
 	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
 }
@@ -191,9 +177,6 @@ void Game::ProcessKeyboard()
 			return;
 		}
 	}
-
-	 
-	/*keyHandler->*/    /*KeyState((BYTE *)&keyStates); */
 	 
 	SceneManager::GetInstance()->KeyState((BYTE *)&keyStates);
 	
@@ -213,10 +196,8 @@ void Game::ProcessKeyboard()
 		int KeyCode = keyEvents[i].dwOfs;
 		int KeyState = keyEvents[i].dwData;
 		if ((KeyState & 0x80) > 0)
-			/*keyHandler->*//* OnKeyDown(KeyCode);*/
 			SceneManager::GetInstance()->OnKeyDown(KeyCode);
 		else
-			/*keyHandler->*/ /*OnKeyUp(KeyCode);*/
 			SceneManager::GetInstance()->OnKeyUp(KeyCode);
 	}
 }
@@ -316,7 +297,6 @@ void Game::SweptAABB(
 	if (t_entry > t_exit) return; 
 
 	t = t_entry; 
-//	DebugOut(L"t = %f\n", t);
 
 	if (tx_entry > ty_entry)
 	{

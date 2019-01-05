@@ -8,8 +8,8 @@ Ghost::Ghost(float X,  float Y, int Direction)
 	y = Y;
 	this->direction = Direction;
 
-	_texture = TextureManager::GetInstance()->GetTexture(eType::GHOST);
-	_sprite = new GSprite(_texture, 100);
+	texture = TextureManager::GetInstance()->GetTexture(eType::GHOST);
+	sprite = new GSprite(texture, 100);
 
 	Health = 1; // sét máu
 	type = eType::GHOST;
@@ -62,7 +62,7 @@ void Ghost::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		delete coEvents[i];
 
 
-	_sprite->Update(dt); // update frame ani
+	sprite->Update(dt); // update frame ani
 }
 
 void Ghost::Render(Camera * camera)
@@ -72,9 +72,9 @@ void Ghost::Render(Camera * camera)
 	 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
-		_sprite->Draw(pos.x, pos.y);
+		sprite->Draw(pos.x, pos.y);
 	else
-		_sprite->DrawFlipX(pos.x, pos.y);
+		sprite->DrawFlipX(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

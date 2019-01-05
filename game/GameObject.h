@@ -15,9 +15,9 @@ using namespace std;
 class GameObject;
 typedef GameObject * LPGAMEOBJECT;
 
-
 struct CollisionEvent;
 typedef CollisionEvent * LPCOLLISIONEVENT;
+
 struct CollisionEvent
 {
 	LPGAMEOBJECT obj;
@@ -42,7 +42,7 @@ class GameObject
 protected:
 	DWORD LastTimeAttacked; // thời điểm bị tấn công cuối cùng
 	int Health;
-	int id; // ID của object
+	int id;
 
 	int direction;	// hướng -1 : trái, 1: phải
 	eType type; // Loại Object
@@ -50,16 +50,16 @@ protected:
 	float x;
 	float y;
 
-	float dx;	// dx = vx*dt
-	float dy;	// dy = vy*dt
+	float dx;
+	float dy;
 
 	float vx;
 	float vy;
 
 	DWORD dt;
 
-	GTexture * _texture;
-	GSprite * _sprite;
+	GTexture * texture;
+	GSprite * sprite;
 
 	 
 

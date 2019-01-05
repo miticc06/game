@@ -4,8 +4,8 @@
 
 UpgradeMorningStar::UpgradeMorningStar(float X, float Y) 
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::UPGRADEMORNINGSTAR);
-	_sprite = new GSprite(_texture, 100);
+	texture = TextureManager::GetInstance()->GetTexture(eType::UPGRADEMORNINGSTAR);
+	sprite = new GSprite(texture, 100);
 	type = eType::UPGRADEMORNINGSTAR;
 
 	this->x = X;

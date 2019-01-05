@@ -17,8 +17,8 @@ public:
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 
-	void Create(float simonX, float simonY, int simonDirection);
-	 
+	void Attack(float X, float Y, int Direction);
+
  	void RenderIcon(float X, float Y);
 	  
 

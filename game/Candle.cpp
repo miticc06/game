@@ -9,8 +9,8 @@ Candle::~Candle()
 
 Candle::Candle(float X, float Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::CANDLE);
-	_sprite = new GSprite(_texture, 100);
+	texture = TextureManager::GetInstance()->GetTexture(eType::CANDLE);
+	sprite = new GSprite(texture, 100);
 	this->x = X;
 	this->y = Y;
 	type = eType::CANDLE;
@@ -23,14 +23,14 @@ void Candle::GetBoundingBox(float & left, float & top, float & right, float & bo
 {
 	left = x - 5;
 	top = y - 5;
-	right = x + _texture->FrameWidth + 5;
-	bottom = y + _texture->FrameHeight + 5; //Mở rộng BBOX cho dễ đánh trúng
+	right = x + texture->GetFrameWidth() + 5;
+	bottom = y + texture->GetFrameHeight() + 5; //Mở rộng BBOX cho dễ đánh trúng
 
 }
 
 void Candle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	_sprite->Update(dt); // update animation
+	sprite->Update(dt); // update animation
 }
 
 void Candle::Render(Camera * camera)
@@ -39,5 +39,5 @@ void Candle::Render(Camera * camera)
 		RenderBoundingBox(camera);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
-	_sprite->Draw(pos.x, pos.y);
+	sprite->Draw(pos.x, pos.y);
 }

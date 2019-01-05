@@ -109,7 +109,7 @@ public:
 //-----------------------------------------------------------------------------
 // Name: class CStreamingSound
 // Desc: Encapsulates functionality to play a wave file with DirectSound.  
-//       The Create() method loads a chunk of wave file into the buffer, 
+//       The Attack() method loads a chunk of wave file into the buffer, 
 //       and as sound plays more is written to the buffer by calling 
 //       HandleWaveStreamNotification() whenever hNotifyEvent is signaled.
 //-----------------------------------------------------------------------------

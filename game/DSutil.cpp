@@ -51,7 +51,7 @@ HRESULT CSoundManager::Initialize( HWND  hWnd,
 
     SAFE_RELEASE_S( m_pDS );
 
-    // Create IDirectSound using the primary sound device
+    // Attack IDirectSound using the primary sound device
     if( FAILED( hr = DirectSoundCreate8( NULL, &m_pDS, NULL ) ) )
         return 0;//( TEXT("DirectSoundCreate8"), hr );
 
@@ -157,7 +157,7 @@ HRESULT CSoundManager::Get3DListenerInterface( LPDIRECTSOUND3DLISTENER* ppDSList
 
 
 //-----------------------------------------------------------------------------
-// Name: CSoundManager::Create()
+// Name: CSoundManager::Attack()
 // Desc: 
 //-----------------------------------------------------------------------------
 HRESULT CSoundManager::Create( CSound** ppSound, 
@@ -204,7 +204,7 @@ HRESULT CSoundManager::Create( CSound** ppSound,
     // Make the DirectSound buffer the same size as the wav file
     dwDSBufferSize = pWaveFile->GetSize();
 
-    // Create the direct sound buffer, and only request the flags needed
+    // Attack the direct sound buffer, and only request the flags needed
     // since each requires some overhead and limits if the buffer can 
     // be hardware accelerated
     DSBUFFERDESC dsbd;
@@ -264,7 +264,7 @@ HRESULT CSoundManager::Create( CSound** ppSound,
         }
    }
     
-    // Create the sound
+    // Attack the sound
     *ppSound = new CSound( apDSBuffer, dwDSBufferSize, dwNumBuffers, pWaveFile, dwCreationFlags );
     
     SAFE_DELETE( apDSBuffer );
@@ -328,7 +328,7 @@ HRESULT CSoundManager::CreateFromMemory( CSound** ppSound,
     // Make the DirectSound buffer the same size as the wav file
     dwDSBufferSize = ulDataSize;
 
-    // Create the direct sound buffer, and only request the flags needed
+    // Attack the direct sound buffer, and only request the flags needed
     // since each requires some overhead and limits if the buffer can 
     // be hardware accelerated
     DSBUFFERDESC dsbd;
@@ -372,7 +372,7 @@ HRESULT CSoundManager::CreateFromMemory( CSound** ppSound,
         }
    }
 
-    // Create the sound
+    // Attack the sound
     *ppSound = new CSound( apDSBuffer, dwDSBufferSize, dwNumBuffers, pWaveFile, dwCreationFlags );
 
     SAFE_DELETE( apDSBuffer );
@@ -445,7 +445,7 @@ HRESULT CSoundManager::CreateStreaming( CStreamingSound** ppStreamingSound,
         return 0;//( TEXT("CreateSoundBuffer"), hr );
     }
 
-    // Create the notification events, so that we know when to fill
+    // Attack the notification events, so that we know when to fill
     // the buffer as the sound plays. 
     if( FAILED( hr = pDSBuffer->QueryInterface( IID_IDirectSoundNotify, 
                                                 (VOID**)&pDSNotify ) ) )
@@ -477,7 +477,7 @@ HRESULT CSoundManager::CreateStreaming( CStreamingSound** ppStreamingSound,
     SAFE_RELEASE_S( pDSNotify );
     SAFE_DELETE_ARRAY( aPosNotify );
 
-    // Create the sound
+    // Attack the sound
     *ppStreamingSound = new CStreamingSound( pDSBuffer, dwDSBufferSize, pWaveFile, dwNotifySize );
 
     return S_OK;
@@ -1370,7 +1370,7 @@ HRESULT CWaveFile::ResetFile()
         }
         else
         {
-            // Create the 'data' chunk that holds the waveform samples.  
+            // Attack the 'data' chunk that holds the waveform samples.  
             m_ck.ckid = mmioFOURCC('d', 'a', 't', 'a');
             m_ck.cksize = 0;
 
@@ -1543,7 +1543,7 @@ HRESULT CWaveFile::WriteMMIO( WAVEFORMATEX *pwfxDest )
     
     dwFactChunk = (DWORD)-1;
 
-    // Create the output file RIFF chunk of form type 'WAVE'.
+    // Attack the output file RIFF chunk of form type 'WAVE'.
     m_ckRiff.fccType = mmioFOURCC('W', 'A', 'V', 'E');       
     m_ckRiff.cksize = 0;
 

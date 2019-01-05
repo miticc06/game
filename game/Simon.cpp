@@ -3,8 +3,8 @@
 
 Simon::Simon(Camera* camera)
 {
- 	_texture = TextureManager::GetInstance()->GetTexture(eType::SIMON);
-	_sprite = new GSprite(_texture, 250);
+ 	texture = TextureManager::GetInstance()->GetTexture(eType::SIMON);
+	sprite = new GSprite(texture, 250);
 	_sprite_deadth = new GSprite(TextureManager::GetInstance()->GetTexture(eType::SIMON_DEADTH), 250);
 	type = eType::SIMON;
 	 
@@ -55,7 +55,7 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 #pragma region Update về sprite
 	 
-	int index = _sprite->GetCurrentFrame();
+	int index = sprite->GetCurrentFrame();
 	  
 	if (isOnStair)
 	{  
@@ -66,24 +66,24 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				/* Xử lí ani đánh khi đang đi lên thang*/
 				if (index < SIMON_ANI_STAIR_UP_ATTACKING_BEGIN) // nếu ani chưa đúng
 				{
-					_sprite->SelectFrame(SIMON_ANI_STAIR_UP_ATTACKING_BEGIN); // set lại ani bắt đầu
-					_sprite->timeAccumulated = dt;
+					sprite->SelectFrame(SIMON_ANI_STAIR_UP_ATTACKING_BEGIN); // set lại ani bắt đầu
+					sprite->timeAccumulated = dt;
 				}
 				else
 				{
 					/* Update ani bình thường */
-					_sprite->timeAccumulated += dt;
-					if (_sprite->timeAccumulated >= SIMON_TIME_WAIT_ANI_ATTACKING)
+					sprite->timeAccumulated += dt;
+					if (sprite->timeAccumulated >= SIMON_TIME_WAIT_ANI_ATTACKING)
 					{
-						_sprite->timeAccumulated -= SIMON_TIME_WAIT_ANI_ATTACKING;
-						_sprite->SelectFrame(_sprite->GetCurrentFrame() + 1);
+						sprite->timeAccumulated -= SIMON_TIME_WAIT_ANI_ATTACKING;
+						sprite->SelectFrame(sprite->GetCurrentFrame() + 1);
 					}
 					/* Update ani bình thường */
 
-					if (_sprite->GetCurrentFrame() > SIMON_ANI_STAIR_UP_ATTACKING_END) // đã đi vượt qua frame cuối
+					if (sprite->GetCurrentFrame() > SIMON_ANI_STAIR_UP_ATTACKING_END) // đã đi vượt qua frame cuối
 					{
 						isAttacking = false;
-						_sprite->SelectFrame(SIMON_ANI_STAIR_STANDING_UP);
+						sprite->SelectFrame(SIMON_ANI_STAIR_STANDING_UP);
 					}
 				}
 				/* Xử lí ani đánh khi đang đi lên thang*/
@@ -94,25 +94,25 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				/* Xử lí ani đánh khi đang đi xuống thang*/
 				if (index < SIMON_ANI_STAIR_DOWN_ATTACKING_BEGIN) // nếu ani chưa đúng
 				{
-					_sprite->SelectFrame(SIMON_ANI_STAIR_DOWN_ATTACKING_BEGIN); // set lại ani bắt đầu
-					_sprite->timeAccumulated = dt;
+					sprite->SelectFrame(SIMON_ANI_STAIR_DOWN_ATTACKING_BEGIN); // set lại ani bắt đầu
+					sprite->timeAccumulated = dt;
 				}
 				else
 				{
 					/* Update ani bình thường */
-					_sprite->timeAccumulated += dt;
-					if (_sprite->timeAccumulated >= SIMON_TIME_WAIT_ANI_ATTACKING)
+					sprite->timeAccumulated += dt;
+					if (sprite->timeAccumulated >= SIMON_TIME_WAIT_ANI_ATTACKING)
 					{
-						_sprite->timeAccumulated -= SIMON_TIME_WAIT_ANI_ATTACKING;
-						_sprite->SelectFrame(_sprite->GetCurrentFrame() + 1);
+						sprite->timeAccumulated -= SIMON_TIME_WAIT_ANI_ATTACKING;
+						sprite->SelectFrame(sprite->GetCurrentFrame() + 1);
 					}
 					/* Update ani bình thường */
 
-					if (_sprite->GetCurrentFrame() > SIMON_ANI_STAIR_DOWN_ATTACKING_END) // đã đi vượt qua frame cuối
+					if (sprite->GetCurrentFrame() > SIMON_ANI_STAIR_DOWN_ATTACKING_END) // đã đi vượt qua frame cuối
 					{
 
 						isAttacking = false;
-						_sprite->SelectFrame(SIMON_ANI_STAIR_STANDING_DOWN);
+						sprite->SelectFrame(SIMON_ANI_STAIR_STANDING_DOWN);
 					}
 				}
 				/* Xử lí ani đánh khi đang đi xuống thang*/ 
@@ -129,18 +129,18 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (isProcessingOnStair == 1) // nếu ở giai đoạn bước chân thì set frame 12
 				{
 					if (vy < 0) // ddi len
-						_sprite->SelectFrame(SIMON_ANI_STAIR_GO_UP_BEGIN);
+						sprite->SelectFrame(SIMON_ANI_STAIR_GO_UP_BEGIN);
 					else
-						_sprite->SelectFrame(SIMON_ANI_STAIR_GO_DOWN_BEGIN);
+						sprite->SelectFrame(SIMON_ANI_STAIR_GO_DOWN_BEGIN);
 				}
 
 
 				if (isProcessingOnStair == 2) // nếu ở giai đoạn bước chân trụ thì set frame 13
 				{
 					if (vy < 0) // ddi len
-						_sprite->SelectFrame(SIMON_ANI_STAIR_GO_UP_END);
+						sprite->SelectFrame(SIMON_ANI_STAIR_GO_UP_END);
 					else
-						_sprite->SelectFrame(SIMON_ANI_STAIR_GO_DOWN_END);
+						sprite->SelectFrame(SIMON_ANI_STAIR_GO_DOWN_END);
 				}
 				 
 				DoCaoDiDuoc = DoCaoDiDuoc + abs(vy) * 16.0f;
@@ -182,20 +182,20 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			else
 			{
 				if (this->directionY == -1) // ddang di len
-					_sprite->SelectFrame(SIMON_ANI_STAIR_STANDING_UP);
+					sprite->SelectFrame(SIMON_ANI_STAIR_STANDING_UP);
 				else
-					_sprite->SelectFrame(SIMON_ANI_STAIR_STANDING_DOWN);
+					sprite->SelectFrame(SIMON_ANI_STAIR_STANDING_DOWN);
 			} 
 		}
 	
-	//	DebugOut(L"_sprite index = %d \n", _sprite->GetCurrentFrame());
+	//	DebugOut(L"sprite index = %d \n", sprite->GetCurrentFrame());
 
 	}
 	else
 	{
 		if (isHurting)
 		{
-			_sprite->SelectFrame(SIMON_ANI_HURTING);
+			sprite->SelectFrame(SIMON_ANI_HURTING);
 		}
 		else
 		{ 
@@ -206,32 +206,32 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					/* Xử lí ani ngồi đánh */
 					if (index < SIMON_ANI_SITTING_ATTACKING_BEGIN) // nếu ani chưa đúng
 					{
-						_sprite->SelectFrame(SIMON_ANI_SITTING_ATTACKING_BEGIN); // set lại ani bắt đầu
-						_sprite->timeAccumulated = dt;
+						sprite->SelectFrame(SIMON_ANI_SITTING_ATTACKING_BEGIN); // set lại ani bắt đầu
+						sprite->timeAccumulated = dt;
 					}
 					else
 					{
 						/* Update ani bình thường */
-						_sprite->timeAccumulated += dt;
-						if (_sprite->timeAccumulated >= SIMON_TIME_WAIT_ANI_ATTACKING)
+						sprite->timeAccumulated += dt;
+						if (sprite->timeAccumulated >= SIMON_TIME_WAIT_ANI_ATTACKING)
 						{
-							_sprite->timeAccumulated -= SIMON_TIME_WAIT_ANI_ATTACKING;
-							_sprite->SelectFrame(_sprite->GetCurrentFrame() + 1);
+							sprite->timeAccumulated -= SIMON_TIME_WAIT_ANI_ATTACKING;
+							sprite->SelectFrame(sprite->GetCurrentFrame() + 1);
 						}
 						/* Update ani bình thường */
 
-						if (_sprite->GetCurrentFrame() > SIMON_ANI_SITTING_ATTACKING_END) // đã đi vượt qua frame cuối
+						if (sprite->GetCurrentFrame() > SIMON_ANI_SITTING_ATTACKING_END) // đã đi vượt qua frame cuối
 						{
 							isAttacking = false;
-							_sprite->SelectFrame(SIMON_ANI_SITTING);
+							sprite->SelectFrame(SIMON_ANI_SITTING);
 						}
 					}
 					/* Xử lí ani ngồi đánh */
-					DebugOut(L"update ani simon dt = %d, tich luy = %d\n", dt, _sprite->timeAccumulated);
+					DebugOut(L"update ani simon dt = %d, tich luy = %d\n", dt, sprite->timeAccumulated);
 
 				}
 				else
-					_sprite->SelectFrame(SIMON_ANI_SITTING);
+					sprite->SelectFrame(SIMON_ANI_SITTING);
 			}
 			else
 				if (isAttacking == true)
@@ -240,26 +240,26 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					/* Xử lí ani đứng đánh */
 					if (index < SIMON_ANI_STANDING_ATTACKING_BEGIN) // nếu ani chưa đúng
 					{
-						_sprite->SelectFrame(SIMON_ANI_STANDING_ATTACKING_BEGIN); // set lại ani bắt đầu
-						_sprite->timeAccumulated = dt;
+						sprite->SelectFrame(SIMON_ANI_STANDING_ATTACKING_BEGIN); // set lại ani bắt đầu
+						sprite->timeAccumulated = dt;
 					}
 					else
 					{
 						/* Update ani bình thường */
-						_sprite->timeAccumulated += dt;
-						if (_sprite->timeAccumulated >= SIMON_TIME_WAIT_ANI_ATTACKING)
+						sprite->timeAccumulated += dt;
+						if (sprite->timeAccumulated >= SIMON_TIME_WAIT_ANI_ATTACKING)
 						{
-							_sprite->timeAccumulated -= SIMON_TIME_WAIT_ANI_ATTACKING;
-							_sprite->SelectFrame(_sprite->GetCurrentFrame() + 1);
+							sprite->timeAccumulated -= SIMON_TIME_WAIT_ANI_ATTACKING;
+							sprite->SelectFrame(sprite->GetCurrentFrame() + 1);
 						}
 						/* Update ani bình thường */
 
-						if (_sprite->GetCurrentFrame() > SIMON_ANI_STANDING_ATTACKING_END) // đã đi vượt qua frame cuối
+						if (sprite->GetCurrentFrame() > SIMON_ANI_STANDING_ATTACKING_END) // đã đi vượt qua frame cuối
 						{
 							//mapWeapon[TypeWeaponCollect]->Start(this->x, this->y);
 
 							isAttacking = false;
-							_sprite->SelectFrame(SIMON_ANI_IDLE);
+							sprite->SelectFrame(SIMON_ANI_IDLE);
 						}
 					}
 					/* Xử lí ani đứng đánh */
@@ -271,25 +271,25 @@ void Simon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						if (isJumping == false) // ko nhảy
 						{
 							if (index < SIMON_ANI_WALKING_BEGIN || index >= SIMON_ANI_WALKING_END)
-								_sprite->SelectFrame(SIMON_ANI_WALKING_BEGIN);
+								sprite->SelectFrame(SIMON_ANI_WALKING_BEGIN);
 
 							//cập nhật frame mới
-							_sprite->Update(dt); // dt này được cập nhật khi gọi update; 
+							sprite->Update(dt); // dt này được cập nhật khi gọi update; 
 						}
 						else
 						{
-							_sprite->SelectFrame(SIMON_ANI_JUMPING);
+							sprite->SelectFrame(SIMON_ANI_JUMPING);
 						}
 
 					}
 					else
 						if (isJumping == true) // nếu ko đi mà chỉ nhảy
 						{
-							_sprite->SelectFrame(SIMON_ANI_JUMPING);
+							sprite->SelectFrame(SIMON_ANI_JUMPING);
 						}
 						else
 						{
-							_sprite->SelectFrame(SIMON_ANI_IDLE);		// SIMON đứng yên
+							sprite->SelectFrame(SIMON_ANI_IDLE);		// SIMON đứng yên
 
 						}
 
@@ -397,17 +397,17 @@ void Simon::Render(Camera* camera)
 		if (this->GetFreeze() == true)
 		{
 			if (direction == -1)
-				_sprite->Draw(pos.x, pos.y, alpha, rand() % 256, rand() % 256, rand() % 256);
+				sprite->Draw(pos.x, pos.y, alpha, rand() % 256, rand() % 256, rand() % 256);
 			else
-				_sprite->DrawFlipX(pos.x, pos.y, alpha, rand() % 256, rand() % 256, rand() % 256);
+				sprite->DrawFlipX(pos.x, pos.y, alpha, rand() % 256, rand() % 256, rand() % 256);
 
 		}
 		else
 		{
 			if (direction == -1)
-				_sprite->Draw(pos.x, pos.y, alpha);
+				sprite->Draw(pos.x, pos.y, alpha);
 			else
-				_sprite->DrawFlipX(pos.x, pos.y, alpha);
+				sprite->DrawFlipX(pos.x, pos.y, alpha);
 		}
 	}
 	 
@@ -852,17 +852,17 @@ void Simon::Attack(eType typeWeapon)
 			return;
 
 		isAttacking = true; // set trang thái tấn công
-		_sprite->SelectFrame(0);
-		_sprite->ResetTime();
+		sprite->SelectFrame(0);
+		sprite->ResetTime();
 
-		mapWeapon[typeWeapon]->Create(this->x, this->y, this->direction); // set vị trí weapon theo simon
+		mapWeapon[typeWeapon]->Attack(this->x, this->y, this->direction); // set vị trí weapon theo simon
 		isAllowSubHeartCollect = true;
 	}
 	else // xử lí Double Shot
 	{
 		if (isUseDoubleShot && typeWeapon!=eType::MORNINGSTAR && typeWeapon != eType::STOPWATCH) // đang ở chế độ DoubleShot và k phải là Morning star VÀ STOPWATCH
 		{
-			if (GetTickCount() - mapWeapon[typeWeapon]->GetLastTimeAttack() >= 300) // sau 200 ms thì mới được dùng Double Shot
+			if (GetTickCount() - mapWeapon[typeWeapon]->GetLastTimeAttack() >= 250) // sau 250 ms thì mới được dùng Double Shot
 			{
 				bool isMustRecreateDoubleShot = false; // ban đầu k cần tạo lại
 
@@ -929,11 +929,11 @@ void Simon::Attack(eType typeWeapon)
 
 
 				isAttacking = true; // set trang thái tấn công
-				_sprite->SelectFrame(0);
-				_sprite->ResetTime();
+				sprite->SelectFrame(0);
+				sprite->ResetTime();
 
 
-				mapWeapon[eType::WEAPON_DOUBLE_SHOT]->Create(this->x, this->y, this->direction);
+				mapWeapon[eType::WEAPON_DOUBLE_SHOT]->Attack(this->x, this->y, this->direction);
 				isAllowSubHeartCollect = true;
 
 			}

@@ -31,6 +31,6 @@ void Font::Draw(float x, float y, const string & s)
 			}
 			else
 				_sprite->SelectFrame(36);
-		_sprite->Draw(x + i * _texture->FrameWidth, y);
+		_sprite->Draw(x + i * _texture->GetFrameWidth(), y);
 	}
 }

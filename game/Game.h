@@ -1,11 +1,8 @@
 ﻿#ifndef __GAME_H__
 #define __GAME_H__
 
-
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h> 
-
-
 
 
 #include "define.h"
@@ -13,23 +10,6 @@
 
  
 #define KEYBOARD_BUFFER_SIZE 1024
-/*
-Abstract class to define keyboard event handlers
-*/
-
-/*
-class KeyEventHandler
-{
-public:
-	virtual void KeyState(BYTE *state) = 0;
-	virtual void OnKeyDown(int KeyCode) = 0;
-	virtual void OnKeyUp(int KeyCode) = 0;
-};
-
-typedef KeyEventHandler * LPKEYEVENTHANDLER;
-
-*/
-
 
 class Game
 {
@@ -48,15 +28,9 @@ protected:
 
 	BYTE  keyStates[256];			// DirectInput keyboard state buffer 
 	DIDEVICEOBJECTDATA keyEvents[KEYBOARD_BUFFER_SIZE];		// Buffered keyboard data
-
-	//LPKEYEVENTHANDLER keyHandler;
-
-	virtual void KeyState(BYTE *state);
-	virtual void OnKeyDown(int KeyCode);
-	virtual void OnKeyUp(int KeyCode);
-
+	  
 public:
-	void InitKeyboard(/*LPKEYEVENTHANDLER handler*/);
+	void InitKeyboard();
 	void Init(HWND hWnd);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, int alpha = 255);
@@ -96,5 +70,5 @@ public:
 
 
 
-#endif // !__GAME_H__
+#endif
 

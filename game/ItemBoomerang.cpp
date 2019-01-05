@@ -6,8 +6,8 @@ ItemBoomerang::ItemBoomerang(float X, float Y)
 {
 	type = eType::ITEMBOOMERANG;
 
-	_texture = TextureManager::GetInstance()->GetTexture(type);
-	_sprite = new GSprite(_texture, 100);
+	texture = TextureManager::GetInstance()->GetTexture(type);
+	sprite = new GSprite(texture, 100);
 
 	x = X;
 	y = Y;

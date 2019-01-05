@@ -15,7 +15,7 @@ public:
 	StopWatch();
 	virtual ~StopWatch();
 
-	virtual void Create(float simonX, float simonY, int simonDirection);
+	virtual void Attack(float X, float Y, int Direction);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(Camera *camera);
  	virtual bool isCollision(GameObject* obj); 

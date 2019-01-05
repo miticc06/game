@@ -24,7 +24,7 @@ public:
 	int GetDirection();
 	void SetDirection(int Direction);
 
-	virtual void Create(float X, float Y, int Direction);
+	virtual void Attack(float X, float Y, int Direction);
   
   	
 	virtual void Render(Camera *camera); 

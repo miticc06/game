@@ -4,8 +4,8 @@
 
 FireBall::FireBall(Camera *camera)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::FIREBALL);
-	_sprite = new GSprite(_texture, 0);
+	texture = TextureManager::GetInstance()->GetTexture(eType::FIREBALL);
+	sprite = new GSprite(texture, 0);
 	type = eType::FIREBALL;
 	isFinish = true;
 	this->camera = camera;
@@ -34,10 +34,9 @@ void FireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	 
 }
 
-void FireBall::Create(float X, float Y, int Direction)
+void FireBall::Attack(float X, float Y, int Direction)
 { 
-	Weapon::Create(X, Y, Direction);
-	//vx = FIREBALL_SPEED * direction;
+	Weapon::Attack(X, Y, Direction); 
 }
  
 void FireBall::RenderIcon(float X, float Y)

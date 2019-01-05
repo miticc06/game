@@ -4,8 +4,8 @@
 MoneyBag::MoneyBag(float X, float Y, eType TypeMoneyBag)
 {
 	type = TypeMoneyBag;
-	_texture = TextureManager::GetInstance()->GetTexture(eType::BONUS);
-	_sprite = new GSprite(_texture, 0);
+	texture = TextureManager::GetInstance()->GetTexture(eType::BONUS);
+	sprite = new GSprite(texture, 0);
 
 	this->x = X;
 	this->y = Y;
@@ -30,20 +30,20 @@ void MoneyBag::Render(Camera * camera)
 	switch (type)
 	{ 
 	case eType::MONEY_BAG_RED:
-		_sprite->SelectFrame(MONEYBAG_ANI_RED);
+		sprite->SelectFrame(MONEYBAG_ANI_RED);
 		break;
 
 	case eType::MONEY_BAG_WHITE:
-		_sprite->SelectFrame(MONEYBAG_ANI_WHITE);
+		sprite->SelectFrame(MONEYBAG_ANI_WHITE);
 		break;
 
 	case eType::MONEY_BAG_PURPLE:
-		_sprite->SelectFrame(MONEYBAG_ANI_PURPLE);
+		sprite->SelectFrame(MONEYBAG_ANI_PURPLE);
 		break;
 	}
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
-	_sprite->Draw(pos.x, pos.y);
+	sprite->Draw(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

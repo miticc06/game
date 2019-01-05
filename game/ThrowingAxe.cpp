@@ -5,8 +5,8 @@
 ThrowingAxe::ThrowingAxe(Camera * camera)
 {
 	type = eType::THROWINGAXE;
-	_texture = TextureManager::GetInstance()->GetTexture(type);
-	_sprite = new GSprite(_texture, 70);
+	texture = TextureManager::GetInstance()->GetTexture(type);
+	sprite = new GSprite(texture, 70);
 
 
 	_spriteIcon = new GSprite(TextureManager::GetInstance()->GetTexture(eType::ITEMTHROWINGAXE), 0);
@@ -40,16 +40,16 @@ void ThrowingAxe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	y += dy;
 	x += dx;
 
-	_sprite->Update(dt);
+	sprite->Update(dt);
 }
 
-void ThrowingAxe::Create(float simonX, float simonY, int simonDirection)
+void ThrowingAxe::Attack(float X, float Y, int Direction)
 {
 	if (isFinish == false)
 		return;
-	Weapon::Create(simonX, simonY, simonDirection);
+	Weapon::Attack(X, Y, Direction);
 	UpdatePositionFitSimon();
-	vx = THROWINGAXE_SPEED_X * simonDirection;
+	vx = THROWINGAXE_SPEED_X * Direction;
 	vy = -THROWINGAXE_SPEED_Y;
 	 
 	Sound::GetInstance()->Play(eSound::soundAxe, true);

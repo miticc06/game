@@ -3,8 +3,8 @@
 HeliCopter::HeliCopter(float X, float Y)
 {
 	type = eType::HELICOPTER;
-	_texture = TextureManager::GetInstance()->GetTexture(type);
-	_sprite = new GSprite(_texture, 70);
+	texture = TextureManager::GetInstance()->GetTexture(type);
+	sprite = new GSprite(texture, 70);
  
 	this->x = X;
 	this->y = Y;
@@ -35,9 +35,9 @@ void HeliCopter::Render(Camera * camera)
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
-		_sprite->Draw(pos.x, pos.y);
+		sprite->Draw(pos.x, pos.y);
 	else
-		_sprite->DrawFlipX(pos.x, pos.y);
+		sprite->DrawFlipX(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

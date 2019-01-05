@@ -6,8 +6,8 @@
 
 ItemHolyWater::ItemHolyWater(float X, float Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::ITEMHOLYWATER);
-	_sprite = new GSprite(_texture, 0);
+	texture = TextureManager::GetInstance()->GetTexture(eType::ITEMHOLYWATER);
+	sprite = new GSprite(texture, 0);
 	type = eType::ITEMHOLYWATER;
 
 	this->x = X;

@@ -3,8 +3,8 @@
 PhantomBat::PhantomBat(Simon * simon, Camera *camera, vector <Weapon*> * listWeaponOfEnemy)
 { 
 	type = eType::PHANTOMBAT; 
-	_texture = TextureManager::GetInstance()->GetTexture(type);
-	_sprite = new GSprite(_texture, 70);
+	texture = TextureManager::GetInstance()->GetTexture(type);
+	sprite = new GSprite(texture, 70);
 
 	this->simon = simon;
 	this->camera = camera;
@@ -42,8 +42,8 @@ void PhantomBat::GetBoundingBox(float & left, float & top, float & right, float 
 {
 	left = x+5;
 	top = y;
-	right = x + _texture->FrameWidth-5;
-	bottom = y + _texture->FrameHeight - 10;
+	right = x + texture->GetFrameWidth()-5;
+	bottom = y + texture->GetFrameHeight() - 10;
 }
 
 void PhantomBat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -303,16 +303,16 @@ void PhantomBat::Render(Camera * camera)
 		return;
 
 	if (StatusProcessing == PHANTOMBAT_PROCESS_SLEEP)
-		_sprite->SelectFrame(0);
+		sprite->SelectFrame(0);
 	else
 	{ 
-		_sprite -> Update(dt);
-		if (_sprite->GetCurrentFrame() == 0)
-			_sprite->SelectFrame(1);
+		sprite -> Update(dt);
+		if (sprite->GetCurrentFrame() == 0)
+			sprite->SelectFrame(1);
 	}
 
 	D3DXVECTOR2 pos = camera->Transform(x, y); 
-	_sprite->Draw(pos.x, pos.y);  
+	sprite->Draw(pos.x, pos.y);  
 	  
 	if (IS_DEBUG_RENDER_BBOX)
 	{ 
@@ -500,7 +500,7 @@ void PhantomBat::StartAttack()
 	float t = S / FIREBALL_SPEED;
 
 	weapon->SetSpeed( DirectionWeapon* abs(xAttack - simon->GetX())/t, abs(yAttack - simon->GetY())/t);
-	weapon->Create(xAttack, yAttack, 1);
+	weapon->Attack(xAttack, yAttack, 1);
 
 	StatusProcessing = PHANTOMBAT_PROCESS_ATTACK;
 

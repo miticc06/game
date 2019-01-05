@@ -6,8 +6,8 @@ StopWatch::StopWatch()
 {
 	type = eType::STOPWATCH;
 
-	_texture = TextureManager::GetInstance()->GetTexture(eType::STOPWATCH);
-	_sprite = new GSprite(_texture, 100);
+	texture = TextureManager::GetInstance()->GetTexture(eType::STOPWATCH);
+	sprite = new GSprite(texture, 100);
  
  	isFinish = true;
 }
@@ -20,7 +20,7 @@ StopWatch::~StopWatch()
 		Sound::GetInstance()->Stop(eSound::soundStopWatch);
 }
 
-void StopWatch::Create(float simonX, float simonY, int simonDirection)
+void StopWatch::Attack(float X, float Y, int Direction)
 {
 	TimeSpent = 0;
 	isFinish = false;
@@ -52,6 +52,6 @@ bool StopWatch::isCollision(GameObject * obj)
 
 void StopWatch::RenderIcon(float X, float Y)
 {
-	_sprite->Draw(X, Y);
+	sprite->Draw(X, Y);
 }
  

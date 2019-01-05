@@ -4,8 +4,8 @@
 Bat::Bat(float X, float Y, int Direction)
 {
 	type = eType::BAT;
-	_texture = TextureManager::GetInstance()->GetTexture(type);
-	_sprite = new GSprite(_texture, 70);
+	texture = TextureManager::GetInstance()->GetTexture(type);
+	sprite = new GSprite(texture, 70);
 	 
 	this->x = X;
 	this->y = Y;
@@ -41,9 +41,9 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 	y += dy;
 	x += dx;
 
-	_sprite->Update(dt);
-	if (_sprite->GetCurrentFrame() == 0)
-		_sprite->Update(dt);
+	sprite->Update(dt);
+	if (sprite->GetCurrentFrame() == 0)
+		sprite->Update(dt);
 }
 
 void Bat::Render(Camera * camera)
@@ -53,9 +53,9 @@ void Bat::Render(Camera * camera)
 	 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
-		_sprite->Draw(pos.x, pos.y);
+		sprite->Draw(pos.x, pos.y);
 	else
-		_sprite->DrawFlipX(pos.x, pos.y);
+		sprite->DrawFlipX(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

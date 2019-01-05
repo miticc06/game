@@ -1,30 +1,21 @@
 ﻿#ifndef _DEFINE_H__
 #define _DEFINE_H__
-
-#define _USE_MATH_DEFINES
-
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <map>
-#include "debug.h"
-
-#include <vector>
-
-#include <Windows.h> 
-
+ 
+ 
+#include <fstream> 
 #include <string>
-
-
-#include <algorithm>
-
-
 #include <stdio.h>
-
-#include <fstream>
+#include <Windows.h>  
 #include <iostream>
+#include <map>
+#include "debug.h" 
+#include <algorithm>
+#include <d3dx9.h>
 #include <stdlib.h>
-#include <iostream>
 #include <iomanip>
+#include <d3d9.h>
+#include <vector>
+#include <iostream>
 
 
 
@@ -33,13 +24,8 @@ using namespace std;
 
 #define COLOR_BLACK D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)  
 #define COLOR_KEY D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f) 
-
-
-#define SHOWBOX_PINK 0
-
-
-
-
+ 
+ 
 #define SCREEN_WIDTH 528
 #define SCREEN_HEIGHT 480 
 
@@ -55,10 +41,6 @@ using namespace std;
 extern D3DCOLOR D3DCOLOR_BACKGROUND; // màu nền game
  
  
-
-extern int ScreenColumn;
-extern int ScreenRow;
-
 
 extern int isDebug_Untouchable;
 extern int isDebug_RenderBBox;

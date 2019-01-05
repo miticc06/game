@@ -22,7 +22,7 @@ void Weapon::SetDirection(int Direction)
 	this->direction = Direction;
 }
 
-void Weapon::Create(float X, float Y, int Direction)
+void Weapon::Attack(float X, float Y, int Direction)
 {
 	this->x = X;
 	this->y = Y;
@@ -38,12 +38,12 @@ void Weapon::Render(Camera * camera)
 	if (isFinish)
 		return; 
 	 
-	//DebugOut(L"WEAPON: index = %d \n", _sprite->GetCurrentFrame());
+	//DebugOut(L"WEAPON: index = %d \n", sprite->GetCurrentFrame());
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
-		_sprite->Draw(pos.x, pos.y);
+		sprite->Draw(pos.x, pos.y);
 	else
-		_sprite->DrawFlipX(pos.x, pos.y);
+		sprite->DrawFlipX(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

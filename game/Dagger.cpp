@@ -5,8 +5,8 @@
 Dagger::Dagger(Camera *camera)
 {
 	type = eType::DAGGER;
- 	_texture = TextureManager::GetInstance()->GetTexture(type);
-	_sprite = new GSprite(_texture, 0);
+ 	texture = TextureManager::GetInstance()->GetTexture(type);
+	sprite = new GSprite(texture, 0);
 	this->camera = camera;
 }
 
@@ -32,11 +32,11 @@ void Dagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	GameObject::Update(dt); // update dt,dx,dy 
 	x += dx;
 	 
-}
+} 
 
-void Dagger::Create(float simonX, float simonY, int simonDirection)
+void Dagger::Attack(float X, float Y, int Direction)
 {
-	Weapon::Create(simonX, simonY + 10, simonDirection);
+	Weapon::Attack(X, Y + 10, Direction);
 	vx = DAGGER_SPEED * direction;
 	Sound::GetInstance()->Play(eSound::soundDagger);
 }
@@ -44,6 +44,6 @@ void Dagger::Create(float simonX, float simonY, int simonDirection)
 
 void Dagger::RenderIcon(float X, float Y)
 {
-	_sprite->DrawFrameFlipX(0, X, Y); 
+	sprite->DrawFrameFlipX(0, X, Y); 
 }
   

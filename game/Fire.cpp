@@ -18,7 +18,7 @@ void Fire::Update(DWORD dt)
 {
 	Effect::Update(dt);
 
-	//DebugOut(L"GetCurrentFrame = %d\n", _sprite->GetCurrentFrame());
+	//DebugOut(L"GetCurrentFrame = %d\n", sprite->GetCurrentFrame());
  
 
 	if (_sprite->GetCurrentFrame() == 3) // nếu là frame cuối thì xong, frame cuối trống

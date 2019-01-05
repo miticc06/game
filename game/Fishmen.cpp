@@ -1,24 +1,24 @@
 ﻿#include "Fishmen.h"
 
- 
+
 Fishmen::Fishmen(float X, float Y, int Direction, Simon* simon, vector<Weapon*> *listWeaponOfEnemy, Camera * camera)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::FISHMEN);
-	_sprite = new GSprite(_texture, 200);
+	texture = TextureManager::GetInstance()->GetTexture(eType::FISHMEN);
+	sprite = new GSprite(texture, 200);
 	type = eType::FISHMEN;
 
 	this->x = X;
-	this->y = Y; 
+	this->y = Y;
 	this->direction = Direction;
-	this->Health = 1; 
+	this->Health = 1;
 	vx = 0;
 	vy = -FISHMEN_SPEED_Y_UP;
-	
+
 	yInit = y;
-	xInit = x; 
+	xInit = x;
 	xAccumulationAttack = 0;
-	 
-	_sprite->SelectFrame(FISHMEN_ANI_JUMP);
+
+	sprite->SelectFrame(FISHMEN_ANI_JUMP);
 
 	isRunning = 0;
 	isAttacking = false;
@@ -34,10 +34,10 @@ Fishmen::~Fishmen()
 
 void Fishmen::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	left = x+5;
+	left = x + 5;
 	top = y + 15;
-	right = x + _texture->FrameWidth-5;
-	bottom = y + _texture->FrameHeight;
+	right = x + texture->GetFrameWidth() - 5;
+	bottom = y + texture->GetFrameHeight();
 }
 
 void Fishmen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
@@ -146,34 +146,34 @@ void Fishmen::Update(DWORD dt, vector<LPGAMEOBJECT>* listObject)
 #pragma region Update Animation
 	if (isAttacking)
 	{
-		_sprite->SelectFrame(FISHMEN_ANI_ATTACK);
+		sprite->SelectFrame(FISHMEN_ANI_ATTACK);
 	}
 	else
 		if (isRunning)
 		{
-			int index = _sprite->GetCurrentFrame();
+			int index = sprite->GetCurrentFrame();
 
 			if (FISHMEN_ANI_WALK_BEGIN <= index && index <= FISHMEN_ANI_WALK_END)
-				_sprite->Update(dt);
+				sprite->Update(dt);
 
-			if (_sprite->GetCurrentFrame() == FISHMEN_ANI_ATTACK) // đang trong trạng thái đi mà quay về frame attack thì set thành frame đi
-				_sprite->SelectFrame(FISHMEN_ANI_WALK_BEGIN);
+			if (sprite->GetCurrentFrame() == FISHMEN_ANI_ATTACK) // đang trong trạng thái đi mà quay về frame attack thì set thành frame đi
+				sprite->SelectFrame(FISHMEN_ANI_WALK_BEGIN);
 
 		}
 #pragma endregion
 
 }
- 
+
 void Fishmen::Render(Camera * camera)
 {
 	if (Health <= 0)
 		return;
-	 
+
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
-		_sprite->Draw(pos.x, pos.y);
+		sprite->Draw(pos.x, pos.y);
 	else
-		_sprite->DrawFlipX(pos.x, pos.y);
+		sprite->DrawFlipX(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);
@@ -195,8 +195,8 @@ void Fishmen::Attack()
 
 	isAttacking = true;
 	TimeAttack = GetTickCount();
-	 
+
 	weapon->SetSpeed(FIREBALL_SPEED * direction, 0);
-	weapon->Create(x+10, y +3, direction);
+	weapon->Attack(x + 10, y + 3, direction);
 
 }

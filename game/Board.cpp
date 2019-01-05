@@ -83,5 +83,5 @@ Board::~Board()
 void Board::SetTexture(GTexture * tex)
 {
 	_texture = tex;
-	_sprite->_texture = tex; 
+	_sprite->texture = tex; 
 }

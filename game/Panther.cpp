@@ -13,8 +13,8 @@ Panther::Panther(float X, float Y, int Direction, float autoGoX_Distance, Simon 
 	AutoGoX_Backup_X = x;
 	AutoGoX_Distance = autoGoX_Distance;
 
-	_texture = TextureManager::GetInstance()->GetTexture(type);
-	_sprite = new GSprite(_texture, 120);
+	texture = TextureManager::GetInstance()->GetTexture(type);
+	sprite = new GSprite(texture, 120);
 
 	isSitting = 1;
 	isRunning = 0;
@@ -25,15 +25,7 @@ Panther::Panther(float X, float Y, int Direction, float autoGoX_Distance, Simon 
 	this->simon = simon;
 }
 
-
-
-void Panther::GetBoundingBox(float & left, float & top, float & right, float & bottom)
-{
-	left = x;
-	top = y;
-	right = x + _texture->FrameWidth;
-	bottom = y + _texture->FrameHeight;
-}
+ 
 
 void Panther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -56,7 +48,7 @@ void Panther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else
 		DistanceLimit = PANTHER_DEFAULT_DISTANCE_AUTO_GO_X_DIRECTION_LEFT;
 
-	if (isStart == 0 && abs(simon->GetX() - (x+_texture->FrameWidth)) <= DistanceLimit)
+	if (isStart == 0 && abs(simon->GetX() - (x+texture->GetFrameWidth())) <= DistanceLimit)
 	{
 		isSitting = false;
 		isRunning = true;
@@ -70,7 +62,7 @@ void Panther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	
 	if (isSitting)
 	{
-		_sprite->SelectFrame(PANTHER_ANI_SITTING);
+		sprite->SelectFrame(PANTHER_ANI_SITTING);
 	}
 	else
 	{
@@ -78,12 +70,12 @@ void Panther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			if (!isJumping) // ko đang nhảy thì chạy => đang nhảy thì cho animation đứng yên
 			{
-				if (PANTHER_ANI_RUNNING_BEGIN <= _sprite->GetCurrentFrame() && _sprite->GetCurrentFrame() < PANTHER_ANI_RUNNING_END)
+				if (PANTHER_ANI_RUNNING_BEGIN <= sprite->GetCurrentFrame() && sprite->GetCurrentFrame() < PANTHER_ANI_RUNNING_END)
 				{
-					_sprite->Update(dt);
+					sprite->Update(dt);
 				}
 				else
-					_sprite->SelectFrame(PANTHER_ANI_RUNNING_BEGIN);
+					sprite->SelectFrame(PANTHER_ANI_RUNNING_BEGIN);
 			}
 			
 		}
@@ -115,9 +107,8 @@ void Panther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float min_tx, min_ty, nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 		
-		//x += min_tx * dx + nx * 0.4f;
 		x += dx;
-		if (ny == -1) // chỉ xét va chạm hướng xuống
+		if (ny == -1)
 			y += min_ty * dy + ny * 0.4f;
 		else 		
 			y += dy;
@@ -166,13 +157,13 @@ void Panther::Render(Camera * camera)
 	if (Health <= 0)
 		return;
 
-//	_sprite->Update(dt);
+//	sprite->Update(dt);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
-		_sprite->Draw(pos.x, pos.y);
+		sprite->Draw(pos.x, pos.y);
 	else
-		_sprite->DrawFlipX(pos.x, pos.y);
+		sprite->DrawFlipX(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 		RenderBoundingBox(camera);

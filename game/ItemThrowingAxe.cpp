@@ -4,8 +4,8 @@
 
 ItemThrowingAxe::ItemThrowingAxe(float X, float Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::ITEMTHROWINGAXE);
-	_sprite = new GSprite(_texture, 0);
+	texture = TextureManager::GetInstance()->GetTexture(eType::ITEMTHROWINGAXE);
+	sprite = new GSprite(texture, 0);
 	type = eType::ITEMTHROWINGAXE;
 
 	this->x = X;

@@ -31,7 +31,7 @@ public:
 	void Render(Camera *camera);
 
 
-	void Create(float simonX, float simonY, int simonDirection);
+	void Attack(float X, float Y, int Direction);
 
 	void UpdatePositionFitSimon();
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);

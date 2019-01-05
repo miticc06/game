@@ -5,9 +5,9 @@
 
 SmallHeart::SmallHeart(float X, float Y)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::SMALLHEART);
+	texture = TextureManager::GetInstance()->GetTexture(eType::SMALLHEART);
 
-	_sprite = new GSprite(_texture, 100);
+	sprite = new GSprite(texture, 100);
 	type = eType::SMALLHEART;
 
 	this->x = X;

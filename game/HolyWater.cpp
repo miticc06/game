@@ -4,8 +4,8 @@
 
 HolyWater::HolyWater(Camera * camera)
 {
-	_texture = TextureManager::GetInstance()->GetTexture(eType::HOLYWATER);
-	_sprite = new GSprite(_texture, 100);
+	texture = TextureManager::GetInstance()->GetTexture(eType::HOLYWATER);
+	sprite = new GSprite(texture, 100);
 	type = eType::HOLYWATER;
 	_spriteIcon = new GSprite(TextureManager::GetInstance()->GetTexture(eType::ITEMHOLYWATER), 200);
 
@@ -21,7 +21,7 @@ HolyWater::~HolyWater()
 
 void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (!camera->checkObjectInCamera(x, y, (float)_texture->FrameWidth, (float)_texture->FrameHeight))
+	if (!camera->checkObjectInCamera(x, y, (float)texture->GetFrameWidth(), (float)texture->GetFrameHeight()))
 		isFinish = true;
 
 	if (isFinish)
@@ -67,27 +67,14 @@ void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	 
 }
-
-void HolyWater::Create(float simonX, float simonY, int simonDirection)
-{
-	if (isFinish == false)
-		return;
-	Weapon::Create(simonX, simonY, simonDirection);
-	UpdatePositionFitSimon();
-	vx = HOLLYWATER_SPEED_X * simonDirection;
-	vy = - HOLLYWATER_SPEED_Y;
-	isCollisionBrick = false;
-	_sprite->SelectFrame(0);
-	CountLoop = 0;
-}
-
+ 
 void HolyWater::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
 	left = x-5;
 	top = y;
-	right = x + _texture->FrameWidth+5;
-	bottom = y + _texture->FrameHeight;
-	if (_sprite->GetCurrentFrame() == 0) // frame đầu
+	right = x + texture->GetFrameWidth()+5;
+	bottom = y + texture->GetFrameHeight();
+	if (sprite->GetCurrentFrame() == 0) // frame đầu
 	{
 		left += 5;
 		top += 5;
@@ -104,6 +91,19 @@ void HolyWater::UpdatePositionFitSimon()
 		
 }
 
+void HolyWater::Attack(float X, float Y, int Direction)
+{
+	if (isFinish == false)
+		return;
+	Weapon::Attack(X, Y, Direction);
+	UpdatePositionFitSimon();
+	vx = HOLLYWATER_SPEED_X * Direction;
+	vy = -HOLLYWATER_SPEED_Y;
+	isCollisionBrick = false;
+	sprite->SelectFrame(0);
+	CountLoop = 0;
+}
+
 void HolyWater::RenderIcon(float X, float Y)
 {
 	_spriteIcon->Draw(X,Y);
@@ -116,26 +116,26 @@ void HolyWater::Render(Camera * camera)
 		return;
 
 	if (isCollisionBrick) // chạm đất r thì mới update ani
-		_sprite->Update(dt);
+		sprite->Update(dt);
 
 	D3DXVECTOR2 pos = camera->Transform(x, y);
 	if (direction == -1)
-		_sprite->Draw(pos.x, pos.y);
+		sprite->Draw(pos.x, pos.y);
 	else
-		_sprite->DrawFlipX(pos.x, pos.y);
+		sprite->DrawFlipX(pos.x, pos.y);
 
 	if (IS_DEBUG_RENDER_BBOX)
 	{
  		RenderBoundingBox(camera);
 	}
 
-	if (_sprite->GetCurrentFrame() == 3) // là frame cuối cùng thì kết thúc
+	if (sprite->GetCurrentFrame() == 3) // là frame cuối cùng thì kết thúc
 	{ 
 		CountLoop++;
 		if (CountLoop >= 2) // lặp đúng 2 lần thì dừng
 			isFinish = true;
 		else
-			_sprite->SelectFrame(1);
+			sprite->SelectFrame(1);
 	}
 }
  

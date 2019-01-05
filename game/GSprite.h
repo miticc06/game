@@ -14,15 +14,16 @@ public:
 	GSprite(GTexture* Texture, DWORD TimeAnimation);
 	virtual ~GSprite();
 
-	GTexture * _texture;
+	GTexture * texture;
+
 	DWORD timeAccumulated;	 // thời gian chờ đã tích lũy
 	DWORD timeAnimation; // thời gian phải chờ giữa các frame
 	 
-	RECT GetRectFrame(int index);
+	RECT GetRectFrame(int idFrame);
  	void Next();
 	void ResetTime();
 
- 	void SelectFrame(int index);
+ 	void SelectFrame(int idFrame);
 
  	void Update(DWORD dt);
 

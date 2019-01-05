@@ -6,8 +6,8 @@
 Boomerang::Boomerang(Camera * camera, GameObject* simon)
 {
 	type = eType::BOOMERANG;
- 	_texture = TextureManager::GetInstance()->GetTexture(type);
-	_sprite = new GSprite(_texture, 70);
+ 	texture = TextureManager::GetInstance()->GetTexture(type);
+	sprite = new GSprite(texture, 70);
 
 	_spriteIcon = new GSprite(TextureManager::GetInstance()->GetTexture(eType::ITEMBOOMERANG), 0);
 
@@ -57,15 +57,15 @@ void Boomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	
 
-	_sprite->Update(dt);
+	sprite->Update(dt);
 
 }
 
-void Boomerang::Create(float X, float Y, int Direction)
+void Boomerang::Attack(float X, float Y, int Direction)
 {
 	if (isFinish == false)
 		return;
-	Weapon::Create(X, Y, Direction);
+	Weapon::Attack(X, Y, Direction);
 	UpdatePositionFitSimon();
 	vx = BOOMERANG_SPEED_X * Direction;
 	vy = 0;

@@ -16,7 +16,7 @@ public:
 	virtual ~FireBall();
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
-	void Create(float X, float Y, int Direction);
+	void Attack(float X, float Y, int Direction);
  	void RenderIcon(float X, float Y); 
 
 	void Render(Camera *camera);
