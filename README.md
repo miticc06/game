@@ -28,4 +28,4 @@ State 3
  
 ## Authors
 
-* **Đặng Minh Tiến**
+* **Đặng Minh Tiến** (096.101.4106)
