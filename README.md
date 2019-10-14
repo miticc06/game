@@ -3,7 +3,7 @@ Game Castlevania DirectX - Nhập môn phát triển game
 
 Giảng viên hướng dẫn : Thầy **Đinh Nguyễn Anh Dũng**
 
-Code này mình đạt 10đ, các bạn thấy hay nhớ tặng mình 1 Star nhé ^^
+Code này mình đạt 10đ, các bạn thấy hay và hữu ích nhớ tặng mình 1 Star nhé ^^
 
 ## Demo
 
